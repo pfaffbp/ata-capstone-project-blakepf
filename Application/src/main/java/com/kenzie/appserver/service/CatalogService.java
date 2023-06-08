@@ -8,9 +8,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.ToDoubleBiFunction;
-import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Service
 public class CatalogService {
@@ -68,9 +65,43 @@ public class CatalogService {
         return animes;
     }
 
-    /* -----------------------------------------------------------------------------------------------------------
-        Private Methods
-       ----------------------------------------------------------------------------------------------------------- */
+    public Anime addNewAnime(Anime anime) {
 
+        CatalogRecord catalogRecord = new CatalogRecord();
 
+        catalogRecord.setAnimeId(anime.getAnimeId());
+        catalogRecord.setTitle(anime.getTitle());
+        catalogRecord.setRating(anime.getRating());
+        catalogRecord.setYearReleased(anime.getYearReleased());
+        catalogRecord.setGenre(anime.getGenre());
+        catalogRecord.setEpisodes(anime.getEpisodes());
+        catalogRecord.setDescription(anime.getDescription());
+        catalogRepository.save(catalogRecord);
+
+        return anime;
+    }
+
+    public void updateAnime(Anime anime) {
+
+        if (catalogRepository.existsById(anime.getAnimeId())) {
+            CatalogRecord catalogRecord = new CatalogRecord();
+
+            catalogRecord.setAnimeId(anime.getAnimeId());
+            catalogRecord.setTitle(anime.getTitle());
+            catalogRecord.setRating(anime.getRating());
+            catalogRecord.setYearReleased(anime.getYearReleased());
+            catalogRecord.setGenre(anime.getGenre());
+            catalogRecord.setEpisodes(anime.getEpisodes());
+            catalogRecord.setDescription(anime.getDescription());
+            catalogRepository.save(catalogRecord);
+
+            cache.evict(anime.getAnimeId());
+        }
+    }
+
+    public void deleteAnime(String animeId) {
+
+        catalogRepository.deleteById(animeId);
+        cache.evict(animeId);
+    }
 }
