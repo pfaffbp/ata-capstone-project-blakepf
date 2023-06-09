@@ -25,8 +25,8 @@ public class UserService {
 
         User storedUser = userRepository
                 .findById(username)
-                .map(user -> new User(user.getUsername(), user.getFriends(), user.getPassword(), user.getAge()
-                        user.getEmail(), user.getBio(), user.getFavoriteAnime(), user.getFullName()))
+                .map(user -> new User(user.getUsername(), user.getEmail(), user.getPassword(),
+                        user.getFullName(), user.getAge(), user.getBio()))
                 .orElse(null);
         if (storedUser != null) {
             cache.add(storedUser.getUsername(), storedUser);

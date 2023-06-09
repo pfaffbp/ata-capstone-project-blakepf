@@ -19,6 +19,17 @@ public class User {
         this.friends = new ArrayList<>();
         this.favoriteAnime = new ArrayList<>();
     }
+
+    public User(String username, String email, String password, String fullName, int age, String bio) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.fullName = fullName;
+        this.age = age;
+        this.bio = bio;
+        this.friends = new ArrayList<>();
+        this.favoriteAnime = new ArrayList<>();
+    }
     public String getUsername() {
         return username;
     }
