@@ -1,8 +1,10 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheUserStore;
+import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
+import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +16,8 @@ import java.util.List;
 public class UserService {
     private UserRepository userRepository;
     private CacheUserStore cache;
+
+    private CatalogRepository animeRepository;
 
     public UserService(UserRepository userRepository, CacheUserStore cache) {
         this.userRepository = userRepository;
@@ -71,4 +75,8 @@ public class UserService {
         userRepository.deleteById(fullName);
         cache.evict(fullName);
     }
+    //starting method for adding a new favorite anime to a specific user
+//    public List<Anime> addNewFavorite(User user, Anime anime) {
+//
+//    }
 }
