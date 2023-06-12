@@ -22,7 +22,7 @@ public class CatalogUpdateRequest {
     private String image;
 
     @JsonProperty("startDate")
-    private LocalDate startDate;
+    private int startDate;
 
     @JsonProperty("season")
     private String season;
@@ -37,7 +37,7 @@ public class CatalogUpdateRequest {
     private int episodes;
 
     @JsonProperty("genre")
-    private List genre;
+    private List<String> genre;
 
     public String getTitle() {
         return title;
@@ -71,11 +71,11 @@ public class CatalogUpdateRequest {
         this.image = image;
     }
 
-    public LocalDate getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
 
@@ -111,11 +111,11 @@ public class CatalogUpdateRequest {
         this.episodes = episodes;
     }
 
-    public List getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public void setGenre(List genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 }

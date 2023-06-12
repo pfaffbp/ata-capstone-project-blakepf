@@ -11,15 +11,15 @@ public class Anime {
     private String animeId;
     private String description;
     private String image;
-    private LocalDate startDate;
+    private int startDate;
     private String season;
     private int popularity;
     private int rating;
     private int episodes;
-    private List genre;
+    private List<String> genre;
 
     public Anime(String title, String animeId, String description, String image,
-                 LocalDate startDate, String season, int popularity, int rating, int episodes, List genre) {
+                 int startDate, String season, int popularity, int rating, int episodes, List<String> genre) {
         this.title = title;
         this.animeId = animeId;
         this.description = description;
@@ -64,11 +64,11 @@ public class Anime {
         this.image = image;
     }
 
-    public LocalDate getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
 
@@ -104,11 +104,11 @@ public class Anime {
         this.episodes = episodes;
     }
 
-    public List getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public void setGenre(List genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 }
