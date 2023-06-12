@@ -15,13 +15,13 @@ public class CatalogRecord {
     private String animeId;
     private String description;
     private String image;
-    private LocalDate startDate;
+    private int startDate;
     private String season;
     private int popularity;
 
     private int rating;
     private int episodes;
-    private List genre;
+    private List<String> genre;
 
 
     @DynamoDBAttribute(attributeName = "Title")
@@ -61,11 +61,11 @@ public class CatalogRecord {
     }
 
     @DynamoDBAttribute(attributeName = "StartDate")
-    public LocalDate getStartDate() {
+    public int getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(LocalDate startDate) {
+    public void setStartDate(int startDate) {
         this.startDate = startDate;
     }
 
@@ -106,11 +106,11 @@ public class CatalogRecord {
     }
 
     @DynamoDBAttribute(attributeName = "Genre")
-    public List getGenre() {
+    public List<String> getGenre() {
         return genre;
     }
 
-    public void setGenre(List genre) {
+    public void setGenre(List<String> genre) {
         this.genre = genre;
     }
 
@@ -121,7 +121,7 @@ public class CatalogRecord {
         CatalogRecord that = (CatalogRecord) o;
         return popularity == that.popularity && rating == that.rating && episodes == that.episodes && title.equals
                 (that.title) && animeId.equals(that.animeId) && description.equals(that.description) && image.equals
-                (that.image) && startDate.equals(that.startDate) && season.equals(that.season) && genre.equals
+                (that.image) && startDate == (that.startDate) && season.equals(that.season) && genre.equals
                 (that.genre);
     }
 
