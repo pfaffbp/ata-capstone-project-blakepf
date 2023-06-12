@@ -3,38 +3,41 @@ package com.kenzie.appserver.controller.model;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
+import java.time.LocalDate;
+import java.util.List;
 
 public class CatalogUpdateRequest {
 
     @NotEmpty
-    @JsonProperty("animeId")
-    private String animeId;
-
     @JsonProperty("title")
     private String title;
 
-    @JsonProperty("rating")
-    private double rating;
-
-    @JsonProperty("yearReleased")
-    private int yearReleased;
-
-    @JsonProperty("genre")
-    private int genre;
-
-    @JsonProperty("episodes")
-    private int episodes;
+    @JsonProperty("animeId")
+    private String animeId;
 
     @JsonProperty("description")
     private String description;
 
-    public String getAnimeId() {
-        return animeId;
-    }
+    @JsonProperty("image")
+    private String image;
 
-    public void setAnimeId(String animeId) {
-        this.animeId = animeId;
-    }
+    @JsonProperty("startDate")
+    private LocalDate startDate;
+
+    @JsonProperty("season")
+    private String season;
+
+    @JsonProperty("popularity")
+    private int popularity;
+
+    @JsonProperty("rating")
+    private int rating;
+
+    @JsonProperty("episodes")
+    private int episodes;
+
+    @JsonProperty("genre")
+    private List genre;
 
     public String getTitle() {
         return title;
@@ -44,28 +47,60 @@ public class CatalogUpdateRequest {
         this.title = title;
     }
 
-    public double getRating() {
+    public String getAnimeId() {
+        return animeId;
+    }
+
+    public void setAnimeId(String animeId) {
+        this.animeId = animeId;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    public LocalDate getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
+    }
+
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    public int getRating() {
         return rating;
     }
 
-    public void setRating(double rating) {
+    public void setRating(int rating) {
         this.rating = rating;
-    }
-
-    public int getYearReleased() {
-        return yearReleased;
-    }
-
-    public void setYearReleased(int yearReleased) {
-        this.yearReleased = yearReleased;
-    }
-
-    public int getGenre() {
-        return genre;
-    }
-
-    public void setGenre(int genre) {
-        this.genre = genre;
     }
 
     public int getEpisodes() {
@@ -76,12 +111,12 @@ public class CatalogUpdateRequest {
         this.episodes = episodes;
     }
 
-    public String getDescription() {
-        return description;
+    public List getGenre() {
+        return genre;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setGenre(List genre) {
+        this.genre = genre;
     }
 }
 
