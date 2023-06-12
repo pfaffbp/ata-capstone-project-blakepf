@@ -1,24 +1,33 @@
-package com.kenzie.appserver.service.model;
+package com.kenzie.appserver.controller.model;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.kenzie.appserver.service.model.Anime;
+import com.kenzie.appserver.service.model.User;
+
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
-public class User {
-
+public class UserUpdateRequest {
+    @JsonProperty("friends")
     private List<User> friends;
+    @JsonProperty("favoriteAnime")
     private List<Anime> favoriteAnime;
+    @NotEmpty
+    @JsonProperty("fullName")
     private String fullName;
+    @JsonProperty("age")
     private int age;
+    @JsonProperty("bio")
     private String bio;
 
-
-    public User(String fullName, int age, String bio) {
-        this.fullName = fullName;
-        this.age = age;
-        this.bio = bio;
-        this.friends = new ArrayList<>();
-        this.favoriteAnime = new ArrayList<>();
+    public String getFullName() {
+        return fullName;
     }
+
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
+
     public List<User> getFriends() {
         return friends;
     }
@@ -33,14 +42,6 @@ public class User {
 
     public void setFavoriteAnime(List<Anime> favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
     }
 
     public int getAge() {
