@@ -1,6 +1,6 @@
-query findAnime{
-    Page(page : 1){
-        media(popularity_greater: 300000 type : ANIME){
+query findPopularAnime{
+    Page(page : 1, perPage : 50){
+        media(popularity_greater: 10 type : ANIME){
             title{
             userPreferred
             }

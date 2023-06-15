@@ -1,4 +1,4 @@
-package com.kenzie.appserver.Dto;
+package com.kenzie.appserver.DAO;
 
 public class Title {
     private String userPreferred;
@@ -10,5 +10,4 @@ public class Title {
     public void setUserPreferred(String userPreferred) {
         this.userPreferred = userPreferred;
     }
-// Getters and setters for Title class
 }

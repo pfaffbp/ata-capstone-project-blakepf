@@ -1,8 +1,6 @@
-package com.kenzie.appserver.Dto;
+package com.kenzie.appserver.DAO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.appserver.Dto.CoverImage;
-import com.kenzie.appserver.Dto.Title;
 
 import java.util.List;
 

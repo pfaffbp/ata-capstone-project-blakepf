@@ -1,4 +1,4 @@
-package com.kenzie.appserver.Dto;
+package com.kenzie.appserver.DAO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

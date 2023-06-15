@@ -1,8 +1,6 @@
-package com.kenzie.appserver.Dto;
+package com.kenzie.appserver.DAO;
 
 public class CoverImage {
-
-
     private String medium;
 
     public String getMedium() {
@@ -12,5 +10,4 @@ public class CoverImage {
     public void setMedium(String medium) {
         this.medium = medium;
     }
-// Getters and setters for CoverImage class
 }

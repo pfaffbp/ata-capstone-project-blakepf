@@ -1,6 +1,4 @@
-package com.kenzie.appserver.Dto;
-
-import com.kenzie.appserver.Dto.Media;
+package com.kenzie.appserver.DAO;
 
 import java.util.List;
 
