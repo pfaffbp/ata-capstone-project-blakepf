@@ -21,6 +21,7 @@ public class LoginController {
         this.loginService = loginService;
     }
 
+
     @PostMapping("/createLogin")
     public ResponseEntity<LoginResponse> createLogin(@RequestBody LoginCreateRequest loginCreateRequest){
         boolean success = loginService.createLogin(loginCreateRequest.getEmail(), loginCreateRequest.getPassword());
@@ -28,11 +29,13 @@ public class LoginController {
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
+
     @GetMapping("/login")
     public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
         Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
         return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
+
 
     @PutMapping("/updateEmail")
     public ResponseEntity<LoginResponse> updateEmailByEmail (@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest){
@@ -41,6 +44,7 @@ public class LoginController {
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+
 
     @PutMapping("/changePassword")
     public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest){
