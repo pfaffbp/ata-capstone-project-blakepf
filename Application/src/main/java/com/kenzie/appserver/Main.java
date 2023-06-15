@@ -1,13 +1,13 @@
 package com.kenzie.appserver;
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import com.kenzie.appserver.Dto.GraphQLResponse;
-import com.kenzie.appserver.Dto.Media;
+import com.kenzie.appserver.DAO.GraphQLResponse;
+import com.kenzie.appserver.DAO.Media;
 import com.kenzie.appserver.config.CacheAnimeStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.service.CatalogService;
+import com.kenzie.appserver.service.model.Anime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -37,9 +37,7 @@ public class Main {
 
     @Autowired
     public Main(CatalogService catalogService, CatalogRepository catalogRepository, CacheAnimeStore cacheAnimeStore){
-        Main.catalogService = catalogService;
-        Main.catalogRepository = catalogRepository;
-        animeStore = cacheAnimeStore;
+        Main.catalogService = new CatalogService(catalogRepository, cacheAnimeStore);
     }
 
 
@@ -56,20 +54,14 @@ public class Main {
 
             List<Media> mediaList = response.getData().getPage().getMedia();
 
-
-
             for (Media media : mediaList) {
-                System.out.println("Title: " + media.getTitle().getUserPreferred());
-                System.out.println("ID: " + media.getId());
-                System.out.println("Description: " + media.getDescription());
-                System.out.println("Cover Image: " + media.getCoverImage().getMedium());
-                System.out.println("Average Score: " + media.getAverageScore());
-                System.out.println("Episodes: " + media.getEpisodes());
-                System.out.println("Genres: " + media.getGenres());
-                System.out.println("startDate " + media.getStartDate().getYear());
-                System.out.println("season " + media.getSeason());
-                System.out.println("popularity " + media.getPopularity());
-                System.out.println("-----------------------------------");
+                Anime anime = new Anime(media.getTitle().getUserPreferred(), String.valueOf(media.getId()),
+                        media.getDescription(), media.getCoverImage().getMedium(),
+                        media.getStartDate().getYear(), media.getSeason(),
+                        media.getPopularity(), media.getAverageScore(),
+                        media.getEpisodes(), media.getGenres());
+
+                catalogService.addNewAnime(anime);
             }
 
             } catch(InterruptedException e){
