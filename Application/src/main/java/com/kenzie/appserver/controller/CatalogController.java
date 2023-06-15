@@ -1,5 +1,6 @@
 package com.kenzie.appserver.controller;
 
+
 import com.kenzie.appserver.controller.model.CatalogCreateRequest;
 import com.kenzie.appserver.controller.model.CatalogResponse;
 import com.kenzie.appserver.controller.model.CatalogUpdateRequest;
@@ -40,13 +41,16 @@ public class CatalogController {
 
     @PostMapping
     public ResponseEntity<CatalogResponse> addNewAnime(@RequestBody CatalogCreateRequest catalogCreateRequest) {
-        Anime anime = new Anime(randomUUID().toString(),
-                catalogCreateRequest.getTitle(),
+        Anime anime = new Anime(catalogCreateRequest.getTitle(),
+                randomUUID().toString(),
+                catalogCreateRequest.getDescription(),
+                catalogCreateRequest.getImage(),
+                catalogCreateRequest.getStartDate(),
+                catalogCreateRequest.getSeason(),
+                catalogCreateRequest.getPopularity(),
                 catalogCreateRequest.getRating(),
-                catalogCreateRequest.getYearReleased(),
-                catalogCreateRequest.getGenre(),
                 catalogCreateRequest.getEpisodes(),
-                catalogCreateRequest.getDescription());
+                catalogCreateRequest.getGenre());
 
         catalogService.addNewAnime(anime);
 
@@ -54,6 +58,8 @@ public class CatalogController {
 
         return ResponseEntity.created(URI.create("/anime/" + catalogResponse.getAnimeId())).body(catalogResponse);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<CatalogResponse>> getAllAnime() {
@@ -76,13 +82,16 @@ public class CatalogController {
     @PutMapping
     public ResponseEntity<CatalogResponse> updateAnime(@RequestBody CatalogUpdateRequest catalogUpdateRequest) {
 
-        Anime anime = new Anime(catalogUpdateRequest.getAnimeId(),
-                catalogUpdateRequest.getTitle(),
+        Anime anime = new Anime(catalogUpdateRequest.getTitle(),
+                catalogUpdateRequest.getAnimeId(),
+                catalogUpdateRequest.getDescription(),
+                catalogUpdateRequest.getImage(),
+                catalogUpdateRequest.getStartDate(),
+                catalogUpdateRequest.getSeason(),
+                catalogUpdateRequest.getPopularity(),
                 catalogUpdateRequest.getRating(),
-                catalogUpdateRequest.getYearReleased(),
-                catalogUpdateRequest.getGenre(),
                 catalogUpdateRequest.getEpisodes(),
-                catalogUpdateRequest.getDescription());
+                catalogUpdateRequest.getGenre());
 
         catalogService.updateAnime(anime);
 
@@ -101,13 +110,16 @@ public class CatalogController {
     private CatalogResponse createCatalogResponse(Anime anime) {
 
         CatalogResponse catalogResponse = new CatalogResponse();
-        catalogResponse.setAnimeId(anime.getAnimeId());
         catalogResponse.setTitle(anime.getTitle());
-        catalogResponse.setRating(anime.getRating());
-        catalogResponse.setYearReleased(anime.getYearReleased());
-        catalogResponse.setGenre(anime.getGenre());
-        catalogResponse.setEpisodes(anime.getEpisodes());
+        catalogResponse.setAnimeId(anime.getAnimeId());
         catalogResponse.setDescription(anime.getDescription());
+        catalogResponse.setImage(anime.getImage());
+        catalogResponse.setStartDate(anime.getStartDate());
+        catalogResponse.setSeason(anime.getSeason());
+        catalogResponse.setPopularity(anime.getPopularity());
+        catalogResponse.setRating(anime.getRating());
+        catalogResponse.setEpisodes(anime.getEpisodes());
+        catalogResponse.setGenre(anime.getGenre());
 
         return catalogResponse;
     }

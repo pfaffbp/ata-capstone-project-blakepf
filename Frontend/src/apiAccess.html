@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="apiPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/apiPage.css">
+</head>
+<body>
+<form id = "clientCalls">
+  <label for="Pagination" class = "PaginationClass">
+    <h3>Do you want a page? True or False</h3>
+  </label>
+  <select id ="Pagination">
+    <option value="true">True</option>
+    <option value="false">False</option>
+  </select>
+
+  <label for="Arguments" class="ArgumentClass">
+    <h3>How Many Arguments?</h3>
+  </label>
+  <input type="number" id="Arguments">
+
+  <label for="Fields" class="FieldsClass">
+    <h3>How Many Fields?</h3>
+  </label>
+  <input type="number" id="Fields">
+  <button id ="submit">Submit</button>
+</form>
+
+
+<form id ="apiCall">
+</form>
+<!--<button id ="submit-2">Submit</button>-->
+
+
+</body>
+</html>
