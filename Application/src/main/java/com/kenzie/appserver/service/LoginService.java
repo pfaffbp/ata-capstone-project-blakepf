@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class LoginService {
@@ -19,11 +20,14 @@ public class LoginService {
     }
 
     public boolean createLogin(String email, String password) {
-        Optional<LoginRecord> record = loginRepository.findById(email);
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
         if (record.isPresent()) {
             return false;
         } else {
-            LoginRecord loginRecord = new LoginRecord(email, password);
+            LoginRecord loginRecord = new LoginRecord();
+            loginRecord.setUserId(UUID.randomUUID().toString());
+            loginRecord.setEmail(email);
+            loginRecord.setPassword(password);
             loginRepository.save(loginRecord);
             return true;
         }
@@ -31,7 +35,7 @@ public class LoginService {
     }
 
     public Login login(String email, String password) {
-        Optional<LoginRecord> record = loginRepository.findById(email);
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
         if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
             if (loginRecord.getPassword().equals(password)) {
@@ -44,9 +48,9 @@ public class LoginService {
         }
     }
 
-    public boolean deleteLoginByEmail(String email) {
-        Optional<LoginRecord> record = loginRepository.findById(email);
-        if (record.isPresent()) {
+    public boolean deleteLoginByEmail(String email, String password) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent() && record.get().getPassword().equals(password)){
             loginRepository.delete(record.get());
             return true;
         } else {
@@ -54,11 +58,11 @@ public class LoginService {
         }
     }
 
-    public boolean updatePasswordByEmail(String email, String password) {
-        Optional<LoginRecord> record = loginRepository.findById(email);
-        if (record.isPresent()) {
+    public boolean updatePasswordByEmail(String email, String password, String updatePassword) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent() && record.get().getPassword().equals(password)) {
             LoginRecord loginRecord = record.get();
-            loginRecord.setPassword(password);
+            loginRecord.setPassword(updatePassword);
             loginRepository.save(loginRecord);
             return true;
         } else {
@@ -66,9 +70,9 @@ public class LoginService {
         }
     }
 
-    public boolean updateEmailByEmail(String email, String updatedEmail) {
-        Optional<LoginRecord> record = loginRepository.findById(email);
-        if (record.isPresent()) {
+    public boolean updateEmailByEmail(String email, String updatedEmail, String password) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent() && record.get().getPassword().equals(password)) {
             LoginRecord loginRecord = record.get();
             loginRecord.setEmail(updatedEmail);
             loginRepository.save(loginRecord);

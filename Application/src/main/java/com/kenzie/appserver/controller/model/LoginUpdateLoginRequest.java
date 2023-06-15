@@ -4,11 +4,14 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class LoginRequest {
-
+public class LoginUpdateLoginRequest {
     @NotEmpty
     @JsonProperty("email")
     private String email;
+
+    @NotEmpty
+    @JsonProperty("newEmail")
+    private String newEmail;
 
     @NotEmpty
     @JsonProperty("password")
@@ -22,6 +25,14 @@ public class LoginRequest {
         this.email = email;
     }
 
+    public String getNewEmail() {
+        return newEmail;
+    }
+
+    public void setNewEmail(String newEmail) {
+        this.newEmail = newEmail;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -30,3 +41,4 @@ public class LoginRequest {
         this.password = password;
     }
 }
+
