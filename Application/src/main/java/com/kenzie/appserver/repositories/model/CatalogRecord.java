@@ -4,27 +4,25 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
+import java.time.LocalDate;
+import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "AnimeCatalog")
 public class CatalogRecord {
 
-    private String animeId;
     private String title;
-    private double rating;
-    private int yearReleased;
-    private int genre;
-    private int episodes;
+    private String animeId;
     private String description;
+    private String image;
+    private int startDate;
+    private String season;
+    private int popularity;
 
-    @DynamoDBHashKey(attributeName = "AnimeId")
-    public String getAnimeId() {
-        return animeId;
-    }
+    private int rating;
+    private int episodes;
+    private List<String> genre;
 
-    public void setAnimeId(String animeId) {
-        this.animeId = animeId;
-    }
 
     @DynamoDBAttribute(attributeName = "Title")
     public String getTitle() {
@@ -35,40 +33,13 @@ public class CatalogRecord {
         this.title = title;
     }
 
-    @DynamoDBAttribute(attributeName = "Rating")
-    public double getRating() {
-        return rating;
+    @DynamoDBHashKey(attributeName = "AnimeId")
+    public String getAnimeId() {
+        return animeId;
     }
 
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    @DynamoDBAttribute(attributeName = "YearReleased")
-    public int getYearReleased() {
-        return yearReleased;
-    }
-
-    public void setYearReleased(int yearReleased) {
-        this.yearReleased = yearReleased;
-    }
-
-    @DynamoDBAttribute(attributeName = "Genre")
-    public int getGenre() {
-        return genre;
-    }
-
-    public void setGenre(int genre) {
-        this.genre = genre;
-    }
-
-    @DynamoDBAttribute(attributeName = "Episodes")
-    public int getEpisodes() {
-        return episodes;
-    }
-
-    public void setEpisodes(int episodes) {
-        this.episodes = episodes;
+    public void setAnimeId(String animeId) {
+        this.animeId = animeId;
     }
 
     @DynamoDBAttribute(attributeName = "Description")
@@ -80,18 +51,82 @@ public class CatalogRecord {
         this.description = description;
     }
 
+    @DynamoDBAttribute(attributeName = "Image")
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
+
+    @DynamoDBAttribute(attributeName = "StartDate")
+    public int getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(int startDate) {
+        this.startDate = startDate;
+    }
+
+    @DynamoDBAttribute(attributeName = "Season")
+    public String getSeason() {
+        return season;
+    }
+
+    public void setSeason(String season) {
+        this.season = season;
+    }
+
+    @DynamoDBAttribute(attributeName = "Popularity")
+    public int getPopularity() {
+        return popularity;
+    }
+
+    public void setPopularity(int popularity) {
+        this.popularity = popularity;
+    }
+
+    @DynamoDBAttribute(attributeName = "Rating")
+    public int getRating() {
+        return rating;
+    }
+
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
+
+    @DynamoDBAttribute(attributeName = "Episodes")
+    public int getEpisodes() {
+        return episodes;
+    }
+
+    public void setEpisodes(int episodes) {
+        this.episodes = episodes;
+    }
+
+    @DynamoDBAttribute(attributeName = "Genre")
+    public List<String> getGenre() {
+        return genre;
+    }
+
+    public void setGenre(List<String> genre) {
+        this.genre = genre;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         CatalogRecord that = (CatalogRecord) o;
-        return Double.compare(that.rating, rating) == 0 && yearReleased == that.yearReleased && genre ==
-                that.genre && episodes == that.episodes && animeId.equals(that.animeId) && title.equals(that.title) &&
-                description.equals(that.description);
+        return popularity == that.popularity && rating == that.rating && episodes == that.episodes && title.equals
+                (that.title) && animeId.equals(that.animeId) && description.equals(that.description) && image.equals
+                (that.image) && startDate == (that.startDate) && season.equals(that.season) && genre.equals
+                (that.genre);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(animeId, title, rating, yearReleased, genre, episodes, description);
+        return Objects.hash(title, animeId, description, image, startDate, season, popularity, rating, episodes, genre);
     }
 }

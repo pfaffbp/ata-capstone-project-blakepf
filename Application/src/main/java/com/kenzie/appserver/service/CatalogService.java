@@ -31,13 +31,16 @@ public class CatalogService {
 
         Anime animeStored = catalogRepository
                 .findById(animeId)
-                .map(anime -> new Anime(anime.getAnimeId(),
-                        anime.getTitle(),
+                .map(anime -> new Anime(anime.getTitle(),
+                        anime.getAnimeId(),
+                        anime.getDescription(),
+                        anime.getImage(),
+                        anime.getStartDate(),
+                        anime.getSeason(),
+                        anime.getPopularity(),
                         anime.getRating(),
-                        anime.getYearReleased(),
-                        anime.getGenre(),
                         anime.getEpisodes(),
-                        anime.getDescription()))
+                        anime.getGenre()))
                 .orElse(null);
 
         if (animeStored != null) {
@@ -53,13 +56,16 @@ public class CatalogService {
         Iterable<CatalogRecord> animeIterator = catalogRepository.findAll();
 
         for(CatalogRecord record : animeIterator) {
-            animes.add(new Anime(record.getAnimeId(),
-                    record.getTitle(),
+            animes.add(new Anime(record.getTitle(),
+                    record.getAnimeId(),
+                    record.getDescription(),
+                    record.getImage(),
+                    record.getStartDate(),
+                    record.getSeason(),
+                    record.getPopularity(),
                     record.getRating(),
-                    record.getYearReleased(),
-                    record.getGenre(),
                     record.getEpisodes(),
-                    record.getDescription()));
+                    record.getGenre()));
         }
 
         return animes;
@@ -69,13 +75,16 @@ public class CatalogService {
 
         CatalogRecord catalogRecord = new CatalogRecord();
 
-        catalogRecord.setAnimeId(anime.getAnimeId());
         catalogRecord.setTitle(anime.getTitle());
-        catalogRecord.setRating(anime.getRating());
-        catalogRecord.setYearReleased(anime.getYearReleased());
-        catalogRecord.setGenre(anime.getGenre());
-        catalogRecord.setEpisodes(anime.getEpisodes());
+        catalogRecord.setAnimeId(anime.getAnimeId());
         catalogRecord.setDescription(anime.getDescription());
+        catalogRecord.setImage(anime.getImage());
+        catalogRecord.setStartDate(anime.getStartDate());
+        catalogRecord.setSeason(anime.getSeason());
+        catalogRecord.setPopularity(anime.getPopularity());
+        catalogRecord.setRating(anime.getRating());
+        catalogRecord.setEpisodes(anime.getEpisodes());
+        catalogRecord.setGenre(anime.getGenre());
         catalogRepository.save(catalogRecord);
 
         return anime;
@@ -86,13 +95,16 @@ public class CatalogService {
         if (catalogRepository.existsById(anime.getAnimeId())) {
             CatalogRecord catalogRecord = new CatalogRecord();
 
-            catalogRecord.setAnimeId(anime.getAnimeId());
             catalogRecord.setTitle(anime.getTitle());
-            catalogRecord.setRating(anime.getRating());
-            catalogRecord.setYearReleased(anime.getYearReleased());
-            catalogRecord.setGenre(anime.getGenre());
-            catalogRecord.setEpisodes(anime.getEpisodes());
+            catalogRecord.setAnimeId(anime.getAnimeId());
             catalogRecord.setDescription(anime.getDescription());
+            catalogRecord.setImage(anime.getImage());
+            catalogRecord.setStartDate(anime.getStartDate());
+            catalogRecord.setSeason(anime.getSeason());
+            catalogRecord.setPopularity(anime.getPopularity());
+            catalogRecord.setRating(anime.getRating());
+            catalogRecord.setEpisodes(anime.getEpisodes());
+            catalogRecord.setGenre(anime.getGenre());
             catalogRepository.save(catalogRecord);
 
             cache.evict(anime.getAnimeId());
