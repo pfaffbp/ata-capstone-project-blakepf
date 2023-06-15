@@ -1,7 +1,7 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.LoginCreateRequest;
-import com.kenzie.appserver.controller.model.LoginRequest;
+import com.kenzie.appserver.controller.model.*;
+import com.kenzie.appserver.repositories.model.LoginRecord;
 import com.kenzie.appserver.service.LoginService;
 import com.kenzie.appserver.service.model.Login;
 import org.apache.tomcat.jni.User;
@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController
-@RequestMapping("/Login")
+@RequestMapping("/login")
 public class LoginController {
 
     private LoginService loginService;
@@ -21,33 +21,42 @@ public class LoginController {
         this.loginService = loginService;
     }
 
-    @PostMapping("/login")
-    public ResponseEntity<Void> createLogin(@RequestBody LoginCreateRequest request){
-        boolean accepted = loginService.createLogin(request.getEmail(), request.getPassword());
-        return accepted ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
-    }
+    @PostMapping
+    public ResponseEntity<LoginResponse> createLogin(@RequestBody LoginCreateRequest loginCreateRequest){
+        boolean success = loginService.createLogin(loginCreateRequest.getEmail(), loginCreateRequest.getPassword());
 
-    @PostMapping("/login")
-    public ResponseEntity<User> login(@RequestBody @Valid LoginRequest request) {
-        Login login = loginService.login(request.getEmail(), request.getPassword());
-        return login != null ? ResponseEntity.status(HttpStatus.ACCEPTED).build(): ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-    }
-
-    @DeleteMapping("/deleteLoginByEmail")
-    public ResponseEntity<Void> deleteByEmail(@RequestParam String email) {
-        boolean success = loginService.deleteLoginByEmail(email);
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @PutMapping("/updatePassword")
-    public ResponseEntity<Void> updatePasswordByEmail(@RequestParam String email, @RequestParam String password) {
-        boolean success = loginService.updatePasswordByEmail(email, password);
-        return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build()  : ResponseEntity.status(HttpStatus.CONFLICT).build();
+    @GetMapping
+    public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
+        Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
+        return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     }
 
-    @PutMapping("/updateEmail")
-    public ResponseEntity<Void> updateEmailByEmail(@RequestParam String email, @RequestParam String password) {
-        boolean success = loginService.updateEmailByEmail(email, password);
-        return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build()  : ResponseEntity.status(HttpStatus.CONFLICT).build();
+    @PutMapping
+    public ResponseEntity<LoginResponse> updateEmailByEmail (@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest){
+        boolean success = loginService.updateEmailByEmail(loginUpdateLoginRequest.getEmail(),
+                loginUpdateLoginRequest.getNewEmail(), loginUpdateLoginRequest.getPassword());
+
+        return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+
+/*    @PutMapping
+    public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest){
+        boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(),
+                loginUpdatePasswordRequest.getPassword(), loginUpdatePasswordRequest.getNewPassword());
+
+        return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }*/
+
+    @DeleteMapping
+    public ResponseEntity<LoginResponse> deleteLoginByEmail(@RequestBody LoginDeleteRequest loginDeleteRequest){
+        boolean success = loginService.deleteLoginByEmail(loginDeleteRequest.getEmail(), loginDeleteRequest.getPassword());
+
+        return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
+    }
+
+
+
 }
