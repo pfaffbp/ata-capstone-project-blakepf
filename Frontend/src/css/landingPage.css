@@ -1,0 +1,48 @@
+body {
+    display: flex;
+    justify-content: center;
+}
+
+.leftImage {
+    background: red;
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+}
+
+.container-fluid {
+    background: green;
+    width: 65%;
+    max-width: 65%;
+    height: 100%;
+    display: inline-block;
+    font-size: 20px;
+    
+}
+
+.nav {
+    background-color: #333333;
+    width: 100%;
+    position: fixed;
+}
+
+.nav a {
+    color: white;
+    text-decoration: bold;
+}
+
+.main-links {
+    float: left;
+    margin-right: 200px;
+}
+
+.account {
+    float: right;
+}
+
+.rightImage {
+    background: blue;
+    width: 15%;
+    height: 100%;
+    display: inline-block;
+}

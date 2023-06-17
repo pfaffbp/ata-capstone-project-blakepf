@@ -1,7 +1,4 @@
-*{
-    margin: 0;
-    padding: 0;
-}
+
 header{
     width: auto;
 }
@@ -9,20 +6,6 @@ body{
     background-color: #eeeedd;
 }
 
-.nav{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #333333;
-    display: flex;
-    justify-content: center;
-}
-
-a{
-    padding-left: 30px;
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-}
 
 .signup_href{
     color: #eaeded;
@@ -38,31 +21,61 @@ a{
     padding-right: 30px;
 }
 
-.entire-website{
-    flex-grow: 1;
-    display: flex;
-    /*flex-flow: inherit;*/
+.entire-website {
     height: 100%;
     width: 100%;
+}
+
+
+.leftSideImage {
+    float: left;
+    width: 10%;
+    background: green;
+    display: inline-block;
+}
+
+.leftSidePic {
+    max-width: 100%;
+}
+
+.main {
+    width: 65%;
+    background: blue;
+    position: center;
+    display: inline-block;
+    margin: auto;
+}
+
+.rightSidePic {
+    max-width: 100%;
+}
+
+.rightSideImage{
+    float: right;
+    width: 10%;
+    background: red;
+    display: inline-block;
+}
+
+.nav {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #333333;
+    display: flex;
     justify-content: center;
-    gap: 1vw;
+    position: fixed;
+    width: 100%;
 }
 
-.leftSideImage{
+.nav a {
+    padding-left: 30px;
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+    float: left;
 }
 
-.leftSidePic{
-    position: sticky;
-    top: 0;
-}
 
-.rightSidePic{
-    position: sticky;
-    top: 0;
-}
-
-.middleBlock{
-}
 
 .top-third-middle{
     display: flex;
