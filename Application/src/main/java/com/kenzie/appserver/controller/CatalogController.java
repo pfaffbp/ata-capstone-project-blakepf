@@ -1,5 +1,6 @@
 package com.kenzie.appserver.controller;
 
+
 import com.kenzie.appserver.controller.model.CatalogCreateRequest;
 import com.kenzie.appserver.controller.model.CatalogResponse;
 import com.kenzie.appserver.controller.model.CatalogUpdateRequest;
@@ -57,6 +58,8 @@ public class CatalogController {
 
         return ResponseEntity.created(URI.create("/anime/" + catalogResponse.getAnimeId())).body(catalogResponse);
     }
+
+
 
     @GetMapping
     public ResponseEntity<List<CatalogResponse>> getAllAnime() {

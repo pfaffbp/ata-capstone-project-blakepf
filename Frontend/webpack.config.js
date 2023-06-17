@@ -9,6 +9,7 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    apiPage: path.resolve(__dirname, 'src', 'pages', 'apiPage.js')
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -16,7 +17,7 @@ module.exports = {
   },
   devServer: {
     https: false,
-    port: 8080,
+    port: 8081,
     open: true,
     proxy: [
       {
@@ -31,6 +32,11 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/apiAccess.html',
+      filename: 'apiAccess.html',
       inject: false
     }),
     new CopyPlugin({
