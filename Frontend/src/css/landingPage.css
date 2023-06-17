@@ -1,48 +1,91 @@
+* {
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+
+}
+
 body {
-    display: flex;
-    justify-content: center;
+    width: 100%;
+    background: black;
 }
 
-.leftImage {
-    background: red;
-    width: 15%;
-    height: 100%;
-    display: inline-block;
+img {
+    width: 100%;
 }
 
-.container-fluid {
-    background: green;
-    width: 65%;
-    max-width: 65%;
-    height: 100%;
-    display: inline-block;
-    font-size: 20px;
-    
+
+/* ------- Navigation Bar ------- */
+
+.logo {
+    width: 10%;
+    float: left;
+    margin-left: 10px;
+    margin-right: 10px;
 }
 
 .nav {
     background-color: #333333;
-    width: 100%;
     position: fixed;
+    width: 99%;
+    margin-top: 0;
+    font-size: 22px;
+    border-radius: 10px;
+    border: purple;
 }
 
 .nav a {
     color: white;
-    text-decoration: bold;
+    text-decoration: none;
+    text-transform: uppercase;
+    padding: 25px 10px;
+    display: inline-block;
 }
 
 .main-links {
     float: left;
-    margin-right: 200px;
 }
 
 .account {
     float: right;
+    margin-right: 10px;
 }
 
-.rightImage {
-    background: blue;
-    width: 15%;
+/* ------- All content  ------- */
+
+#flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
     height: 100%;
-    display: inline-block;
+    padding-top: 80px;
+    border: none;
 }
+
+/* ------- Left side banner  ------- */
+
+.leftImage {
+    max-width: 16%;
+    align-self: center;
+    justify-self: center;
+}
+
+/* ------- Right side banner  ------- */
+
+.rightImage {
+    max-width: 16%;
+    align-self: center;
+    justify-self: center;
+}
+
+
+/* ------- Mid-Section Content  ------- */
+
+.main {
+    background: green;
+    width: 65%;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+
+
