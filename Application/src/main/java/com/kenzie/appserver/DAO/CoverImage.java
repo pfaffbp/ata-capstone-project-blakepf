@@ -1,13 +1,13 @@
 package com.kenzie.appserver.DAO;
 
 public class CoverImage {
-    private String medium;
+    private String large;
 
-    public String getMedium() {
-        return medium;
+    public String getLarge() {
+        return large;
     }
 
-    public void setMedium(String medium) {
-        this.medium = medium;
+    public void setMedium(String large) {
+        this.large = large;
     }
 }

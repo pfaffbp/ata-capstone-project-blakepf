@@ -1,13 +1,13 @@
-query findPopularAnime{
+query findSeasonalAnime{
     Page(page : 1, perPage : 50){
-        media(popularity_greater: 10 type : ANIME){
+        media(startDate_greater: 20230101, season: SPRING, type: ANIME){
             title{
             userPreferred
             }
             id
       description
       coverImage{
-        medium
+        large
       }
       startDate {
         year
