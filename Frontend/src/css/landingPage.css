@@ -92,6 +92,7 @@ img {
     position: fixed;
     border: 2px solid black;
     padding: 20px;
+    z-index: 10;
 }
 
 .anime-container {
