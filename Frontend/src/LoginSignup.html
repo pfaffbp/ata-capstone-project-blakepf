@@ -1,62 +1,74 @@
 <!DOCTYPE html>
+<!-- Coding By CodingNepal - codingnepalweb.com -->
 <html lang="en">
 <head>
-    <script type="text/javascript" src="LoginSignup.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/LoginSignup.css">
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <script src="LoginSignupPage.js" type="module"></script>
+    <meta charset="uft-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Signup</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="css/Login.css" />
+
+    <!-- Boxicons CSS -->
+    <link
+            href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
+            rel="stylesheet"
+    />
 </head>
-<main>
-
-    <section class='login'>
-        <div class='login--wrap clearfix'>
-            <div class="row clearfix">
-                <div class="col col-6 login--l">
-                    <div class="title"><span class='text'>Login</span></div>
-                    <div class='login--body'>
-                        <label>
-                            <div class='label'>Email address</div>
-                            <input type='text' placeholder='john@doe.com' required />
-                        </label>
-                        <label>
-                            <div class='label'>Password</div>
-                            <input type='password' placeholder='*********' required />
-                        </label>
-                        <div class='sbmt'>
-                            <button class='sbmt--btn'>Login</button>
-                        </div>
-                    </div>
-
-                </div>
-                <div class="col col-6 login--s">
-                    <div class="title"><span class='text'>Signup</span></div>
-                    <div class='login--body'>
-                        <label>
-                            <div class='label'>Email Address</div>
-                            <input type='text' placeholder='john@doe.com' required />
-                        </label>
-                        <label>
-                            <div class='label'>Confirm Email address</div>
-                            <input type='text' placeholder='john@doe.com' required />
-                        </label>
-                        <label>
-                            <div class='label'>Password</div>
-                            <input type='password' placeholder='*********' required />
-                        </label>
-                        <label>
-                            <div class='label'>Confirm password</div>
-                            <input type='password' placeholder='*********' required />
-                        </label>
-                        <div class='sbmt'>
-                            <button class='sbmt--btn2'>Signup</button>
-                        </div>
-                    </div>
-                </div>
+<body>
+<div class="container">
+    <header>Signup</header>
+    <form >
+        <div class="field email-field">
+            <div class="input-field">
+                <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
             </div>
-            </div>
+            <span class="error email-error">
+            <i class="bx bx-error-circle error-icon"></i>
+            <p class="error-text">Please enter a valid email</p>
+          </span>
         </div>
-    </section>
+        <div class="field create-password">
+            <div class="input-field">
+                <input
+                        type="password"
+                        id="password"
+                        placeholder="Create password"
+                        class="password"
+                />
+                <i class="bx bx-hide show-hide"></i>
+            </div>
+            <span class="error password-error">
+            <i class="bx bx-error-circle error-icon"></i>
+            <p class="error-text">
+              Please enter atleast 8 charatcer with number, symbol, small and
+              capital letter.
+            </p>
+          </span>
+        </div>
+        <div class="field confirm-password">
+            <div class="input-field">
+                <input
+                        type="password"
+                        id="confirm-password"
+                        placeholder="Confirm password"
+                        class="cPassword"
+                />
+                <i class="bx bx-hide show-hide"></i>
+            </div>
+            <span class="error cPassword-error">
+            <i class="bx bx-error-circle error-icon"></i>
+            <p class="error-text">Password don't match</p>
+          </span>
+        </div>
+        <div class="input-field button">
+            <input type="submit" id="createUser" value="Submit" />
+        </div>
+    </form>
+</div>
 
-</main>
+<!-- JavaScript -->
 
+</body>
 </html>
