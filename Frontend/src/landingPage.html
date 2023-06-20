@@ -3,7 +3,9 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/landingPage.css">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script type="text/javascript" src="landingPage.js"></script>
+  <!--   <script type="text/javascript" src="pages/landingPage.js"></script> -->
+    <script type = "text/javascript" src = "pages/landingSlideshow.js"></script>
+
     <title>Aniverse: Home</title>
 </head>
 
@@ -32,75 +34,63 @@
            
             <div class = "slideshow-section">
 
-                <fieldset class="slideshow">
-
-                    <!-- Slide 1 -->
-                    <label class="slide-button" for="slideCheckbox1">Intro</label>
-                    <input type="radio" id="slideCheckbox1" name="slide" checked></input>
-                    <div class="slide">
-                      <div class="slide__content">
-                        <span class="psst">
-                          <strong>Psst!</strong> Updated version of this pen available
-                          <a href="https://codepen.io/pbutcher/pen/yLLKbNo" target="_blank">here</a>!
-                        </span>
-                        <h1>Slideshow Concept (No JS)</h1>
-                        <p>A pure CSS and HTML slideshow concept.</p>
-                        <p>To add or remove slides:</p>
-                        <ul>
-                          <li>Add a new slide template in the HTML</li>
-                          <li>Update the <code>$slide-count</code> SCSS variable</li>
-                          <li>Tab colours: Update the <code>$c-slides</code> SCSS variable</li>
-                          <li>Slide popout images: Update the <code>$b-slides</code> SCSS variable</li>
-                        </ul>
-                        <p>Use the tabs below to change slide.</p>
-                        <p>Et voila.</p>
-                      </div>  
+                <div class="slider">
+                    <!-- fade css -->
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>ONE PIECE: RED</h1>
+                            <p>Web Devoloper<br>Subscribe To My Channel For More Videos</p>
+                        </div>
+                        <img src="images/One Piece Red Promo Art.jpg">
                     </div>
-                  
-                    <!-- Slide 2 -->
-                    <label class="slide-button" for="slideCheckbox2">More</label>
-                    <input type="radio" id="slideCheckbox2" name="slide"></input>
-                    <div class="slide">
-                      <div class="slide__content">
-                        <h1>More</h1>
-                        <p>More here</p>
-                      </div> 
+                    
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>IMAGE 2</h1>
+                            <p>Web Devoloper<br>Subscribe To My Channel For More Videos</p>
+                        </div>
+                        <img src="images/Bleach Promo Art.avif" style="width: 100%; height: 100%;">
                     </div>
-                  
-                    <!-- Slide 3 -->
-                    <label class="slide-button" for="slideCheckbox3">Yet More</label>
-                    <input type="radio" id="slideCheckbox3" name="slide"></input>
-                    <div class="slide">
-                      <div class="slide__content">
-                        <h1>Yet More</h1>
-                        <p>Yet more here</p>
-                      </div>  
+                    
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>IMAGE 3</h1>
+                            <p>Web Devoloper<br>Subscribe To My Channel For More Videos</p>
+                        </div>
+                        <img src="images/Demon Slayer Promo Art.avif" style="width: 100%; height: 100%;">
                     </div>
-                  
-                    <!-- Slide 4 -->
-                    <label class="slide-button" for="slideCheckbox4">Zzz</label>
-                    <input type="radio" id="slideCheckbox4" name="slide"></input>
-                    <div class="slide">
-                      <div class="slide__content">
-                        <h1>Zzz</h1>
-                        <p>Yada yada</p>
-                      </div>   
+                    
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>IMAGE 4</h1>
+                            <p>Web Devoloper<br>Subscribe To My Channel For More Videos</p>
+                        </div>
+                        <img src="images/Jujutsu Kaisen Promo Art.jpeg" style="width: 100%; height: 100%;">
                     </div>
-                  
-                    <!-- Slide 5 -->
-                    <label class="slide-button" for="slideCheckbox5">The End</label>
-                    <input type="radio" id="slideCheckbox5" name="slide"></input>
-                    <div class="slide">
-                      <div class="slide__content">
-                        <h1>The end</h1>
-                        <p>It's over</p>
-                      </div>  
+                    
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>IMAGE 5</h1>
+                            <p>Web Devoloper<br>Subscribe To My Channel For More Videos</p>
+                        </div>
+                        <img src="img5.jpg" style="width: 100%; height: 100%;">
                     </div>
-                  
-                    <!-- Add more slides here! -->
-                  
-                  </fieldset>
-                  
+                    <!-- /fade css -->
+                    
+                    <!-- onclick js -->
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                      <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                    
+                    <div class="dotsbox" style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                        <span class="dot" onclick="currentSlide(5)"></span>
+                    </div>
+                    <!-- /onclick js -->
+                </div>
+                   
             </div>
     
             <h2>Popular Animes</h2>
@@ -121,3 +111,49 @@
 
     </div>
 </body>
+
+<script>
+    const myslide = document.querySelectorAll('.myslide'),
+	  dot = document.querySelectorAll('.dot');
+let counter = 1;
+slidefun(counter);
+
+let timer = setInterval(autoSlide, 8000);
+function autoSlide() {
+	counter += 1;
+	slidefun(counter);
+}
+function plusSlides(n) {
+	counter += n;
+	slidefun(counter);
+	resetTimer();
+}
+function currentSlide(n) {
+	counter = n;
+	slidefun(counter);
+	resetTimer();
+}
+function resetTimer() {
+	clearInterval(timer);
+	timer = setInterval(autoSlide, 8000);
+}
+
+function slidefun(n) {
+	
+	let i;
+	for(i = 0;i<myslide.length;i++){
+		myslide[i].style.display = "none";
+	}
+	for(i = 0;i<dot.length;i++) {
+		dot[i].className = dot[i].className.replace(' active', '');
+	}
+	if(n > myslide.length){
+	   counter = 1;
+	   }
+	if(n < 1){
+	   counter = myslide.length;
+	   }
+	myslide[counter - 1].style.display = "block";
+	dot[counter - 1].className += " active";
+}
+</script>
