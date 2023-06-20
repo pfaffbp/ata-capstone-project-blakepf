@@ -9,11 +9,10 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-
     LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
-    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
-
+    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
+    searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -52,7 +51,11 @@ module.exports = {
       filename: 'animepage.html',
       inject: false
     }),
-
+    new HtmlWebpackPlugin({
+      template: './src/searchPage.html',
+      filename: 'searchPage.html',
+      inject: false
+    }),
     new CopyPlugin({
       patterns: [
         {
