@@ -7,6 +7,15 @@ body{
     background-color: #eeeedd;
 }
 
+#search-form{
+    width: 50vw;
+    max-height: 100px;
+}
+#search-bar{
+    width: 100%;
+    height: 30px;
+}
+
 .nav{
     padding-top: 10px;
     padding-bottom: 10px;
@@ -37,14 +46,32 @@ body{
 }
 
 .entire-website{
-    flex-grow: 1;
+    /*flex-grow: 1;*/
+    /*display: flex;*/
+    /*!*flex-flow: inherit;*!*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*justify-content: center;*/
+    /*gap: 1vw;*/
     display: flex;
-    /*flex-flow: inherit;*/
-    height: 100%;
-    width: 100%;
     justify-content: center;
-    gap: 1vw;
+
 }
+.middleBlock{
+    display: inline-block;
+    justify-content: center;
+    max-width: 100%;
+}
+
+#work-area{
+    display: inline-block;
+    flex-wrap: wrap;
+}
+
+.poster{
+    display: inline-block;
+}
+
 
 .leftSideImage{
 }
@@ -52,6 +79,10 @@ body{
 .leftSidePic{
     position: sticky;
     top: 0;
+}
+
+.title-box{
+    max-width: 10%;
 }
 
 .rightSidePic{

@@ -194,10 +194,10 @@ class ApiPage extends BaseClass{
 
         let result = await this.client.getExample(querySetup(pagination, argMap, fieldMap), this.errorHandler);
 
-        await this.client.createExample(result, this.errorHandler);
+        // await this.client.createExample(result, this.errorHandler);
 
         console.log(result);
-
+        console.log("here")
 
     }
 
