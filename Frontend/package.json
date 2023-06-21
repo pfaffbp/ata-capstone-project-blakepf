@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "license": "UNLICENSED",
   "main": "js/index.js",
+  "type": "module",
   "npm-pretty-much": {
     "consumeLibCommonJs": true,
     "runTest": "never"
