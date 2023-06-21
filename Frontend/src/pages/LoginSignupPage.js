@@ -9,7 +9,7 @@ class LoginSignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'onCreateLogin'], this);
+        this.bindClassMethods([ 'onCreateLogin', 'onLogin'], this);
         this.dataStore = new DataStore();
 
 
@@ -21,6 +21,8 @@ class LoginSignupPage extends BaseClass {
     async mount() {
         this.client = new LoginSignupClient();
         document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
+        document.getElementById('LoginUser').addEventListener('click', this.onLogin);
+       // await this.alreadyLoggedIn();
 
 
 
@@ -42,12 +44,27 @@ class LoginSignupPage extends BaseClass {
             cPassField = form.querySelector(".confirm-password"),
             cPassInput = cPassField.querySelector(".cPassword").value;
 
+     /*   const eyeIcons = document.querySelectorAll(".show-hide");
+        eyeIcons.forEach((eyeIcon) => {
+            eyeIcon.addEventListener("click", () => {
+                const pInput = eyeIcon.parentElement.querySelector("input"); //getting parent element of eye icon and selecting the password input
+                if (pInput.type === "password") {
+                    eyeIcon.classList.replace("bx-hide", "bx-show");
+                    return (pInput.type = "text");
+                }
+                eyeIcon.classList.replace("bx-show", "bx-hide");
+                pInput.type = "password";
+            });
+        });*/
+
 
         try {
             await this.validateUserInput(passInput, cPassInput);
             const login = await this.client.createLogin(emailInput, passInput);
-            this.dataStore.set('login', login)
-            console.log('Login', login)
+            //this.dataStore.set('login', emailInput)
+            this.showMessage(`Login ${emailInput} created successfully!`);
+            /*console.log('Login', login)*/
+            form.reset();//resets the forum if successful leaves info if not
 
 
         }catch (error) {
@@ -58,11 +75,39 @@ class LoginSignupPage extends BaseClass {
 
         }
 
+        async onLogin(event) {
+            event.preventDefault();
+            this.dataStore.set("LoggedIn", null);
+            const loginInput = document.getElementById("email-Login").value;
+            const loginPassInput = document.getElementById("loginPassword").value;
+            /*const  form = document.querySelector("form"),
+                loginField = form.querySelector(".login-email-field"),
+                loginInput = loginField.querySelector("email").value,
+                passField = form.querySelector("login-password"),
+                loginPassInput = passField.querySelector("password").value;*/
+            try {
+                const login = await this.client.getLogin(loginInput, loginPassInput);
+                if (login) {
+                    this.showMessage(`Logged ${loginInput} successfully!`);
+                    localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
+                  //  console.log(localStorage.getItem("LoggedIn"));
+                } else {
+                    this.showMessage("incorrect email or password!");
+                }
+            } catch (error) {
+                console.error(error);
+                this.errorHandler("Error Logging in! Try again...");
+            }
+
+        }
+
     async validateUserInput(passInput, cPassInput) {
         if (!this.validatePassword(passInput, cPassInput)) {
             throw new Error('Passwords must match.');
         }
         }
+
+
 
 
   validateEmail(email, confirmEmail){
@@ -72,6 +117,7 @@ class LoginSignupPage extends BaseClass {
     validatePassword(passInput, cPassInput) {
         return passInput === cPassInput;
     }
+
 
 
 }

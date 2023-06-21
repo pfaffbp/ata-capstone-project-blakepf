@@ -13,7 +13,7 @@ export default class LoginSignupClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getExample', 'createLogin'];
+        const methodsToBind = ['clientLoaded', 'getLogin', 'createLogin'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -36,23 +36,27 @@ export default class LoginSignupClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-    async getExample(id, errorCallback) {
+
+    async getLogin(email, password, errorCallback){
         try {
-            const response = await this.client.get(`/example/${id}`);
-            return response.data;
-        } catch (error) {
-            this.handleError("getExample", error, errorCallback)
+            const response = await  this.client.post('/login/login',{
+                email: email,
+                password: password
+            });
+            return response.data
+        }catch (error){
+            this.handleError("getLogin", error, errorCallback)
         }
     }
 
     async createLogin(email, password, errorCallback) {
         try {
-            console.log("before" + email, password)
+          //  console.log("before" + email, password)
             const response = await this.client.post(`/login/createLogin`, {
                 email: email,
                 password: password,
             });
-            console.log("after response" + response);
+            //console.log("after response" + response);
 
             return response.data;
         } catch (error) {
