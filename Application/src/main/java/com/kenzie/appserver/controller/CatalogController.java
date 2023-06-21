@@ -1,17 +1,20 @@
 package com.kenzie.appserver.controller;
 
 
-import com.kenzie.appserver.controller.model.CatalogCreateRequest;
-import com.kenzie.appserver.controller.model.CatalogResponse;
-import com.kenzie.appserver.controller.model.CatalogUpdateRequest;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.kenzie.appserver.controller.model.*;
+import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.model.Anime;
+import org.checkerframework.checker.units.qual.C;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static java.util.UUID.randomUUID;
 
@@ -122,6 +125,55 @@ public class CatalogController {
         catalogResponse.setGenre(anime.getGenre());
 
         return catalogResponse;
+    }
+
+    private CatalogResponse catalogRecordToResponse(CatalogRecord anime){
+        CatalogResponse catalogResponse = new CatalogResponse();
+        catalogResponse.setTitle(anime.getTitle());
+        catalogResponse.setAnimeId(anime.getAnimeId());
+        catalogResponse.setDescription(anime.getDescription());
+        catalogResponse.setImage(anime.getImage());
+        catalogResponse.setStartDate(anime.getStartDate());
+        catalogResponse.setSeason(anime.getSeason());
+        catalogResponse.setPopularity(anime.getPopularity());
+        catalogResponse.setRating(anime.getRating());
+        catalogResponse.setEpisodes(anime.getEpisodes());
+        catalogResponse.setGenre(anime.getGenre());
+
+        return catalogResponse;
+    }
+
+
+
+    @GetMapping("/homePage")
+    public ResponseEntity<List<CatalogResponse>> getFrontPageAnime(){
+        List<PaginatedQueryList<CatalogRecord>> queryLists = new ArrayList<>();
+        queryLists.add(catalogService.getSeasonAnime());
+
+//        queryLists.add(catalogService.getPopularAnime());
+
+        List<CatalogResponse> scanList = new ArrayList<>();
+        scanList.addAll(catalogService.getPopularAnime().stream()
+                .map(this::catalogRecordToResponse)
+                        .collect(Collectors.toList())
+                );
+        scanList.addAll(catalogService.getHighlyRated().stream()
+                .map(this::catalogRecordToResponse)
+                .collect(Collectors.toList())
+        );
+
+        queryLists.stream()
+                .flatMap(Collection::stream)
+                .map(this::catalogRecordToResponse)
+                .forEach(scanList::add);
+
+        return ResponseEntity.ok(scanList);
+
+//        return ResponseEntity.ok(queryLists.stream()
+//                .flatMap(Collection::stream)
+//                .map(this::catalogRecordToResponse)
+//                .collect(Collectors.toList()));
+
     }
 }
 

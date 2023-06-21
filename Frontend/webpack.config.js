@@ -9,7 +9,9 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-    apiPage: path.resolve(__dirname, 'src', 'pages', 'apiPage.js')
+    homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
+    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
+    searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -17,12 +19,12 @@ module.exports = {
   },
   devServer: {
     https: false,
-    port: 8081,
+    port: 8080,
     open: true,
     proxy: [
       {
         context: [
-          '/example',
+          '/',
         ],
         target: 'http://localhost:5001'
       }
@@ -35,8 +37,18 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/apiAccess.html',
-      filename: 'apiAccess.html',
+      template: './src/homepage.html',
+      filename: 'homepage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/animepage.html',
+      filename: 'animepage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/searchPage.html',
+      filename: 'searchPage.html',
       inject: false
     }),
     new CopyPlugin({

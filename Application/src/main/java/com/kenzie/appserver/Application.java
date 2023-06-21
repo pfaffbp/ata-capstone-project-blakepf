@@ -1,9 +1,11 @@
 package com.kenzie.appserver;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.DAO.GraphQLResponse;
 import com.kenzie.appserver.DAO.Media;
 import com.kenzie.appserver.config.CacheAnimeStore;
+import com.kenzie.appserver.config.DynamoDbConfig;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.model.Anime;
@@ -21,6 +23,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +32,7 @@ import java.util.Map;
 @EnableScheduling
 @SpringBootApplication
 public class Application {
-    public static String fileName = "C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\request.txt";
+    public static String fileName = "C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\popularAnimeRequest.txt";
     public static Path filePath = Path.of(fileName);
     public static final String graphUri = "https://graphql.anilist.co";
 
@@ -39,9 +42,11 @@ public class Application {
 
     public  CacheAnimeStore animeStore;
 
+    private DynamoDBMapper mapper;
+
     @Autowired
-    public Application(CatalogRepository catalogRepository, CacheAnimeStore cacheAnimeStore){
-       this.catalogService = new CatalogService(catalogRepository, cacheAnimeStore);
+    public Application(CatalogRepository catalogRepository, CacheAnimeStore cacheAnimeStore, DynamoDBMapper mapper){
+       this.catalogService = new CatalogService(catalogRepository, cacheAnimeStore, mapper);
     }
 
 
@@ -52,22 +57,40 @@ public class Application {
         SpringApplication.run(Application.class, args);
 
         try {
-            String data = makePostRequest();
-            System.out.println(data);
+            Path seasonalAnime = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\seasonalAnimeRequest.txt");
+            Path popularAnime = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\popularAnimeRequest.txt");
+            Path highlyRated = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\highlyRatedAnimeRequest.txt");
 
-            GraphQLResponse response = objectMapper.readValue(data, GraphQLResponse.class);
 
-            List<Media> mediaList = response.getData().getPage().getMedia();
+            List<String> dataResponse = new ArrayList<>();
+            dataResponse.add(makePostRequest(popularAnime));
+            dataResponse.add(makePostRequest(seasonalAnime));
+            dataResponse.add(makePostRequest(highlyRated));
 
-            for (Media media : mediaList) {
+            List<GraphQLResponse> graphQLResponsesList = new ArrayList<>();
+
+            for(String response : dataResponse){
+                graphQLResponsesList.add(objectMapper.readValue(response, GraphQLResponse.class));
+            }
+
+            List<List<Media>> mediaLists = new ArrayList<>();
+            for(GraphQLResponse graphQLResponse : graphQLResponsesList){
+                mediaLists.add(graphQLResponse.getData().getPage().getMedia());
+            }
+
+
+
+            for(List<Media> mediaList : mediaLists){
+                for (Media media : mediaList) {
                 Anime anime = new Anime(media.getTitle().getUserPreferred(), String.valueOf(media.getId()),
-                        media.getDescription(), media.getCoverImage().getMedium(),
+                        media.getDescription(), media.getCoverImage().getLarge(),
                         media.getStartDate().getYear(), media.getSeason(),
                         media.getPopularity(), media.getAverageScore(),
                         media.getEpisodes(), media.getGenres());
 
                 catalogService.addNewAnime(anime);
             }
+        }
             System.out.println("Tables have been Filled");
 
         } catch(InterruptedException e){
@@ -79,7 +102,7 @@ public class Application {
         }
 
     }
-    public static String makePostRequest() throws IOException, URISyntaxException, InterruptedException {
+    public static String makePostRequest(Path filePath) throws IOException, URISyntaxException, InterruptedException {
 
         // GraphQL query
 
