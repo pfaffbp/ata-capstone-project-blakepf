@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'uploadAnimeToDatabase'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -30,7 +30,7 @@ export default class AnimeClient extends BaseClass {
             const response = await this.client.get(`/anime/${id}`)
             return response.data;
         }catch(error){
-
+            this.handleError("getAnimeInfo", error, errorCallback);
         }
     }
 
@@ -82,6 +82,8 @@ export default class AnimeClient extends BaseClass {
         try {
             const response = await fetch(url, options);
             const data = await handleResponse(response);
+            console.log(data.data);
+            await this.uploadAnimeToDatabase(data, errorCallback);
             return data.data.Page.media;
         } catch (error) {
             handleError(error);
@@ -96,6 +98,27 @@ export default class AnimeClient extends BaseClass {
             console.error(error);
         }
 
+    }
+
+    async uploadAnimeToDatabase(array, errorCallback){
+        console.log(array)
+        try{
+            const response = await this.client.post(`/anime/postSearch`, {
+                graphQLResponse : array
+            });
+        }catch(error){
+            this.handleError("uploadAnimeToDatabase", error, errorCallback);
+        }
+    }
+
+    handleError(method, error, errorCallback) {
+        console.error(method + " failed - " + error);
+        if (error.response.data.message !== undefined) {
+            console.error(error.response.data.message);
+        }
+        if (errorCallback) {
+            errorCallback(method + " failed - " + error);
+        }
     }
 
 }
