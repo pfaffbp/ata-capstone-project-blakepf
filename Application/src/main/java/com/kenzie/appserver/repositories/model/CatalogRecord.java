@@ -1,8 +1,6 @@
 package com.kenzie.appserver.repositories.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -10,6 +8,11 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "AnimeCatalog")
 public class CatalogRecord {
+    public static final String SEASONAL_ANIME_INDEX = "SeasonAnime";
+
+    public static final String POPULAR_ANIME_INDEX = "PopularAnime";
+
+    public static final String HIGHLY_RATED_INDEX = "HighlyRated";
 
     private String title;
     private String animeId;
@@ -24,6 +27,7 @@ public class CatalogRecord {
     private List<String> genre;
 
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = HIGHLY_RATED_INDEX, attributeName = "Title")
     @DynamoDBAttribute(attributeName = "Title")
     public String getTitle() {
         return title;
@@ -60,6 +64,7 @@ public class CatalogRecord {
         this.image = image;
     }
 
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = SEASONAL_ANIME_INDEX, attributeName = "StartDate")
     @DynamoDBAttribute(attributeName = "StartDate")
     public int getStartDate() {
         return startDate;
@@ -69,6 +74,7 @@ public class CatalogRecord {
         this.startDate = startDate;
     }
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = SEASONAL_ANIME_INDEX, attributeName = "Season")
     @DynamoDBAttribute(attributeName = "Season")
     public String getSeason() {
         return season;
@@ -78,6 +84,7 @@ public class CatalogRecord {
         this.season = season;
     }
 
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = POPULAR_ANIME_INDEX, attributeName = "Popularity")
     @DynamoDBAttribute(attributeName = "Popularity")
     public int getPopularity() {
         return popularity;
@@ -87,6 +94,8 @@ public class CatalogRecord {
         this.popularity = popularity;
     }
 
+
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = HIGHLY_RATED_INDEX, attributeName = "Rating")
     @DynamoDBAttribute(attributeName = "Rating")
     public int getRating() {
         return rating;

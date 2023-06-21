@@ -13,6 +13,7 @@ checkstyle {
 }
 
 dependencies {
+    implementation 'com.graphql-java:graphql-java:20.4' //michael added this part
     implementation project(":ServiceLambdaModel")
     implementation project(":ServiceLambdaJavaClient")
     implementation 'org.springframework.boot:spring-boot-starter:2.6.3'

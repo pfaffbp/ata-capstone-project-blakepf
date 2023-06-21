@@ -9,6 +9,9 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
+    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
+    searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -21,7 +24,7 @@ module.exports = {
     proxy: [
       {
         context: [
-          '/example',
+          '/',
         ],
         target: 'http://localhost:5001'
       }
@@ -31,6 +34,21 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/index.html',
       filename: 'index.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/homepage.html',
+      filename: 'homepage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/animepage.html',
+      filename: 'animepage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/searchPage.html',
+      filename: 'searchPage.html',
       inject: false
     }),
     new CopyPlugin({
