@@ -9,7 +9,10 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+
     LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
+    homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
+    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
 
   },
   output: {
@@ -38,6 +41,15 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/LoginSignup.html',
       filename: 'LoginSignup.html',
+      inject: false
+    }),
+      template: './src/homepage.html',
+      filename: 'homepage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/animepage.html',
+      filename: 'animepage.html',
       inject: false
     }),
 

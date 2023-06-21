@@ -1,0 +1,227 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+header{
+    width: auto;
+}
+body{
+    background-color: #eeeedd;
+}
+
+.nav{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #333333;
+    display: flex;
+    justify-content: center;
+}
+
+/*a{*/
+/*    padding-left: 30px;*/
+/*    color: #eaeded;*/
+/*    text-decoration: none;*/
+/*    font-size: 20px;*/
+/*}*/
+
+.navigation-buttons{
+    padding-left: 30px;
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.signup_href{
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.login_href{
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+    padding-right: 30px;
+}
+
+.entire-website{
+    flex-grow: 1;
+    display: flex;
+    /*flex-flow: inherit;*/
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    gap: 1vw;
+}
+
+.leftSideImage{
+}
+
+.leftSidePic{
+    position: sticky;
+    top: 0;
+}
+
+.rightSidePic{
+    position: sticky;
+    top: 0;
+}
+
+.middleBlock{
+}
+
+.top-third-middle{
+    display: flex;
+    gap: 5vw;
+}
+
+.slideShowHolder{
+    opacity: 50%;
+    margin-top: 12.5VH;
+}
+
+.transparency{
+    margin-top: 12.5VH;
+    position: absolute;
+    opacity: 80%;
+}
+
+.fri-activity{
+    /*display: flex;*/
+    /*justify-content: stretch;*/
+}
+
+.friend-activity{
+    box-shadow: 0px 1px 5px 0px black ;
+    width: 240px;
+    height: 305px;
+    border-width: thin 2px;
+    box-sizing: content-box;
+}
+
+.friend-act-header{
+    box-shadow: 0px 1px 5px 0px black ;
+    background-color: #333333;
+    margin-top: 12.5vh;
+    width: 241px;
+    height: 5vh;
+    border-style: none;
+}
+
+.friend-h2{
+    text-align: center;
+    color: white;
+}
+
+/*.popular-anime-catalog{*/
+/*    display: flex;*/
+/*    align-items: stretch;*/
+/*    object-fit: cover;*/
+/*    height: 25vh;*/
+/*    border-style: solid;*/
+/*}*/
+
+
+#popular-anime-container{
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    gap: 0.5vw;
+    overflow-x: scroll;
+    width: 1062px;
+    flex-flow: row;
+    align-items: stretch;
+    max-width: inherit;
+
+}
+
+#seasonal-anime-container{
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    gap: 0.5vw;
+    overflow-x: scroll;
+    width: 1062px;
+    flex-flow: row;
+    align-items: stretch;
+    max-width: inherit;
+}
+
+#highly-rated-container{
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    gap: 0.5vw;
+    overflow-x: scroll;
+    width: 1062px;
+    flex-flow: row;
+    align-items: stretch;
+    max-width: inherit;
+}
+
+.anime-poster-class{
+    margin-top: 10px;
+    display: flex;
+    align-items: stretch;
+    /*flex-shrink: 0;*/
+    /*flex-grow: 1;*/
+}
+
+/*.anime-poster{*/
+/*    display: flex;*/
+/*    flex-direction: column;*/
+/*}*/
+
+.anime-poster-ind{
+    width: 160px;
+    height: 80%;
+    object-fit: cover;
+}
+
+
+
+.anime-description{
+    background-color: #443355;
+    height: 50px;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+}
+
+.sticky-wrapper{
+}
+
+h5{
+    align-items: center;
+    color: white;
+    font-family: sans-serif;
+    font-weight: bold;
+}
+/*.transparency-catalog{*/
+/*    position: absolute;*/
+/*    max-width: 100%;*/
+/*    max-height: 100%;*/
+/*}*/
+
+.transparency :hover{
+    opacity: 100%;
+}
+
+
+p{
+    color: white;
+}
+
+
+
+@media all and (min-width: 800px) {
+    .entire-website    { flex: 3 0px; }
+    .leftSideImage { order: 1; }
+    .middleBlock   { order: 2; }
+    .rightSideImage { order: 3; }
+}
+
+h2{
+    margin-top: 20px;
+    color: #101010;
+}
