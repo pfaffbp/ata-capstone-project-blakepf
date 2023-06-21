@@ -9,8 +9,11 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+
+    LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
+
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -36,6 +39,10 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
+      template: './src/LoginSignup.html',
+      filename: 'LoginSignup.html',
+      inject: false
+    }),
       template: './src/homepage.html',
       filename: 'homepage.html',
       inject: false
@@ -45,6 +52,7 @@ module.exports = {
       filename: 'animepage.html',
       inject: false
     }),
+
     new CopyPlugin({
       patterns: [
         {
