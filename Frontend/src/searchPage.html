@@ -7,38 +7,47 @@
     <link rel="stylesheet" type="text/css" href="css/searchPage.css">
 </head>
 <body>
-<div class="nav">
-    <a href="homepage.html" class="navigation-buttons">Anime</a>
-    <a href = "holder1" class="navigation-buttons">Community</a>
-    <a href = "holder2" class="navigation-buttons" >Friends</a>
-    <a href = "holder3" class="navigation-buttons">Read</a>
-    <a href = "searchPage.html" class="navigation-buttons">Search</a>
-    <a class = "signup_href navigation-buttons" href = "holder5">Signup</a>
-    <a class = "login_href navigation-buttons" href = "holder4">Login</a>
-</div>
+    <div class="nav">
+        <img src = "css/aniverse-logo-white.png" class= "logo">
 
-<div class = "entire-website">
-    <div class = "leftSideImage">
-        <img class = "leftSidePic" src="https://res.cloudinary.com/devbshzwb/image/upload/v1687066302/gqi9biwntccaddzmeo03.png" width="250px" height=1000px>
+        <div class = "main-links">
+            <a href="landingPage.html">Anime</a>
+            <a href = "holder1">Community</a>
+            <a href = "holder2">Friends</a>
+            <a href = "holder3">Read</a>
+        </div>
+        
+        <div class = "account">
+            <a href = "holder5">Signup</a>
+            <a href = "holder4">Login</a>
+        </div>
     </div>
 
+    <div id = "flex-container">
 
-    <div class = "middleBlock">
-        <form id="search-form">
-            <label for="search-bar" class="search-bar-class">
-                <h4>Search For Anime</h4>
-            </label>
-            <input type="text" id="search-bar">
-            <button id="search-button">Search</button>
-        </form>
-        <div id="work-area"></div>
+        <div class = "leftImage">
+            <img src="css/zenitsu-left.png">
+        </div>
+
+        <div class = "main">   
+            <form id="search-form">
+                
+                <label for="search-bar" class="search-bar-class">
+                    <h2> Search For Anime </h2>
+                </label>
+
+                <input type="text" id="search-bar">
+
+                <button id="search-button">Search</button>
+            </form>
+            <div id="work-area"></div>
+        </div>
+    
     </div>
 
-    <div class = "rightSideImage">
-        <img class = "rightSidePic" src="https://res.cloudinary.com/devbshzwb/image/upload/v1687066306/hvqfv2yh0ho4kjymsspj.png" width="250px" height=1000px>
+    <div class= "rightImage">
+        <img src="css/tanjiro-right.png">
     </div>
-
-</div>
 
 </body>
 </html>
