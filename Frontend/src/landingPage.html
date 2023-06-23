@@ -2,16 +2,13 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/landingPage.css">
-    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
-    <script type = "module" src="pages/homePage.js"></script>
-
-
+    <script type = "text/javascript" src="homePage.js"></script>
     <title>Aniverse: Home</title>
 </head>
 
 <body>
     <div class="nav">
-        <img src = "images/Aniverse Transparent (White).png" class= "logo">
+        <img src = "css/aniverse-logo-white.png" class= "logo">
 
         <div class = "main-links">
             <a href="holder">Anime</a>
@@ -21,6 +18,7 @@
         </div>
         
         <div class = "account">
+            <a href = "searchPage.html" class="navigation-buttons">Search</a>
             <a href = "holder5">Signup</a>
             <a href = "holder4">Login</a>
         </div>
@@ -28,7 +26,9 @@
 
     <div id = "flex-container">
 
-        <div class = "leftImage"><img src="images/Zenitsu (Left).png"></div>
+        <div class = "leftImage">
+            <img src="css/zenitsu-left.png">
+        </div>
 
         <div class = "main">            
            
@@ -107,14 +107,16 @@
             <h2>Highly Rated</h2>
             <div class = "anime-container" id="highly-rated-container"></div>
 
-    
-            </div>
+        </div> 
+
+        <div class= "rightImage">
+            <img src="css/tanjiro-right.png">
         </div>
-
-
-        <div class= "rightImage"><img src="images/Tanjiro (Right).png"></div>
 
     </div>
 
-    <script src = "pages/landingSlideshow.js"></script>
+
+       
+
+    <script src = "landingSlideshow.js"></script>
 </body>

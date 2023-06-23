@@ -1,10 +1,8 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import HomePageClient from "../api/homePageClient";
-<<<<<<< HEAD
-=======
 import AnimeClient from "../api/animeClient";
->>>>>>> origin/new-branch-for-dev
+
 
 class SearchPage extends BaseClass{
 
