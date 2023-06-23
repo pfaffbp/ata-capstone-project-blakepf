@@ -1,68 +1,129 @@
 *{
-    margin: 0;
-    padding: 0;
-}
-
-body{
-    background-color: #eeeedd;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 }
 
 
-.nav{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #333333;
-    display: flex;
-    justify-content: center;
-}
-
-.navigation-buttons{
-    padding-left: 30px;
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.signup_href{
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-    margin-left: auto;
-}
-
-.login_href{
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-    padding-right: 30px;
-}
-
-
-
-.entire-website{
-    flex-grow: 1;
-    display: flex;
-    /*flex-flow: inherit;*/
-    height: 100%;
+body {
     width: 100%;
+    background: black;
+    color: white;
+}
+
+img {
+    width: 100%;
+}
+
+/* ------- Navigation Bar ------- */
+
+.logo {
+    width: 8%;
+    min-width: 8%;
+    float: left;
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 5px;
+}
+
+.nav {
+    background-color: #333333;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    font-size: 20 px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.nav a {
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 25px 15px;
+    display: inline-block;
+}
+
+.nav a:hover {
+    color: purple;
+}
+
+.main-links {
+    float: left;
+}
+
+.account {
+    float: right;
+    margin-right: 30px;
+}
+
+/* ------- Main Content  ------- */
+
+#flex-container {
+    display: flex;
+    flex-direction: row;
     justify-content: center;
-    gap: 1vw;
+    width: 100%;                    
+    height: 100%;
+    padding-top: 100px;
+    border: none;
 }
 
-.leftSidePic{
-    position: sticky;
-    top: 0;
+/* ------- Left side banner  ------- */
+
+.leftImage {
+    width: 20%;
+    position: fixed;                        /* Currently Zenitsu from Demon Slayer. May change it to something else! */
+    bottom: 1%;                     
+    left: 3%;
 }
 
-.rightSidePic{
-    position: sticky;
-    top: 0;
+/* ------- Right side banner  ------- */
+
+.rightImage {
+    width: 30%;
+    position: fixed;                        /* Currently Tanjiro from Demon Slayer. May also change it to something else! */
+    right: 0%;
+    top: 8%;
+}
+
+/* ------- Center Div, Holds All Search Content  ------- */
+
+.main {
+    background: black;              
+    border: 2px solid white;         /* <----- Remove this once you've styled the rest of the page. */
+    width: 60%;                        /* I pretty much only put the border there so you can separate the content from the background." */
+    margin: auto;
+    top: -5%;
+    z-index: 1;
+}
+
+.main h2 {
+    margin-left: 20px;
+    margin-top: 10px;                   /* Currently "Search For Anime" */
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+#search-form {
+    width: 50vw;
+    max-height: 100px;
+    margin: auto;
+}
+
+#search-bar {
+    width: 100%;
+    height: 30px;
 }
 
 
-#middleBlock{
-
+#work-area {
+    display: inline-block;
+    flex-wrap: wrap;
 }
+
+.poster {
+    display: inline-block;
+}
+
 
 /*#info-div{*/
 /*    display: flex;*/
