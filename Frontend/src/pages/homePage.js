@@ -20,7 +20,7 @@ class HomePage extends BaseClass {
     async renderHomePage() {
         let workArea = document.getElementById('popular-anime-container');
         let seasonAnime = document.getElementById("seasonal-anime-container");
-        let highlyRatedAnime = document.getElementById("highly-rated-container");
+            let highlyRatedAnime = document.getElementById("highly-rated-container");
 
         let response = await this.client.getFrontPage(this.errorHandler);
 

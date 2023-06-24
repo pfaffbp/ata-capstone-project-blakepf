@@ -39,7 +39,7 @@ export default class AnimeClient extends BaseClass {
         let query = `
     query findPopularAnime($title: String) {
       Page(page: 1, perPage: 50) {
-        media(search: $title, type: ANIME) {
+        media(search: $title, type: ANIME, isAdult: false) {
           title {
             userPreferred
           }

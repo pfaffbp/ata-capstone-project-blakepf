@@ -61,7 +61,6 @@ public class Application {
             Path popularAnime = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/popularAnimeRequest.txt");
             Path highlyRated = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/highlyRatedAnimeRequest.txt");
 
-
             List<String> dataResponse = new ArrayList<>();
             dataResponse.add(makePostRequest(popularAnime));
             dataResponse.add(makePostRequest(seasonalAnime));
@@ -77,8 +76,6 @@ public class Application {
             for(GraphQLResponse graphQLResponse : graphQLResponsesList){
                 mediaLists.add(graphQLResponse.getData().getPage().getMedia());
             }
-
-
 
             for(List<Media> mediaList : mediaLists){
                 for (Media media : mediaList) {
