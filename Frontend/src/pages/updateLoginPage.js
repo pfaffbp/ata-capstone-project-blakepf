@@ -117,6 +117,9 @@ class UpdateLoginPage extends BaseClass {
         return password === newPassword;
     }
 
+    // Hide and show password
+
+
 
 }
 
