@@ -51,12 +51,12 @@ export default class LoginSignupClient extends BaseClass {
 
     async createLogin(email, password, errorCallback) {
         try {
-            console.log("before" + email, password)
+         //   console.log("before" + email, password)
             const response = await this.client.post(`/login/createLogin`, {
                 email: email,
                 password: password,
             });
-            console.log("after response" + response);
+          //  console.log("after response" + response);
 
             return response.data;
         } catch (error) {
