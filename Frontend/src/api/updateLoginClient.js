@@ -9,11 +9,11 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class LoginSignupClient extends BaseClass {
+export default class updateLoginClient extends BaseClass {
 
-    constructor(props = {}){
+    constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'getLogin', 'createLogin'];
+        const methodsToBind = ['clientLoaded', 'updateEmailByEmail', 'updatePasswordByEmail'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -25,7 +25,7 @@ export default class LoginSignupClient extends BaseClass {
      */
     clientLoaded(client) {
         this.client = client;
-        if (this.props.hasOwnProperty("onReady")){
+        if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady();
         }
     }
@@ -37,30 +37,38 @@ export default class LoginSignupClient extends BaseClass {
      * @returns The concert
      */
 
-    async getLogin(email, password, errorCallback){
-        try {
-            const response = await  this.client.post('/login/login',{
-                email: email,
-                password: password
-            });
-            return response.data
-        }catch (error){
-            this.handleError("getLogin", error, errorCallback)
-        }
-    }
 
-    async createLogin(email, password, errorCallback) {
+
+    async updateEmailByEmail(email, newEmail, password, errorCallback) {
         try {
-            console.log("before" + email, password)
-            const response = await this.client.post(`/login/createLogin`, {
+            //  console.log("before: " + email, newEmail, password);
+            const response = await this.client.put('/login/updateEmail', {
                 email: email,
+                newEmail: newEmail,
                 password: password,
             });
-            console.log("after response" + response);
+            //console.log("after response" + response);
 
             return response.data;
         } catch (error) {
-            this.handleError("createLogin", error, errorCallback);
+            this.handleError("UpdateEmail", error, errorCallback);
+            throw error;
+        }
+    }
+
+    async updatePasswordByEmail(email, password, newPassword, errorCallback) {
+        try {
+             console.log("before: " + email, password, newPassword,);
+            const response = await this.client.put(`/login/changePassword`, {
+                email: email,
+                password: password,
+                newPassword: newPassword,
+            });
+            //console.log("after response" + response);
+
+            return response.data;
+        } catch (error) {
+            this.handleError("updatePassword", error, errorCallback);
             throw error;
         }
     }

@@ -35,14 +35,17 @@ class LoginSignupPage extends BaseClass {
     async onCreateLogin(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-        this.dataStore.set("createLogin", null);
-        const form = document.querySelector("form"),
+       this.dataStore.set("createLogin", null);
+      /*  const form = document.querySelector("form"),
             emailField = form.querySelector(".email-field"),
             emailInput = emailField.querySelector(".email").value,
             passField = form.querySelector(".create-password"),
             passInput = passField.querySelector(".password").value,
             cPassField = form.querySelector(".confirm-password"),
-            cPassInput = cPassField.querySelector(".cPassword").value;
+            cPassInput = cPassField.querySelector(".cPassword").value;*/
+        const emailInput = document.getElementById('email-entry').value;
+        const passInput = document.getElementById('password').value;
+        const cPassInput = document.getElementById('confirm-password').value;
 
      /*   const eyeIcons = document.querySelectorAll(".show-hide");
         eyeIcons.forEach((eyeIcon) => {
@@ -61,10 +64,10 @@ class LoginSignupPage extends BaseClass {
         try {
             await this.validateUserInput(passInput, cPassInput);
             const login = await this.client.createLogin(emailInput, passInput);
-            //this.dataStore.set('login', emailInput)
+            this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
             /*console.log('Login', login)*/
-            form.reset();//resets the forum if successful leaves info if not
+           // form.reset();//resets the forum if successful leaves info if not
 
 
         }catch (error) {
@@ -91,6 +94,7 @@ class LoginSignupPage extends BaseClass {
                     this.showMessage(`Logged ${loginInput} successfully!`);
                     localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
                   //  console.log(localStorage.getItem("LoggedIn"));
+                    //window.location.href = "homepage.html";
                 } else {
                     this.showMessage("incorrect email or password!");
                 }
@@ -106,9 +110,6 @@ class LoginSignupPage extends BaseClass {
             throw new Error('Passwords must match.');
         }
         }
-
-
-
 
   validateEmail(email, confirmEmail){
         return email === confirmEmail;

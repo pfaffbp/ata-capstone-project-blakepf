@@ -74,10 +74,10 @@ form .input-field-1 {
 .invalid .error {
     display: flex;
 }
-/*.error .error-icon {
+.error .error-icon {
     margin-right: 6px;
     font-size: 15px;
-}*/
+}
 .create-password .error {
     align-items: flex-start;
 }
@@ -158,8 +158,7 @@ form .input-field-2 {
 .invalid .error {
     display: flex;
 }
-/*
 .error .error-icon {
     margin-right: 6px;
     font-size: 15px;
-}*/
+}

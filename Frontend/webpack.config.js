@@ -10,6 +10,7 @@ module.exports = {
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
     LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
+    updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
 
@@ -22,10 +23,13 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
+/*    openPage: 'http://localhost:8080',
+    disableHostCheck: true,*/
     proxy: [
       {
         context: [
           '/',
+
         ],
         target: 'http://localhost:5001'
       }
@@ -40,6 +44,12 @@ module.exports = {
     new HtmlWebpackPlugin({
       template: './src/LoginSignup.html',
       filename: 'LoginSignup.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+
+      template: './src/updateLogin.html',
+      filename: 'updateLogin.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
