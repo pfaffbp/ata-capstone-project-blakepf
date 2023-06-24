@@ -28,7 +28,7 @@ module.exports = {
         context: [
           '/',
         ],
-        target: 'http://localhost:5001'
+        target: 'http://localhost:8080/homepage.html'
       }
     ]
   },
@@ -43,6 +43,7 @@ module.exports = {
       filename: 'LoginSignup.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
       template: './src/homepage.html',
       filename: 'homepage.html',
       inject: false

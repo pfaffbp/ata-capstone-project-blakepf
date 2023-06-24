@@ -91,6 +91,7 @@ class LoginSignupPage extends BaseClass {
                     this.showMessage(`Logged ${loginInput} successfully!`);
                     localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
                   //  console.log(localStorage.getItem("LoggedIn"));
+                    window.location.href = "homepage.html";
                 } else {
                     this.showMessage("incorrect email or password!");
                 }
