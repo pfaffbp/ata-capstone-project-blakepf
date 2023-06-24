@@ -9,7 +9,6 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-
     LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
@@ -48,6 +47,7 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
+
       template: './src/updateLogin.html',
       filename: 'updateLogin.html',
       inject: false
