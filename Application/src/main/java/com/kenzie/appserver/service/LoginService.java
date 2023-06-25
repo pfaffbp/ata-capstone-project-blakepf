@@ -81,4 +81,14 @@ public class LoginService {
             return false;
         }
     }
+
+    public String getUserIdByEmail(String email) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent()) {
+            return record.get().getUserId();
+        } else {
+            return null;
+        }
+    }
+
 }

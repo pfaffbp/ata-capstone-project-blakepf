@@ -61,6 +61,20 @@ public class LoginController {
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
+    @GetMapping("/userId")
+    public ResponseEntity<UserIdResponce> getUserIdByEmail(@RequestBody UserIdRequest userIdRequest) {
+        String email = userIdRequest.getEmail();
+        String userId = loginService.getUserIdByEmail(email);
+
+        if (userId != null) {
+            UserIdResponce response = new UserIdResponce();
+            response.setUserId(userId);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 
 
 }
