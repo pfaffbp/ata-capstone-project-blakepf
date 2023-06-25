@@ -15,4 +15,9 @@ public class CacheConfig {
     public CacheAnimeStore myCache() {
         return new CacheAnimeStore(120, TimeUnit.SECONDS);
     }
+
+    @Bean
+    public CacheStoreUser myCache2() {
+        return new CacheStoreUser(120, TimeUnit.SECONDS);
+    }
 }
