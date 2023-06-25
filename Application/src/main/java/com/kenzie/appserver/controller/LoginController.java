@@ -59,9 +59,8 @@ public class LoginController {
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
-    @GetMapping("/userId")
-    public ResponseEntity<UserIdResponse> getUserIdByEmail(@RequestBody UserIdRequest userIdRequest) {
-        String email = userIdRequest.getEmail();
+    @GetMapping("/{email}")
+    public ResponseEntity<UserIdResponse> getUserIdByEmail(@PathVariable String email) {
         String userId = loginService.getUserIdByEmail(email);
 
         if (userId != null) {
