@@ -1,10 +1,8 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.*;
-import com.kenzie.appserver.repositories.model.LoginRecord;
 import com.kenzie.appserver.service.LoginService;
 import com.kenzie.appserver.service.model.Login;
-import org.apache.tomcat.jni.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -62,12 +60,12 @@ public class LoginController {
     }
 
     @GetMapping("/userId")
-    public ResponseEntity<UserIdResponce> getUserIdByEmail(@RequestBody UserIdRequest userIdRequest) {
+    public ResponseEntity<UserIdResponse> getUserIdByEmail(@RequestBody UserIdRequest userIdRequest) {
         String email = userIdRequest.getEmail();
         String userId = loginService.getUserIdByEmail(email);
 
         if (userId != null) {
-            UserIdResponce response = new UserIdResponce();
+            UserIdResponse response = new UserIdResponse();
             response.setUserId(userId);
             return ResponseEntity.ok(response);
         } else {

@@ -2,7 +2,7 @@ package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class UserIdResponce {
+public class UserIdResponse {
     @JsonProperty("userId")
     private String userId;
 
