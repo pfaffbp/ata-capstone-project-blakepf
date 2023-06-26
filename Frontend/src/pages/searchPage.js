@@ -34,9 +34,16 @@ class SearchPage extends BaseClass{
             items +=`
             <div class="poster">
             <a href="animepage.html"><img class = "poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large} width="160px" height="90%"></a>  
+            <p>${newResponse[i].title.userPreferred}</p>
             </div>
          `;
         }
+
+        const style = document.createElement('style');
+        style.innerHTML = `
+`;
+
+        document.head.appendChild(style);
 
         workArea.innerHTML = items;
 
