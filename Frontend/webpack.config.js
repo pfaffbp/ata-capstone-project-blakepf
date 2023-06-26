@@ -42,6 +42,7 @@ module.exports = {
       filename: 'LoginSignup.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
       template: './src/homepage.html',
       filename: 'homepage.html',
       inject: false
