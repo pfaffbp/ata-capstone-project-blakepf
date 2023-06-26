@@ -9,7 +9,7 @@ class UpdateLoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdateEmail', 'onUpdatePassword'], this);
+        this.bindClassMethods(['onUpdateEmail'], this);
         this.dataStore = new DataStore();
 
 
@@ -21,7 +21,7 @@ class UpdateLoginPage extends BaseClass {
     async mount() {
         this.client = new updateLoginClient();
         document.getElementById('updateEmailButton').addEventListener('click', this.onUpdateEmail);
-        document.getElementById('updatePasswordButton').addEventListener('click', this.onUpdatePassword);
+
         // await this.alreadyLoggedIn();
 
 
@@ -60,7 +60,7 @@ class UpdateLoginPage extends BaseClass {
             const emailUpdate = await this.client.updateEmailByEmail(emailInput, newEmailInput, passInput);
             //this.dataStore.set('emailUpdate', emailInput)
             this.showMessage(`Email: ${newEmailInput} updated successfully!`);
-           // window.location.href = "homepage.html";
+            window.location.href = "homepage.html";
 
 
         } catch (error) {
@@ -71,29 +71,6 @@ class UpdateLoginPage extends BaseClass {
 
     }
 
-    async onUpdatePassword(event) {
-        event.preventDefault();
-      //  this.dataStore.set("updatePassword", null);
-        const emailInput = document.getElementById("updatePassword-email-Login").value;
-        const passInput = document.getElementById("loginPassword").value;
-        const newPassInput = document.getElementById("newLoginPassword").value;
-        const newPassConfirmInput = document.getElementById("newLoginPassword-Confirm").value;
-        /*const  form = document.querySelector("form"),
-            loginField = form.querySelector(".login-email-field"),
-            loginInput = loginField.querySelector("email").value,
-            passField = form.querySelector("login-password"),
-            loginPassInput = passField.querySelector("password").value;*/
-        try {
-            await this.validatePasswordInput(newPassInput, newPassConfirmInput);
-            const updatePassword = await this.client.updatePasswordByEmail(emailInput, passInput, newPassInput);
-            this.showMessage(`Password for: ${emailInput} updated successfully!`);
-          //  window.location.href = "homepage.html";
-
-        } catch (error) {
-            console.error(error);
-            this.errorHandler("Error Updating! Try again...");
-        }
-    }
 
 
     async validatePasswordInput(password, confirmPassword) {

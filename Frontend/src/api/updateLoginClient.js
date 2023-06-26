@@ -13,7 +13,7 @@ export default class updateLoginClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'updateEmailByEmail', 'updatePasswordByEmail'];
+        const methodsToBind = ['clientLoaded', 'updateEmailByEmail'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -56,22 +56,6 @@ export default class updateLoginClient extends BaseClass {
         }
     }
 
-    async updatePasswordByEmail(email, password, newPassword, errorCallback) {
-        try {
-             console.log("before: " + email, password, newPassword,);
-            const response = await this.client.put(`/login/changePassword`, {
-                email: email,
-                password: password,
-                newPassword: newPassword,
-            });
-            //console.log("after response" + response);
-
-            return response.data;
-        } catch (error) {
-            this.handleError("updatePassword", error, errorCallback);
-            throw error;
-        }
-    }
 
     /**
      * Helper method to log the error and run any error functions.

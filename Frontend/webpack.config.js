@@ -9,9 +9,9 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-  /*  LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),*/
     loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
     signupPage: path.resolve(__dirname, 'src', 'pages', 'signupPage.js'),
+    updatePasswordPage: path.resolve(__dirname, 'src', 'pages', 'updatePasswordPage.js'),
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
@@ -43,11 +43,7 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
-/*    new HtmlWebpackPlugin({
-      template: './src/LoginSignup.html',
-      filename: 'LoginSignup.html',
-      inject: false
-    }),*/
+
     new HtmlWebpackPlugin({
       template: './src/signup.html',
       filename: 'signup.html',
@@ -59,7 +55,11 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-
+      template: './src/updatePassword.html',
+      filename: 'updatePassword.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
       template: './src/updateLogin.html',
       filename: 'updateLogin.html',
       inject: false
