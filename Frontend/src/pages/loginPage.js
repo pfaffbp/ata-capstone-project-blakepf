@@ -1,15 +1,15 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import LoginSignupClient from "../api/LoginSignupClient";
+import LoginClient from "../api/loginClient";
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class LoginSignupPage extends BaseClass {
+class LoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'onCreateLogin', 'onLogin'], this);
+        this.bindClassMethods([ 'onLogin'], this);
         this.dataStore = new DataStore();
 
 
@@ -19,8 +19,7 @@ class LoginSignupPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        this.client = new LoginSignupClient();
-        document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
+        this.client = new LoginClient();
         document.getElementById('LoginUser').addEventListener('click', this.onLogin);
        // await this.alreadyLoggedIn();
 
@@ -31,42 +30,7 @@ class LoginSignupPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-
-    async onCreateLogin(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
-       this.dataStore.set("createLogin", null);
-        const form = document.querySelector("form"),
-            emailField = form.querySelector(".email-field"),
-            emailInput = emailField.querySelector(".email").value,
-            passField = form.querySelector(".create-password"),
-            passInput = passField.querySelector(".password").value,
-            cPassField = form.querySelector(".confirm-password"),
-            cPassInput = cPassField.querySelector(".cPassword").value;
-   /*     const emailInput = document.getElementById('email-entry').value;
-        const passInput = document.getElementById('password').value;
-        const cPassInput = document.getElementById('confirm-password').value;*/
-
-
-        try {
-            await this.validateUserInput(passInput, cPassInput);
-            const login = await this.client.createLogin(emailInput, passInput);
-
-            this.dataStore.set('login', emailInput)
-            this.showMessage(`Login ${emailInput} created successfully!`);
-            /*console.log('Login', login)*/
-           form.reset();//resets the forum if successful leaves info if not
-
-
-        }catch (error) {
-            console.error(error);
-            this.errorHandler("Error creating Login! Try again...");
-
-        }
-
-        }
-
-        async onLogin(event) {
+        async onLogin(event){
             event.preventDefault();
             this.dataStore.set("LoggedIn", null);
             const loginInput = document.getElementById("email-Login").value;
@@ -115,8 +79,8 @@ class LoginSignupPage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const loginSignupPage = new LoginSignupPage();
-     loginSignupPage.mount();
+    const loginPage = new LoginPage();
+     loginPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

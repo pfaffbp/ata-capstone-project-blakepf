@@ -111,7 +111,7 @@ img {
     bottom: -650px;
     cursor: pointer;
 }
-.Update Password{
+.Login{
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -206,16 +206,6 @@ form .input-field-2 {
     border-radius: 8px;
     padding: 0 15px;
     border: 2px solid purple;
-}
-.input-field-2 .show-hide {
-    position: absolute;
-    right: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #919191;
-    cursor: pointer;
-    padding: 3px;
 }
 .field .error {
     display: flex;

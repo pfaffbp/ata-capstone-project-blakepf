@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/updateLogin.css">
-    <script type = "text/javascript" src="updateLoginPage.js"></script>
-    <title>Aniverse: Update Login</title>
+    <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
+    <script type = "text/javascript" src="signupPage.js"></script>
+    <title>Aniverse: Signup</title>
 </head>
 
 <body>
@@ -20,7 +20,6 @@
     <div class = "account">
         <a href = "searchPage.html" class="navigation-buttons">Search</a>
         <a href = "login.html">Login</a>
-        <a href = "signup.html">Signup</a>
     </div>
 </div>
 
@@ -98,78 +97,58 @@
 
 
 
-
-<div class="container-1">
-
-    <h1>Update Email</h1>
-    <form  id="updateLogin-forum">
-        <div class="col-1">
-        <div class="field updateEmail-field">
-            <div class="input-field-1">
-                <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
-            </div>
-            <span class="error email-error">
+        <!--     <div class="Signup" style="text-align:center">-->
+        <div class="container-1">
+            <h1>Signup</h1>
+            <form  id="signup-forum">
+                <div class="col-1">
+                    <div class="field email-field">
+                        <div class="input-field-1">
+                            <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
+                        </div>
+                        <span class="error email-error">
             <i class="bx bx-error-circle error-icon"></i>
             <p class="error-text">Please enter a valid email</p>
           </span>
-        </div>
-            <div class="field newEmail-field">
-                <div class="input-field-1">
-                    <input type="email" id="newEmail-entry" placeholder="Enter your new email" class="email" />
-                </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
-            </div>
-            <div class="field newEmailConfirm-field">
-                <div class="input-field-1">
-                    <input type="email" id="newEmailConfirm-entry" placeholder="Confirm your new email" class="email" />
-                </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
-            </div>
-        <div class="field enter-password">
-            <div class="input-field-1">
-                <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter Your password"
-                        class="password"
-                />
-                <i class="bx bx-hide show-hide"></i>
-            </div>
-            <span class="error password-error">
+                    </div>
+                    <div class="field create-password">
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Create password"
+                                    class="password"
+                            />
+                            <i class="bx bx-hide show-hide" ></i>
+                        </div>
+                        <span class="error password-error">
             <i class="bx bx-error-circle error-icon"></i>
             <p class="error-text">
             Please enter at least 8 characters.
             </p>
           </span>
-        </div>
-        <div class="field confirm-password">
-            <div class="input-field-1">
-                <input
-                        type="password"
-                        id="confirm-password"
-                        placeholder="Confirm password"
-                        class="cPassword"
-                />
-                <i class="bx bx-hide show-hide"></i>
-            </div>
-            <span class="error cPassword-error">
+                    </div>
+                    <div class="field confirm-password">
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="Confirm password"
+                                    class="cPassword"
+                            />
+                            <i class="bx bx-hide show-hide"></i>
+                        </div>
+                        <span class="error cPassword-error">
             <i class="bx bx-error-circle error-icon"></i>
             <p class="error-text">Password don't match</p>
           </span>
+                    </div>
+                    <div class="input-field-1 button">
+                        <input type="submit" id="createUser" value="Submit" />
+                    </div>
+                </div>
+            </form>
         </div>
-        <div class="input-field-1 button">
-            <input type="submit" id="updateEmailButton" value="Update Email" />
-        </div>
-        </div>
-    </form>
-</div>
-
     </div>
 
     <div class= "rightImage">
@@ -177,10 +156,5 @@
     </div>
 
 </div>
-
-
-
-
-
 <script src = "landingSlideshow.js"></script>
 </body>

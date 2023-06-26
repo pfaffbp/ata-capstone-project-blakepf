@@ -9,11 +9,11 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class LoginSignupClient extends BaseClass {
+export default class LoginClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getLogin', 'createLogin'];
+        const methodsToBind = ['clientLoaded', 'getLogin'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -49,21 +49,6 @@ export default class LoginSignupClient extends BaseClass {
         }
     }
 
-    async createLogin(email, password, errorCallback) {
-        try {
-         //   console.log("before" + email, password)
-            const response = await this.client.post(`/login/createLogin`, {
-                email: email,
-                password: password,
-            });
-          //  console.log("after response" + response);
-
-            return response.data;
-        } catch (error) {
-            this.handleError("createLogin", error, errorCallback);
-            throw error;
-        }
-    }
 
     /**
      * Helper method to log the error and run any error functions.

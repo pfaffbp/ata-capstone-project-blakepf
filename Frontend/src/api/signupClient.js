@@ -9,11 +9,11 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class updateLoginClient extends BaseClass {
+export default class signupClient extends BaseClass {
 
-    constructor(props = {}) {
+    constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'updateEmailByEmail'];
+        const methodsToBind = ['clientLoaded', 'createLogin'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -25,7 +25,7 @@ export default class updateLoginClient extends BaseClass {
      */
     clientLoaded(client) {
         this.client = client;
-        if (this.props.hasOwnProperty("onReady")) {
+        if (this.props.hasOwnProperty("onReady")){
             this.props.onReady();
         }
     }
@@ -39,23 +39,21 @@ export default class updateLoginClient extends BaseClass {
 
 
 
-    async updateEmailByEmail(email, newEmail, password, errorCallback) {
+    async createLogin(email, password, errorCallback) {
         try {
-            //  console.log("before: " + email, newEmail, password);
-            const response = await this.client.put('/login/updateEmail', {
+         //   console.log("before" + email, password)
+            const response = await this.client.post(`/login/createLogin`, {
                 email: email,
-                newEmail: newEmail,
                 password: password,
             });
-            //console.log("after response" + response);
+          //  console.log("after response" + response);
 
             return response.data;
         } catch (error) {
-            this.handleError("UpdateEmail", error, errorCallback);
+            this.handleError("createLogin", error, errorCallback);
             throw error;
         }
     }
-
 
     /**
      * Helper method to log the error and run any error functions.
