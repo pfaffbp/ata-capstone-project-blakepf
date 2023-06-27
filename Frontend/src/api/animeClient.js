@@ -122,6 +122,6 @@ export default class AnimeClient extends BaseClass {
     }
 
 }
-    /**
-     * Once the page has loaded, set up the event handlers and fetch the concert list.
-     */
+/**
+ * Once the page has loaded, set up the event handlers and fetch the concert list.
+ */

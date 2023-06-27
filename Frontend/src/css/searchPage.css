@@ -197,18 +197,27 @@ img {
     display: inline-block;
     flex-wrap: wrap;
     padding-top: 20px;
+    transition: transform 0.3s ease;
+}
+
+.work-area:hover{
+    transform: scale(1.1);
 }
 
 .poster {
     display: inline-block;
     width: 160px; /* Adjust this value as needed */
     height: auto; /* This will maintain the image's aspect ratio */
-    margin-bottom: 10px; /* Adjust this value to add separation between posters */
+    margin-bottom: 15px; /* Adjust this value to add separation between posters */
     text-align: center;
     grid-area: 2 / 2 / 3 / 3;
     border: 2px solid #f4effa;
     margin-left: 10px;
 
+}
+
+.poster:hover {
+    transform: scale(1.1);
 }
 
 .poster-click {
