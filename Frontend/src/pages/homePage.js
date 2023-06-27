@@ -81,6 +81,7 @@ class HomePage extends BaseClass {
 
         docs.forEach(href => {
             href.addEventListener('click', async function (){
+                // datasset("animeCode", href.value);
                 sessionStorage.setItem("animeCode", href.alt);
             });
         });

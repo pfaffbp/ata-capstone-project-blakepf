@@ -30,7 +30,7 @@ public class LoginController {
     }
 
 
-    @GetMapping("/login")
+    @PostMapping("/login")
     public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
         Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
         return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();

@@ -9,12 +9,15 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
+    LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
+    updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
     searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
     landingPage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     landingSlideshow: path.resolve(__dirname, 'src', 'pages', 'landingSlideshow.js')
   },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -23,10 +26,13 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
+/*    openPage: 'http://localhost:8080',
+    disableHostCheck: true,*/
     proxy: [
       {
         context: [
           '/',
+
         ],
         target: 'http://localhost:5001'
       }
@@ -39,6 +45,17 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
+      template: './src/LoginSignup.html',
+      filename: 'LoginSignup.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+
+      template: './src/updateLogin.html',
+      filename: 'updateLogin.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
       template: './src/homepage.html',
       filename: 'homepage.html',
       inject: false
@@ -48,6 +65,7 @@ module.exports = {
       filename: 'animepage.html',
       inject: false
     }),
+
     new HtmlWebpackPlugin({
       template: './src/searchPage.html',
       filename: 'searchPage.html',
@@ -58,6 +76,7 @@ module.exports = {
       filename: 'landingPage.html',
       inject: false
     }),
+
     new CopyPlugin({
       patterns: [
         {

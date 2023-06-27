@@ -89,7 +89,7 @@ img {
 
 /* ------- Center Div, Holds All Anime Info Content  ------- */
 
-.main {
+#main {
     background: black;
     width: 60%;
     height: 100%;

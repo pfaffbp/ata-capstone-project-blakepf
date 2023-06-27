@@ -28,12 +28,12 @@ public class CatalogServiceTest {
     private CatalogService catalogService;
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
-    @BeforeEach
-    void setup() {
-        catalogRepository = mock(CatalogRepository.class);
-        cacheStore = mock(CacheAnimeStore.class);
-        catalogService = new CatalogService(catalogRepository, cacheStore);
-    }
+//    @BeforeEach
+//    void setup() {
+//        catalogRepository = mock(CatalogRepository.class);
+//        cacheStore = mock(CacheAnimeStore.class);
+//        catalogService = new CatalogService(catalogRepository, cacheStore);
+//    }
 
     @Test
     void deleteAnime() {
