@@ -25,7 +25,7 @@ class AnimePage extends BaseClass{
 
 
         console.log(response);
-        workArea.innerHTML = `
+        workArea.innerHTML += `
             <div class = "image-box">
                     <img src= ${response.image}>
 
