@@ -89,7 +89,7 @@ img {
 
 .main {
     background: black;
-    border: 2px solid white;         /* <----- Remove this once you've styled the rest of the page. */
+            /* border: 2px solid white; <----- Remove this once you've styled the rest of the page. */
     width: 80%;                        /* I pretty much only put the border there so you can separate the content from the background." */
     margin: auto;
     top: -5%;
@@ -107,6 +107,7 @@ img {
     width: 50vw;
     max-height: 100px;
     margin: auto;
+    padding-top: 20px;
 }
 
 #search-bar {
@@ -196,10 +197,25 @@ img {
 #work-area {
     display: inline-block;
     flex-wrap: wrap;
+    padding-top: 20px;
 }
 
 .poster {
     display: inline-block;
+    width: 160px; /* Adjust this value as needed */
+    height: auto; /* This will maintain the image's aspect ratio */
+    margin-bottom: 10px; /* Adjust this value to add separation between posters */
+    text-align: center;
+    grid-area: 2 / 2 / 3 / 3;
+    border: 2px solid #f4effa;
+    margin-left: 10px;
+
+}
+
+.poster-click {
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
 }
 
 .title-box{
@@ -216,15 +232,9 @@ img {
     width: 100%;
 }
 
-.poster {
-    width: 170px; /* Adjust this value as needed */
-    height: auto; /* This will maintain the image's aspect ratio */
-    margin-bottom: 10px; /* Adjust this value to add separation between posters */
-    text-align: center;
-}
-
-.poster-click {
-    width: 100%;
-    height: auto;
-    object-fit: cover;
+p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
 }
