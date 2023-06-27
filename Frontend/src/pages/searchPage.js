@@ -31,6 +31,8 @@ class SearchPage extends BaseClass{
         let searchValue = document.getElementById("search-bar").value;
         let searchValueIntoString = `${searchValue}`;
 
+        let serachValueGenre = document.getElementById("    ")
+
         console.log(searchValue);
 
         const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
@@ -41,7 +43,7 @@ class SearchPage extends BaseClass{
         for(let i = 0; i < newResponse.length; i++){
             items +=`
             <div class="poster">
-            <a href="animepage.html"><img class = "poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large} width="160px" height="90%"></a>    
+            <a href="animepage.html"><img class = "poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large} width="160px" height="90%"></a>  
             </div>
          `;
         }
