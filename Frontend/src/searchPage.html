@@ -35,12 +35,28 @@
         <div class = "main">
             <form id="search-form">
                 <label for="search-bar" class="search-bar-class">
-                    <h2> Search for Anime &#x1F50D;</h2>
+                    <h2>Search for Anime by Title &#x1F50D;</h2>
                 </label>
                 <div class = "search-bar-button">
                 <input type="text" id="search-bar" placeholder="What are you looking for?"/>
                     <button class="button-85" role="button">Search</button>
                 </div>
+                <br>
+                <label for="search-bar" class="search-bar-class">
+                    <h2>Search by Genre &#x1F50D;</h2>
+                </label>
+                <div id="search-bar-button">
+                    <button class="button-85" data-genre="Action">Action</button>
+                    <button class="button-85" data-genre="Adventure">Adventure</button>
+                    <button class="button-85" data-genre="Comedy">Comedy</button>
+                    <button class="button-85" data-genre="Drama">Drama</button>
+                    <button class="button-85" data-genre="Fantasy">Fantasy</button>
+                    <button class="button-85" data-genre="Horror">Horror</button>
+                    <button class="button-85" data-genre="Mystery">Mystery</button>
+                    <button class="button-85" data-genre="Sci-Fi">Sci-Fi</button>
+                    <button class="button-85" data-genre="Slice of Life">Slice of Life</button>
+                </div>
+                <br>
                 <div id="work-area"></div>
             </form>
         </div>

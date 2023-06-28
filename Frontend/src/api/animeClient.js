@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'uploadAnimeToDatabase'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -97,6 +97,77 @@ export default class AnimeClient extends BaseClass {
             alert('Error, check console');
             console.error(error);
         }
+
+    }
+
+    async getAnimeByGenre(genre, errorCallback) {
+        const map = new Map();
+        let query = `
+            query findAnimeByGenre($genre : String) {
+                Page(page : 1, perPage : 50){
+                    media(genre: $genre, type: ANIME){
+                        title{
+                        userPreferred
+                        }
+                        id
+                description
+                coverImage{
+                    large
+                }
+                startDate {
+                    year
+                    month
+                    day
+                }
+                season
+                popularity
+                averageScore
+                episodes
+                genres
+                
+                    }
+                }
+            }
+        `;
+
+        let variables = {
+            genre: genre
+        };
+
+        var url = 'https://graphql.anilist.co',
+            options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables
+                })
+            };
+
+        try {
+            const response = await fetch(url, options);
+            const data = await handleResponse(response);
+            console.log(data.data);
+            await this.uploadAnimeToDatabase(data, errorCallback);
+            return data.data.Page.media;
+        } catch (error) {
+            handleError(error);
+        }
+
+        function handleResponse(response) {
+            return response.json().then(function (json) {
+                return response.ok ? json : Promise.reject(json);
+            });
+        }
+
+        function handleError(error) {
+            alert('Error, check console');
+            console.error(error);
+        }
+
 
     }
 

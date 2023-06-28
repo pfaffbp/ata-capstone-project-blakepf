@@ -88,9 +88,7 @@ img {
 /* ------- Center Div, Holds All Search Content  ------- */
 
 .main {
-    background: black;
-            /* border: 2px solid white; <----- Remove this once you've styled the rest of the page. */
-    width: 80%;                        /* I pretty much only put the border there so you can separate the content from the background." */
+    background: none;
     margin: auto;
     top: -5%;
     z-index: 1;
@@ -187,7 +185,7 @@ img {
     position: absolute;
     width: 100%;
     height: 100%;
-    background: #5b018d;
+    background: purple;
     left: 0;
     top: 0;
     border-radius: 10px;
@@ -254,5 +252,13 @@ p{
 .rightSidePic{
     position: sticky;
     top: 0;
+}
+
+#genre-buttons {
+    margin-top: 20px;
+}
+
+.genre-button {
+    margin-right: 10px;
 }
 
