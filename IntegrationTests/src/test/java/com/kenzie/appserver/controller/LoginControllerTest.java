@@ -41,9 +41,6 @@ class LoginControllerTest {
     }
 
 
-
-
-
     @Test
     void testUpdatePasswordByEmail() throws Exception {
         LoginUpdatePasswordRequest request = new LoginUpdatePasswordRequest();
