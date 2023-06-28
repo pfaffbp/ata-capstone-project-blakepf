@@ -70,6 +70,10 @@ class SearchPage extends BaseClass {
         const workArea = document.getElementById("work-area");
         workArea.innerHTML = items;
 
+        this.genreButtons.forEach(button => button.classList.remove("active"));
+        event.target.classList.add("active");
+
+
         document.querySelectorAll(".poster-click").forEach(poster => {
             poster.addEventListener("click", async function () {
                 sessionStorage.setItem("animeCode", poster.alt);

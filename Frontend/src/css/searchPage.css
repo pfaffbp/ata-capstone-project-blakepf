@@ -321,3 +321,9 @@ p{
     top: 0;
     border-radius: 10px;
 }
+
+.button-86.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
