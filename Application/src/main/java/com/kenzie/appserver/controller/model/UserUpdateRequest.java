@@ -15,6 +15,9 @@ public class UserUpdateRequest {
     @NotEmpty
     @JsonProperty("fullName")
     private String fullName;
+
+    @JsonProperty("displayName")
+    private String displayName;
     @JsonProperty("age")
     private int age;
     @JsonProperty("bio")
@@ -58,5 +61,11 @@ public class UserUpdateRequest {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getDisplayName() { return displayName; }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

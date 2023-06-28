@@ -14,6 +14,7 @@ public class UserRecord {
     private List<User> friends;
     private List<Anime> favoriteAnime;
     private String fullName;
+    private String displayName;
     private int age;
     private String bio;
 
@@ -60,6 +61,12 @@ public class UserRecord {
     public void setBio(String bio) {
         this.bio = bio;
     }
+    @DynamoDBAttribute(attributeName = "DisplayName")
+    public String getDisplayName() {return displayName;}
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 
     @Override
     public boolean equals(Object o) {
@@ -74,4 +81,5 @@ public class UserRecord {
     public int hashCode() {
         return Objects.hash(friends, favoriteAnime, fullName, age, bio);
     }
+
 }

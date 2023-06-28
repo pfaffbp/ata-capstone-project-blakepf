@@ -22,6 +22,9 @@ public class UserCreateRequest {
         @JsonProperty("bio")
         private String bio;
 
+        @JsonProperty("displayName")
+        private String displayName;
+
         public String getFullName() {
             return fullName;
         }
@@ -61,4 +64,12 @@ public class UserCreateRequest {
         public void setBio(String bio) {
             this.bio = bio;
         }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

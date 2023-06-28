@@ -18,6 +18,8 @@ public class UserResponse {
     private int age;
     @JsonProperty("bio")
     private String bio;
+    @JsonProperty("displayName")
+    private String displayName;
 
     public String getFullName() {
         return fullName;
@@ -58,4 +60,10 @@ public class UserResponse {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {return displayName; }
 }
