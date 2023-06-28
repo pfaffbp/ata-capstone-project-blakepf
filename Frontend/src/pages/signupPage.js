@@ -2,6 +2,8 @@ import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import SignupClient from "../api/signupClient";
 
+
+
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -43,35 +45,44 @@ class SignupPage extends BaseClass {
             passInput = passField.querySelector(".password").value,
             cPassField = form.querySelector(".confirm-password"),
             cPassInput = cPassField.querySelector(".cPassword").value;
+
    /*     const emailInput = document.getElementById('email-entry').value;
         const passInput = document.getElementById('password').value;
         const cPassInput = document.getElementById('confirm-password').value;*/
-
-
         try {
+         //   console.log("before hash = " + passInput);
             await this.validateUserInput(passInput, cPassInput);
-            const login = await this.client.createLogin(emailInput, passInput);
-
+            const hashedPassword = this.hashPWsync(passInput);
+           // console.log("hashedPassword  = " + hashedPassword)
+            const login = await this.client.createLogin(emailInput, hashedPassword);
             this.dataStore.set('login', emailInput)
-            this.showMessage(`Login ${emailInput} created successfully!`);
+         //   this.showMessage(`Login ${emailInput} created successfully!`);
             /*console.log('Login', login)*/
-            window.location.href = "login.html";
-
-
+           // window.location.href = "login.html";
         }catch (error) {
             console.error(error);
             this.errorHandler("Error creating Login! Try again...");
-
         }
-
         }
-
 
     async validateUserInput(passInput, cPassInput) {
         if (!this.validatePassword(passInput, cPassInput)) {
             throw new Error('Passwords must match.');
         }
         }
+
+
+        hashPWsync(password){
+            const bcrypt = require('bcryptjs');
+            const salt = bcrypt.genSaltSync(10);
+            const hash = bcrypt.hashSync(password, salt);
+            console.log("this is the salt: " + salt)
+            console.log(" salt form hash:  " + bcrypt.getSalt(hash) )
+            return hash;
+    }
+
+
+
 
   validateEmail(email, confirmEmail){
         return email === confirmEmail;
@@ -90,7 +101,7 @@ class SignupPage extends BaseClass {
  */
 const main = async () => {
     const signupPage = new SignupPage();
-     signupPage.mount();
+     await signupPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

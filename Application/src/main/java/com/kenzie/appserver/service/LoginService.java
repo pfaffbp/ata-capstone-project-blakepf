@@ -34,10 +34,26 @@ public class LoginService {
 
     }
 
+/*    public Login login(String email, String password) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent()) {
+            LoginRecord loginRecord = record.get();
+            if (loginRecord.getPassword().equals(password)) {
+                return new Login(email, password);
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }*/
+
     public Login login(String email, String password) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
         if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
+            String storedPW = loginRecord.getPassword();
+            String enteredPassword = password;
             if (loginRecord.getPassword().equals(password)) {
                 return new Login(email, password);
             } else {
