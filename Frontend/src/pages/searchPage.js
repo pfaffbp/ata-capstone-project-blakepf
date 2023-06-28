@@ -8,7 +8,7 @@ class SearchPage extends BaseClass {
         super();
         this.bindClassMethods(['renderSearchPage', 'searchByGenre'], this);
         this.dataStore = new DataStore();
-        this.genreButtons = Array.from(document.querySelectorAll('.button-85'));
+        this.genreButtons = Array.from(document.querySelectorAll('.button-86'));
     }
 
     async mount() {
