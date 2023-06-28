@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'uploadAnimeToDatabase'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -103,9 +103,9 @@ export default class AnimeClient extends BaseClass {
     async getAnimeByGenre(genre, errorCallback) {        
         const map = new Map();
         let query = `
-            query findAnimeByGenre {
+            query findAnimeByGenre($genre : String) {
                 Page(page : 1, perPage : 50){
-                    media(genre: "$genre", type: ANIME){
+                    media(genre: $genre, type: ANIME){
                         title{
                         userPreferred
                         }

@@ -13,21 +13,25 @@ class SearchPage extends BaseClass{
 
     async mount() {
         document.getElementById("search-form").addEventListener("submit", this.renderSearchPage);
+        document.getElementById("genre-form").addEventListener("submit", this.renderSearchPage);
         this.client = new AnimeClient();
     }
 
-    async renderSearchPage(event){
-        event.preventDefault()
+
+    async renderSearchPage(event) {
+        event.preventDefault();
 
         let workArea = document.getElementById("work-area");
         let searchValue = document.getElementById("search-bar").value;
+        let genreValue = document.getElementById("genre-bar").value;
         let searchValueIntoString = `${searchValue}`;
-
-        let serachValueGenre = document.getElementById("    ")
+        let genreIntoString = `${genreValue}`;
 
         console.log(searchValue);
+        console.log(genreValue);
 
-        const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
+        // const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
+        const newResponse = await this.client.getAnimeByGenre(genreIntoString, this.errorHandler);
 
         let items = "";
 
@@ -40,6 +44,8 @@ class SearchPage extends BaseClass{
          `;
         }
 
+      
+
         workArea.innerHTML = items;
 
         document.querySelectorAll(".poster-click").forEach(poster =>{
@@ -48,8 +54,12 @@ class SearchPage extends BaseClass{
             });
         });
     }
-
+ 
 }
+
+
+
+
 
 const main = async () =>{
     const searchPage = new SearchPage();

@@ -89,3 +89,25 @@ body{
     position: sticky;
     top: 0;
 }
+
+#genres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.genre {
+    background: purple;
+    border-radius: 5px;
+    width: 100px;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.genre:hover {
+    zoom: 120%;
+}
