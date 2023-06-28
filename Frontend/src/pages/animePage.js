@@ -27,13 +27,8 @@ class AnimePage extends BaseClass{
         console.log(response);
         workArea.innerHTML += `
             <div class = "image-box">
-                    <img src= ${response.image}>
-
-                    <div class = "anime-links">
-                        <a href = "holder"> + Add to Favorites + </a>
-                    </div>
-
-                </div>
+                <img src = "${response.image}">
+            </div>
 
                 <div class = "anime-info">
                     <h1> ${response.title} </h1>
@@ -80,12 +75,12 @@ class AnimePage extends BaseClass{
             </div>
 
             <!-- <div class = "reccomended-anime">
-                <h3> If you like ${response.title}, check these out: </h3>
+                <h3> If you like , check these out: </h3>
                 <hr>
             </div> -->
         
-        `
-    }
+            `
+        }
 
 
 }

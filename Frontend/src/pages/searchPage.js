@@ -3,7 +3,6 @@ import DataStore from "../util/DataStore";
 import HomePageClient from "../api/homePageClient";
 import AnimeClient from "../api/animeClient";
 
-
 class SearchPage extends BaseClass{
 
     constructor() {
@@ -13,13 +12,6 @@ class SearchPage extends BaseClass{
     }
 
     async mount() {
-        this.dataStore.addChangeListener(this.renderSearchPage)
-        this.client = new HomePageClient();
-        this.renderSearchPage();
-    }
-
-    async renderSearchPage(){
-        let workArea = document.getElementById("work-area");
         document.getElementById("search-form").addEventListener("submit", this.renderSearchPage);
         this.client = new AnimeClient();
     }

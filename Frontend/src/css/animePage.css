@@ -95,6 +95,7 @@ img {
     height: 100%;                        
     margin: auto;                               /* Div holding all the content below */
     z-index: 1;
+    position: relative;
 }
 
 hr {
@@ -153,6 +154,7 @@ hr {
     padding: 10px;                            /* Div that holds the title, description, and other anime content */
     height: fit-content;
     display: inline-block;
+    position: absolute;
 }
 
 .anime-info h1 {
@@ -196,6 +198,7 @@ hr {
     padding: 10px;
     margin: 50px auto;
     border-radius: 10px;
+    position: relative;
 }
 
 button {
