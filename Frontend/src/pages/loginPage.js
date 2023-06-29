@@ -43,7 +43,10 @@ class LoginPage extends BaseClass {
                 passField = form.querySelector("login-password"),
                 loginPassInput = passField.querySelector("password").value;*/
             try {
+                console.log("email: " + loginInput);
+                console.log("login pass input: " + loginPassInput);
                 const login = await this.client.getLogin(loginInput, loginPassInput);
+                console.log("login " + login);
                 if (login) {
                     this.showMessage(`Logged ${loginInput} successfully!`);
                     localStorage.setItem("LoggedIn", JSON.stringify(loginInput));

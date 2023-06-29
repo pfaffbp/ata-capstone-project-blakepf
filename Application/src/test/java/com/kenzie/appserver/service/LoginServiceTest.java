@@ -56,7 +56,7 @@ class LoginServiceTest {
     }
 
     @Test
-    void login_ValidEmailAndPassword_ReturnsLoginObject() {
+    void login_ValidEmail_ReturnsPassword() {
         String email = "test@example.com";
         String password = "password";
         LoginRecord loginRecord = new LoginRecord();
@@ -65,36 +65,18 @@ class LoginServiceTest {
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
 
-        Login result = loginService.login(email, password);
+        String result = loginService.login(email);
 
-        assertNotNull(result);
-        assertEquals(email, result.getEmail());
-        assertEquals(password, result.getPassword());
+        assertEquals(password, result);
     }
 
     @Test
-    void login_InvalidEmail_ReturnsNull() {
+    void login_NonexistentEmail_ReturnsNull() {
         String email = "test@example.com";
-        String password = "password";
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        Login result = loginService.login(email, password);
-
-        assertNull(result);
-    }
-
-    @Test
-    void login_InvalidPassword_ReturnsNull() {
-        String email = "test@example.com";
-        String password = "password";
-        LoginRecord loginRecord = new LoginRecord();
-        loginRecord.setEmail(email);
-        loginRecord.setPassword("wrong_password");
-
-        when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
-
-        Login result = loginService.login(email, password);
+        String result = loginService.login(email);
 
         assertNull(result);
     }

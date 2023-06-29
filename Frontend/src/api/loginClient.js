@@ -1,5 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
+import bcrypt from 'bcryptjs';
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -37,15 +39,22 @@ export default class LoginClient extends BaseClass {
      * @returns The concert
      */
 
-    async getLogin(email, password, errorCallback){
+    async getLogin(email, password, errorCallback) {
         try {
-            const response = await  this.client.post('/login/login',{
+            const response = await this.client.post('/login/login', {
                 email: email,
-                password: password
             });
-            return response.data
-        }catch (error){
-            this.handleError("getLogin", error, errorCallback)
+            console.log("response data: " + response)
+            const hashedPassword = response.data.password; // Assuming the password is returned from the server
+            const passwordMatch = await bcrypt.compare(password, hashedPassword);
+
+            if (passwordMatch) {
+                return response.data;
+            } else {
+                throw new Error('Invalid password');
+            }
+        } catch (error) {
+            this.handleError("getLogin", error, errorCallback);
         }
     }
 

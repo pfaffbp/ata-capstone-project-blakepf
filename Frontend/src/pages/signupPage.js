@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import SignupClient from "../api/signupClient";
+import bcrypt from 'bcryptjs';
 
 
 
@@ -52,7 +53,7 @@ class SignupPage extends BaseClass {
         try {
          //   console.log("before hash = " + passInput);
             await this.validateUserInput(passInput, cPassInput);
-            const hashedPassword = this.hashPWsync(passInput);
+            const hashedPassword = await bcrypt.hash(passInput, 10);
            // console.log("hashedPassword  = " + hashedPassword)
             const login = await this.client.createLogin(emailInput, hashedPassword);
             this.dataStore.set('login', emailInput)
@@ -70,19 +71,6 @@ class SignupPage extends BaseClass {
             throw new Error('Passwords must match.');
         }
         }
-
-
-        hashPWsync(password){
-            const bcrypt = require('bcryptjs');
-            const salt = bcrypt.genSaltSync(10);
-            const hash = bcrypt.hashSync(password, salt);
-            console.log("this is the salt: " + salt)
-            console.log(" salt form hash:  " + bcrypt.getSalt(hash) )
-            return hash;
-    }
-
-
-
 
   validateEmail(email, confirmEmail){
         return email === confirmEmail;

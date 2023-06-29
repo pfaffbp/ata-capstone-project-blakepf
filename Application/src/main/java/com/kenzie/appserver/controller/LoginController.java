@@ -29,10 +29,18 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
-        Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest){
+        String success = loginService.login(loginRequest.getEmail());
+
+        if (success != null) {
+            LoginGetResponse response = new LoginGetResponse();
+            response.setPassword(success);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+
 
 
     @PutMapping("/updateEmail")
@@ -72,18 +80,8 @@ public class LoginController {
         }
     }
 
-    @GetMapping("/{password}")
-    public ResponseEntity<HashedPWResponse> getHashedPW(@PathVariable String email) {
-        String password = loginService.getHashedPW(email);
 
-        if (password != null) {
-            HashedPWResponse response = new HashedPWResponse();
-            response.setPassword(password);
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+
 
 
 

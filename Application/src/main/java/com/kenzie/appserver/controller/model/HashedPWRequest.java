@@ -16,4 +16,6 @@ public class HashedPWRequest {
     public void setEmail(String email) {
         this.email = email;
     }
+
+
 }

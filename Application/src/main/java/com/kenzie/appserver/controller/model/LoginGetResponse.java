@@ -1,9 +1,11 @@
 package com.kenzie.appserver.controller.model;
 
-import com.amazonaws.services.dynamodbv2.xspec.S;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class HashedPWResponse {
+@JsonInclude(JsonInclude.Include.NON_NULL)
+public class LoginGetResponse {
+
     @JsonProperty("password")
     private String password;
 
