@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import updatePasswordClient from "../api/updatePasswordClient";
+import bcrypt from 'bcryptjs';
 
 /**
  * Logic needed for the view playlist page of the website.
@@ -43,7 +44,8 @@ class UpdatePasswordPage extends BaseClass {
             loginPassInput = passField.querySelector("password").value;*/
         try {
             await this.validatePasswordInput(newPassInput, newPassConfirmInput);
-            const updatePassword = await this.client.updatePasswordByEmail(emailInput, passInput, newPassInput);
+            const hashedNewPassword = await bcrypt.hash(newPassInput, 10);
+            const updatePassword = await this.client.updatePasswordByEmail(emailInput, passInput, hashedNewPassword);
             this.showMessage(`Password for: ${emailInput} updated successfully!`);
             window.location.href = "homepage.html";
 

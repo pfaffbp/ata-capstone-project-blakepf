@@ -54,9 +54,9 @@ public class LoginService {
         }
     }
 
-    public boolean updatePasswordByEmail(String email, String password, String updatePassword) {
+    public boolean updatePasswordByEmail(String email, String updatePassword) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
-        if (record.isPresent() && record.get().getPassword().equals(password)) {
+        if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
             loginRecord.setPassword(updatePassword);
             loginRepository.save(loginRecord);
@@ -66,9 +66,9 @@ public class LoginService {
         }
     }
 
-    public boolean updateEmailByEmail(String email, String updatedEmail, String password) {
+    public boolean updateEmailByEmail(String email, String updatedEmail) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
-        if (record.isPresent() && record.get().getPassword().equals(password)) {
+        if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
             loginRecord.setEmail(updatedEmail);
             loginRepository.save(loginRecord);

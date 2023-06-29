@@ -129,15 +129,14 @@ class LoginServiceTest {
     @Test
     void updatePasswordByEmail_ExistingEmailAndPassword_ReturnsTrue() {
         String email = "test@example.com";
-        String currentPassword = "password";
         String newPassword = "new_password";
         LoginRecord loginRecord = new LoginRecord();
         loginRecord.setEmail(email);
-        loginRecord.setPassword(currentPassword);
+
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
 
-        boolean result = loginService.updatePasswordByEmail(email, currentPassword, newPassword);
+        boolean result = loginService.updatePasswordByEmail(email, newPassword);
 
         assertTrue(result);
         verify(loginRepository, times(1)).save(loginRecord);
@@ -147,46 +146,29 @@ class LoginServiceTest {
     @Test
     void updatePasswordByEmail_NonexistentEmail_ReturnsFalse() {
         String email = "test@example.com";
-        String currentPassword = "password";
         String newPassword = "new_password";
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        boolean result = loginService.updatePasswordByEmail(email, currentPassword, newPassword);
+        boolean result = loginService.updatePasswordByEmail(email, newPassword);
 
         assertFalse(result);
         verify(loginRepository, never()).save(any(LoginRecord.class));
     }
 
-    @Test
-    void updatePasswordByEmail_InvalidPassword_ReturnsFalse() {
-        String email = "test@example.com";
-        String currentPassword = "password";
-        String newPassword = "new_password";
-        LoginRecord loginRecord = new LoginRecord();
-        loginRecord.setEmail(email);
-        loginRecord.setPassword("wrong_password");
-
-        when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
-
-        boolean result = loginService.updatePasswordByEmail(email, currentPassword, newPassword);
-
-        assertFalse(result);
-        verify(loginRepository, never()).save(any(LoginRecord.class));
-    }
 
     @Test
     void updateEmailByEmail_ExistingEmailAndPassword_ReturnsTrue() {
         String email = "test@example.com";
         String updatedEmail = "new@example.com";
-        String password = "password";
+
         LoginRecord loginRecord = new LoginRecord();
         loginRecord.setEmail(email);
-        loginRecord.setPassword(password);
+
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
 
-        boolean result = loginService.updateEmailByEmail(email, updatedEmail, password);
+        boolean result = loginService.updateEmailByEmail(email, updatedEmail);
 
         assertTrue(result);
         verify(loginRepository, times(1)).save(loginRecord);
@@ -197,28 +179,11 @@ class LoginServiceTest {
     void updateEmailByEmail_NonexistentEmail_ReturnsFalse() {
         String email = "test@example.com";
         String updatedEmail = "new@example.com";
-        String password = "password";
+
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
 
-        boolean result = loginService.updateEmailByEmail(email, updatedEmail, password);
-
-        assertFalse(result);
-        verify(loginRepository, never()).save(any(LoginRecord.class));
-    }
-
-    @Test
-    void updateEmailByEmail_InvalidPassword_ReturnsFalse() {
-        String email = "test@example.com";
-        String updatedEmail = "new@example.com";
-        String password = "password";
-        LoginRecord loginRecord = new LoginRecord();
-        loginRecord.setEmail(email);
-        loginRecord.setPassword("wrong_password");
-
-        when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
-
-        boolean result = loginService.updateEmailByEmail(email, updatedEmail, password);
+        boolean result = loginService.updateEmailByEmail(email, updatedEmail);
 
         assertFalse(result);
         verify(loginRepository, never()).save(any(LoginRecord.class));

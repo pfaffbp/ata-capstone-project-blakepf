@@ -1,5 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
+import bcrypt from "bcryptjs";
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -41,17 +43,31 @@ export default class updateLoginClient extends BaseClass {
 
     async updateEmailByEmail(email, newEmail, password, errorCallback) {
         try {
-            //  console.log("before: " + email, newEmail, password);
-            const response = await this.client.put('/login/updateEmail', {
+            const response = await this.client.post('/login/login', {
                 email: email,
-                newEmail: newEmail,
-                password: password,
             });
-            //console.log("after response" + response);
+            console.log("response data: " + response)
+            const hashedPassword = response.data.password; // Assuming the password is returned from the server
+            const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-            return response.data;
+            if (passwordMatch) {
+                try {
+                    // console.log("before: " + email, newEmail);
+                    const response = await this.client.put('/login/updateEmail', {
+                        email: email,
+                        newEmail: newEmail,
+                    });
+                    // console.log("after response" + response);
+                    return response.data;
+                } catch (error) {
+                    this.handleError("UpdateEmail", error, errorCallback);
+                    throw error;
+                }
+            } else {
+                throw new Error('Invalid password');
+            }
         } catch (error) {
-            this.handleError("UpdateEmail", error, errorCallback);
+            this.handleError("Login", error, errorCallback);
             throw error;
         }
     }

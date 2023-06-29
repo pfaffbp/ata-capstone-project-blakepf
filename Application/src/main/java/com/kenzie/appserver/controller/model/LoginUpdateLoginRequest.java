@@ -13,9 +13,6 @@ public class LoginUpdateLoginRequest {
     @JsonProperty("newEmail")
     private String newEmail;
 
-    @NotEmpty
-    @JsonProperty("password")
-    private String password;
 
     public String getEmail() {
         return email;
@@ -33,12 +30,6 @@ public class LoginUpdateLoginRequest {
         this.newEmail = newEmail;
     }
 
-    public String getPassword() {
-        return password;
-    }
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
 }
 
