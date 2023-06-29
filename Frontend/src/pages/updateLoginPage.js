@@ -33,32 +33,17 @@ class UpdateLoginPage extends BaseClass {
     async onUpdateEmail(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-       // this.dataStore.set("updateEmail", null);
+        // this.dataStore.set("updateEmail", null);
         const emailInput = document.getElementById("email-entry").value;
         const newEmailInput = document.getElementById("newEmail-entry").value;
         const newEmailConfirmInput = document.getElementById("newEmailConfirm-entry").value;
         const passInput = document.getElementById("password").value;
         const cPassInput = document.getElementById("confirm-password").value;
 
-        /*   const eyeIcons = document.querySelectorAll(".show-hide");
-           eyeIcons.forEach((eyeIcon) => {
-               eyeIcon.addEventListener("click", () => {
-                   const pInput = eyeIcon.parentElement.querySelector("input"); //getting parent element of eye icon and selecting the password input
-                   if (pInput.type === "password") {
-                       eyeIcon.classList.replace("bx-hide", "bx-show");
-                       return (pInput.type = "text");
-                   }
-                   eyeIcon.classList.replace("bx-show", "bx-hide");
-                   pInput.type = "password";
-               });
-           });*/
-
-
         try {
             await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
             await this.validatePasswordInput(passInput, cPassInput);
             const emailUpdate = await this.client.updateEmailByEmail(emailInput, newEmailInput, passInput);
-            //this.dataStore.set('emailUpdate', emailInput)
             this.showMessage(`Email: ${newEmailInput} updated successfully!`);
             window.location.href = "homepage.html";
 
@@ -70,7 +55,6 @@ class UpdateLoginPage extends BaseClass {
         }
 
     }
-
 
 
     async validatePasswordInput(password, confirmPassword) {
@@ -85,7 +69,6 @@ class UpdateLoginPage extends BaseClass {
         }
     }
 
-
     validateEmail(email, confirmEmail) {
         return email === confirmEmail;
     }
@@ -93,10 +76,6 @@ class UpdateLoginPage extends BaseClass {
     validatePassword(password, newPassword) {
         return password === newPassword;
     }
-
-    // Hide and show password
-
-
 
 }
 

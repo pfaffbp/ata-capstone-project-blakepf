@@ -9,9 +9,9 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class signupClient extends BaseClass {
+export default class SignupClient extends BaseClass {
 
-    constructor(props = {}){
+    constructor(props = {}) {
         super();
         const methodsToBind = ['clientLoaded', 'createLogin'];
         this.bindClassMethods(methodsToBind, this);
@@ -25,14 +25,15 @@ export default class signupClient extends BaseClass {
      */
     clientLoaded(client) {
         this.client = client;
-        if (this.props.hasOwnProperty("onReady")){
+        if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady();
         }
     }
 
     /**
      * Gets the concert for the given ID.
-     * @param id Unique identifier for a concert
+     * @param email
+     * @param password
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
@@ -41,13 +42,10 @@ export default class signupClient extends BaseClass {
 
     async createLogin(email, password, errorCallback) {
         try {
-         //   console.log("before" + email, password)
             const response = await this.client.post(`/login/createLogin`, {
                 email: email,
                 password: password,
             });
-          //  console.log("after response" + response);
-
             return response.data;
         } catch (error) {
             this.handleError("createLogin", error, errorCallback);
@@ -57,6 +55,7 @@ export default class signupClient extends BaseClass {
 
     /**
      * Helper method to log the error and run any error functions.
+     * @param method
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.
      */
