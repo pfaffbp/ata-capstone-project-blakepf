@@ -42,8 +42,9 @@ class UpdateLoginPage extends BaseClass {
 
         try {
             await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
+            const validEmail = await this.validEmailFormat(newEmailInput);
             await this.validatePasswordInput(passInput, cPassInput);
-            const emailUpdate = await this.client.updateEmailByEmail(emailInput, newEmailInput, passInput);
+            const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
             this.showMessage(`Email: ${newEmailInput} updated successfully!`);
             window.location.href = "homepage.html";
 
@@ -56,13 +57,18 @@ class UpdateLoginPage extends BaseClass {
 
     }
 
-
+    //-------------------checks if passwords match ------------
     async validatePasswordInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
             throw new Error('Passwords must match.');
         }
     }
 
+    validatePassword(password, newPassword) {
+        return password === newPassword;
+    }
+
+    //-------------------checks if emails match ------------
     async validateEmailInput(email, confirmEmail) {
         if (!this.validateEmail(email, confirmEmail)) {
             throw new Error('Emails must match.');
@@ -73,8 +79,16 @@ class UpdateLoginPage extends BaseClass {
         return email === confirmEmail;
     }
 
-    validatePassword(password, newPassword) {
-        return password === newPassword;
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
+    }
+
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
 }

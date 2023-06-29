@@ -47,8 +47,9 @@ class SignupPage extends BaseClass {
         try {
 
             await this.validateUserInput(passInput, cPassInput);
+            const validEmail = await this.validEmailFormat(emailInput)
             const hashedPassword = await bcrypt.hash(passInput, 10);
-            const login = await this.client.createLogin(emailInput, hashedPassword);
+            const login = await this.client.createLogin(validEmail, hashedPassword);
             this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
             window.location.href = "login.html";
@@ -58,14 +59,27 @@ class SignupPage extends BaseClass {
         }
     }
 
-    async validateUserInput(passInput, cPassInput) {
-        if (!this.validatePassword(passInput, cPassInput)) {
-            throw new Error('Passwords must match.');
+    //-------------------checks if passwords match ------------
+    async validateUserInput(password, confirmPassword) {
+        if (!this.validatePassword(password, confirmPassword)) {
+            throw new Error('Passwords must match and be at least 8 characters long');
         }
     }
 
-    validatePassword(passInput, cPassInput) {
-        return passInput === cPassInput;
+    validatePassword(password, confirmPassword) {
+        return password.length >= 8 && password === confirmPassword;
+    }
+
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
+    }
+
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
 

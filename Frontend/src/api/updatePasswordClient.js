@@ -50,9 +50,7 @@ export default class updatePasswordClient extends BaseClass {
             const hashedPassword = response.data.password; // Assuming the password is returned from the server
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-            if (!passwordMatch) {
-                throw new Error('Invalid password');
-            } else {
+            if (passwordMatch) {
                 try {
                     const response = await this.client.put(`/login/changePassword`, {
                         email: email,
@@ -63,6 +61,8 @@ export default class updatePasswordClient extends BaseClass {
                     this.handleError("updatePassword", error, errorCallback);
                     throw error;
                 }
+            } else {
+                throw new Error('Invalid password');
             }
         } catch (error) {
             this.handleError("Login", error, errorCallback);

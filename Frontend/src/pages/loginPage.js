@@ -37,7 +37,8 @@ class LoginPage extends BaseClass {
         const loginPassInput = document.getElementById("loginPassword").value;
 
         try {
-            const login = await this.client.getLogin(loginInput, loginPassInput);
+            const validEmail = await this.validEmailFormat(loginInput);
+            const login = await this.client.getLogin(validEmail, loginPassInput);
 
             if (login) {
                 this.showMessage(`Logged ${loginInput} successfully!`);
@@ -51,6 +52,18 @@ class LoginPage extends BaseClass {
             this.errorHandler("Error Logging in! Try again...");
         }
 
+    }
+
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
+    }
+
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
     }
 
 

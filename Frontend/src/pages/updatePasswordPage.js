@@ -51,6 +51,7 @@ class UpdatePasswordPage extends BaseClass {
         }
     }
 
+    //-------------------checks if passwords match ------------
     async validatePasswordInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
             throw new Error('Passwords must match.');
@@ -58,7 +59,7 @@ class UpdatePasswordPage extends BaseClass {
     }
 
     validatePassword(password, newPassword) {
-        return password === newPassword;
+        return password.length >= 8 && password === newPassword;
     }
 
 
