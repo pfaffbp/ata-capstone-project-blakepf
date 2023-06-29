@@ -2,12 +2,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/landingPage.css">
-    <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.4/tiny-slider.css">     <!-- Tiny Slider -->  
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css" 
+    integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A==" crossorigin="anonymous" referrerpolicy="no-referrer"
   />
-
-  <link rel="stylesheet" type="text/css" href="slick/slick-theme.css"/>
-    <script type = "text/javascript" src="homePage.js"></script>
+    <script type = "text/javascript" src="pages/homePage.js"></script>
     <title>Aniverse: Home</title>
 </head>
 
@@ -45,7 +44,6 @@
                         <div class="txt">
                             <h1>JUJUTSU KAISEN:</h1>
                             <h1> SEASON 2</h1>
-                            <p></p>
                         </div>
                         <img src="https://rare-gallery.com/mocahbig/396613-wallpaper-jujutsu-kaisen-yuji-megumi-nobara-satoru.jpg"">
                     </div>
@@ -54,7 +52,6 @@
                         <div class="txt">
                             <h1>DEMON SLAYER: </h1>
                             <h1>SWORDSMITH VILLAGE ARC</h1>
-                            <p></p>
                         </div>
                         <img src="https://i0.wp.com/animeindia.in/wp-content/uploads/2023/02/image-1-5.jpg?fit=1280%2C720&ssl=1"">
                     </div>
@@ -222,9 +219,11 @@
             </div>
     
              <h2>Seasonal Animes</h2>
+             <hr>
             <div class = "anime-container" id="seasonal-anime-container"></div>
     
             <h2>Highly Rated</h2>
+            <hr>
             <div class = "anime-container" id="highly-rated-container"></div> 
 
         </div> 
@@ -235,55 +234,37 @@
 
     </div>
 
-    <script src = "landingSlideshow.js"></script>
-    <script src = "slickSlideshow.js"></script>
-    <script type="text/javascript" src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-    <script type="text/javascript" src="//cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+    <script src = "styles/landingSlideshow.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tiny-slider/2.9.2/min/tiny-slider.js"></script>
     <script>
-    $('.anime-container').slick({
-        dots: false,
-        infinite: false,
-        speed: 300,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        responsive: [
-            {
-            breakpoint: 1024,
-            settings: {
-                slidesToShow: 3,
-                slidesToScroll: 3,
-                infinite: true,
-                dots: false,
-                arrows: true,
-                centerMode: true,
-            }
+        var slider = tns ({
+            "container": ".anime-container",
+            "items" : 2,
+            "responsive": {
+                "1336" : {
+                    "items": 3,
+                },
+                "1800" : {
+                    "items": 4,
+                },
+                "2250" : {
+                    "items": 5,
+                },
+                "3000" : {
+                    "items": 6
+                }
+               
             },
-            {
-            breakpoint: 600,
-            settings: {
-                slidesToShow: 2,
-                slidesToScroll: 2
-            }
-            },
-            {
-            breakpoint: 480,
-            settings: {
-                slidesToShow: 1,
-                slidesToScroll: 1
-            }
-            }
-            // You can unslick at a given breakpoint now by adding:
-            // settings: "unslick"
-            // instead of a settings object
-        ]
-        });
-    
-    
-    // $('.anime-container').slick({
-    //   infinite: true,
-    //   slidesToShow: 3,
-    //   slidesToScroll: 3
-    // });
+            "slideBy": "page",
+            "mouseDrag": true,
+            "swipeAngle": false,
+            "speed": 400,
+            controlsText: ['<span class="fas fa-chevron-circle-left fa-sm" style="color: purple;"></span>', '<span class="fas fa-chevron-circle-right fa-sm" style="color: purple;"></span>'],
+            nav: false,
+            edgePadding: 15,
+            gutter: 20,
+          
+        })
     </script>
     
 </body>
