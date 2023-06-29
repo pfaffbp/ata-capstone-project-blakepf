@@ -72,6 +72,19 @@ public class LoginController {
         }
     }
 
+    @GetMapping("/{password}")
+    public ResponseEntity<HashedPWResponse> getHashedPW(@PathVariable String email) {
+        String password = loginService.getHashedPW(email);
+
+        if (password != null) {
+            HashedPWResponse response = new HashedPWResponse();
+            response.setPassword(password);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 
 
 }

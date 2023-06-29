@@ -107,4 +107,13 @@ public class LoginService {
         }
     }
 
+    public String getHashedPW(String email) {
+        Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        if (record.isPresent()) {
+            return record.get().getPassword();
+        } else {
+            return null;
+        }
+    }
+
 }

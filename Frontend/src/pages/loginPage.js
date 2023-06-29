@@ -1,7 +1,6 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import LoginClient from "../api/loginClient";
-import bcrypt from "bcryptjs";
 
 /**
  * Logic needed for the view playlist page of the website.
@@ -10,7 +9,7 @@ class LoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'onLogin'], this);
+        this.bindClassMethods([  'onLogin'], this);
         this.dataStore = new DataStore();
 
 
@@ -21,6 +20,7 @@ class LoginPage extends BaseClass {
      */
     async mount() {
         this.client = new LoginClient();
+
         document.getElementById('LoginUser').addEventListener('click', this.onLogin);
        // await this.alreadyLoggedIn();
 
@@ -31,16 +31,19 @@ class LoginPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-        async onLogin(event){
+
+        async onLogin(event) {
             event.preventDefault();
             this.dataStore.set("LoggedIn", null);
             const loginInput = document.getElementById("email-Login").value;
             const loginPassInput = document.getElementById("loginPassword").value;
-
+            /*const  form = document.querySelector("form"),
+                loginField = form.querySelector(".login-email-field"),
+                loginInput = loginField.querySelector("email").value,
+                passField = form.querySelector("login-password"),
+                loginPassInput = passField.querySelector("password").value;*/
             try {
-                const hashedPassword = this.hashPWsync(loginInput);
-                console.log("this is the hashed pw:" + hashedPassword);
-                const login = await this.client.getLogin(loginInput, this.hashPWsync(hashedPassword));
+                const login = await this.client.getLogin(loginInput, loginPassInput);
                 if (login) {
                     this.showMessage(`Logged ${loginInput} successfully!`);
                     localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
@@ -55,15 +58,6 @@ class LoginPage extends BaseClass {
             }
 
         }
-
-    hashPWsync(password){
-        const bcrypt = require('bcryptjs');
-        const salt = bcrypt.genSaltSync(10);
-        const hash = bcrypt.hashSync(password, salt);
-        console.log("loginpage has pw = " + hash)
-        return hash;
-    }
-
 
     async validateUserInput(passInput, cPassInput) {
         if (!this.validatePassword(passInput, cPassInput)) {
