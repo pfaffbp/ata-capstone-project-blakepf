@@ -1,6 +1,8 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import SignupClient from "../api/signupClient";
+import bcrypt from 'bcryptjs';
+
 
 /**
  * Logic needed for the view playlist page of the website.
@@ -9,7 +11,7 @@ class SignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'onCreateLogin'], this);
+        this.bindClassMethods(['onCreateLogin'], this);
         this.dataStore = new DataStore();
 
 
@@ -22,8 +24,7 @@ class SignupPage extends BaseClass {
         this.client = new SignupClient();
         document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
 
-       // await this.alreadyLoggedIn();
-
+        // await this.alreadyLoggedIn();
 
 
     }
@@ -31,11 +32,10 @@ class SignupPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-
     async onCreateLogin(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-       this.dataStore.set("createLogin", null);
+        this.dataStore.set("createLogin", null);
         const form = document.querySelector("form"),
             emailField = form.querySelector(".email-field"),
             emailInput = emailField.querySelector(".email").value,
@@ -43,44 +43,44 @@ class SignupPage extends BaseClass {
             passInput = passField.querySelector(".password").value,
             cPassField = form.querySelector(".confirm-password"),
             cPassInput = cPassField.querySelector(".cPassword").value;
-   /*     const emailInput = document.getElementById('email-entry').value;
-        const passInput = document.getElementById('password').value;
-        const cPassInput = document.getElementById('confirm-password').value;*/
-
 
         try {
-            await this.validateUserInput(passInput, cPassInput);
-            const login = await this.client.createLogin(emailInput, passInput);
 
+            await this.validateUserInput(passInput, cPassInput);
+            const validEmail = await this.validEmailFormat(emailInput)
+            const hashedPassword = await bcrypt.hash(passInput, 10);
+            const login = await this.client.createLogin(validEmail, hashedPassword);
             this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
-            /*console.log('Login', login)*/
             window.location.href = "login.html";
-
-
-        }catch (error) {
+        } catch (error) {
             console.error(error);
             this.errorHandler("Error creating Login! Try again...");
-
         }
-
-        }
-
-
-    async validateUserInput(passInput, cPassInput) {
-        if (!this.validatePassword(passInput, cPassInput)) {
-            throw new Error('Passwords must match.');
-        }
-        }
-
-  validateEmail(email, confirmEmail){
-        return email === confirmEmail;
-  }
-
-    validatePassword(passInput, cPassInput) {
-        return passInput === cPassInput;
     }
 
+    //-------------------checks if passwords match ------------
+    async validateUserInput(password, confirmPassword) {
+        if (!this.validatePassword(password, confirmPassword)) {
+            throw new Error('Passwords must match and be at least 8 characters long');
+        }
+    }
+
+    validatePassword(password, confirmPassword) {
+        return password.length >= 8 && password === confirmPassword;
+    }
+
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
+    }
+
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
 
 }
@@ -90,7 +90,7 @@ class SignupPage extends BaseClass {
  */
 const main = async () => {
     const signupPage = new SignupPage();
-     signupPage.mount();
+    await signupPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

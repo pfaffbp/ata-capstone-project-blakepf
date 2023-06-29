@@ -9,7 +9,7 @@ class LoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'onLogin'], this);
+        this.bindClassMethods(['onLogin'], this);
         this.dataStore = new DataStore();
 
 
@@ -20,9 +20,9 @@ class LoginPage extends BaseClass {
      */
     async mount() {
         this.client = new LoginClient();
-        document.getElementById('LoginUser').addEventListener('click', this.onLogin);
-       // await this.alreadyLoggedIn();
 
+        document.getElementById('LoginUser').addEventListener('click', this.onLogin);
+        // await this.alreadyLoggedIn();
 
 
     }
@@ -30,47 +30,41 @@ class LoginPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-        async onLogin(event){
-            event.preventDefault();
-            this.dataStore.set("LoggedIn", null);
-            const loginInput = document.getElementById("email-Login").value;
-            const loginPassInput = document.getElementById("loginPassword").value;
-            /*const  form = document.querySelector("form"),
-                loginField = form.querySelector(".login-email-field"),
-                loginInput = loginField.querySelector("email").value,
-                passField = form.querySelector("login-password"),
-                loginPassInput = passField.querySelector("password").value;*/
-            try {
-                const login = await this.client.getLogin(loginInput, loginPassInput);
-                if (login) {
-                    this.showMessage(`Logged ${loginInput} successfully!`);
-                    localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
-                  //  console.log(localStorage.getItem("LoggedIn"));
-                    window.location.href = "homepage.html";
-                } else {
-                    this.showMessage("incorrect email or password!");
-                }
-            } catch (error) {
-                console.error(error);
-                this.errorHandler("Error Logging in! Try again...");
+    async onLogin(event) {
+        event.preventDefault();
+        this.dataStore.set("LoggedIn", null);
+        const loginInput = document.getElementById("email-Login").value;
+        const loginPassInput = document.getElementById("loginPassword").value;
+
+        try {
+            const validEmail = await this.validEmailFormat(loginInput);
+            const login = await this.client.getLogin(validEmail, loginPassInput);
+
+            if (login) {
+                this.showMessage(`Logged ${loginInput} successfully!`);
+                localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
+                window.location.href = "homepage.html";
+            } else {
+                this.showMessage("incorrect email or password!");
             }
-
+        } catch (error) {
+            console.error(error);
+            this.errorHandler("Error Logging in! Try again...");
         }
 
-    async validateUserInput(passInput, cPassInput) {
-        if (!this.validatePassword(passInput, cPassInput)) {
-            throw new Error('Passwords must match.');
-        }
-        }
-
-  validateEmail(email, confirmEmail){
-        return email === confirmEmail;
-  }
-
-    validatePassword(passInput, cPassInput) {
-        return passInput === cPassInput;
     }
 
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
+    }
+
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
 
 }
@@ -80,7 +74,7 @@ class LoginPage extends BaseClass {
  */
 const main = async () => {
     const loginPage = new LoginPage();
-     loginPage.mount();
+    loginPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

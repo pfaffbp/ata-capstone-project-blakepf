@@ -33,32 +33,18 @@ class UpdateLoginPage extends BaseClass {
     async onUpdateEmail(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-       // this.dataStore.set("updateEmail", null);
+        // this.dataStore.set("updateEmail", null);
         const emailInput = document.getElementById("email-entry").value;
         const newEmailInput = document.getElementById("newEmail-entry").value;
         const newEmailConfirmInput = document.getElementById("newEmailConfirm-entry").value;
         const passInput = document.getElementById("password").value;
         const cPassInput = document.getElementById("confirm-password").value;
 
-        /*   const eyeIcons = document.querySelectorAll(".show-hide");
-           eyeIcons.forEach((eyeIcon) => {
-               eyeIcon.addEventListener("click", () => {
-                   const pInput = eyeIcon.parentElement.querySelector("input"); //getting parent element of eye icon and selecting the password input
-                   if (pInput.type === "password") {
-                       eyeIcon.classList.replace("bx-hide", "bx-show");
-                       return (pInput.type = "text");
-                   }
-                   eyeIcon.classList.replace("bx-show", "bx-hide");
-                   pInput.type = "password";
-               });
-           });*/
-
-
         try {
             await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
+            const validEmail = await this.validEmailFormat(newEmailInput);
             await this.validatePasswordInput(passInput, cPassInput);
-            const emailUpdate = await this.client.updateEmailByEmail(emailInput, newEmailInput, passInput);
-            //this.dataStore.set('emailUpdate', emailInput)
+            const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
             this.showMessage(`Email: ${newEmailInput} updated successfully!`);
             window.location.href = "homepage.html";
 
@@ -71,32 +57,39 @@ class UpdateLoginPage extends BaseClass {
 
     }
 
-
-
+    //-------------------checks if passwords match ------------
     async validatePasswordInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
             throw new Error('Passwords must match.');
         }
     }
 
+    validatePassword(password, newPassword) {
+        return password === newPassword;
+    }
+
+    //-------------------checks if emails match ------------
     async validateEmailInput(email, confirmEmail) {
         if (!this.validateEmail(email, confirmEmail)) {
             throw new Error('Emails must match.');
         }
     }
 
-
     validateEmail(email, confirmEmail) {
         return email === confirmEmail;
     }
 
-    validatePassword(password, newPassword) {
-        return password === newPassword;
+    //-------------------checks if emails is in valid format ------------
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            throw new Error('Invalid email address.');
+        }else return email;
     }
 
-    // Hide and show password
-
-
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
 
 }
 
