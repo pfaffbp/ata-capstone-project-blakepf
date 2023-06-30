@@ -70,19 +70,20 @@ img {
 /* ------- Left side banner  ------- */
 
 .leftImage {
-    width: 20%;
-    position: fixed;                        /* Currently Zenitsu from Demon Slayer. May change it to something else! */
-    bottom: 1%;
+    width: 40%;
+
+    position: fixed;                        /* Currently Sakura */
+    bottom: 3%;
     left: 3%;
 }
 
 /* ------- Right side banner  ------- */
 
 .rightImage {
-    width: 30%;
-    position: fixed;                        /* Currently Tanjiro from Demon Slayer. May also change it to something else! */
+    width: 40%;
+    position: fixed;                        /* Currently Sakura Flower*/
     right: 0%;
-    top: 8%;
+    top: 10%;
 }
 
 /* ------- Center Div, Holds All Search Content  ------- */
@@ -92,6 +93,7 @@ img {
     margin: auto;
     top: -5%;
     z-index: 1;
+    font-size: 12px;
 }
 
 .main h2 {
@@ -102,20 +104,20 @@ img {
 }
 
 #search-form {
-    width: 50vw;
+    width: 60vw;
     max-height: 100px;
     margin: auto;
-    padding-top: 20px;
+    padding-top: 5px;
 }
 
 #search-bar {
     padding: 10px;
-    font-size: 16px;
+    font-size: 12px;
     border: none;
     border-radius: 5px;
     background-color: #ffffff;
     color: #0a0707;
-    width: 200px;
+    width: 250px;
 }
 
 #search-bar:focus {
@@ -203,10 +205,11 @@ img {
 }
 
 .poster {
+    background: black;
     display: inline-block;
-    width: 160px; /* Adjust this value as needed */
-    height: auto; /* This will maintain the image's aspect ratio */
-    margin-bottom: 15px; /* Adjust this value to add separation between posters */
+    width: 160px;
+    height: auto;
+    margin-bottom: 15px; /* Separation between posters */
     text-align: center;
     grid-area: 2 / 2 / 3 / 3;
     border: 2px solid #f4effa;
@@ -327,3 +330,11 @@ p{
     text-decoration: underline;
 }
 
+#kero {
+    position: absolute;
+    width: auto;
+    height: 130px;
+    background-image: url(css/Kero1.png);
+    background-size: cover;
+    pointer-events: none;
+}
