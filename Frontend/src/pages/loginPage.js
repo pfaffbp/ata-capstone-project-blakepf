@@ -32,7 +32,6 @@ class LoginPage extends BaseClass {
 
     async onLogin(event) {
         event.preventDefault();
-        this.dataStore.set("LoggedIn", null);
         const loginInput = document.getElementById("email-Login").value;
         const loginPassInput = document.getElementById("loginPassword").value;
 
@@ -41,8 +40,7 @@ class LoginPage extends BaseClass {
             const login = await this.client.getLogin(validEmail, loginPassInput);
 
             if (login) {
-                this.showMessage(`Logged ${loginInput} successfully!`);
-                localStorage.setItem("LoggedIn", JSON.stringify(loginInput));
+                localStorage.setItem("LoggedIn", loginInput);
                 window.location.href = "homepage.html";
             } else {
                 this.showMessage("incorrect email or password!");
