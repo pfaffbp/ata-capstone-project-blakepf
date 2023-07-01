@@ -57,10 +57,9 @@ public class Application {
         SpringApplication.run(Application.class, args);
 
         try {
-            Path seasonalAnime = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\seasonalAnimeRequest.txt");
-            Path popularAnime = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\popularAnimeRequest.txt");
-            Path highlyRated = Path.of("C:\\Users\\micha\\kenzie\\ata-capstone-project-blakepf\\Application\\src\\main\\java\\com\\kenzie\\appserver\\graphqlrequests\\highlyRatedAnimeRequest.txt");
-
+            Path seasonalAnime = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/seasonalAnimeRequest.txt");
+            Path popularAnime = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/popularAnimeRequest.txt");
+            Path highlyRated = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/highlyRatedAnimeRequest.txt");
 
             List<String> dataResponse = new ArrayList<>();
             dataResponse.add(makePostRequest(popularAnime));
@@ -77,8 +76,6 @@ public class Application {
             for(GraphQLResponse graphQLResponse : graphQLResponsesList){
                 mediaLists.add(graphQLResponse.getData().getPage().getMedia());
             }
-
-
 
             for(List<Media> mediaList : mediaLists){
                 for (Media media : mediaList) {

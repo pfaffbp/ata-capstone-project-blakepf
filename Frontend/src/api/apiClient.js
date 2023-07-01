@@ -51,7 +51,7 @@ export default class ApiClient extends BaseClass {
             };
 
 // Make the HTTP Api request
-        fetch(url, options).then(handleResponse)
+         fetch(url, options).then(handleResponse)
             .then(handleData)
             .catch(handleError);
 

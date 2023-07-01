@@ -2,6 +2,7 @@ package com.kenzie.appserver.controller;
 
 
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.kenzie.appserver.DAO.Media;
 import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.service.CatalogService;
@@ -150,8 +151,6 @@ public class CatalogController {
         List<PaginatedQueryList<CatalogRecord>> queryLists = new ArrayList<>();
         queryLists.add(catalogService.getSeasonAnime());
 
-//        queryLists.add(catalogService.getPopularAnime());
-
         List<CatalogResponse> scanList = new ArrayList<>();
         scanList.addAll(catalogService.getPopularAnime().stream()
                 .map(this::catalogRecordToResponse)
@@ -168,12 +167,30 @@ public class CatalogController {
                 .forEach(scanList::add);
 
         return ResponseEntity.ok(scanList);
+    }
 
-//        return ResponseEntity.ok(queryLists.stream()
-//                .flatMap(Collection::stream)
-//                .map(this::catalogRecordToResponse)
-//                .collect(Collectors.toList()));
+    @PostMapping("postSearch")
+    public void addSearchAnime(@RequestBody FrontPageAnimeRequest frontPageAnimeRequest){
+        frontPageAnimeRequest.getGraphQLResponse()
+                .getData()
+                .getPage()
+                .getMedia().stream()
+                .map(CatalogController::responseToAnime)
+                .forEach(anime -> catalogService.addNewAnime(anime));
+    }
 
+    private static Anime responseToAnime(Media catalogResponse){
+        Anime anime = new Anime(catalogResponse.getTitle().getUserPreferred(),
+                String.valueOf(catalogResponse.getId()),
+                catalogResponse.getDescription(),
+                catalogResponse.getCoverImage().getLarge(),
+                catalogResponse.getStartDate().getYear(),
+                catalogResponse.getSeason(),
+                catalogResponse.getPopularity(),
+                catalogResponse.getAverageScore(),
+                catalogResponse.getEpisodes(),
+                catalogResponse.getGenres());
+        return anime;
     }
 }
 
