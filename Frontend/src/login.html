@@ -4,7 +4,7 @@
     <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
     <script type = "text/javascript" src="loginPage.js"></script>
     <title>Aniverse: Login</title>
-</head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></head>
 
 <body>
 <div class="nav">
@@ -107,11 +107,12 @@
                             <input type="email" id="email-Login" placeholder="Enter your email" class="email" />
                         </div>
                         <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
+
             <p class="error-text"></p>
           </span>
                     </div>
                     <div class="field login-password">
+                        <p>Double click the lock to show/hide text.</p>
                         <div class="input-field-2">
                             <input
                                     type="password"
@@ -119,13 +120,9 @@
                                     placeholder="Enter password"
                                     class="password"
                             />
-                            <i class="bx bx-hide show-hide"></i>
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
                         </div>
                         <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-              Please enter at least 8 characters.
-            </p>
           </span>
                     </div>
                     <div class="input-field-2 button">

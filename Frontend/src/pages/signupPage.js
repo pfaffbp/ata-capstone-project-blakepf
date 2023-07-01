@@ -11,7 +11,7 @@ class SignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onCreateLogin'], this);
+        this.bindClassMethods(['onCreateLogin', 'toggle'], this);
         this.dataStore = new DataStore();
 
 
@@ -23,6 +23,9 @@ class SignupPage extends BaseClass {
     async mount() {
         this.client = new SignupClient();
         document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
+        document.getElementById('eyes').addEventListener('click', this.toggle);
+
+
 
         // await this.alreadyLoggedIn();
 
@@ -36,13 +39,12 @@ class SignupPage extends BaseClass {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
         this.dataStore.set("createLogin", null);
-        const form = document.querySelector("form"),
-            emailField = form.querySelector(".email-field"),
-            emailInput = emailField.querySelector(".email").value,
-            passField = form.querySelector(".create-password"),
-            passInput = passField.querySelector(".password").value,
-            cPassField = form.querySelector(".confirm-password"),
-            cPassInput = cPassField.querySelector(".cPassword").value;
+
+
+      const emailInput = document.getElementById("email-entry").value;
+      const passInput = document.getElementById("password").value;
+      const cPassInput = document.getElementById("confirm-password").value;
+
 
         try {
 
@@ -59,9 +61,38 @@ class SignupPage extends BaseClass {
         }
     }
 
+    async toggle(event){
+        const container = document.querySelector(".container-1"),
+    pwShowHide = document.querySelectorAll(".showHidePw"),
+    pwFields = document.querySelectorAll(".password");
+
+//   js code to show/hide password and change icon
+pwShowHide.forEach(eyeIcon =>{
+    eyeIcon.addEventListener("click", ()=>{
+        pwFields.forEach(pwField =>{
+            if(pwField.type ==="password"){
+                pwField.type = "text";
+
+                pwShowHide.forEach(icon =>{
+                    icon.classList.replace("bx-lock-alt", "bx-lock-open-alt");
+                })
+            }else{
+                pwField.type = "password";
+
+                pwShowHide.forEach(icon =>{
+                    icon.classList.replace("bx-lock-open-alt", "bx-lock-alt");
+                })
+            }
+        })
+    })
+})
+    }
+
+
     //-------------------checks if passwords match ------------
     async validateUserInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
+            alert("passwords must match");
             throw new Error('Passwords must match and be at least 8 characters long');
         }
     }
@@ -73,6 +104,7 @@ class SignupPage extends BaseClass {
     //-------------------checks if emails is in valid format ------------
     async validEmailFormat(email) {
         if (!this.checkEmail(email)) {
+            alert("invalid email");
             throw new Error('Invalid email address.');
         }else return email;
     }

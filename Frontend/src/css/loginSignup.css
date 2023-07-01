@@ -139,13 +139,14 @@ img {
 .container-1 form {
     margin-top: 30px;
 }
-form .field {
+form .form-group {
     margin-bottom: 20px;
 }
 form .input-field-1 {
     position: relative;
     height: 55px;
     width: 100%;
+    margin-top: 20px;
 }
 .input-field-1 input {
     height: 100%;
@@ -156,19 +157,33 @@ form .input-field-1 {
     padding: 0 15px;
     border: 2px solid purple;
 }
+
+.input-field-1 i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field-1 input:is(:focus, :valid) ~ i{
+    color: #000000;
+}
+
+.input-field-1 i.icon{
+    left: 0;
+}
+.input-field-1 i.showHidePw{
+    right: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
 .invalid input {
     border-color: #d93025;
 }
-.input-field-1 .show-hide {
-    position: absolute;
-    right: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #919191;
-    cursor: pointer;
-    padding: 3px;
-}
+
 
 .container-2 {
     position: relative;
@@ -190,7 +205,7 @@ form .input-field-1 {
 .container-2 form {
     margin-top: 30px;
 }
-form .field {
+form .form-group {
     margin-bottom: 20px;
 }
 form .input-field-2 {
@@ -207,7 +222,30 @@ form .input-field-2 {
     padding: 0 15px;
     border: 2px solid purple;
 }
-.field .error {
+
+.input-field-2 i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field-2 input:is(:focus, :valid) ~ i{
+    color: #000000;
+}
+
+.input-field-2 i.icon{
+    left: 0;
+}
+.input-field-2 i.showHidePw{
+    right: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+
+.form-group .error {
     display: flex;
     align-items: center;
     margin-top: 6px;
