@@ -1,10 +1,8 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.*;
-import com.kenzie.appserver.repositories.model.LoginRecord;
 import com.kenzie.appserver.service.LoginService;
 import com.kenzie.appserver.service.model.Login;
-import org.apache.tomcat.jni.User;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -31,16 +29,24 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
-        Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest){
+        String success = loginService.login(loginRequest.getEmail());
+
+        if (success != null) {
+            LoginGetResponse response = new LoginGetResponse();
+            response.setPassword(success);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+
 
 
     @PutMapping("/updateEmail")
     public ResponseEntity<LoginResponse> updateEmailByEmail (@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest){
         boolean success = loginService.updateEmailByEmail(loginUpdateLoginRequest.getEmail(),
-                loginUpdateLoginRequest.getNewEmail(), loginUpdateLoginRequest.getPassword());
+                loginUpdateLoginRequest.getNewEmail());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
@@ -48,8 +54,7 @@ public class LoginController {
 
     @PutMapping("/changePassword")
     public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest){
-        boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(),
-                loginUpdatePasswordRequest.getPassword(), loginUpdatePasswordRequest.getNewPassword());
+        boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(), loginUpdatePasswordRequest.getNewPassword());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
@@ -60,6 +65,22 @@ public class LoginController {
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UserIdResponse> getUserIdByEmail(@PathVariable String email) {
+        String userId = loginService.getUserIdByEmail(email);
+
+        if (userId != null) {
+            UserIdResponse response = new UserIdResponse();
+            response.setUserId(userId);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+
+
 
 
 

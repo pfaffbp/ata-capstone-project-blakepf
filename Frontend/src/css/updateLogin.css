@@ -1,0 +1,524 @@
+
+* {
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+}
+
+body {
+    width: 100%;
+    background: black;
+    color: white;
+}
+
+img {
+    width: 100%;
+}
+
+
+/* ------- Navigation Bar ------- */
+
+.logo {
+    width: 8%;
+    min-width: 8%;
+    float: left;
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 5px;
+}
+
+.nav {
+    background-color: #333333;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    font-size: 20px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.nav a {
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 25px 15px;
+    display: inline-block;
+}
+
+.nav a:hover {
+    color: purple;
+}
+
+.main-links {
+    float: left;
+}
+
+.account {
+    float: right;
+    margin-right: 30px;
+}
+
+/* ------- All content  ------- */
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    border: none;
+}
+
+/* ------- Left side banner  ------- */
+
+.leftImage {
+    width: 20%;
+    position: fixed;
+    bottom: 1%;
+    left: 3%;
+}
+
+/* ------- Right side banner  ------- */
+
+.rightImage {
+    width: 30%;
+    position: fixed;
+    right: 0%;
+    top: 8%;
+}
+
+
+/* ------- Mid-Section Content  ------- */
+
+/* ---- Mid-Section Div  ---- */
+
+.main {
+    background: black;
+    width: 60%;
+    height: max-content;
+    margin: auto;
+    top: -5%;
+    z-index: 1;
+}
+
+
+
+/* ------Signup boxed------*/
+
+.Signup{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: -650px;
+    cursor: pointer;
+}
+.Update Password{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: -650px;
+    cursor: pointer;
+}
+.container-1 {
+    position: relative;
+    max-width: 370px;
+    width: 100%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 8px;
+    background-color: #4f4c4c;
+    border: 2px solid purple;
+}
+
+.container-1 h1 {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.container-1 form {
+    margin-top: 30px;
+}
+form .form-group {
+    margin-bottom: 20px;
+}
+form .input-field-1 {
+    position: relative;
+    height: 55px;
+    width: 100%;
+}
+.input-field-1 input {
+    height: 100%;
+    width: 88%;
+    outline: none;
+    border: white;
+    border-radius: 8px;
+    padding: 0 15px;
+    border: 2px solid purple;
+}
+
+.input-field-1 i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field-1 input:is(:focus, :valid) ~ i{
+    color: #000000;
+}
+
+.input-field-1 i.icon{
+    left: 0;
+}
+.input-field-1 i.showHidePw{
+    right: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.invalid input {
+    border-color: #d93025;
+}
+.input-field-1 .show-hide {
+    position: absolute;
+    right: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    font-size: 18px;
+    color: #919191;
+    cursor: pointer;
+    padding: 3px;
+}
+
+.container-2 {
+    position: relative;
+    max-width: 370px;
+    width: 100%;
+    margin: auto;
+    padding: 25px;
+    border-radius: 8px;
+    background-color: #4f4c4c;
+    border: 2px solid purple;
+}
+.container-2 h2 {
+    color: white;
+    font-size: 25px;
+    font-weight: 700;
+    text-align: center;
+}
+
+.container-2 form {
+    margin-top: 30px;
+}
+form .form-group {
+    margin-bottom: 20px;
+}
+form .input-field-2 {
+    position: relative;
+    height: 55px;
+    width: 100%;
+}
+.input-field-2 input {
+    height: 100%;
+    width: 88%;
+    outline: none;
+    border: white;
+    border-radius: 8px;
+    padding: 0 15px;
+    border: 2px solid purple;
+}
+
+.input-field-2 i{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #999;
+    font-size: 23px;
+    transition: all 0.2s ease;
+}
+
+.input-field-2 input:is(:focus, :valid) ~ i{
+    color: #000000;
+}
+
+.input-field-2 i.icon{
+    left: 0;
+}
+.input-field-2 i.showHidePw{
+    right: 10px;
+    cursor: pointer;
+    padding: 10px;
+}
+.form-group .error {
+    display: flex;
+    align-items: center;
+    margin-top: 6px;
+    color: #d93025;
+    font-size: 13px;
+    display: none;
+}
+
+.error .error-icon {
+    margin-right: 6px;
+    font-size: 15px;
+}
+
+.create-password .error {
+    align-items: flex-start;
+}
+
+.create-password .error-icon {
+    margin-top: 4px;
+}
+
+.button {
+    margin: 10px 18px 0px;
+}
+.button input {
+    color: #fff;
+    font-size: 16px;
+    font-weight: 650;
+    background-color: purple;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+.button input:hover {
+    background-color: #c200c2;
+}
+
+
+/* ---- Slideshow Banner  ---- */
+
+.slideshow-section {
+    height: 600px;
+    display: flex;
+    justify-content: center;                            /* --- Slideshow container --- */
+    align-items: center;
+    background: #333333;
+    z-index: 2;
+    margin: 0;
+    width: 100%;
+}
+
+.slider {
+    position: relative;
+    background: #2c3e50;
+    height:600px;
+    width: 100%;
+    z-index: 3;
+}
+
+.myslide {
+    max-height: 600px;
+    width: 100%;
+    display: none;
+    overflow: hidden;
+}
+
+.prev, .next {
+    position: absolute;
+    top: 50%;
+    transform: translate(0, -50%);
+    font-size: 50px;
+    padding: 15px;
+    cursor: pointer;
+    color: #fff;
+    transition: 0.1s;
+    user-select: none;
+}
+
+.prev:hover, .next:hover{
+    color: #00a7ff; /* blue */
+}
+.next{
+    right: 0;
+}
+.dotsbox{
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%);
+    bottom: 20px;
+    cursor: pointer;
+}
+.dot{
+    display: inline-block;
+    width: 15px;
+    height: 15px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    margin: 0 10px;
+    cursor: pointer;
+}
+
+.active, .dot:hover{
+    border-color: #fd4bf3; /* blue */
+}
+
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from {opacity: 0.8}
+    to {opacity: 1}
+}
+
+@keyframes fade {
+    from {opacity: 0.8}
+    to {opacity: 1}
+}
+
+
+
+.txt {
+    position: absolute;
+    color: #fff;
+    letter-spacing: 2px;
+    line-height: 35px;
+    top: 65%;
+    left: 10%;
+    -webkit-animation-name: posi;
+    -webkit-animation-duration: 2s;
+    animation-name: posi;
+    animation-duration: 2s;
+    z-index: 1;
+}
+
+@-webkit-keyframes posi {
+    from {left: 25%;}
+    to {left: 10%;}
+}
+
+
+@keyframes posi {
+    from {left: 25%;}
+    to {left: 10%;}
+}
+
+.txt h1{
+    color: white;
+    font-size: 50px;
+    margin-bottom: 20px;
+}
+.txt p{
+    font-weight: bold;
+    font-size: 20px;
+}
+
+
+
+.slider img {
+    transform: scale(1.5, 1.5);
+    -webkit-animation-name: zoomin;
+    -webkit-animation-duration: 30s;
+    animation-name: zoomin;
+    animation-duration: 30s;
+}
+
+@-webkit-keyframes zoomin {
+    from {transform: scale(1, 1);}
+    to {transform: scale(1.3, 1.3);}
+}
+
+
+@keyframes zoomin {
+    from {transform: scale(1, 1);}
+    to {transform: scale(1.3, 1.3);}
+}
+/* /4 */
+
+
+
+/* 5 */
+@media screen and (max-width: 800px){
+    .myslide{
+        height: 500px;
+    }
+    .txt{
+        letter-spacing: 2px;
+        line-height: 25px;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        -webkit-animation-name: posi2;
+        -webkit-animation-duration: 2s;
+        animation-name: posi2;
+        animation-duration: 2s;
+    }
+
+    @-webkit-keyframes posi2 {
+        from {top: 35%;}
+        to {top: 50%;}
+    }
+
+
+    @keyframes posi2 {
+        from {top: 35%;}
+        to {top: 50%;}
+    }
+
+    .txt h1{
+        font-size: 40px;
+    }
+    .txt p{
+        font-size: 13px;
+    }
+
+}
+/* /5 */
+
+/* 6 */
+@media screen and (max-width: 520px){
+    .txt h1{
+        font-size: 30px;
+        margin-bottom: 20px;
+    }
+    .sign{
+        margin-right: 20px;
+    }
+    .sign a{
+        font-size: 12px;
+    }
+}
+/* /6 */
+
+
+/* ---- Anime Scroll  ---- */
+
+.anime-container {
+    display: flex;
+    overflow-x: scroll;
+    gap: 25px;
+    height: 335px;
+    margin: 20px;
+}
+
+.anime-cover-title {
+    display: block;
+    align-items: center;
+    width: 220px;
+    flex-shrink: 0;
+}
+
+
+.title {
+    top: 0;
+    bottom: 0;
+    background: rgba(29, 106, 154, 0.72);
+    color: #fff;
+    opacity: 0;
+    transition: opacity .2s, visibility .2s;
+}
+
+.anime-container:hover .cover-image h5 {
+    opacity: 1;
+}
+
+
+
+

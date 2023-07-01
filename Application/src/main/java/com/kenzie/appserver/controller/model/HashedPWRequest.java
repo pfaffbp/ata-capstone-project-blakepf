@@ -4,14 +4,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import javax.validation.constraints.NotEmpty;
 
-public class LoginUpdatePasswordRequest {
+public class HashedPWRequest {
     @NotEmpty
     @JsonProperty("email")
     private String email;
-
-    @NotEmpty
-    @JsonProperty("newPassword")
-    private String newPassword;
 
     public String getEmail() {
         return email;
@@ -22,11 +18,4 @@ public class LoginUpdatePasswordRequest {
     }
 
 
-    public String getNewPassword() {
-        return newPassword;
-    }
-
-    public void setNewPassword(String newPassword) {
-        this.newPassword = newPassword;
-    }
 }

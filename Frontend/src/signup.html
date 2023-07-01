@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
+    <script type = "text/javascript" src="signupPage.js"></script>
+    <title>Aniverse: Signup</title>
+
+    <!-- ===== boxicon CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+</head>
+
+
+
+<body>
+<div class="nav">
+    <img src = "css/aniverse-logo-white.png" class= "logo">
+
+    <div class = "main-links">
+        <a href="holder">Anime</a>
+        <a href = "holder1">Community</a>
+        <a href = "holder2">Friends</a>
+        <a href = "holder3">Read</a>
+    </div>
+
+    <div class = "account">
+        <a href = "searchPage.html" class="navigation-buttons">Search</a>
+        <a href = "login.html">Login</a>
+    </div>
+</div>
+
+<div class = "flex-container">
+
+    <div class = "leftImage">
+        <img src="css/zenitsu-left.png">
+    </div>
+
+    <div class = "main">
+
+        <div class = "slideshow-section">
+
+            <div class="slider">
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>JUJUTSU KAISEN:</h1>
+                        <h1> SEASON 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://rare-gallery.com/mocahbig/396613-wallpaper-jujutsu-kaisen-yuji-megumi-nobara-satoru.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>DEMON SLAYER: </h1>
+                        <h1>SWORDSMITH VILLAGE ARC</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://i0.wp.com/animeindia.in/wp-content/uploads/2023/02/image-1-5.jpg?fit=1280%2C720&ssl=1" style="height: 100%;">
+                </div>
+
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>ONE PIECE</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://sm.ign.com/ign_in/photo/b/best-anime/best-anime-series-on-netflix-right-now-june-2022_1ym8.jpg">
+                </div>
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>ATTACK ON TITAN:</h1>
+                        <h1>SEASON 4 PART 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://assets.puzzlefactory.com/puzzle/318/550/original.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>SPY X FAMILY: SEASON 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://sm.ign.com/t/ign_br/screenshot/default/spy-x-family_jk5a.1200.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <div class="dotsbox" style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+        <!--     <div class="Signup" style="text-align:center">-->
+        <div class="container-1">
+            <h1>Signup</h1>
+            <form  id="signup-forum">
+                <div class="col-1">
+                    <div class="field email-field">
+                        <div class="input-field-1">
+                            <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
+                        </div>
+                        <span class="error email-error">
+
+          </span>
+                    </div>
+                    <div class="field create-password">
+                        <p>Double click the lock to show/hide text.</p>
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Create password, must be 8 characters long. "
+                                    class="password"
+                            >
+                          <!--  <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                     <!--       <i class='bx bx-lock-open-alt' ></i>-->
+                        </div>
+
+                    </div>
+                    <div class="field confirm-password">
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="Confirm password, must be 8 characters long."
+                                    class="password"
+                            >
+                           <!-- <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                    <!--        <i class='bx bx-lock-open-alt' ></i>-->
+
+                        </div>
+                        <span class="error cPassword-error">
+
+          </span>
+                    </div>
+                    <div class="input-field-1 button">
+                        <input type="submit" id="createUser" value="Submit" />
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class= "rightImage">
+        <img src="css/tanjiro-right.png">
+    </div>
+
+</div>
+<!--<script src = "util/showPW.js"></script>-->
+<script src = "landingSlideshow.js"></script>
+</body>
