@@ -1,6 +1,7 @@
 
 * {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	box-sizing: border-box;
 }
 
 body {
@@ -399,16 +400,16 @@ img {
 /* ---- Popular Titles, Seasonal Titles, Suggested Titles Section  ---- */
 
 h2 {
-    width: 100%;
-    margin-bottom: 0;
-    margin-top: 50px;
-    margin-left: 30px;
+   width: 100%;
+   margin-bottom: 0;
+   margin-top: 50px;
+   margin-left: 30px;
 }
 
 hr {
-    background-color: purple;
-    height: 3px;                                /* Horizontal line and style */
-    border: none;
+   background-color: purple;
+    height: 3px;                                
+   border: none;
     width: 97%;
     margin-top: 20px;
 }
@@ -416,16 +417,43 @@ hr {
 .anime-container {
     margin: 20px auto;
     height: 325px;
+	width: 90%;
     overflow-x: hidden;
     overflow-y: hidden;
     align-items: center;
+	display: flex;
+	gap: 20px;
+	justify-content: center;
+	
 }
+
+/* ---- Anime Posters ---- */
+
 
 .anime-poster {
     height: 300px;
     max-height: 300px;
-    width: 200px;
+    width: 180px;
     text-align: center;
+	align-items: center;
+	animation: fadeInLeft ease 1.5s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes fadeInLeft {
+	0% {
+	   opacity: 0;
+	   transform: translateX(30px);
+	}
+	100% {
+	   opacity: 1;
+	   transform: translateX(0);
+	}
+ }
+
+.anime-poster:hover {
+	zoom: 101%;
 }
 
 .anime-poster img {
@@ -434,39 +462,80 @@ hr {
 
 .anime-poster h5 {
     padding: 2px auto;
-    margin: 5px;
+    margin: 5px; 
+	text-transform: uppercase;
 }
 
-/* ----- Tiny Slider Settings ----- */
+/* ---- Arrow Styling ---- */
 
-.tns-outer {
-    position: relative;             /* ----- Tiny Slider Settings ----- */
-    margin-left: -20px;             
+.button-outline-left {
+	position: absolute;
+	height: inheirt;
+	top: 39%;
+	left: 22%;
+	cursor: pointer;
 }
 
-[data-controls] {
-    border: 0;
-    padding: 0;
-    font-size: 30px;
-    position: absolute;             /* ----- Tiny Slider Settings ----- */
-    top: 45%;
-    margin-top: -20px;
-    z-index: 1;
-    background: transparent;
+.button-outline-right {
+	position: absolute;
+	height: inheirt;
+	top: 39%;
+	right: 21%;
+	cursor: pointer;
 }
 
-[data-controls="prev"] {
-    left: 40px;
+.left {
+	border: solid purple;
+    border-width: 0 4px 4px 0;
+    display: inline-block;
+    padding: 3px;
+	transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
 
-[data-controls="next"] {
-    right: 30px;
+.left:hover {
+	border: solid silver;
+	border-width: 0 4px 4px 0;
 }
 
-.tns-ovh {
-    width: 80%;
-    margin: auto;
+.right {
+	border: solid purple;
+    border-width: 4px 0px 0px 4px;
+    display: inline-block;
+    padding: 3px;
+	transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
 }
+
+.right:hover {
+	border: solid silver;
+	border-width: 4px 0px 0px 4px;
+}
+
+#prev-2 {
+	top: 82%;
+}
+
+#next-2 {
+	top: 82%;
+}
+
+#prev-3 {
+	top: 123%;
+}
+
+#next-3 {
+	top: 123%;
+}
+
+
+
+
+
+
+
+
+
 
 
 

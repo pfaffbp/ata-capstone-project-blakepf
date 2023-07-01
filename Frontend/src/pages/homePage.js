@@ -29,59 +29,208 @@ class HomePage extends BaseClass {
         let highRatedItems = "";
         console.log(response)
 
+        // (Popular) On load, the page renders the first 6 items of the list.
 
-        for(let i =0 ; i < 10; i++){
+        for (let i = 0; i < 6; i++) {
             console.log("Inside here")
+
             items += `
-         <div class="anime-poster-class">
-             <div class="anime-poster">
-              <a href="animepage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
-                 <div class="anime-description">
-                     <h5>${response[i].title}</h5>
-                 </div>
-             </div>
-         </div>
+            <div class="anime-poster-class">
+                <div class="anime-poster">
+                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                    <div class="anime-description">
+                        <h5>${response[i].title}</h5>
+                    </div>
+                </div>
+            </div>
             `;
 
         }
 
         workArea.innerHTML = items;
 
-        for(let i = 10 ; i < 20; i++){
+        // (Popular) When you click on the right arrow, loads the next 6 items using this function.
+
+        document.getElementById("next-1").addEventListener("click", function loadNext1() {
+            items = "";
+            for (let i = 5; i < 11; i++) {
+                console.log("Inside here")
+
+                items += `
+                <div class="anime-poster-class">
+                    <div class="anime-poster">
+                    <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                        <div class="anime-description">
+                            <h5>${response[i].title}</h5>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+            }
+
+            workArea.innerHTML = items;
+        }
+        )
+
+        // (Popular) When you click on the left arrow, loads the original 6 items using this function.
+
+        document.getElementById("prev-1").addEventListener("click", function loadPrev1() {
+            items = "";
+            for (let i = 0; i < 5; i++) {
+                console.log("Inside here")
+                items += `
+                    <div class="anime-poster-class">
+                        <div class="anime-poster">
+                        <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                            <div class="anime-description">
+                                <h5>${response[i].title}</h5>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+
+            workArea.innerHTML = items;
+        }
+        )
+
+
+        // (Seasonal) On load, the page renders the first 6 items of the list.
+
+        for (let i = 10; i < 16; i++) {
             console.log("Inside here")
+
             seasonalItems += `
-         <div class="anime-poster-class">
-             <div class="anime-poster">
-              <a href="animepage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
-                 <div class="anime-description">
-                     <h5>${response[i].title}</h5>
-                 </div>
-             </div>
-         </div>
-            `;}
+                <div class="anime-poster-class">
+                    <div class="anime-poster">
+                    <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                        <div class="anime-description">
+                            <h5>${response[i].title}</h5>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
         seasonAnime.innerHTML = seasonalItems;
 
-        for(let i = 20 ; i < 30; i++){
+        // (Seasonal) When you click on the right arrow, loads the next 6 items using this function.
+
+        document.getElementById("next-2").addEventListener("click", function loadNext2() {
+            seasonalItems = "";
+            for (let i = 16; i < 22; i++) {
+                console.log("Inside here")
+
+                seasonalItems += `
+                <div class="anime-poster-class">
+                    <div class="anime-poster">
+                    <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                        <div class="anime-description">
+                            <h5>${response[i].title}</h5>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+            }
+
+            seasonAnime.innerHTML = seasonalItems;
+        }
+        )
+
+        // (Popular) When you click on the left arrow, loads the original 6 items using this function.
+
+        document.getElementById("prev-2").addEventListener("click", function loadPrev2() {
+            seasonalItems = "";
+            for (let i = 10; i < 16; i++) {
+                console.log("Inside here")
+
+                seasonalItems += `
+                    <div class="anime-poster-class">
+                        <div class="anime-poster">
+                        <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                            <div class="anime-description">
+                                <h5>${response[i].title}</h5>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            seasonAnime.innerHTML = seasonalItems;
+        }
+        )
+
+
+        // (Highly Rated) On load, the page renders the first 6 items of the list.
+
+        for (let i = 22; i < 28; i++) {
             console.log("Inside here")
+
             highRatedItems += `
-         <div class="anime-poster-class">
-             <div class="anime-poster">
-             <a href="animepage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
-                 <div class="anime-description">
-                     <h5>${response[i].title}</h5>
-                 </div>
-             </div>
-         </div>
+                <div class="anime-poster-class">
+                    <div class="anime-poster">
+                    <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                        <div class="anime-description">
+                            <h5>${response[i].title}</h5>
+                        </div>
+                    </div>
+                </div>
             `;
         }
 
         highlyRatedAnime.innerHTML = highRatedItems;
 
+        // (Highly Rated) When you click on the right arrow, loads the next 6 items using this function.
+
+        document.getElementById("next-3").addEventListener("click", function loadNext2() {
+            highRatedItems = "";
+            for (let i = 28; i < 34; i++) {
+                console.log("Inside here")
+
+                highRatedItems += `
+                <div class="anime-poster-class">
+                    <div class="anime-poster">
+                    <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                        <div class="anime-description">
+                            <h5>${response[i].title}</h5>
+                        </div>
+                    </div>
+                </div>
+                `;
+
+            }
+
+            highlyRatedAnime.innerHTML = highRatedItems;
+        }
+        )
+
+        // (Highly Rated) When you click on the left arrow, loads the original 6 items using this function.
+
+        document.getElementById("prev-3").addEventListener("click", function loadPrev2() {
+            highRatedItems = "";
+            for (let i = 22; i < 28; i++) {
+                console.log("Inside here")
+
+                highRatedItems += `
+                    <div class="anime-poster-class">
+                        <div class="anime-poster">
+                        <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image} width="160px" height="90%"></a>
+                            <div class="anime-description">
+                                <h5>${response[i].title}</h5>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }
+            highlyRatedAnime.innerHTML = highRatedItems;
+        }
+        )
+
         let docs = document.querySelectorAll('.poster-click');
 
         docs.forEach(href => {
-            href.addEventListener('click', async function (){
-                // datasset("animeCode", href.value);
+            href.addEventListener('click', async function () {
                 sessionStorage.setItem("animeCode", href.alt);
             });
         });
@@ -92,10 +241,10 @@ class HomePage extends BaseClass {
 }
 
 
-    const main = async () =>{
-        const homePage = new HomePage();
-        homePage.mount();
-        console.log("mount");
-    };
+const main = async () => {
+    const homePage = new HomePage();
+    homePage.mount();
+    console.log("mount");
+};
 
 window.addEventListener('DOMContentLoaded', main);

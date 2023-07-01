@@ -14,7 +14,7 @@ module.exports = {
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
     searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
-    landingPage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
+    landingSlideshow: path.resolve(__dirname, 'src', 'styles', 'landingSlideshow.js')
   },
 
   output: {
@@ -61,7 +61,7 @@ module.exports = {
     }),
     new HtmlWebpackPlugin({
       template: './src/animepage.html',
-      filename: 'animepage.html',
+      filename: 'animePage.html',
       inject: false
     }),
 
