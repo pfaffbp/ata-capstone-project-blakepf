@@ -4,7 +4,13 @@
     <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
     <script type = "text/javascript" src="signupPage.js"></script>
     <title>Aniverse: Signup</title>
+
+    <!-- ===== boxicon CSS ===== -->
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
+
+
 
 <body>
 <div class="nav">
@@ -107,26 +113,23 @@
                             <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
                         </div>
                         <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
+
           </span>
                     </div>
                     <div class="field create-password">
+                        <p>Double click the lock to show/hide text.</p>
                         <div class="input-field-1">
                             <input
                                     type="password"
                                     id="password"
                                     placeholder="Create password, must be 8 characters long. "
                                     class="password"
-                            />
-                            <i class="bx bx-hide show-hide" ></i>
+                            >
+                          <!--  <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                     <!--       <i class='bx bx-lock-open-alt' ></i>-->
                         </div>
-                        <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-            Please enter at least 8 characters.
-            </p>
-          </span>
+
                     </div>
                     <div class="field confirm-password">
                         <div class="input-field-1">
@@ -134,13 +137,15 @@
                                     type="password"
                                     id="confirm-password"
                                     placeholder="Confirm password, must be 8 characters long."
-                                    class="cPassword"
-                            />
-                            <i class="bx bx-hide show-hide"></i>
+                                    class="password"
+                            >
+                           <!-- <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                    <!--        <i class='bx bx-lock-open-alt' ></i>-->
+
                         </div>
                         <span class="error cPassword-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Password don't match</p>
+
           </span>
                     </div>
                     <div class="input-field-1 button">
@@ -156,5 +161,6 @@
     </div>
 
 </div>
+<!--<script src = "util/showPW.js"></script>-->
 <script src = "landingSlideshow.js"></script>
 </body>

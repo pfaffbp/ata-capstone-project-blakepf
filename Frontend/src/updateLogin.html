@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="css/updateLogin.css">
     <script type = "text/javascript" src="updateLoginPage.js"></script>
     <title>Aniverse: Update Login</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
@@ -104,34 +105,33 @@
     <h1>Update Email</h1>
     <form  id="updateLogin-forum">
         <div class="col-1">
-        <div class="field updateEmail-field">
+        <div class="form-group updateEmail-field">
             <div class="input-field-1">
                 <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
             </div>
             <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
+
             <p class="error-text">Please enter a valid email</p>
           </span>
         </div>
-            <div class="field newEmail-field">
+            <div class="form-group newEmail-field">
                 <div class="input-field-1">
                     <input type="email" id="newEmail-entry" placeholder="Enter your new email" class="email" />
                 </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
+
             </div>
-            <div class="field newEmailConfirm-field">
+            <div class="form-group newEmailConfirm-field">
                 <div class="input-field-1">
-                    <input type="email" id="newEmailConfirm-entry" placeholder="Confirm your new email" class="email" />
+                    <input
+                            type="email"
+                            id="newEmailConfirm-entry"
+                            placeholder="Confirm your new email"
+                            class="email" />
+
                 </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
+
             </div>
-        <div class="field enter-password">
+        <div class="form-group enter-password">
             <div class="input-field-1">
                 <input
                         type="password"
@@ -139,29 +139,22 @@
                         placeholder="Enter Your password"
                         class="password"
                 />
-                <i class="bx bx-hide show-hide"></i>
+                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
             </div>
-            <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-            Please enter at least 8 characters.
-            </p>
-          </span>
+
         </div>
-        <div class="field confirm-password">
+        <div class="form-group confirm-password">
             <div class="input-field-1">
                 <input
                         type="password"
                         id="confirm-password"
                         placeholder="Confirm password"
-                        class="cPassword"
+                        class="password"
                 />
-                <i class="bx bx-hide show-hide"></i>
+                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+
             </div>
-            <span class="error cPassword-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Password don't match</p>
-          </span>
+
         </div>
         <div class="input-field-1 button">
             <input type="submit" id="updateEmailButton" value="Update Email" />
