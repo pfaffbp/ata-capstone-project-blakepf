@@ -3,7 +3,15 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+
 module.exports = {
+  resolve: {
+    fallback: {
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve("buffer"),
+      stream: require.resolve("stream-browserify")
+    },
+  },
   optimization: {
     usedExports: true
   },
@@ -15,8 +23,8 @@ module.exports = {
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
-
   },
+
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: '[name].js',
@@ -25,8 +33,9 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
-/*    openPage: 'http://localhost:8080',
-    disableHostCheck: true,*/
+
+    /*    openPage: 'http://localhost:8080',
+        disableHostCheck: true,*/
     proxy: [
       {
         context: [
@@ -82,7 +91,11 @@ module.exports = {
           to: path.resolve("dist/css")
         }
       ]
+
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+
   ]
+
 }
+
