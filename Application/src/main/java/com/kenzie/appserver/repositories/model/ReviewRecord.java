@@ -8,15 +8,19 @@ import org.springframework.data.annotation.Id;
 public class ReviewRecord {
 
     public static final String REVIEW_lOOK_UP = "ReviewLookUpGSI";
-    private int animeID;
 
+    public static final String AVERAGE_SCORE = "AverageScoreGsi";
+
+    public static final String USER_LOOK_UP = "UserLookUpGsi";
+
+    private int animeID;
     private String reviewID;
     private String userID;
     private int rating;
     private int postDate;
     private String review;
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = REVIEW_lOOK_UP, attributeName = "animeID")
+    @DynamoDBIndexHashKey(globalSecondaryIndexNames = {REVIEW_lOOK_UP, AVERAGE_SCORE}, attributeName = "animeID")
     public int getAnimeID() {
         return animeID;
     }
@@ -34,6 +38,7 @@ public class ReviewRecord {
     public void setReviewID(String reviewID) {
         this.reviewID = reviewID;
     }
+
     @DynamoDBAttribute(attributeName = "userID")
     public String getUserID() {
         return userID;
@@ -43,7 +48,7 @@ public class ReviewRecord {
         this.userID = userID;
     }
 
-    @DynamoDBAttribute(attributeName = "rating")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = AVERAGE_SCORE, attributeName = "rating")
     public int getRating() {
         return rating;
     }
@@ -52,7 +57,7 @@ public class ReviewRecord {
         this.rating = rating;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = REVIEW_lOOK_UP, attributeName = "postDate")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexNames = {REVIEW_lOOK_UP, USER_LOOK_UP}, attributeName = "postDate")
     public int getPostDate() {
         return postDate;
     }

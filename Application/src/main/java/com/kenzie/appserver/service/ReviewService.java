@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kenzie.appserver.controller.reviewModels.UserReviewPostRequest;
 import com.kenzie.appserver.repositories.ReviewRepository;
@@ -23,6 +24,10 @@ import static com.kenzie.appserver.repositories.model.ReviewRecord.REVIEW_lOOK_U
 
 @Service
 public class ReviewService {
+
+    private int animeId = 0;
+
+    private boolean lastPage = false;
     private ReviewRepository reviewRepository;
     private final DynamoDBMapper mapper;
 
@@ -53,9 +58,65 @@ public class ReviewService {
     }
 
 
-    public PaginatedQueryList<ReviewRecord> getReviewsForAnime(int id){
+//    public PaginatedQueryList<ReviewRecord> getReviewsForAnime(int id){
+//        Map<String, AttributeValue> valueMap = new HashMap<>();
+//        valueMap.put(":animeID", new AttributeValue().withN(String.valueOf(id)));
+//        valueMap.put(":postDate", new AttributeValue().withN(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)));
+//
+//        DynamoDBQueryExpression<ReviewRecord> queryExpression = new DynamoDBQueryExpression<ReviewRecord>()
+//                .withIndexName(REVIEW_lOOK_UP)
+//                .withConsistentRead(false)
+//                .withKeyConditionExpression("animeID = :animeID and postDate <= :postDate")
+//                .withExpressionAttributeValues(valueMap);
+//
+//
+//        PaginatedQueryList<ReviewRecord> reviewRecords = mapper.query(ReviewRecord.class, queryExpression);
+//
+//        return reviewRecords;
+//    }
+
+    public QueryResultPage<ReviewRecord> getReviewsForAnime(int id){
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":animeID", new AttributeValue().withN(String.valueOf(id)));
+        valueMap.put(":postDate", new AttributeValue().withN(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)));
+
+        DynamoDBQueryExpression<ReviewRecord> queryExpression = new DynamoDBQueryExpression<ReviewRecord>()
+                .withIndexName(REVIEW_lOOK_UP)
+                .withConsistentRead(false)
+                .withLimit(10)
+                .withKeyConditionExpression("animeID = :animeID and postDate <= :postDate")
+                .withExpressionAttributeValues(valueMap);
+
+
+        QueryResultPage<ReviewRecord> reviewRecords = mapper.queryPage(ReviewRecord.class, queryExpression);
+
+        return reviewRecords;
+    }
+
+    public QueryResultPage<ReviewRecord> getReviewsForAnime(int id, Map<String, AttributeValue> lastKey){
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":animeID", new AttributeValue().withN(String.valueOf(id)));
+        valueMap.put(":postDate", new AttributeValue().withN(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)));
+
+        if(lastKey.get("postDate").getN().equals("0")) {
+            QueryResultPage<ReviewRecord> reviewRecords = getReviewsForAnime(id);
+            return reviewRecords;
+        }else{
+            DynamoDBQueryExpression<ReviewRecord> queryExpression = new DynamoDBQueryExpression<ReviewRecord>()
+                    .withIndexName(REVIEW_lOOK_UP)
+                    .withConsistentRead(false)
+                    .withLimit(10)
+                    .withExclusiveStartKey(lastKey)
+                    .withKeyConditionExpression("animeID = :animeID and postDate <= :postDate")
+                    .withExpressionAttributeValues(valueMap);
+            QueryResultPage<ReviewRecord> reviewRecords = mapper.queryPage(ReviewRecord.class, queryExpression);
+            return reviewRecords;
+        }
+    }
+
+    public Integer calculateAverageRatingByAnime(int animeId){
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":animeID", new AttributeValue().withN(String.valueOf(animeId)));
         valueMap.put(":postDate", new AttributeValue().withN(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE)));
 
         DynamoDBQueryExpression<ReviewRecord> queryExpression = new DynamoDBQueryExpression<ReviewRecord>()
@@ -65,8 +126,13 @@ public class ReviewService {
                 .withExpressionAttributeValues(valueMap);
 
         PaginatedQueryList<ReviewRecord> reviewRecords = mapper.query(ReviewRecord.class, queryExpression);
-        return reviewRecords;
+        if(reviewRecords.isEmpty()){
+            return null;
+        }
+        int score = reviewRecords.stream().mapToInt(ReviewRecord::getRating).sum();
+        return score / reviewRecords.size();
     }
+
 
 //    public Review updateReview()  //need some other things for this.
 

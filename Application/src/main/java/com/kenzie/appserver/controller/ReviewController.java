@@ -1,21 +1,28 @@
 package com.kenzie.appserver.controller;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.kenzie.appserver.controller.reviewModels.AttributeValuesForReviews;
 import com.kenzie.appserver.controller.reviewModels.GetReviewsRequest;
 import com.kenzie.appserver.controller.reviewModels.ReviewResponse;
 import com.kenzie.appserver.controller.reviewModels.UserReviewPostRequest;
 import com.kenzie.appserver.repositories.model.ReviewRecord;
 import com.kenzie.appserver.service.ReviewService;
 import com.kenzie.appserver.service.model.Review;
+import org.checkerframework.checker.units.qual.A;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/review")
 public class ReviewController {
+
     private ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService){
@@ -35,16 +42,45 @@ public class ReviewController {
         return ResponseEntity.status(204).build();
     }
 
-    @GetMapping("/{animeID}")
-    public ResponseEntity<List<ReviewResponse>> reviewsFromAnimeID(@PathVariable int animeID){
-        PaginatedQueryList<ReviewRecord> reviewRecords = reviewService.getReviewsForAnime(animeID);
+//    @GetMapping("/{animeID}")
+//    public ResponseEntity<List<ReviewResponse>> reviewsFromAnimeID(@PathVariable int animeID){
+//        PaginatedQueryList<ReviewRecord> reviewRecords = reviewService.getReviewsForAnime(animeID);
+//
+//
+//        List<ReviewResponse> reviewResponseList = reviewRecords.stream()
+//                .map(this::reviewRecordToResponse)
+//                .collect(Collectors.toList());
+//
+//        return ResponseEntity.ok(reviewResponseList);
+//    }
 
+    @PostMapping("/limit")
+    public ResponseEntity<HashMap<Integer, Object>> reviewsFromAnimeID(@RequestBody GetReviewsRequest reviewsRequest){
+        QueryResultPage<ReviewRecord> reviewRecords
+                = reviewService.getReviewsForAnime(reviewsRequest.getAnimeID(),
+                convertValuesIntoExclusiveKey(reviewsRequest.getValuesForReviews()));
 
-        List<ReviewResponse> reviewResponseList = reviewRecords.stream()
+        AttributeValuesForReviews attributeValuesForReviews = extractValuesFromLastKey(reviewRecords.getLastEvaluatedKey());
+
+        List<ReviewResponse> reviewResponseList = reviewRecords.getResults()
+                .stream()
                 .map(this::reviewRecordToResponse)
                 .collect(Collectors.toList());
 
-        return ResponseEntity.ok(reviewResponseList);
+        HashMap<Integer, Object> hashMap = new HashMap<>();
+        hashMap.put(1, reviewResponseList);
+        hashMap.put(2, attributeValuesForReviews);
+
+        return ResponseEntity.ok(hashMap);
+    }
+
+    @GetMapping("/{animeID}")
+    public ResponseEntity<Integer> calculateAverageScore(@PathVariable int animeID){
+        Integer averageScore = reviewService.calculateAverageRatingByAnime(animeID);
+        if(averageScore == null){
+            return ResponseEntity.badRequest().build();
+        }
+        return ResponseEntity.ok(averageScore);
     }
 
     private ReviewResponse reviewToResponse(Review review){
@@ -69,5 +105,41 @@ public class ReviewController {
         reviewResponse.setPostDate(review.getPostDate());
 
         return reviewResponse;
+    }
+
+    private AttributeValuesForReviews extractValuesFromLastKey(Map<String, AttributeValue> attributeMap){
+        if(ifNull(attributeMap)){
+            return null;
+        }
+        String animeID = "animeID";
+        String postDate = "postDate";
+        AttributeValuesForReviews attributeValuesForReviews = new AttributeValuesForReviews();
+
+        for(Map.Entry<String, AttributeValue> valueMap : attributeMap.entrySet()){
+            if(valueMap.getKey().equals(animeID)){
+                attributeValuesForReviews.setAnimeID(Integer.parseInt(valueMap.getValue().getN()));
+            }else if(valueMap.getKey().equals(postDate)){
+                attributeValuesForReviews.setPostDate(Integer.parseInt(valueMap.getValue().getN()));
+            }else{
+                attributeValuesForReviews.setReviewID(valueMap.getValue().getS());
+            }
+        }
+        return attributeValuesForReviews;
+    }
+
+    private Map<String, AttributeValue> convertValuesIntoExclusiveKey(AttributeValuesForReviews attributes){
+        if(ifNull(attributes)){
+            return null;
+        }
+        Map<String, AttributeValue> exclusiveKey = new HashMap<>();
+        exclusiveKey.put("animeID", new AttributeValue().withN(String.valueOf(attributes.getAnimeID())));
+        exclusiveKey.put("postDate", new AttributeValue().withN(String.valueOf(attributes.getPostDate())));
+        exclusiveKey.put("reviewID", new AttributeValue(attributes.getReviewID()));
+
+        return exclusiveKey;
+    }
+
+    private boolean ifNull(Object obj){
+        return obj == null;
     }
 }

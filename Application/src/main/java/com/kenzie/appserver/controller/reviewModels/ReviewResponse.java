@@ -16,6 +16,8 @@ public class ReviewResponse {
     @JsonProperty("review")
     private String review;
 
+//    private int likes;
+
     public int getAnimeID() {
         return animeID;
     }
@@ -63,4 +65,12 @@ public class ReviewResponse {
     public void setReview(String review) {
         this.review = review;
     }
+
+//    public int getLikes() {
+//        return likes;
+//    }
+//
+//    public void setLikes(int likes) {
+//        this.likes = likes;
+//    }
 }
