@@ -24,11 +24,18 @@ public class LoginService {
         if (record.isPresent()) {
             return false;
         } else {
+            String userId = UUID.randomUUID().toString();
+
             LoginRecord loginRecord = new LoginRecord();
-            loginRecord.setUserId(UUID.randomUUID().toString());
+            loginRecord.setUserId(userId);
             loginRecord.setEmail(email);
             loginRecord.setPassword(password);
             loginRepository.save(loginRecord);
+
+        /*    UserRecros userRecord = new UserRecord;
+            userRecord.setEmail(email);
+            userRecord.setUserid(userId);
+            user*/
             return true;
         }
 
