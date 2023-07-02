@@ -15,13 +15,13 @@ public class LoginController {
 
     private LoginService loginService;
 
-    LoginController(LoginService loginService){
+    LoginController(LoginService loginService) {
         this.loginService = loginService;
     }
 
 
     @PostMapping("/createLogin")
-    public ResponseEntity<LoginResponse> createLogin(@RequestBody LoginCreateRequest loginCreateRequest){
+    public ResponseEntity<LoginResponse> createLogin(@RequestBody LoginCreateRequest loginCreateRequest) {
         boolean success = loginService.createLogin(loginCreateRequest.getEmail(), loginCreateRequest.getPassword());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -29,7 +29,7 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest){
+    public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String success = loginService.login(loginRequest.getEmail());
 
         if (success != null) {
@@ -42,9 +42,8 @@ public class LoginController {
     }
 
 
-
     @PutMapping("/updateEmail")
-    public ResponseEntity<LoginResponse> updateEmailByEmail (@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest){
+    public ResponseEntity<LoginResponse> updateEmailByEmail(@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest) {
         boolean success = loginService.updateEmailByEmail(loginUpdateLoginRequest.getEmail(),
                 loginUpdateLoginRequest.getNewEmail());
 
@@ -53,14 +52,14 @@ public class LoginController {
 
 
     @PutMapping("/changePassword")
-    public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest){
+    public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest) {
         boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(), loginUpdatePasswordRequest.getNewPassword());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
 
     @DeleteMapping("/deleteAccount")
-    public ResponseEntity<LoginResponse> deleteLoginByEmail(@RequestBody LoginDeleteRequest loginDeleteRequest){
+    public ResponseEntity<LoginResponse> deleteLoginByEmail(@RequestBody LoginDeleteRequest loginDeleteRequest) {
         boolean success = loginService.deleteLoginByEmail(loginDeleteRequest.getEmail(), loginDeleteRequest.getPassword());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
@@ -80,13 +79,3 @@ public class LoginController {
     }
 
 }
-}
-
-
-
-
-
-
-
-
-
