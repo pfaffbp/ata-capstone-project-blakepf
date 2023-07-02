@@ -190,6 +190,7 @@ public class CatalogController {
                 catalogResponse.getAverageScore(),
                 catalogResponse.getEpisodes(),
                 catalogResponse.getGenres());
+
         return anime;
     }
 }
