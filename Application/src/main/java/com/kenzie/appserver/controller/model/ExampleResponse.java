@@ -11,7 +11,6 @@ public class ExampleResponse {
 
     @JsonProperty("name")
     private String name;
-
     public String getId() {
         return id;
     }
