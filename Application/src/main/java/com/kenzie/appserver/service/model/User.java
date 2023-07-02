@@ -12,7 +12,6 @@ public class User {
     private String userId;
     private List<String> favoriteAnime;
     private String fullName;
-    //GSI
     private String displayName;
     private int age;
     private String bio;

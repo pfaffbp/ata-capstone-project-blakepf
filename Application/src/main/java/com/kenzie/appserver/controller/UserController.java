@@ -25,7 +25,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/{displayName}")
+    @GetMapping("/{displayName}/searchByDisplayName")
     public ResponseEntity<UserResponse> searchByDisplayName(@PathVariable("displayName") String displayName) {
         User user = userService.findUserByName(displayName);
 
@@ -37,7 +37,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping
+    @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<User> userList = userService.findAllUsers();
         if (userList == null ||  userList.isEmpty()) {
@@ -53,7 +53,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PutMapping
+    @PutMapping("/updateUser")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
         User user = new User(request.getUserId(), request.getEmail(), request.getFullName(), request.getAge(),
                 request.getFullName(), request.getBio());
@@ -65,7 +65,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping
+    @PostMapping("/addUser")
     public ResponseEntity<UserResponse> addNewUser(@RequestBody UserCreateRequest request) {
         User user = new User(request.getUserId(),request.getEmail(), request.getFullName(),
                 request.getAge(), request.getDisplayName(), request.getBio());
@@ -77,14 +77,14 @@ public class UserController {
         return ResponseEntity.created(URI.create("/user/" + response.getDisplayName())).body(response);
     }
 
-    @DeleteMapping("/{displayName}")
+    @DeleteMapping("/{displayName}/deleteByDisplayName")
     public ResponseEntity<UserResponse> deleteUserByDisplayName(@PathVariable("displayName") String displayName) {
         userService.deleteUser(displayName);
 
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("/{displayName}/friend/{friendFullName}")
+    @PostMapping("/{displayName}/addFriend/{friendFullName}")
     public ResponseEntity<UserResponse> addFriend(
             @PathVariable("displayName") String displayName,
             @PathVariable("friendFullName") String friendDisplayName
@@ -104,7 +104,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{displayName}/friend/{friendFullName}")
+    @DeleteMapping("/{displayName}/removeFriend/{friendFullName}")
     public ResponseEntity<UserResponse> removeFriend(
             @PathVariable("displayName") String displayName,
             @PathVariable("friendFullName") String friendFullName
@@ -124,7 +124,7 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{displayName}/favorite")
+    @PostMapping("/{displayName}/addFavorite/addFavorite")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
             @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
@@ -148,7 +148,7 @@ public class UserController {
         }
     }
 
-    @DeleteMapping("/{displayName}/favorite/{animeId}")
+    @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
     public ResponseEntity<UserResponse> removeFavorite(
             @PathVariable("displayName") String displayName,
             @PathVariable("animeId") String animeId

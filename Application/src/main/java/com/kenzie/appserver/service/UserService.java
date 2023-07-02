@@ -17,7 +17,6 @@ import java.util.List;
 public class UserService {
     private UserRepository userRepository;
     private CacheUserStore cache;
-
     private CatalogRepository animeRepository;
 
     public UserService(UserRepository userRepository, CacheUserStore cache) {
@@ -54,7 +53,6 @@ public class UserService {
     }
     public User addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
-
         userRecord.setUserId(user.getUserId());
         userRecord.setEmail(user.getEmail());
         userRecord.setFullName(user.getFullName());
@@ -62,7 +60,6 @@ public class UserService {
         userRecord.setAge(user.getAge());
         userRecord.setBio(user.getBio());
         userRepository.save(userRecord);
-
         return user;
     }
     public void updateUser(User user) {
