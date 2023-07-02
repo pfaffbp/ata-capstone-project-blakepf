@@ -24,29 +24,32 @@ public class LoginService {
         if (record.isPresent()) {
             return false;
         } else {
+            String userId = UUID.randomUUID().toString();
+
             LoginRecord loginRecord = new LoginRecord();
-            loginRecord.setUserId(UUID.randomUUID().toString());
+            loginRecord.setUserId(userId);
             loginRecord.setEmail(email);
             loginRecord.setPassword(password);
             loginRepository.save(loginRecord);
+
+        /*    UserRecros userRecord = new UserRecord;
+            userRecord.setEmail(email);
+            userRecord.setUserid(userId);
+            user*/
             return true;
         }
 
     }
 
-    public Login login(String email, String password) {
+    public String login(String email) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
         if (record.isPresent()) {
-            LoginRecord loginRecord = record.get();
-            if (loginRecord.getPassword().equals(password)) {
-                return new Login(email, password);
-            } else {
-                return null;
-            }
+            return record.get().getPassword();
         } else {
             return null;
         }
     }
+
 
     public boolean deleteLoginByEmail(String email, String password) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
@@ -58,9 +61,9 @@ public class LoginService {
         }
     }
 
-    public boolean updatePasswordByEmail(String email, String password, String updatePassword) {
+    public boolean updatePasswordByEmail(String email, String updatePassword) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
-        if (record.isPresent() && record.get().getPassword().equals(password)) {
+        if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
             loginRecord.setPassword(updatePassword);
             loginRepository.save(loginRecord);
@@ -70,9 +73,9 @@ public class LoginService {
         }
     }
 
-    public boolean updateEmailByEmail(String email, String updatedEmail, String password) {
+    public boolean updateEmailByEmail(String email, String updatedEmail) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
-        if (record.isPresent() && record.get().getPassword().equals(password)) {
+        if (record.isPresent()) {
             LoginRecord loginRecord = record.get();
             loginRecord.setEmail(updatedEmail);
             loginRepository.save(loginRecord);
@@ -90,5 +93,6 @@ public class LoginService {
             return null;
         }
     }
+
 
 }

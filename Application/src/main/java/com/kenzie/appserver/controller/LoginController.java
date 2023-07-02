@@ -29,16 +29,24 @@ public class LoginController {
 
 
     @PostMapping("/login")
-    public ResponseEntity<Login> login(@RequestBody @Valid LoginRequest loginRequest){
-        Login login =  loginService.login(loginRequest.getEmail(), loginRequest.getPassword());
-        return login != null ? ResponseEntity.ok(login) : ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest){
+        String success = loginService.login(loginRequest.getEmail());
+
+        if (success != null) {
+            LoginGetResponse response = new LoginGetResponse();
+            response.setPassword(success);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
+
 
 
     @PutMapping("/updateEmail")
     public ResponseEntity<LoginResponse> updateEmailByEmail (@RequestBody LoginUpdateLoginRequest loginUpdateLoginRequest){
         boolean success = loginService.updateEmailByEmail(loginUpdateLoginRequest.getEmail(),
-                loginUpdateLoginRequest.getNewEmail(), loginUpdateLoginRequest.getPassword());
+                loginUpdateLoginRequest.getNewEmail());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
@@ -46,8 +54,7 @@ public class LoginController {
 
     @PutMapping("/changePassword")
     public ResponseEntity<LoginResponse> updatePasswordByEmail(@RequestBody LoginUpdatePasswordRequest loginUpdatePasswordRequest){
-        boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(),
-                loginUpdatePasswordRequest.getPassword(), loginUpdatePasswordRequest.getNewPassword());
+        boolean success = loginService.updatePasswordByEmail(loginUpdatePasswordRequest.getEmail(), loginUpdatePasswordRequest.getNewPassword());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
@@ -71,4 +78,15 @@ public class LoginController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
 }
+}
+
+
+
+
+
+
+
+
+

@@ -41,14 +41,10 @@ class LoginControllerTest {
     }
 
 
-
-
-
     @Test
     void testUpdatePasswordByEmail() throws Exception {
         LoginUpdatePasswordRequest request = new LoginUpdatePasswordRequest();
         request.setEmail("test@example.com");
-        request.setPassword("password");
         request.setNewPassword("newpassword");
 
         mvc.perform(put("/login/changePassword")
