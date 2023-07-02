@@ -17,7 +17,6 @@ module.exports = {
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-    LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
     searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
