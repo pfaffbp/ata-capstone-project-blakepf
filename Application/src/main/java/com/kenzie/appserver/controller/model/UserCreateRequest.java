@@ -14,18 +14,40 @@ public class UserCreateRequest {
         private List<User> friends;
         @JsonProperty("favoriteAnime")
         private List<Anime> favoriteAnime;
-        @NotEmpty
         @JsonProperty("fullName")
         private String fullName;
         @JsonProperty("age")
         private int age;
         @JsonProperty("bio")
         private String bio;
-
+        @NotEmpty
         @JsonProperty("displayName")
         private String displayName;
 
-        public String getFullName() {
+        @NotEmpty
+        @JsonProperty("userId")
+        private String userId;
+
+        @JsonProperty("email")
+        private String email;
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getFullName() {
             return fullName;
         }
 

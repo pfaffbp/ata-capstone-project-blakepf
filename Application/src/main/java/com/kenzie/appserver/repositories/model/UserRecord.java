@@ -2,6 +2,7 @@ package com.kenzie.appserver.repositories.model;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
@@ -11,14 +12,34 @@ import java.util.Objects;
 
 @DynamoDBTable(tableName = "UserTable")
 public class UserRecord {
-    private List<User> friends;
-    private List<Anime> favoriteAnime;
+    private List<String> friends;
+
+    private String email;
+    private String userId;
+    private List<String> favoriteAnime;
     private String fullName;
     private String displayName;
     private int age;
     private String bio;
+    @DynamoDBAttribute(attributeName = "email")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "email", attributeName = "email")
+    public String getEmail() {
+        return email;
+    }
 
-    @DynamoDBHashKey(attributeName = "FullName")
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    @DynamoDBHashKey(attributeName = "userId")
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    @DynamoDBAttribute(attributeName = "fullName")
     public String getFullName() {
         return fullName;
     }
@@ -26,25 +47,25 @@ public class UserRecord {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    @DynamoDBAttribute(attributeName = "Friends")
-    public List<User> getFriends() {
+    @DynamoDBAttribute(attributeName = "friends")
+    public List<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<String> friends) {
         this.friends = friends;
     }
 
-    @DynamoDBAttribute(attributeName = "FavoriteAnime")
-    public List<Anime> getFavoriteAnime() {
+    @DynamoDBAttribute(attributeName = "favoriteAnime")
+    public List<String> getFavoriteAnime() {
         return favoriteAnime;
     }
 
-    public void setFavoriteAnime(List<Anime> favoriteAnime) {
+    public void setFavoriteAnime(List<String> favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
     }
 
-    @DynamoDBAttribute(attributeName = "Age")
+    @DynamoDBAttribute(attributeName = "age")
     public int getAge() {
         return age;
     }
@@ -53,7 +74,7 @@ public class UserRecord {
         this.age = age;
     }
 
-    @DynamoDBAttribute(attributeName = "Bio")
+    @DynamoDBAttribute(attributeName = "bio")
     public String getBio() {
         return bio;
     }
@@ -61,7 +82,8 @@ public class UserRecord {
     public void setBio(String bio) {
         this.bio = bio;
     }
-    @DynamoDBAttribute(attributeName = "DisplayName")
+    @DynamoDBAttribute(attributeName = "displayName")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = "displayName", attributeName = "displayName")
     public String getDisplayName() {return displayName;}
 
     public void setDisplayName(String displayName) {

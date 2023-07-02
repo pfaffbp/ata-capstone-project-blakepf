@@ -24,18 +24,19 @@ public class UserService {
         this.userRepository = userRepository;
         this.cache = cache;
     }
-    public User findUserByName(String fullName) {
-        User foundUser = cache.get(fullName);
+    public User findUserByName(String displayName) {
+        User foundUser = cache.get(displayName);
 
         if(foundUser != null) {
             return foundUser;
         }
         User storedUser = userRepository
-                .findById(fullName)
-                .map(user -> new User(user.getFullName(), user.getAge(), user.getDisplayName(), user.getBio()))
+                .findById(displayName)
+                .map(user -> new User(user.getUserId(), user.getEmail(), user.getFullName(),
+                        user.getAge(), user.getDisplayName(), user.getBio()))
                 .orElse(null);
         if (storedUser != null) {
-            cache.add(storedUser.getFullName(), storedUser);
+            cache.add(storedUser.getDisplayName(), storedUser);
         }
         return storedUser;
     }
@@ -45,7 +46,8 @@ public class UserService {
         Iterable<UserRecord> userIterator = userRepository.findAll();
 
         for(UserRecord record : userIterator) {
-            usersList.add(new User(record.getFullName(), record.getAge(), record.getDisplayName(), record.getBio()));
+            usersList.add(new User(record.getUserId(), record.getEmail(), record.getFullName(), record.getAge(),
+                    record.getDisplayName(), record.getBio()));
         }
 
         return usersList;
@@ -53,6 +55,8 @@ public class UserService {
     public User addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
 
+        userRecord.setUserId(user.getUserId());
+        userRecord.setEmail(user.getEmail());
         userRecord.setFullName(user.getFullName());
         userRecord.setDisplayName(user.getDisplayName());
         userRecord.setAge(user.getAge());
@@ -62,9 +66,10 @@ public class UserService {
         return user;
     }
     public void updateUser(User user) {
-        if (userRepository.existsById(user.getFullName())) {
+        if (userRepository.existsById(user.getDisplayName())) {
             UserRecord userRecord = new UserRecord();
-
+            userRecord.setUserId(user.getUserId());
+            userRecord.setEmail(user.getEmail());
             userRecord.setFullName(user.getFullName());
             userRecord.setDisplayName(user.getDisplayName());
             userRecord.setAge(user.getAge());
@@ -74,81 +79,81 @@ public class UserService {
             cache.evict(user.getFullName());
         }
     }
-    public void deleteUser(String fullName) {
-        userRepository.deleteById(fullName);
-        cache.evict(fullName);
+    public void deleteUser(String displayName) {
+        userRepository.deleteById(displayName);
+        cache.evict(displayName);
     }
 
 
-    public List<Anime> addNewFavorite(User user, Anime anime) {
-        UserRecord existingUser = userRepository.findById(user.getFullName()).orElse(null);
-        CatalogRecord existingAnime = animeRepository.findById(anime.getAnimeId()).orElse(null);
+    public List<String> addNewFavorite(String displayName, String animeId) {
+        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (user.getFavoriteAnime().contains(anime)) {
+        if (existingUser.getFavoriteAnime().contains(animeId)) {
             throw new IllegalArgumentException("Anime is already in user's favorites.");
         }
 
-        user.getFavoriteAnime().add(anime);
+        existingUser.getFavoriteAnime().add(animeId);
 
-        return user.getFavoriteAnime();
+        return existingUser.getFavoriteAnime();
     }
-    public void removeFavorite(User user, Anime anime) {
-        UserRecord existingUser = userRepository.findById(user.getFullName()).orElse(null);
-        CatalogRecord existingAnime = animeRepository.findById(anime.getAnimeId()).orElse(null);
+    public void removeFavorite(String displayName, String animeId) {
+        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (!existingUser.getFavoriteAnime().contains(anime)) {
+        if (!existingUser.getFavoriteAnime().contains(animeId)) {
             throw new IllegalArgumentException("Anime is not in user's favorites.");
         }
 
-        user.getFavoriteAnime().remove(anime);
+        existingUser.getFavoriteAnime().remove(animeId);
     }
 
-    public List<User> addFriend(User user, User friend) {
-        if (user.getFullName().equals(friend.getFullName())) {
+    public List<String> addFriend(String userDisplayName, String friendDisplayName) {
+        if (userDisplayName.equals(friendDisplayName)) {
             throw new IllegalArgumentException("Cannot add oneself as a friend.");
         }
 
-        UserRecord existingUser = userRepository.findById(user.getFullName()).orElse(null);
-        UserRecord existingFriend = userRepository.findById(friend.getFullName()).orElse(null);
+        UserRecord existingUser = userRepository.findById(userDisplayName).orElse(null);
+        UserRecord existingFriend = userRepository.findById(friendDisplayName).orElse(null);
 
         if (existingUser == null || existingFriend == null) {
             throw new IllegalArgumentException("One or both users do not exist.");
         }
 
-        if (user.getFriends().contains(friend)) {
+        if (existingUser.getFriends().contains(existingFriend.getDisplayName())) {
             throw new IllegalArgumentException("Users are already friends.");
         }
 
-        user.getFriends().add(friend);
-        friend.getFriends().add(user);
+        existingUser.getFriends().add(friendDisplayName);
+        existingFriend.getFriends().add(userDisplayName);
 
-        return user.getFriends();
+        return existingUser.getFriends();
     }
-    public void removeFriend(User user, User friend) {
-        if (user.getFullName().equals(friend.getFullName())) {
+    public void removeFriend(String userDisplayName, String friendDisplayName) {
+        if (userDisplayName.equals(friendDisplayName)) {
             throw new IllegalArgumentException("Cannot remove oneself as a friend.");
         }
 
-        UserRecord existingUser = userRepository.findById(user.getFullName()).orElse(null);
-        UserRecord existingFriend = userRepository.findById(friend.getFullName()).orElse(null);
+        UserRecord existingUser = userRepository.findById(userDisplayName).orElse(null);
+        UserRecord existingFriend = userRepository.findById(friendDisplayName).orElse(null);
 
         if (existingUser == null || existingFriend == null) {
             throw new IllegalArgumentException("One or both users do not exist.");
         }
 
-        if (!existingUser.getFriends().contains(friend)) {
+        if (!existingUser.getFriends().contains(friendDisplayName)) {
             throw new IllegalArgumentException("Users are not friends.");
         }
 
-        existingUser.getFriends().remove(friend);
-        existingFriend.getFriends().remove(user);
+        existingUser.getFriends().remove(friendDisplayName);
+        existingFriend.getFriends().remove(userDisplayName);
     }
 }

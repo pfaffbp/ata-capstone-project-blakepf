@@ -9,9 +9,9 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
     @JsonProperty("friends")
-    private List<User> friends;
+    private List<String> friends;
     @JsonProperty("favoriteAnime")
-    private List<Anime> favoriteAnime;
+    private List<String> favoriteAnime;
     @JsonProperty("fullName")
     private String fullName;
     @JsonProperty("age")
@@ -21,6 +21,28 @@ public class UserResponse {
     @JsonProperty("displayName")
     private String displayName;
 
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("userId")
+    private String userId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
     public String getFullName() {
         return fullName;
     }
@@ -29,19 +51,19 @@ public class UserResponse {
         this.fullName = fullName;
     }
 
-    public List<User> getFriends() {
+    public List<String> getFriends() {
         return friends;
     }
 
-    public void setFriends(List<User> friends) {
+    public void setFriends(List<String> friends) {
         this.friends = friends;
     }
 
-    public List<Anime> getFavoriteAnime() {
+    public List<String> getFavoriteAnime() {
         return favoriteAnime;
     }
 
-    public void setFavoriteAnime(List<Anime> favoriteAnime) {
+    public void setFavoriteAnime(List<String> favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
     }
 
