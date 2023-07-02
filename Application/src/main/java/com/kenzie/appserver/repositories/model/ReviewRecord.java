@@ -39,7 +39,7 @@ public class ReviewRecord {
         this.reviewID = reviewID;
     }
 
-    @DynamoDBAttribute(attributeName = "userID")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = USER_LOOK_UP, attributeName = "userID")
     public String getUserID() {
         return userID;
     }
