@@ -95,13 +95,11 @@ public class UserRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRecord that = (UserRecord) o;
-        return age == that.age && friends.equals(that.friends) && favoriteAnime.equals(that.favoriteAnime)
-                && fullName.equals(that.fullName) && bio.equals(that.bio);
+        return age == that.age && Objects.equals(friends, that.friends) && Objects.equals(email, that.email) && userId.equals(that.userId) && Objects.equals(favoriteAnime, that.favoriteAnime) && Objects.equals(fullName, that.fullName) && displayName.equals(that.displayName) && Objects.equals(bio, that.bio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(friends, favoriteAnime, fullName, age, bio);
+        return Objects.hash(friends, email, userId, favoriteAnime, fullName, displayName, age, bio);
     }
-
 }
