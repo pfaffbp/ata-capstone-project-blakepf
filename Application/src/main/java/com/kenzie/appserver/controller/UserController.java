@@ -1,16 +1,15 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.FavoriteAnimeRequest;
-import com.kenzie.appserver.controller.model.UserCreateRequest;
-import com.kenzie.appserver.controller.model.UserResponse;
-import com.kenzie.appserver.controller.model.UserUpdateRequest;
+import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
@@ -40,7 +39,7 @@ public class UserController {
     @GetMapping
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<User> userList = userService.findAllUsers();
-        if (userList == null ||  userList.isEmpty()) {
+        if (userList == null || userList.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
@@ -67,7 +66,7 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<UserResponse> addNewUser(@RequestBody UserCreateRequest request) {
-        User user = new User(request.getUserId(),request.getEmail(), request.getFullName(),
+        User user = new User(request.getUserId(), request.getEmail(), request.getFullName(),
                 request.getAge(), request.getDisplayName(), request.getBio());
 
         userService.addNewUser(user);
@@ -128,7 +127,7 @@ public class UserController {
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
             @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
-            ) {
+    ) {
         User user = userService.findUserByName(displayName);
 
         if (user == null) {
@@ -179,4 +178,20 @@ public class UserController {
         response.setDisplayName(user.getDisplayName());
         return response;
     }
+
+    @PostMapping("/{displayName}")
+    public ResponseEntity<UserNicknameResponse> checkNicknameUniqueness(@PathVariable String displayName) {
+        String nickname = userService.checkNicknameUniqueness(displayName);
+        if (nickname != null) {
+            UserNicknameResponse response = new UserNicknameResponse();
+            response.setDisplayName(nickname);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+    }
 }
+
+
+

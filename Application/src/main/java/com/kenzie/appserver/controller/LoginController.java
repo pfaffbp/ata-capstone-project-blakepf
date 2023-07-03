@@ -22,7 +22,8 @@ public class LoginController {
 
     @PostMapping("/createLogin")
     public ResponseEntity<LoginResponse> createLogin(@RequestBody LoginCreateRequest loginCreateRequest) {
-        boolean success = loginService.createLogin(loginCreateRequest.getEmail(), loginCreateRequest.getPassword());
+        boolean success = loginService.createLogin(loginCreateRequest.getEmail(), loginCreateRequest.getPassword(),
+                loginCreateRequest.getNickname());
 
         return success ? ResponseEntity.status(HttpStatus.ACCEPTED).build() : ResponseEntity.status(HttpStatus.CONFLICT).build();
     }
