@@ -37,14 +37,7 @@ export default class ProfileClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-    async getUserDisplayName(errorCallback) {
-        try {
-            const response = await this.client.get(`/user/${email}`);
-            return response.data;
-        } catch (error) {
-            this.handleError("getUserDisplayName", error, errorCallback)
-        }
-    }
+
 
 
     /**

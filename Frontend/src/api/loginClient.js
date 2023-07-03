@@ -15,7 +15,7 @@ export default class LoginClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'getLogin'];
+        const methodsToBind = ['clientLoaded', 'getLogin', 'getUserDisplayName'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -56,6 +56,17 @@ export default class LoginClient extends BaseClass {
             }
         } catch (error) {
             this.handleError("getLogin", error, errorCallback);
+        }
+    }
+
+    async getUserDisplayName(email, errorCallback) {
+        try {
+            const response = await this.client.get(`/user/${email}`);
+            console.log("client side response for display name" + response);
+            console.log("this is the data" + response.data.displayName);
+            return response.data.displayName;
+        } catch (error) {
+            this.handleError("getUserDisplayName", error, errorCallback)
         }
     }
 
