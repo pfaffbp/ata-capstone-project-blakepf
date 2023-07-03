@@ -13,7 +13,6 @@ class SearchPage extends BaseClass{
 
     async mount() {
         document.getElementById("search-form").addEventListener("submit", this.renderSearchPage);
-<<<<<<< HEAD
         this.client = new AnimeClient();
     }
 
@@ -27,7 +26,6 @@ class SearchPage extends BaseClass{
         console.log(searchValue);
 
         const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
-=======
         document.getElementById("genre-form").addEventListener("submit", this.renderSearchPage);
         this.client = new AnimeClient();
     }
@@ -47,7 +45,7 @@ class SearchPage extends BaseClass{
 
         // const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
         const newResponse = await this.client.getAnimeByGenre(genreIntoString, this.errorHandler);
->>>>>>> juvisbranch
+
 
         let items = "";
 
@@ -60,11 +58,6 @@ class SearchPage extends BaseClass{
          `;
         }
 
-<<<<<<< HEAD
-=======
-      
-
->>>>>>> juvisbranch
         workArea.innerHTML = items;
 
         document.querySelectorAll(".poster-click").forEach(poster =>{
