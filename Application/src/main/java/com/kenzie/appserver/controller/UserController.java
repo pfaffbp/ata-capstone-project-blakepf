@@ -55,7 +55,7 @@ public class UserController {
     @PutMapping("/updateUser")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
         User user = new User(request.getUserId(), request.getEmail(), request.getFullName(), request.getAge(),
-                request.getFullName(), request.getBio());
+                request.getDisplayName(), request.getBio());
 
         userService.updateUser(user);
 
@@ -177,6 +177,19 @@ public class UserController {
         response.setFriends(user.getFriends());
         response.setDisplayName(user.getDisplayName());
         return response;
+    }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UserDisplayNameResponse> fineDisplayNameByEmail(@PathVariable String email) {
+        String displayName = userService.fineDisplayNameByEmail(email);;
+
+        if (displayName != null) {
+            UserDisplayNameResponse response = new UserDisplayNameResponse();
+            response.setDisplayName(displayName);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
     }
 
 }
