@@ -34,24 +34,36 @@ export default class SignupClient extends BaseClass {
      * Gets the concert for the given ID.
      * @param email
      * @param password
+     * @param nickname
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
 
 
 
-    async createLogin(email, password, errorCallback) {
+    async createLogin(email, password, nickname, errorCallback) {
         try {
             const response = await this.client.post(`/login/createLogin`, {
                 email: email,
                 password: password,
+                nickname: nickname
             });
             return response.data;
         } catch (error) {
+            console.log("this is the error " + error);
+            if (error.response.status === 449){
+                alert("Nickname already exists.")
+            }else if (error.response.status === 444){
+                alert("Email already exists.")
+            }else
             this.handleError("createLogin", error, errorCallback);
             throw error;
         }
     }
+
+
+
+
 
     /**
      * Helper method to log the error and run any error functions.

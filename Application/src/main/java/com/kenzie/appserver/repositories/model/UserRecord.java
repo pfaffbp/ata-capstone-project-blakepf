@@ -19,7 +19,7 @@ public class UserRecord {
     private List<String> favoriteAnime;
     private String fullName;
     private String displayName;
-    private int age;
+    private Integer age;
     private String bio;
     @DynamoDBAttribute(attributeName = "email")
     @DynamoDBIndexHashKey(globalSecondaryIndexName = "email", attributeName = "email")
@@ -66,11 +66,11 @@ public class UserRecord {
     }
 
     @DynamoDBAttribute(attributeName = "age")
-    public int getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
