@@ -92,6 +92,7 @@ public class CatalogService {
         catalogRecord.setRating(anime.getRating());
         catalogRecord.setEpisodes(anime.getEpisodes());
         catalogRecord.setGenre(anime.getGenre());
+
         catalogRepository.save(catalogRecord);
 
         return anime;
@@ -143,12 +144,6 @@ public class CatalogService {
         Map<String, AttributeValue> valueMap = new HashMap<>();
         valueMap.put(":Popularity", new AttributeValue().withN("200000"));
 
-//        DynamoDBQueryExpression<CatalogRecord> queryExpression = new DynamoDBQueryExpression<CatalogRecord>()
-//                .withIndexName(CatalogRecord.POPULAR_ANIME_INDEX)
-//                .withConsistentRead(false)
-//                .withKeyConditionExpression("Popularity >= :Popularity")
-//                .withExpressionAttributeValues(valueMap);
-
         DynamoDBScanExpression dynamoDBScanExpression = new DynamoDBScanExpression()
                 .withFilterExpression("Popularity >= :Popularity")
                 .withExpressionAttributeValues(valueMap);
@@ -164,13 +159,6 @@ public class CatalogService {
         DynamoDBScanExpression queryExpression = new DynamoDBScanExpression()
                 .withFilterExpression("Rating >= :Rating")
                 .withExpressionAttributeValues(valueMap);
-
-//        DynamoDBQueryExpression<CatalogRecord> queryExpression = new DynamoDBQueryExpression<CatalogRecord>()
-//                .withIndexName(CatalogRecord.HIGHLY_RATED_INDEX)
-//                .withConsistentRead(false)
-//                .withKeyConditionExpression("Rating > :Rating")
-//                .withExpressionAttributeValues(valueMap);
-
 
         List<CatalogRecord> catalogRecords = mapper.scan(CatalogRecord.class, queryExpression);
         return catalogRecords;

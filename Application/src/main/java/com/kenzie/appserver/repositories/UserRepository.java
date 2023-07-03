@@ -10,5 +10,5 @@ import java.util.Optional;
 @EnableScan
 public interface UserRepository extends CrudRepository<UserRecord, String> {
 
-    Optional<UserRecord> findByDisplayName(String nickname);
+    Optional<UserRecord> findByDisplayName(String displayName);
 }

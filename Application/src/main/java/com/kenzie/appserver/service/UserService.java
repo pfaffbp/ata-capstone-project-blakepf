@@ -16,7 +16,6 @@ import java.util.Optional;
 public class UserService {
     private UserRepository userRepository;
     private CacheUserStore cache;
-
     private CatalogRepository animeRepository;
 
     public UserService(UserRepository userRepository, CacheUserStore cache) {
@@ -30,7 +29,7 @@ public class UserService {
             return foundUser;
         }
         User storedUser = userRepository
-                .findById(displayName)
+                .findByDisplayName(displayName)
                 .map(user -> new User(user.getUserId(), user.getEmail(), user.getFullName(),
                         user.getAge(), user.getDisplayName(), user.getBio()))
                 .orElse(null);
@@ -51,9 +50,8 @@ public class UserService {
 
         return usersList;
     }
-    public User addNewUser(User user) {
+    public void addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
-
         userRecord.setUserId(user.getUserId());
         userRecord.setEmail(user.getEmail());
         userRecord.setFullName(user.getFullName());
@@ -61,8 +59,6 @@ public class UserService {
         userRecord.setAge(user.getAge());
         userRecord.setBio(user.getBio());
         userRepository.save(userRecord);
-
-        return user;
     }
     public void updateUser(User user) {
         if (userRepository.existsById(user.getDisplayName())) {
