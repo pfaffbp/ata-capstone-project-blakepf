@@ -179,18 +179,6 @@ public class UserController {
         return response;
     }
 
-    @PostMapping("/{displayName}")
-    public ResponseEntity<UserNicknameResponse> checkNicknameUniqueness(@PathVariable String displayName) {
-        String nickname = userService.checkNicknameUniqueness(displayName);
-        if (nickname != null) {
-            UserNicknameResponse response = new UserNicknameResponse();
-            response.setDisplayName(nickname);
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-    }
 }
 
 

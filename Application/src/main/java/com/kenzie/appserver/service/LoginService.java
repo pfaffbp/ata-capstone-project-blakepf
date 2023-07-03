@@ -26,13 +26,14 @@ public class LoginService {
         this.userRepository = userRepository;
     }
 
-    public boolean createLogin(String email, String password, String nickname) {
+    public int createLogin(String email, String password, String nickname) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
         Optional<UserRecord> userRecordCheck = userRepository.findByDisplayName(nickname);
 
         if (record.isPresent()) {
-            return false;
+            return 444;
         }else if (userRecordCheck.isPresent()){
+            System.out.println("from login service");
             throw new NicknameAlreadyExistsException(nickname);
 
         } else {
@@ -49,7 +50,7 @@ public class LoginService {
             userRecord.setUserId(userId);
             userRecord.setDisplayName(nickname);
             userRepository.save(userRecord);
-            return true;
+            return 200;
         }
 
     }

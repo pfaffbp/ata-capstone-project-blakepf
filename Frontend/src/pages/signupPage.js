@@ -4,6 +4,8 @@ import SignupClient from "../api/signupClient";
 import bcrypt from 'bcryptjs';
 
 
+
+
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -49,7 +51,7 @@ class SignupPage extends BaseClass {
         try {
 
             await this.validateUserInput(passInput, cPassInput);
-         //   await this.checkIfNicknameExists(nickname);
+          //  await this.checkIfNicknameExists(nickname);
             const validEmail = await this.validEmailFormat(emailInput)
             const hashedPassword = await bcrypt.hash(passInput, 10);
             const login = await this.client.createLogin(validEmail, hashedPassword, nickname);
@@ -58,9 +60,11 @@ class SignupPage extends BaseClass {
             window.location.href = "login.html";
         } catch (error) {
             console.error(error);
-            this.errorHandler("Error creating Login! Try again...");
+                this.errorHandler("Error creating Login! Try again...");
+            }
         }
-    }
+
+
 
     async toggle(event) {
         const container = document.querySelector(".container-1"),
@@ -114,15 +118,6 @@ class SignupPage extends BaseClass {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
     }
-
-/*    async checkIfNicknameExists(nickname){
-        console.log("this is the nickname: " + nickname);
-        const name = await this.client.checkIfNicknameExists(nickname)
-        console.log("this is the name = " + name);
-        alert("User with Nickname " + nickname + " already exists, Please choose another.")
-        return name === nickname;
-
-    }*/
 
 }
 

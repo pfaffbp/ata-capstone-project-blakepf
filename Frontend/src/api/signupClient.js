@@ -50,24 +50,17 @@ export default class SignupClient extends BaseClass {
             });
             return response.data;
         } catch (error) {
+            console.log("this is the error " + error);
+            if (error.response.status === 449){
+                alert("Nickname already exists.")
+            }else if (error.response.status === 444){
+                alert("Email already exists.")
+            }else
             this.handleError("createLogin", error, errorCallback);
             throw error;
         }
     }
 
-/*    async checkIfNicknameExists(nickname, errorCallback) {
-        try {
-            console.log("this is the client nickname: " + nickname)
-            const response = await this.client.post(`user/{displayName}`, {
-                nickname: nickname
-            });
-            console.log("this is the response " + response);
-            return response.data;
-        } catch (error) {
-            this.handleError("checkIfNicknameExists", error, errorCallback);
-            throw error;
-        }
-    }*/
 
 
 

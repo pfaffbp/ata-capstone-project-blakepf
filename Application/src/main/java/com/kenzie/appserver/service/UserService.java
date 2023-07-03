@@ -4,14 +4,11 @@ import com.kenzie.appserver.config.CacheUserStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
-import com.kenzie.appserver.repositories.model.LoginRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
-import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Optional;
 
@@ -159,13 +156,18 @@ public class UserService {
         existingFriend.getFriends().remove(userDisplayName);
     }
 
-    public String checkNicknameUniqueness(String nickname) {
+ /*   public String checkNicknameUniqueness(String nickname) {
         Optional<UserRecord> userRecord = userRepository.findByDisplayName(nickname);
         if (userRecord.isPresent()) {
             return userRecord.get().getDisplayName();
         } else {
             return null;
         }
+    }*/
+
+    public boolean checkNicknameUniqueness(String nickname) {
+        Optional<UserRecord> userRecord = userRepository.findByDisplayName(nickname);
+        return !userRecord.isPresent();
     }
 
 }
