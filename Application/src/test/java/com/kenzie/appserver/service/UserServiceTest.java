@@ -4,14 +4,13 @@ import com.kenzie.appserver.config.CacheUserStore;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +53,7 @@ public class UserServiceTest {
         repository.save(userRecord);
 
         //WHEN
-        when(repository.findById(userId)).thenReturn(Optional.of(userRecord));
+        when(repository.findByDisplayName(displayName)).thenReturn(Optional.of(userRecord));
         User foundUser = service.findUserByName(displayName);
 
 
@@ -66,15 +65,52 @@ public class UserServiceTest {
     }
 
     @Test
-    void findById_invalidId_returnsNull() {
-        //GIVEN
+    void findByDisplayName_invalidDisplayName_returnsNull() {
+        UserRecord nullRecord = new UserRecord();
+        nullRecord.setUserId(null);
+        nullRecord.setDisplayName(null);
+
+        when(repository.findByDisplayName(nullRecord.getDisplayName())).thenReturn(Optional.empty());
+        User nullUser = service.findUserByName(nullRecord.getDisplayName());
+
+        Assertions.assertNull(nullUser);
+    }
+
+    @Test
+    void findAllUsers_returnsUsersList() {
         String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(userId);
+        userRecord.setEmail("user1email@gmail.com");
+        userRecord.setFullName("Jane Doe");
+        userRecord.setAge(27);
+        userRecord.setDisplayName("Jane");
+        userRecord.setBio("bio of Jane");
+        repository.save(userRecord);
+
+        UserRecord userRecord2 = new UserRecord();
+        userRecord2.setUserId(userId2);
+        userRecord2.setEmail("user2email@gmail.com");
+        userRecord2.setFullName("John Doe");
+        userRecord2.setAge(27);
+        userRecord2.setDisplayName("John");
+        userRecord2.setBio("bio of John");
+        repository.save(userRecord2);
+
+        List<UserRecord> userRecords = new ArrayList<>();
+        userRecords.add(userRecord);
+        userRecords.add(userRecord2);
 
         //WHEN
-        when(repository.findById(userId)).thenReturn(Optional.empty());
-        User user = service.findUserByName(userId);
+        when(repository.findAll()).thenReturn(userRecords);
+        List<User> users = service.findAllUsers();
 
         //THEN
-        assertNull(user, "The user is null");
+        assertNotNull(users, "The users are returned");
+        assertEquals(userRecords.size(), users.size(), "The sizes match");
     }
+
+
 }
