@@ -4,15 +4,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
-import com.kenzie.appserver.service.model.Anime;
-import com.kenzie.appserver.service.model.User;
 
 import java.util.List;
 import java.util.Objects;
 
 @DynamoDBTable(tableName = "UserTable")
 public class UserRecord {
-    private List<String> friends;
+    private List<String> followers;
+    private List<String> following;
     private String email;
     private String userId;
     private List<String> favoriteAnime;
@@ -49,13 +48,22 @@ public class UserRecord {
     public void setFullName(String fullName) {
         this.fullName = fullName;
     }
-    @DynamoDBAttribute(attributeName = "friends")
-    public List<String> getFriends() {
-        return friends;
+    @DynamoDBAttribute(attributeName = "followers")
+    public List<String> getFollowers() {
+        return followers;
     }
 
-    public void setFriends(List<String> friends) {
-        this.friends = friends;
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    @DynamoDBAttribute(attributeName = "following")
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
     }
 
     @DynamoDBAttribute(attributeName = "favoriteAnime")
@@ -97,11 +105,11 @@ public class UserRecord {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         UserRecord that = (UserRecord) o;
-        return age == that.age && Objects.equals(friends, that.friends) && Objects.equals(email, that.email) && userId.equals(that.userId) && Objects.equals(favoriteAnime, that.favoriteAnime) && Objects.equals(fullName, that.fullName) && displayName.equals(that.displayName) && Objects.equals(bio, that.bio);
+        return age == that.age && Objects.equals(followers, that.followers) && Objects.equals(email, that.email) && userId.equals(that.userId) && Objects.equals(favoriteAnime, that.favoriteAnime) && Objects.equals(fullName, that.fullName) && displayName.equals(that.displayName) && Objects.equals(bio, that.bio);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(friends, email, userId, favoriteAnime, fullName, displayName, age, bio);
+        return Objects.hash(followers, email, userId, favoriteAnime, fullName, displayName, age, bio);
     }
 }

@@ -10,10 +10,12 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class UserCreateRequest {
-        @JsonProperty("friends")
-        private List<User> friends;
+        @JsonProperty("followers")
+        private List<String> followers;
+        @JsonProperty("following")
+        private List<String> following;
         @JsonProperty("favoriteAnime")
-        private List<Anime> favoriteAnime;
+        private List<String> favoriteAnime;
         @JsonProperty("fullName")
         private String fullName;
         @JsonProperty("age")
@@ -51,41 +53,49 @@ public class UserCreateRequest {
             return fullName;
         }
 
-        public void setFullName(String fullName) {
-            this.fullName = fullName;
-        }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-        public List<User> getFriends() {
-            return friends;
-        }
+    public List<String> getFollowers() {
+        return followers;
+    }
 
-        public void setFriends(List<User> friends) {
-            this.friends = friends;
-        }
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
 
-        public List<Anime> getFavoriteAnime() {
-            return favoriteAnime;
-        }
+    public List<String> getFollowing() {
+        return following;
+    }
 
-        public void setFavoriteAnime(List<Anime> favoriteAnime) {
-            this.favoriteAnime = favoriteAnime;
-        }
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
 
-        public int getAge() {
-            return age;
-        }
+    public List<String> getFavoriteAnime() {
+        return favoriteAnime;
+    }
 
-        public void setAge(int age) {
-            this.age = age;
-        }
+    public void setFavoriteAnime(List<String> favoriteAnime) {
+        this.favoriteAnime = favoriteAnime;
+    }
 
-        public String getBio() {
-            return bio;
-        }
+    public int getAge() {
+        return age;
+    }
 
-        public void setBio(String bio) {
-            this.bio = bio;
-        }
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
 
     public String getDisplayName() {
         return displayName;
