@@ -180,6 +180,37 @@ export default class AnimeClient extends BaseClass {
         }
     }
 
+    async getReviewsByAnimeID(ID, lastKey, errorCallback){
+        try{
+            if(lastKey !== null) {
+                console.log(lastKey)
+                const response = await this.client.post(`review/limit`, {
+                    animeID: ID,
+                    valuesForReviews: {
+                        animeID: lastKey.animeID,
+                        postDate: lastKey.postDate,
+                        reviewID: lastKey.reviewID
+                    }
+                });
+                return response.data;
+            } else{
+                const response = await this.client.post(`review/limit`, {
+                    animeID: ID,
+                    valuesForReviews: {
+                        animeID: 0,
+                        postDate: 0,
+                        reviewID: "string"
+                    }
+                });
+                return response.data;
+            }
+
+        }catch(error){
+        this.handleError("uploadAnimeToDatabase", error, errorCallback);
+        }
+
+    }
+
     handleError(method, error, errorCallback) {
         console.error(method + " failed - " + error);
         if (error.response.data.message !== undefined) {
