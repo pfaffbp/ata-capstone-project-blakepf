@@ -11,6 +11,7 @@ public class Review {
     private int rating;
     private int postDate;
     private String review;
+    private int likes;
 
     public Review(int animeID, String userID, int rating, String review) {
         this.animeID = animeID;
@@ -19,6 +20,7 @@ public class Review {
         this.rating = rating;
         this.postDate = Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE));
         this.review = review;
+        this.likes = 0;
     }
 
     public Review(){}
@@ -69,5 +71,13 @@ public class Review {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }

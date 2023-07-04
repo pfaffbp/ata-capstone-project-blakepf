@@ -19,6 +19,7 @@ public class ReviewRecord {
     private int rating;
     private int postDate;
     private String review;
+    private int likes;
 
     @DynamoDBIndexHashKey(globalSecondaryIndexNames = {REVIEW_lOOK_UP, AVERAGE_SCORE}, attributeName = "animeID")
     public int getAnimeID() {
@@ -72,5 +73,14 @@ public class ReviewRecord {
 
     public void setReview(String review) {
         this.review = review;
+    }
+
+    @DynamoDBAttribute(attributeName = "likes")
+    public int getLikes() {
+        return likes;
+    }
+
+    public void setLikes(int likes) {
+        this.likes = likes;
     }
 }
