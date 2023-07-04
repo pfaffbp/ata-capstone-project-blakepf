@@ -51,10 +51,10 @@ class SignupPage extends BaseClass {
         try {
 
             await this.validateUserInput(passInput, cPassInput);
-          //  await this.checkIfNicknameExists(nickname);
             const validEmail = await this.validEmailFormat(emailInput)
             const hashedPassword = await bcrypt.hash(passInput, 10);
-            const login = await this.client.createLogin(validEmail, hashedPassword, nickname);
+            const checkedNickName = await this.validateNickname(nickname)
+            const login = await this.client.createLogin(validEmail, hashedPassword, checkedNickName);
             this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
             window.location.href = "login.html";
@@ -117,6 +117,17 @@ class SignupPage extends BaseClass {
     checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+
+    async validateNickname(nickname) {
+        if (!this.checkNicknameLength(nickname)) {
+            alert("Limit display name to 16 characters or less.")
+            throw new Error('Limit display name to 16 characters or less.')
+        } else return nickname;
+    }
+
+    checkNicknameLength(nickName){
+            return nickName.length <= 16;
     }
 
 }
