@@ -45,10 +45,8 @@ export default class LoginClient extends BaseClass {
             const response = await this.client.post('/login/login', {
                 email: email,
             });
-            console.log("response data: " + response)
             const hashedPassword = response.data.password; // Assuming the password is returned from the server
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
-
             if (!passwordMatch) {
                 throw new Error('Invalid password');
             } else {
@@ -62,8 +60,6 @@ export default class LoginClient extends BaseClass {
     async getUserDisplayName(email, errorCallback) {
         try {
             const response = await this.client.get(`/user/${email}`);
-            console.log("client side response for display name" + response);
-            console.log("this is the data" + response.data.displayName);
             return response.data.displayName;
         } catch (error) {
             this.handleError("getUserDisplayName", error, errorCallback)

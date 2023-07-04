@@ -33,7 +33,6 @@ public class LoginService {
         if (record.isPresent()) {
             return 444;
         }else if (userRecordCheck.isPresent()){
-            System.out.println("from login service");
             throw new NicknameAlreadyExistsException(nickname);
 
         } else {
