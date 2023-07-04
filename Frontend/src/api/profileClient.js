@@ -1,6 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
-let email = localStorage.getItem('LoggedIn');
+let displayName = localStorage.getItem('displayName')
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -14,10 +15,11 @@ export default class ProfileClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getUserDisplayName', ];
+        const methodsToBind = ['clientLoaded', 'getUserData' ];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
+
     }
 
     /**
@@ -37,6 +39,15 @@ export default class ProfileClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
+    async getUserData( errorCallback){
+
+        try {
+            const response = await this.client.get(`/user/${displayName}/searchByDisplayName/`);
+            return response.data;
+        }catch (error){
+            this.handleError('getUserData', error, errorCallback)
+        }
+    }
 
 
 

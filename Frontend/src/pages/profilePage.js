@@ -10,7 +10,7 @@ class ProfilePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onGet', 'onCreate', 'renderExample'], this);
+        this.bindClassMethods(['onLoad', 'renderUserProfile'], this);
         this.dataStore = new DataStore();
     }
 
@@ -18,65 +18,81 @@ class ProfilePage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        document.getElementById('get-by-id-form').addEventListener('submit', this.onGet);
-        document.getElementById('create-form').addEventListener('submit', this.onCreate);
+
         this.client = new ProfileClient();
 
-        this.dataStore.addChangeListener(this.renderExample)
+        this.dataStore.addChangeListener(this.renderUserProfile)
+        this.onLoad();
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
 
-    async renderExample() {
-        let resultArea = document.getElementById("result-info");
+    async renderUserProfile() {
+        let nameArea = document.getElementById("fullName");
+        let displayName = document.getElementById("displayName");
+        let ageArea = document.getElementById("age");
+        let bioArea = document.getElementById('bio');
+        let animeArea = document.getElementById('favAnime')
+        let friendArea = document.getElementById('friendsList')
 
-        const example = this.dataStore.get("example");
+        const uData = this.dataStore.get("userData");
+        if (uData) {
+            let items ="";
+                    items += `
+                   <p> Display Name: ${uData.displayName} </p>                            
+                `;
+            let age ="";
+            age += `
+                   <p> Age: ${uData.age} </p>                             
+                `;
+            let name ="";
+            name += `
+                   <p> Name: ${uData.fullName} </p>                             
+                `;
+            let bio ="";
+            bio += `
+                   <p> Bio: ${uData.bio} </p>                             
+                `;
+          let animeList =""
+            /*    for (let anime of uData){
+                  animeList +=`
+                  ${anime.favoriteAnime}
+                  `;
+              }*/
+            let friendList =""
+            /*    for (let anime of uData){
+                  animeList +=`
+                  ${anime.favoriteAnime}
+                  `;
+              }*/
 
-        if (example) {
-            resultArea.innerHTML = `
-                <div>ID: ${example.id}</div>
-                <div>Name: ${example.name}</div>
-            `
+
+            displayName.innerHTML = items;
+            ageArea.innerHTML = age;
+            nameArea.innerHTML = name;
+            bioArea.innerHTML = bio;
+            animeArea.innerHTML = animeList;
+            friendArea.innerHTML = friendList;
         } else {
-            resultArea.innerHTML = "No Item";
+            displayName.innerHTML = "No Item";
+            ageArea.innerHTML = "No Item";
+            nameArea.innerHTML = "No Item";
+            animeArea.innerHTML = "No Item";
+            friendArea.innerHTML = "No Item";
+
         }
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
 
-    async onGet(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
 
-        let id = document.getElementById("id-field").value;
-        this.dataStore.set("example", null);
-
-        let result = await this.client.getExample(id, this.errorHandler);
-        this.dataStore.set("example", result);
-        if (result) {
-            this.showMessage(`Got ${result.name}!`)
-        } else {
-            this.errorHandler("Error doing GET!  Try again...");
-        }
-    }
-
-    async onCreate(event) {
-        // Prevent the page from refreshing on form submit
-        event.preventDefault();
-        this.dataStore.set("example", null);
-
-        let name = document.getElementById("create-name-field").value;
-
-        const createdExample = await this.client.createExample(name, this.errorHandler);
-        this.dataStore.set("example", createdExample);
-
-        if (createdExample) {
-            this.showMessage(`Created ${createdExample.name}!`)
-        } else {
-            this.errorHandler("Error creating!  Try again...");
-        }
+    async onLoad(){
+        let result = await this.client.getUserData(this.errorHandler);
+        this.dataStore.set("userData", result);
     }
 }
+
+
 
 /**
  * Main method to run when the page contents have loaded.
