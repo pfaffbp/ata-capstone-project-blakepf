@@ -100,11 +100,7 @@ export default class AnimeClient extends BaseClass {
 
     }
 
-<<<<<<< HEAD
     async getAnimeByGenre(genre, errorCallback) {
-=======
-    async getAnimeByGenre(genre, errorCallback) {        
->>>>>>> origin/juvisbranch
         const map = new Map();
         let query = `
             query findAnimeByGenre($genre : String) {
@@ -133,11 +129,7 @@ export default class AnimeClient extends BaseClass {
                 }
             }
         `;
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/juvisbranch
         let variables = {
             genre: genre
         };
@@ -176,11 +168,7 @@ export default class AnimeClient extends BaseClass {
             console.error(error);
         }
 
-<<<<<<< HEAD
 
-=======
-        
->>>>>>> origin/juvisbranch
     }
 
     async uploadAnimeToDatabase(array, errorCallback){

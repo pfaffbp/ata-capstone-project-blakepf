@@ -90,15 +90,9 @@ img {
 /* ------- Center Div, Holds All Anime Info Content  ------- */
 
 #main {
-<<<<<<< HEAD:Frontend/src/css/animepage.css
     background: black;
-    width: 60%;
-    height: 100%;
-=======
-    background: black;              
     width: 60%;        
-    height: 100%;                        
->>>>>>> origin/juvisbranch:Frontend/src/css/animePage.css
+    height: 100%;
     margin: auto;                               /* Div holding all the content below */
     z-index: 1;
     position: relative;

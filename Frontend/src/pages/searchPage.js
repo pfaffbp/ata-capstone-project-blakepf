@@ -3,12 +3,7 @@ import DataStore from "../util/DataStore";
 import HomePageClient from "../api/homePageClient";
 import AnimeClient from "../api/animeClient";
 
-<<<<<<< HEAD
 class SearchPage extends BaseClass {
-=======
-class SearchPage extends BaseClass{
-
->>>>>>> origin/juvisbranch
     constructor() {
         super();
         this.bindClassMethods(['renderSearchPage', 'searchByGenre', 'animateKero'], this);
@@ -22,7 +17,6 @@ class SearchPage extends BaseClass{
 
     async mount() {
         document.getElementById("search-form").addEventListener("submit", this.renderSearchPage);
-<<<<<<< HEAD
         this.genreButtons.forEach(button => button.addEventListener("click", this.searchByGenre));
         this.keroElement.addEventListener("animationstart", this.animateKero);
         this.client = new AnimeClient();
@@ -30,27 +24,13 @@ class SearchPage extends BaseClass{
 
     async renderSearchPage(event) {
         event.preventDefault();
-=======
-        document.getElementById("genre-form").addEventListener("submit", this.renderSearchPage);
-        this.client = new AnimeClient();
-    }
-
-
-    async renderSearchPage(event) {
-        event.preventDefault();
-
->>>>>>> origin/juvisbranch
         let workArea = document.getElementById("work-area");
         let searchValue = document.getElementById("search-bar").value;
-        let genreValue = document.getElementById("genre-bar").value;
         let searchValueIntoString = `${searchValue}`;
-        let genreIntoString = `${genreValue}`;
 
         console.log(searchValue);
-        console.log(genreValue);
 
-        // const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
-        const newResponse = await this.client.getAnimeByGenre(genreIntoString, this.errorHandler);
+        const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
 
         let items = "";
 
@@ -64,12 +44,8 @@ class SearchPage extends BaseClass{
       `;
         }
 
-<<<<<<< HEAD
         const style = document.createElement('style');
         style.innerHTML = ``;
-=======
-      
->>>>>>> origin/juvisbranch
 
         workArea.innerHTML = items;
 
@@ -79,7 +55,6 @@ class SearchPage extends BaseClass{
             });
         });
     }
-<<<<<<< HEAD
 
     async searchByGenre(event) {
         const genre = event.target.dataset.genre;
@@ -132,16 +107,6 @@ class SearchPage extends BaseClass{
 }
 
 const main = async () => {
-=======
- 
-}
-
-
-
-
-
-const main = async () =>{
->>>>>>> origin/juvisbranch
     const searchPage = new SearchPage();
     searchPage.mount();
     console.log("mount");

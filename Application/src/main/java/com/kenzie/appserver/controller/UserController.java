@@ -1,13 +1,9 @@
 package com.kenzie.appserver.controller;
 
-import com.kenzie.appserver.controller.model.FavoriteAnimeRequest;
-import com.kenzie.appserver.controller.model.UserCreateRequest;
-import com.kenzie.appserver.controller.model.UserResponse;
-import com.kenzie.appserver.controller.model.UserUpdateRequest;
-import com.kenzie.appserver.service.CatalogService;
+import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.UserService;
-import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +36,7 @@ public class UserController {
     @GetMapping("/getAllUsers")
     public ResponseEntity<List<UserResponse>> getAllUsers() {
         List<User> userList = userService.findAllUsers();
-        if (userList == null ||  userList.isEmpty()) {
+        if (userList == null || userList.isEmpty()) {
             return ResponseEntity.status(204).build();
         }
 
@@ -55,8 +51,7 @@ public class UserController {
 
     @PutMapping("/updateUser")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
-        User user = new User(request.getUserId(), request.getEmail(), request.getFullName(), request.getAge(),
-                request.getFullName(), request.getBio());
+        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
 
         userService.updateUser(user);
 
@@ -67,8 +62,7 @@ public class UserController {
 
     @PostMapping("/addUser")
     public ResponseEntity<UserResponse> addNewUser(@RequestBody UserCreateRequest request) {
-        User user = new User(request.getUserId(),request.getEmail(), request.getFullName(),
-                request.getAge(), request.getDisplayName(), request.getBio());
+        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
 
         userService.addNewUser(user);
 
@@ -84,8 +78,8 @@ public class UserController {
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("/{displayName}/addFriend/{friendFullName}")
-    public ResponseEntity<UserResponse> addFriend(
+    @PostMapping("/{displayName}/followUser/{friendFullName}")
+    public ResponseEntity<UserResponse> followUser(
             @PathVariable("displayName") String displayName,
             @PathVariable("friendFullName") String friendDisplayName
     ) {
@@ -96,16 +90,17 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        List<String> friends = userService.addFriend(user.getDisplayName(), friend.getDisplayName());
+        List<String> friends = userService.follow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFriends(friends);
+        response.setFollowers(friends);
 
         return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{displayName}/removeFriend/{friendFullName}")
-    public ResponseEntity<UserResponse> removeFriend(
+
+    @DeleteMapping("/{displayName}/unfollowUser/{friendFullName}")
+    public ResponseEntity<UserResponse> unfollowUser(
             @PathVariable("displayName") String displayName,
             @PathVariable("friendFullName") String friendFullName
     ) {
@@ -116,10 +111,10 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        userService.removeFriend(user.getDisplayName(), friend.getDisplayName());
+        userService.unfollow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFriends(user.getFriends());
+        response.setFollowers(user.getFollowers());
 
         return ResponseEntity.ok(response);
     }
@@ -128,7 +123,7 @@ public class UserController {
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
             @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
-            ) {
+    ) {
         User user = userService.findUserByName(displayName);
 
         if (user == null) {
@@ -175,8 +170,25 @@ public class UserController {
         response.setAge(user.getAge());
         response.setBio(user.getBio());
         response.setFavoriteAnime(user.getFavoriteAnime());
-        response.setFriends(user.getFriends());
+        response.setFollowers(user.getFollowers());
         response.setDisplayName(user.getDisplayName());
         return response;
     }
+
+    @GetMapping("/{email}")
+    public ResponseEntity<UserDisplayNameResponse> fineDisplayNameByEmail(@PathVariable String email) {
+        String displayName = userService.fineDisplayNameByEmail(email);;
+
+        if (displayName != null) {
+            UserDisplayNameResponse response = new UserDisplayNameResponse();
+            response.setDisplayName(displayName);
+            return ResponseEntity.ok(response);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
 }
+
+
+

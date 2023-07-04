@@ -7,9 +7,12 @@ body{
     background-color: #eeeedd;
 }
 
-<<<<<<< HEAD
-img {
-    width: 100%;
+#search-form{
+    width: 50vw;
+    max-height: 100px;
+}
+#search-bar {
+
 }
 
 /* ------- Navigation Bar ------- */
@@ -184,13 +187,7 @@ img {
     z-index: -1;
     content: "";
     position: absolute;
-=======
-#search-form{
-    width: 50vw;
-    max-height: 100px;
-}
-#search-bar{
->>>>>>> origin/juvisbranch
+>>>>>>> Blake_dev
     width: 100%;
     height: 100%;
     background: purple;
@@ -257,12 +254,9 @@ img {
     transform: scale(1.1);
 }
 
-<<<<<<< HEAD
+
 .poster {
     background: black;
-=======
-.poster{
->>>>>>> origin/juvisbranch
     display: inline-block;
     width: 160px;
     height: auto;
@@ -302,7 +296,29 @@ img {
     top: 0;
 }
 
-<<<<<<< HEAD
+
+#genres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.genre {
+    background: purple;
+    border-radius: 5px;
+    width: 100px;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.genre:hover {
+    zoom: 120%;
+}
+
 .search-bar-button {
     display: block;
     width: 100%;
@@ -405,26 +421,3 @@ p{
     background-size: cover;
     pointer-events: none;
 }
-=======
-#genres {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-}
-
-.genre {
-    background: purple;
-    border-radius: 5px;
-    width: 100px;
-    margin: 10px;
-    padding: 5px;
-    text-align: center;
-    font-size: 15px;
-    font-weight: bold;
-    cursor: pointer;
-}
-
-.genre:hover {
-    zoom: 120%;
-}
->>>>>>> origin/juvisbranch
