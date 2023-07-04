@@ -1,6 +1,8 @@
 package com.kenzie.appserver.service;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kenzie.appserver.config.CacheAnimeStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
@@ -267,4 +269,5 @@ public class CatalogServiceTest {
             }
         }
     }
+
 }
