@@ -12,13 +12,39 @@ public class UserUpdateRequest {
     private List<User> friends;
     @JsonProperty("favoriteAnime")
     private List<Anime> favoriteAnime;
-    @NotEmpty
+
     @JsonProperty("fullName")
     private String fullName;
+    @NotEmpty
+    @JsonProperty("displayName")
+    private String displayName;
     @JsonProperty("age")
     private int age;
     @JsonProperty("bio")
     private String bio;
+
+    @JsonProperty("email")
+    private String email;
+
+    @NotEmpty
+    @JsonProperty("userId")
+    private String userId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getFullName() {
         return fullName;
@@ -58,5 +84,11 @@ public class UserUpdateRequest {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getDisplayName() { return displayName; }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

@@ -1,5 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
+import bcrypt from "bcryptjs";
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -13,7 +15,7 @@ export default class updateLoginClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'updateEmailByEmail', 'updatePasswordByEmail'];
+        const methodsToBind = ['clientLoaded', 'updateEmailByEmail'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -32,7 +34,9 @@ export default class updateLoginClient extends BaseClass {
 
     /**
      * Gets the concert for the given ID.
-     * @param id Unique identifier for a concert
+     * @param email
+     * @param newEmail
+     * @param password
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
@@ -41,40 +45,37 @@ export default class updateLoginClient extends BaseClass {
 
     async updateEmailByEmail(email, newEmail, password, errorCallback) {
         try {
-            //  console.log("before: " + email, newEmail, password);
-            const response = await this.client.put('/login/updateEmail', {
+            const response = await this.client.post('/login/login', {
                 email: email,
-                newEmail: newEmail,
-                password: password,
             });
-            //console.log("after response" + response);
+            console.log("response data: " + response)
+            const hashedPassword = response.data.password; // Assuming the password is returned from the server
+            const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-            return response.data;
+            if (!passwordMatch) {
+                throw new Error('Invalid password');
+            } else {
+                try {
+                    const response = await this.client.put('/login/updateEmail', {
+                        email: email,
+                        newEmail: newEmail,
+                    });
+                    return response.data;
+                } catch (error) {
+                    this.handleError("UpdateEmail", error, errorCallback);
+                    throw error;
+                }
+            }
         } catch (error) {
-            this.handleError("UpdateEmail", error, errorCallback);
+            this.handleError("Login", error, errorCallback);
             throw error;
         }
     }
 
-    async updatePasswordByEmail(email, password, newPassword, errorCallback) {
-        try {
-             console.log("before: " + email, password, newPassword,);
-            const response = await this.client.put(`/login/changePassword`, {
-                email: email,
-                password: password,
-                newPassword: newPassword,
-            });
-            //console.log("after response" + response);
-
-            return response.data;
-        } catch (error) {
-            this.handleError("updatePassword", error, errorCallback);
-            throw error;
-        }
-    }
 
     /**
      * Helper method to log the error and run any error functions.
+     * @param method
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.
      */

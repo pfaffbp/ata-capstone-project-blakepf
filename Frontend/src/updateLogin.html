@@ -1,55 +1,137 @@
 <!DOCTYPE html>
-<!-- example from code pen combo and codingnepalweb.com -->
-<html lang="en">
 <head>
-    <script src="updateLoginPage.js" type="module"></script>
-    <meta charset="uft-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Signup</title>
-
-    <!-- CSS -->
-    <link rel="stylesheet" href="css/updateLogin.css" />
-
-    <!-- Boxicons CSS -->
-    <link
-            href="https://unpkg.com/boxicons@2.1.2/css/boxicons.min.css"
-            rel="stylesheet"
-    />
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/updateLogin.css">
+    <script type = "text/javascript" src="updateLoginPage.js"></script>
+    <title>Aniverse: Update Login</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
+
 <body>
+<div class="nav">
+    <img src = "css/aniverse-logo-white.png" class= "logo">
+
+    <div class = "main-links">
+        <a href="holder">Anime</a>
+        <a href = "holder1">Community</a>
+        <a href = "holder2">Friends</a>
+        <a href = "holder3">Read</a>
+    </div>
+
+    <div class = "account">
+        <a href = "searchPage.html" class="navigation-buttons">Search</a>
+        <a href = "login.html">Login</a>
+        <a href = "signup.html">Signup</a>
+    </div>
+</div>
+
+<div class = "flex-container">
+
+    <div class = "leftImage">
+        <img src="css/zenitsu-left.png">
+    </div>
+
+    <div class = "main">
+
+        <div class = "slideshow-section">
+
+            <div class="slider">
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>JUJUTSU KAISEN:</h1>
+                        <h1> SEASON 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://rare-gallery.com/mocahbig/396613-wallpaper-jujutsu-kaisen-yuji-megumi-nobara-satoru.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>DEMON SLAYER: </h1>
+                        <h1>SWORDSMITH VILLAGE ARC</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://i0.wp.com/animeindia.in/wp-content/uploads/2023/02/image-1-5.jpg?fit=1280%2C720&ssl=1" style="height: 100%;">
+                </div>
+
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>ONE PIECE</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://sm.ign.com/ign_in/photo/b/best-anime/best-anime-series-on-netflix-right-now-june-2022_1ym8.jpg">
+                </div>
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>ATTACK ON TITAN:</h1>
+                        <h1>SEASON 4 PART 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://assets.puzzlefactory.com/puzzle/318/550/original.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+
+                <div class="myslide fade">
+                    <div class="txt">
+                        <h1>SPY X FAMILY: SEASON 2</h1>
+                        <p></p>
+                    </div>
+                    <img src="https://sm.ign.com/t/ign_br/screenshot/default/spy-x-family_jk5a.1200.jpg" style="width: 100%; height: 100%;">
+                </div>
+
+                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                <div class="dotsbox" style="text-align:center">
+                    <span class="dot" onclick="currentSlide(1)"></span>
+                    <span class="dot" onclick="currentSlide(2)"></span>
+                    <span class="dot" onclick="currentSlide(3)"></span>
+                    <span class="dot" onclick="currentSlide(4)"></span>
+                    <span class="dot" onclick="currentSlide(5)"></span>
+                </div>
+
+            </div>
+
+        </div>
+
+
+
+
 <div class="container-1">
 
     <h1>Update Email</h1>
     <form  id="updateLogin-forum">
         <div class="col-1">
-        <div class="field updateEmail-field">
+        <div class="form-group updateEmail-field">
             <div class="input-field-1">
                 <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
             </div>
             <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
+
             <p class="error-text">Please enter a valid email</p>
           </span>
         </div>
-            <div class="field newEmail-field">
+            <div class="form-group newEmail-field">
                 <div class="input-field-1">
                     <input type="email" id="newEmail-entry" placeholder="Enter your new email" class="email" />
                 </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
+
             </div>
-            <div class="field newEmailConfirm-field">
+            <div class="form-group newEmailConfirm-field">
                 <div class="input-field-1">
-                    <input type="email" id="newEmailConfirm-entry" placeholder="Confirm your new email" class="email" />
+                    <input
+                            type="email"
+                            id="newEmailConfirm-entry"
+                            placeholder="Confirm your new email"
+                            class="email" />
+
                 </div>
-                <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
+
             </div>
-        <div class="field enter-password">
+        <div class="form-group enter-password">
             <div class="input-field-1">
                 <input
                         type="password"
@@ -57,29 +139,22 @@
                         placeholder="Enter Your password"
                         class="password"
                 />
-                <i class="bx bx-hide show-hide"></i>
+                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
             </div>
-            <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-            Please enter at least 8 characters.
-            </p>
-          </span>
+
         </div>
-        <div class="field confirm-password">
+        <div class="form-group confirm-password">
             <div class="input-field-1">
                 <input
                         type="password"
                         id="confirm-password"
                         placeholder="Confirm password"
-                        class="cPassword"
+                        class="password"
                 />
-                <i class="bx bx-hide show-hide"></i>
+                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+
             </div>
-            <span class="error cPassword-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Password don't match</p>
-          </span>
+
         </div>
         <div class="input-field-1 button">
             <input type="submit" id="updateEmailButton" value="Update Email" />
@@ -87,75 +162,18 @@
         </div>
     </form>
 </div>
-<div class="container-2">
-    <div class="col-2">
-        <h2>Update Password</h2>
-        <form  id="updatePassword-forum">
-        <div class="field-2 updatePassword-email-field">
-            <div class="input-field-2">
-                <input type="email" id="updatePassword-email-Login" placeholder="Enter your email" class="email" />
-            </div>
-            <span class="error email-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Please enter a valid email</p>
-          </span>
-        </div>
-        <div class="field loginPassword-password">
-            <div class="input-field-2">
-                <input
-                        type="password"
-                        id="loginPassword"
-                        placeholder="Enter password"
-                        class="password"
-                />
-                <i class="bx bx-hide show-hide"></i>
-            </div>
-            <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-              Please enter at least 8 characters.
-            </p>
-          </span>
-        </div>
-            <div class="field updatePassword-password">
-                <div class="input-field-2">
-                    <input
-                            type="password"
-                            id="newLoginPassword"
-                            placeholder="Enter your new password"
-                            class="password"
-                    />
-                    <i class="bx bx-hide show-hide"></i>
-                </div>
-                <span class="error password-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">
-              Please enter at least 8 characters.
-            </p>
-          </span>
-            </div>
-            <div class="field updatePassword-confirm-password">
-                <div class="input-field-2">
-                    <input
-                            type="password"
-                            id="newLoginPassword-Confirm"
-                            placeholder="Confirm your new password"
-                            class="cPassword"
-                    />
-                    <i class="bx bx-hide show-hide"></i>
-                </div>
-                <span class="error cPassword-error">
-            <i class="bx bx-error-circle error-icon"></i>
-            <p class="error-text">Password don't match</p>
-          </span>
-            </div>
-        <div class="input-field-2 button">
-            <input type="submit" id="updatePasswordButton" value="Update Password" />
-        </div>
-        </form>
+
     </div>
-</div>
+
+    <div class= "rightImage">
+        <img src="css/tanjiro-right.png">
+    </div>
 
 </div>
+
+
+
+
+
+<script src = "landingSlideshow.js"></script>
 </body>
-</html>
