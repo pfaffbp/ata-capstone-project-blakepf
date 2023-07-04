@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="profilePage.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/userProfilePage.css">
+    <script type="text/javascript" src="searchUsersPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/searchUsersPage.css">
 </head>
 
 <body>
@@ -15,7 +15,6 @@
         <div class = "main-links">
             <a href="landingPage.html">Anime</a>
             <a href = "holder1">Community</a>
-            <a href = "searchUsers.html">Find Friends</a>
             <a href = "holder3">Read</a>
         </div>
         
@@ -24,7 +23,6 @@
             <a href = "signup.html">Signup</a>
             <a href = "login.html">Login</a>
             <a  id="logout">LogOut</a>
-
         </div>
     </div>
     <!-- Navigation Bar End -->
@@ -35,10 +33,21 @@
             <img src="css/zenitsu-left.png">
         </div>
 
-        <div class = "main">   
+        <div class = "main">
+
+            <form id="search-form">
+                <label for="search-bar" class="search-bar-class">
+                    <h1>Search for Users &#x1F50D;</h1>
+                </label>
+                <div class = "search-bar-button">
+                    <input type="text" id="search-bar" placeholder="Who you looking for?"/>
+                    <button class="button-85" role="button" id="searchButton">Search</button>
+                </div>
+            </form>
+
             <!-- Insert your profile content here. -->
             <div class = "display-name">
-                <h1 id="displayName" >Display Name</h1>
+                <h1 id="displayName" >Display Name:</h1>
             </div>
 
             <hr>
@@ -49,9 +58,9 @@
 
                 <div class = "user-info">
                     <ul>
-                        <p id="fullName" > Fullname</p>
-                        <p id="age" >Age</p>
-                        <p id="bio"> This will be the bio.</p>
+                        <p id="fullName" > Name: </p>
+                        <p id="age" >Age: </p>
+                        <p id="bio">Bio:</p>
 
                     </ul>
                 </div>

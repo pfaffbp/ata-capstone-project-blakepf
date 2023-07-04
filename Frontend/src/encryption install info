@@ -17,11 +17,8 @@ you will need to install bcrypt
 https://www.npmjs.com/package/bcryptjs  -- the webpage you can locate info on bcryptjs
 ----the install is the npm below
 npm i bcryptjs
+npm install --save-dev crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url buffer process
 
 When you try to ./gradlew :Application:bootRunDev
 you may get prompted to install additional things.
 Big red warnings/errors. you will know.
-you may have to install buffer its just s simple buffer it will tell you in the error
-you may have to install browserify
-it will tell you the npm in the error if it does
-https://www.npmjs.com/package/browserify
