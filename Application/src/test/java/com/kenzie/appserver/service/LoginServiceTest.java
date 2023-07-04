@@ -38,7 +38,6 @@ class LoginServiceTest {
         loginService = new LoginService(loginRepository, userRepository);
 
     }
-
     @Test
     void createLogin_NewEmailAndPassword_Returns200() {
         String email = "test@example.com";

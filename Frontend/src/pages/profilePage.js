@@ -74,11 +74,12 @@ class ProfilePage extends BaseClass {
             animeArea.innerHTML = animeList;
             friendArea.innerHTML = friendList;
         } else {
-            displayName.innerHTML = "No Item";
-            ageArea.innerHTML = "No Item";
-            nameArea.innerHTML = "No Item";
-            animeArea.innerHTML = "No Item";
-            friendArea.innerHTML = "No Item";
+            displayName.innerHTML = "Display Name:";
+            ageArea.innerHTML = "Age:";
+            nameArea.innerHTML = "Name:";
+            bioArea.innerHTML = "Bio:";
+            animeArea.innerHTML = "Friends List:";
+            friendArea.innerHTML = "Favorite Anime List:";
 
         }
     }

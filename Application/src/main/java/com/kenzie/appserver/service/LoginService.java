@@ -32,6 +32,7 @@ public class LoginService {
 
         if (record.isPresent()) {
             return 444;
+            // 444 = email already exists
         }else if (userRecordCheck.isPresent()){
             throw new NicknameAlreadyExistsException(nickname);
 
@@ -48,6 +49,8 @@ public class LoginService {
             userRecord.setEmail(email);
             userRecord.setUserId(userId);
             userRecord.setDisplayName(nickname);
+            userRecord.setFullName(" ");
+            userRecord.setBio(" ");
             userRepository.save(userRecord);
             return 200;
         }
