@@ -21,6 +21,7 @@ class SearchUsersPage extends BaseClass {
 
         this.client = new SearchUserClient();
         this.dataStore.addChangeListener(this.renderUserProfile)
+        document.getElementById('logout').addEventListener('click', this.Logout);
         document.getElementById('searchButton').addEventListener('click', this.onSearch);
 
     }
@@ -89,6 +90,12 @@ class SearchUsersPage extends BaseClass {
         event.preventDefault();
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
+    }
+
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
     }
 }
 

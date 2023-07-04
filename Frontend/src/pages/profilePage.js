@@ -20,7 +20,7 @@ class ProfilePage extends BaseClass {
     async mount() {
 
         this.client = new ProfileClient();
-
+        document.getElementById('logout').addEventListener('click', this.Logout);
         this.dataStore.addChangeListener(this.renderUserProfile)
         this.onLoad();
     }
@@ -88,6 +88,12 @@ class ProfilePage extends BaseClass {
     async onLoad(){
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
+    }
+
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
     }
 }
 
