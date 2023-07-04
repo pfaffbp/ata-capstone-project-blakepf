@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <script type="text/javascript" src="profilePage.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/userProfilePage.css">
+    <script type="text/javascript" src="searchUsersPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/searchUsersPage.css">
 </head>
 
 <body>
@@ -33,7 +33,18 @@
             <img src="css/zenitsu-left.png">
         </div>
 
-        <div class = "main">   
+        <div class = "main">
+
+            <form id="search-form">
+                <label for="search-bar" class="search-bar-class">
+                    <h1>Search for Users &#x1F50D;</h1>
+                </label>
+                <div class = "search-bar-button">
+                    <input type="text" id="search-bar" placeholder="Who you looking for?"/>
+                    <button class="button-85" role="button" id="searchButton">Search</button>
+                </div>
+            </form>
+
             <!-- Insert your profile content here. -->
             <div class = "display-name">
                 <h1 id="displayName" >Display Name</h1>

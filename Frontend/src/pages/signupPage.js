@@ -47,13 +47,15 @@ class SignupPage extends BaseClass {
         const cPassInput = document.getElementById("confirm-password").value;
         const nickname = document.getElementById('nickname').value;
 
+        let toLower = nickname;
+        let name = toLower.toLowerCase();
 
         try {
 
             await this.validateUserInput(passInput, cPassInput);
             const validEmail = await this.validEmailFormat(emailInput)
             const hashedPassword = await bcrypt.hash(passInput, 10);
-            const checkedNickName = await this.validateNickname(nickname)
+            const checkedNickName = await this.validateNickname(name)
             const login = await this.client.createLogin(validEmail, hashedPassword, checkedNickName);
             this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
@@ -119,6 +121,7 @@ class SignupPage extends BaseClass {
         return emailRegex.test(email);
     }
 
+    //-------------------checks nickname Length ------------
     async validateNickname(nickname) {
         if (!this.checkNicknameLength(nickname)) {
             alert("Limit display name to 16 characters or less.")

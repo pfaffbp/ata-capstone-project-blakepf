@@ -1,16 +1,16 @@
 
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import ProfileClient from "../api/profileClient";
+import SearchUserClient from "../api/searchUsersClient";
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class ProfilePage extends BaseClass {
+class SearchUsersPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onLoad', 'renderUserProfile'], this);
+        this.bindClassMethods([ 'renderUserProfile', 'onSearch'], this);
         this.dataStore = new DataStore();
     }
 
@@ -19,10 +19,10 @@ class ProfilePage extends BaseClass {
      */
     async mount() {
 
-        this.client = new ProfileClient();
-
+        this.client = new SearchUserClient();
         this.dataStore.addChangeListener(this.renderUserProfile)
-        this.onLoad();
+        document.getElementById('searchButton').addEventListener('click', this.onSearch);
+
     }
 
     // Render Methods --------------------------------------------------------------------------------------------------
@@ -85,7 +85,8 @@ class ProfilePage extends BaseClass {
     // Event Handlers --------------------------------------------------------------------------------------------------
 
 
-    async onLoad(){
+    async onSearch(event){
+        event.preventDefault();
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
     }
@@ -97,8 +98,8 @@ class ProfilePage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const profilePage = new ProfilePage();
-    profilePage.mount();
+    const searchUsersPage = new SearchUsersPage();
+    searchUsersPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);
