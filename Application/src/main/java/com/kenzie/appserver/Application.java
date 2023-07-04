@@ -46,7 +46,7 @@ public class Application {
 
     @Autowired
     public Application(CatalogRepository catalogRepository, CacheAnimeStore cacheAnimeStore, DynamoDBMapper mapper){
-       this.catalogService = new CatalogService(catalogRepository, cacheAnimeStore, mapper);
+        this.catalogService = new CatalogService(catalogRepository, cacheAnimeStore, mapper);
     }
 
 
@@ -60,7 +60,6 @@ public class Application {
             Path seasonalAnime = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/seasonalAnimeRequest.txt");
             Path popularAnime = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/popularAnimeRequest.txt");
             Path highlyRated = Path.of("src/main/java/com/kenzie/appserver/graphqlrequests/highlyRatedAnimeRequest.txt");
-
 
             List<String> dataResponse = new ArrayList<>();
             dataResponse.add(makePostRequest(popularAnime));
@@ -82,15 +81,15 @@ public class Application {
 
             for(List<Media> mediaList : mediaLists){
                 for (Media media : mediaList) {
-                Anime anime = new Anime(media.getTitle().getUserPreferred(), String.valueOf(media.getId()),
-                        media.getDescription(), media.getCoverImage().getLarge(),
-                        media.getStartDate().getYear(), media.getSeason(),
-                        media.getPopularity(), media.getAverageScore(),
-                        media.getEpisodes(), media.getGenres());
+                    Anime anime = new Anime(media.getTitle().getUserPreferred(), String.valueOf(media.getId()),
+                            media.getDescription(), media.getCoverImage().getLarge(),
+                            media.getStartDate().getYear(), media.getSeason(),
+                            media.getPopularity(), media.getAverageScore(),
+                            media.getEpisodes(), media.getGenres());
 
-                catalogService.addNewAnime(anime);
+                    catalogService.addNewAnime(anime);
+                }
             }
-        }
             System.out.println("Tables have been Filled");
 
         } catch(InterruptedException e){
@@ -143,4 +142,3 @@ public class Application {
         return responseBody;
     }
 }
-
