@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.kenzie.appserver.config.CacheAnimeStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mockito;
+import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -27,13 +29,18 @@ public class CatalogServiceTest {
     private CacheAnimeStore cacheStore;
     private CatalogService catalogService;
     private final MockNeat mockNeat = MockNeat.threadLocal();
+    private DynamoDBMapper mapper;
 
-//    @BeforeEach
-//    void setup() {
-//        catalogRepository = mock(CatalogRepository.class);
-//        cacheStore = mock(CacheAnimeStore.class);
-//        catalogService = new CatalogService(catalogRepository, cacheStore);
-//    }
+
+    @BeforeEach
+    void setup() {
+        MockitoAnnotations.initMocks(this);
+        mapper = mock(DynamoDBMapper.class);
+        catalogRepository = mock(CatalogRepository.class);
+        cacheStore = mock(CacheAnimeStore.class);
+        catalogService = new CatalogService(catalogRepository, cacheStore, mapper);
+
+    }
 
     @Test
     void deleteAnime() {
