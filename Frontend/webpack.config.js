@@ -80,6 +80,11 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
+      template: './src/userProfilePage.html',
+      filename: 'userProfilePage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
       template: './src/homepage.html',
       filename: 'homepage.html',
       inject: false
