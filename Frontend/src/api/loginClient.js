@@ -1,5 +1,7 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
+import bcrypt from 'bcryptjs';
+
 
 /**
  * Client to call the MusicPlaylistService.
@@ -9,11 +11,11 @@ import axios from 'axios'
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class LoginSignupClient extends BaseClass {
+export default class LoginClient extends BaseClass {
 
-    constructor(props = {}){
+    constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'getLogin', 'createLogin'];
+        const methodsToBind = ['clientLoaded', 'getLogin', 'getUserDisplayName'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -25,48 +27,53 @@ export default class LoginSignupClient extends BaseClass {
      */
     clientLoaded(client) {
         this.client = client;
-        if (this.props.hasOwnProperty("onReady")){
+        if (this.props.hasOwnProperty("onReady")) {
             this.props.onReady();
         }
     }
 
     /**
      * Gets the concert for the given ID.
-     * @param id Unique identifier for a concert
+     * @param email
+     * @param password
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
 
-    async getLogin(email, password, errorCallback){
+    async getLogin(email, password, errorCallback) {
         try {
-            const response = await  this.client.post('/login/login',{
+            const response = await this.client.post('/login/login', {
                 email: email,
-                password: password
             });
-            return response.data
-        }catch (error){
-            this.handleError("getLogin", error, errorCallback)
-        }
-    }
+            console.log("response data: " + response)
+            const hashedPassword = response.data.password; // Assuming the password is returned from the server
+            const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-    async createLogin(email, password, errorCallback) {
-        try {
-         //   console.log("before" + email, password)
-            const response = await this.client.post(`/login/createLogin`, {
-                email: email,
-                password: password,
-            });
-          //  console.log("after response" + response);
-
-            return response.data;
+            if (!passwordMatch) {
+                throw new Error('Invalid password');
+            } else {
+                return response.data;
+            }
         } catch (error) {
-            this.handleError("createLogin", error, errorCallback);
-            throw error;
+            this.handleError("getLogin", error, errorCallback);
         }
     }
+
+    async getUserDisplayName(email, errorCallback) {
+        try {
+            const response = await this.client.get(`/user/${email}`);
+            console.log("client side response for display name" + response);
+            console.log("this is the data" + response.data.displayName);
+            return response.data.displayName;
+        } catch (error) {
+            this.handleError("getUserDisplayName", error, errorCallback)
+        }
+    }
+
 
     /**
      * Helper method to log the error and run any error functions.
+     * @param method
      * @param error The error received from the server.
      * @param errorCallback (Optional) A function to execute if the call fails.
      */

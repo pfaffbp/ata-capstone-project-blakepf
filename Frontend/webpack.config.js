@@ -3,13 +3,24 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const CopyPlugin = require("copy-webpack-plugin");
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
+
 module.exports = {
+  resolve: {
+    fallback: {
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve("buffer"),
+      stream: require.resolve("stream-browserify")
+    },
+  },
   optimization: {
     usedExports: true
   },
   entry: {
     examplePage: path.resolve(__dirname, 'src', 'pages', 'examplePage.js'),
-    LoginSignupPage: path.resolve(__dirname, 'src', 'pages', 'LoginSignupPage.js'),
+    profilePage: path.resolve(__dirname, 'src', 'pages', 'profilePage.js'),
+    loginPage: path.resolve(__dirname, 'src', 'pages', 'loginPage.js'),
+    signupPage: path.resolve(__dirname, 'src', 'pages', 'signupPage.js'),
+    updatePasswordPage: path.resolve(__dirname, 'src', 'pages', 'updatePasswordPage.js'),
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
@@ -25,8 +36,9 @@ module.exports = {
     https: false,
     port: 8080,
     open: true,
-/*    openPage: 'http://localhost:8080',
-    disableHostCheck: true,*/
+
+    /*    openPage: 'http://localhost:8080',
+        disableHostCheck: true,*/
     proxy: [
       {
         context: [
@@ -43,15 +55,30 @@ module.exports = {
       filename: 'index.html',
       inject: false
     }),
+
     new HtmlWebpackPlugin({
-      template: './src/LoginSignup.html',
-      filename: 'LoginSignup.html',
+      template: './src/signup.html',
+      filename: 'signup.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
-
+      template: './src/login.html',
+      filename: 'login.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/updatePassword.html',
+      filename: 'updatePassword.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
       template: './src/updateLogin.html',
       filename: 'updateLogin.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/userProfile.html',
+      filename: 'userProfile.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
@@ -60,19 +87,8 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/animepage.html',
+      template: './src/animePage.html',
       filename: 'animePage.html',
-      inject: false
-    }),
-
-    new HtmlWebpackPlugin({
-      template: './src/searchPage.html',
-      filename: 'searchPage.html',
-      inject: false
-    }),
-    new HtmlWebpackPlugin({
-      template: './src/landingPage.html',
-      filename: 'landingPage.html',
       inject: false
     }),
 
@@ -83,7 +99,11 @@ module.exports = {
           to: path.resolve("dist/css")
         }
       ]
+
     }),
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+
   ]
+
 }
+

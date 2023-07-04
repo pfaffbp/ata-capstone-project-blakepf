@@ -1,11 +1,16 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="css/updateLogin.css">
-    <script type = "text/javascript" src="updateLoginPage.js"></script>
-    <title>Aniverse: Update Login</title>
+    <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
+    <script type = "text/javascript" src="signupPage.js"></script>
+    <title>Aniverse: Signup</title>
+
+    <!-- ===== boxicon CSS ===== -->
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
 </head>
+
+
 
 <body>
 <div class="nav">
@@ -21,7 +26,6 @@
     <div class = "account">
         <a href = "searchPage.html" class="navigation-buttons">Search</a>
         <a href = "login.html">Login</a>
-        <a href = "signup.html">Signup</a>
     </div>
 </div>
 
@@ -99,70 +103,73 @@
 
 
 
+        <!--     <div class="Signup" style="text-align:center">-->
+        <div class="container-1">
+            <h1>Signup</h1>
+            <form  id="signup-forum">
+                <div class="col-1">
+                    <div class="field email-field">
+                        <div class="input-field-1">
+                            <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
+                        </div>
+                        <span class="error email-error">
 
-<div class="container-1">
-
-    <h1>Update Email</h1>
-    <form  id="updateLogin-forum">
-        <div class="col-1">
-        <div class="form-group updateEmail-field">
-            <div class="input-field-1">
-                <input type="email" id="email-entry" placeholder="Enter your email" class="email" />
-            </div>
-            <span class="error email-error">
-
-            <p class="error-text">Please enter a valid email</p>
           </span>
-        </div>
-            <div class="form-group newEmail-field">
-                <div class="input-field-1">
-                    <input type="email" id="newEmail-entry" placeholder="Enter your new email" class="email" />
+                    </div>
+
+                    <div class="field email-field">
+                        <div class="input-field-1">
+                            <input
+                                    type="email"
+                                    id="nickname"
+                                    placeholder="Enter a Display nickname"
+                                    class="email" />
+                        </div>
+                        <span class="error email">
+
+          </span>
+                    </div>
+                    <div class="field create-password">
+                        <p>Double click the lock to show/hide text.</p>
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="password"
+                                    placeholder="Create password, must be 8 characters long. "
+                                    class="password"
+                            >
+                          <!--  <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                     <!--       <i class='bx bx-lock-open-alt' ></i>-->
+                        </div>
+                        <span class="error create-password">
+
+          </span>
+
+                    </div>
+                    <div class="field confirm-password">
+                        <div class="input-field-1">
+                            <input
+                                    type="password"
+                                    id="confirm-password"
+                                    placeholder="Confirm password, must be 8 characters long."
+                                    class="password"
+                            >
+                           <!-- <i class="uil uil-eye-slash showHidePw" id="eyes" ></i>-->
+                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
+                    <!--        <i class='bx bx-lock-open-alt' ></i>-->
+
+                        </div>
+                        <span class="error password-error">
+
+          </span>
+                    </div>
+                    <div class="input-field-1 button">
+                        <input type="submit" id="createUser" value="Submit" />
+                    </div>
                 </div>
-
-            </div>
-            <div class="form-group newEmailConfirm-field">
-                <div class="input-field-1">
-                    <input
-                            type="email"
-                            id="newEmailConfirm-entry"
-                            placeholder="Confirm your new email"
-                            class="email" />
-
-                </div>
-
-            </div>
-        <div class="form-group enter-password">
-            <div class="input-field-1">
-                <input
-                        type="password"
-                        id="password"
-                        placeholder="Enter Your password"
-                        class="password"
-                />
-                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
-            </div>
-
+            </form>
         </div>
-        <div class="form-group confirm-password">
-            <div class="input-field-1">
-                <input
-                        type="password"
-                        id="confirm-password"
-                        placeholder="Confirm password"
-                        class="password"
-                />
-                <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
-
-            </div>
-
-        </div>
-        <div class="input-field-1 button">
-            <input type="submit" id="updateEmailButton" value="Update Email" />
-        </div>
-        </div>
-    </form>
-</div>
-
     </div>
 
     <div class= "rightImage">
@@ -170,10 +177,6 @@
     </div>
 
 </div>
-
-
-
-
-
+<!--<script src = "util/showPW.js"></script>-->
 <script src = "landingSlideshow.js"></script>
 </body>

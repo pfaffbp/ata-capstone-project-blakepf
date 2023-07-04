@@ -1,15 +1,19 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import updateLoginClient from "../api/updateLoginClient";
+import SignupClient from "../api/signupClient";
+import bcrypt from 'bcryptjs';
+
+
+
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class UpdateLoginPage extends BaseClass {
+class SignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdateEmail','toggle'], this);
+        this.bindClassMethods(['onCreateLogin', 'toggle'], this);
         this.dataStore = new DataStore();
 
 
@@ -19,9 +23,11 @@ class UpdateLoginPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        this.client = new updateLoginClient();
-        document.getElementById('updateEmailButton').addEventListener('click', this.onUpdateEmail);
+        this.client = new SignupClient();
+        document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
         document.getElementById('eyes').addEventListener('click', this.toggle);
+
+
         // await this.alreadyLoggedIn();
 
 
@@ -30,52 +36,55 @@ class UpdateLoginPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-    async onUpdateEmail(event) {
+    async onCreateLogin(event) {
         // Prevent the page from refreshing on form submit
         event.preventDefault();
-        // this.dataStore.set("updateEmail", null);
+        this.dataStore.set("createLogin", null);
+
+
         const emailInput = document.getElementById("email-entry").value;
-        const newEmailInput = document.getElementById("newEmail-entry").value;
-        const newEmailConfirmInput = document.getElementById("newEmailConfirm-entry").value;
         const passInput = document.getElementById("password").value;
         const cPassInput = document.getElementById("confirm-password").value;
+        const nickname = document.getElementById('nickname').value;
+
 
         try {
-            await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
-            const validEmail = await this.validEmailFormat(newEmailInput);
-            await this.validatePasswordInput(passInput, cPassInput);
-            const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
-            this.showMessage(`Email: ${newEmailInput} updated successfully!`);
-            window.location.href = "homepage.html";
 
-
+            await this.validateUserInput(passInput, cPassInput);
+          //  await this.checkIfNicknameExists(nickname);
+            const validEmail = await this.validEmailFormat(emailInput)
+            const hashedPassword = await bcrypt.hash(passInput, 10);
+            const login = await this.client.createLogin(validEmail, hashedPassword, nickname);
+            this.dataStore.set('login', emailInput)
+            this.showMessage(`Login ${emailInput} created successfully!`);
+            window.location.href = "login.html";
         } catch (error) {
             console.error(error);
-            this.errorHandler("Error Updating Email! Try again...");
-
+                this.errorHandler("Error creating Login! Try again...");
+            }
         }
 
-    }
 
-    async toggle(event){
+
+    async toggle(event) {
         const container = document.querySelector(".container-1"),
             pwShowHide = document.querySelectorAll(".showHidePw"),
             pwFields = document.querySelectorAll(".password");
 
 //   js code to show/hide password and change icon
-        pwShowHide.forEach(eyeIcon =>{
-            eyeIcon.addEventListener("click", ()=>{
-                pwFields.forEach(pwField =>{
-                    if(pwField.type ==="password"){
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                pwFields.forEach(pwField => {
+                    if (pwField.type === "password") {
                         pwField.type = "text";
 
-                        pwShowHide.forEach(icon =>{
+                        pwShowHide.forEach(icon => {
                             icon.classList.replace("bx-lock-alt", "bx-lock-open-alt");
                         })
-                    }else{
+                    } else {
                         pwField.type = "password";
 
-                        pwShowHide.forEach(icon =>{
+                        pwShowHide.forEach(icon => {
                             icon.classList.replace("bx-lock-open-alt", "bx-lock-alt");
                         })
                     }
@@ -84,28 +93,17 @@ class UpdateLoginPage extends BaseClass {
         })
     }
 
+
     //-------------------checks if passwords match ------------
-    async validatePasswordInput(password, confirmPassword) {
+    async validateUserInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
-            alert("passwords must match");
-            throw new Error('Passwords must match.');
+         //   alert("passwords must match");
+            throw new Error('Passwords must match and be at least 8 characters long');
         }
     }
 
-    validatePassword(password, newPassword) {
-        return password === newPassword;
-    }
-
-    //-------------------checks if emails match ------------
-    async validateEmailInput(email, confirmEmail) {
-        if (!this.validateEmail(email, confirmEmail)) {
-            alert("Email must match.");
-            throw new Error('Emails must match.');
-        }
-    }
-
-    validateEmail(email, confirmEmail) {
-        return email === confirmEmail;
+    validatePassword(password, confirmPassword) {
+        return password.length >= 8 && password === confirmPassword;
     }
 
     //-------------------checks if emails is in valid format ------------
@@ -113,7 +111,7 @@ class UpdateLoginPage extends BaseClass {
         if (!this.checkEmail(email)) {
             alert("invalid email");
             throw new Error('Invalid email address.');
-        }else return email;
+        } else return email;
     }
 
     checkEmail(email) {
@@ -127,8 +125,8 @@ class UpdateLoginPage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const updateLoginPage = new UpdateLoginPage();
-    updateLoginPage.mount();
+    const signupPage = new SignupPage();
+    await signupPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

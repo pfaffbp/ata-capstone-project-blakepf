@@ -1,15 +1,16 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import updateLoginClient from "../api/updateLoginClient";
+import updatePasswordClient from "../api/updatePasswordClient";
+import bcrypt from 'bcryptjs';
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class UpdateLoginPage extends BaseClass {
+class UpdatePasswordPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdateEmail','toggle'], this);
+        this.bindClassMethods(['onUpdatePassword', 'toggle'], this);
         this.dataStore = new DataStore();
 
 
@@ -19,8 +20,8 @@ class UpdateLoginPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        this.client = new updateLoginClient();
-        document.getElementById('updateEmailButton').addEventListener('click', this.onUpdateEmail);
+        this.client = new updatePasswordClient();
+        document.getElementById('updatePasswordButton').addEventListener('click', this.onUpdatePassword);
         document.getElementById('eyes').addEventListener('click', this.toggle);
         // await this.alreadyLoggedIn();
 
@@ -30,31 +31,26 @@ class UpdateLoginPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-    async onUpdateEmail(event) {
-        // Prevent the page from refreshing on form submit
+    async onUpdatePassword(event) {
         event.preventDefault();
-        // this.dataStore.set("updateEmail", null);
-        const emailInput = document.getElementById("email-entry").value;
-        const newEmailInput = document.getElementById("newEmail-entry").value;
-        const newEmailConfirmInput = document.getElementById("newEmailConfirm-entry").value;
-        const passInput = document.getElementById("password").value;
-        const cPassInput = document.getElementById("confirm-password").value;
+
+        const emailInput = document.getElementById("updatePassword-email-Login").value;
+        const passInput = document.getElementById("loginPassword").value;
+        const newPassInput = document.getElementById("newLoginPassword").value;
+        const newPassConfirmInput = document.getElementById("newLoginPassword-Confirm").value;
 
         try {
-            await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
-            const validEmail = await this.validEmailFormat(newEmailInput);
-            await this.validatePasswordInput(passInput, cPassInput);
-            const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
-            this.showMessage(`Email: ${newEmailInput} updated successfully!`);
+            await this.validatePasswordInput(newPassInput, newPassConfirmInput);
+            const validEmail = await this.validEmailFormat(emailInput)
+            const hashedNewPassword = await bcrypt.hash(newPassInput, 10);
+            const updatePassword = await this.client.updatePasswordByEmail(validEmail, passInput, hashedNewPassword);
+            this.showMessage(`Password for: ${emailInput} updated successfully!`);
             window.location.href = "homepage.html";
-
 
         } catch (error) {
             console.error(error);
-            this.errorHandler("Error Updating Email! Try again...");
-
+            this.errorHandler("Error Updating! Try again...");
         }
-
     }
 
     async toggle(event){
@@ -93,33 +89,21 @@ class UpdateLoginPage extends BaseClass {
     }
 
     validatePassword(password, newPassword) {
-        return password === newPassword;
+        return password.length >= 8 && password === newPassword;
     }
 
-    //-------------------checks if emails match ------------
-    async validateEmailInput(email, confirmEmail) {
-        if (!this.validateEmail(email, confirmEmail)) {
-            alert("Email must match.");
-            throw new Error('Emails must match.');
-        }
-    }
 
-    validateEmail(email, confirmEmail) {
-        return email === confirmEmail;
-    }
+async validEmailFormat(email) {
+    if (!this.checkEmail(email)) {
+        alert("invalid email");
+        throw new Error('Invalid email address.');
+    }else return email;
+}
 
-    //-------------------checks if emails is in valid format ------------
-    async validEmailFormat(email) {
-        if (!this.checkEmail(email)) {
-            alert("invalid email");
-            throw new Error('Invalid email address.');
-        }else return email;
-    }
-
-    checkEmail(email) {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-        return emailRegex.test(email);
-    }
+checkEmail(email) {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+}
 
 }
 
@@ -127,8 +111,8 @@ class UpdateLoginPage extends BaseClass {
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const updateLoginPage = new UpdateLoginPage();
-    updateLoginPage.mount();
+    const updatePasswordPage = new UpdatePasswordPage();
+    await updatePasswordPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

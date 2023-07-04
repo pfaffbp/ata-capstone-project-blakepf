@@ -1,7 +1,5 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
-import bcrypt from "bcryptjs";
-
 
 /**
  * Client to call the MusicPlaylistService.
@@ -11,11 +9,11 @@ import bcrypt from "bcryptjs";
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class updateLoginClient extends BaseClass {
+export default class SignupClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'updateEmailByEmail'];
+        const methodsToBind = ['clientLoaded', 'createLogin'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -35,42 +33,36 @@ export default class updateLoginClient extends BaseClass {
     /**
      * Gets the concert for the given ID.
      * @param email
-     * @param newEmail
      * @param password
+     * @param nickname
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
 
 
 
-    async updateEmailByEmail(email, newEmail, password, errorCallback) {
+    async createLogin(email, password, nickname, errorCallback) {
         try {
-            const response = await this.client.post('/login/login', {
+            const response = await this.client.post(`/login/createLogin`, {
                 email: email,
+                password: password,
+                nickname: nickname
             });
-            console.log("response data: " + response)
-            const hashedPassword = response.data.password; // Assuming the password is returned from the server
-            const passwordMatch = await bcrypt.compare(password, hashedPassword);
-
-            if (!passwordMatch) {
-                throw new Error('Invalid password');
-            } else {
-                try {
-                    const response = await this.client.put('/login/updateEmail', {
-                        email: email,
-                        newEmail: newEmail,
-                    });
-                    return response.data;
-                } catch (error) {
-                    this.handleError("UpdateEmail", error, errorCallback);
-                    throw error;
-                }
-            }
+            return response.data;
         } catch (error) {
-            this.handleError("Login", error, errorCallback);
+            console.log("this is the error " + error);
+            if (error.response.status === 449){
+                alert("Nickname already exists.")
+            }else if (error.response.status === 444){
+                alert("Email already exists.")
+            }else
+            this.handleError("createLogin", error, errorCallback);
             throw error;
         }
     }
+
+
+
 
 
     /**

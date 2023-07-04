@@ -2,7 +2,6 @@ import BaseClass from "../util/baseClass";
 import axios from 'axios'
 import bcrypt from "bcryptjs";
 
-
 /**
  * Client to call the MusicPlaylistService.
  *
@@ -11,11 +10,11 @@ import bcrypt from "bcryptjs";
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class updateLoginClient extends BaseClass {
+export default class updatePasswordClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'updateEmailByEmail'];
+        const methodsToBind = ['clientLoaded', 'updatePasswordByEmail'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -35,15 +34,14 @@ export default class updateLoginClient extends BaseClass {
     /**
      * Gets the concert for the given ID.
      * @param email
-     * @param newEmail
      * @param password
+     * @param newPassword
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
 
 
-
-    async updateEmailByEmail(email, newEmail, password, errorCallback) {
+    async updatePasswordByEmail(email, password, newPassword, errorCallback) {
         try {
             const response = await this.client.post('/login/login', {
                 email: email,
@@ -52,26 +50,25 @@ export default class updateLoginClient extends BaseClass {
             const hashedPassword = response.data.password; // Assuming the password is returned from the server
             const passwordMatch = await bcrypt.compare(password, hashedPassword);
 
-            if (!passwordMatch) {
-                throw new Error('Invalid password');
-            } else {
+            if (passwordMatch) {
                 try {
-                    const response = await this.client.put('/login/updateEmail', {
+                    const response = await this.client.put(`/login/changePassword`, {
                         email: email,
-                        newEmail: newEmail,
+                        newPassword: newPassword,
                     });
                     return response.data;
                 } catch (error) {
-                    this.handleError("UpdateEmail", error, errorCallback);
+                    this.handleError("updatePassword", error, errorCallback);
                     throw error;
                 }
+            } else {
+                throw new Error('Invalid password');
             }
         } catch (error) {
             this.handleError("Login", error, errorCallback);
             throw error;
         }
     }
-
 
     /**
      * Helper method to log the error and run any error functions.

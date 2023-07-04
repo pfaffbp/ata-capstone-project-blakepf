@@ -100,7 +100,7 @@ export default class AnimeClient extends BaseClass {
 
     }
 
-    async getAnimeByGenre(genre, errorCallback) {        
+    async getAnimeByGenre(genre, errorCallback) {
         const map = new Map();
         let query = `
             query findAnimeByGenre($genre : String) {
@@ -129,7 +129,7 @@ export default class AnimeClient extends BaseClass {
                 }
             }
         `;
-        
+
         let variables = {
             genre: genre
         };
@@ -168,7 +168,7 @@ export default class AnimeClient extends BaseClass {
             console.error(error);
         }
 
-        
+
     }
 
     async uploadAnimeToDatabase(array, errorCallback){
@@ -193,6 +193,6 @@ export default class AnimeClient extends BaseClass {
     }
 
 }
-    /**
-     * Once the page has loaded, set up the event handlers and fetch the concert list.
-     */
+/**
+ * Once the page has loaded, set up the event handlers and fetch the concert list.
+ */

@@ -30,7 +30,7 @@ img {
     position: fixed;
     width: 100%;
     top: 0;
-    font-size: 20 px;
+    font-size: 20px;
     font-weight: bold;
     z-index: 2;
 }
@@ -63,7 +63,7 @@ img {
     display: flex;
     flex-direction: row;
     justify-content: center;
-    width: 100%;                    
+    width: 100%;
     height: 100%;
     padding-top: 100px;
     border: none;
@@ -74,7 +74,7 @@ img {
 .leftImage {
     width: 20%;
     position: fixed;                        /* Currently Zenitsu from Demon Slayer. May change it to something else! */
-    bottom: 1%;                     
+    bottom: 1%;
     left: 3%;
 }
 
@@ -90,9 +90,9 @@ img {
 /* ------- Center Div, Holds All Anime Info Content  ------- */
 
 #main {
-    background: black;              
+    background: black;
     width: 60%;        
-    height: 100%;                        
+    height: 100%;
     margin: auto;                               /* Div holding all the content below */
     z-index: 1;
     position: relative;
@@ -169,7 +169,7 @@ hr {
     margin: auto 10px;
     display: inline-block;
     border-radius: 10px;
-  
+
 }
 
 .addl-info {
@@ -251,5 +251,3 @@ button:hover {
 .anime-container:hover .cover-image h5 {
     opacity: 1;
 }
-
-

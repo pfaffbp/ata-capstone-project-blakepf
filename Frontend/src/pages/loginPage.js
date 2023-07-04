@@ -1,15 +1,15 @@
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
-import updateLoginClient from "../api/updateLoginClient";
+import LoginClient from "../api/loginClient";
 
 /**
  * Logic needed for the view playlist page of the website.
  */
-class UpdateLoginPage extends BaseClass {
+class LoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdateEmail','toggle'], this);
+        this.bindClassMethods(['onLogin', 'toggle'], this);
         this.dataStore = new DataStore();
 
 
@@ -19,8 +19,9 @@ class UpdateLoginPage extends BaseClass {
      * Once the page has loaded, set up the event handlers and fetch the concert list.
      */
     async mount() {
-        this.client = new updateLoginClient();
-        document.getElementById('updateEmailButton').addEventListener('click', this.onUpdateEmail);
+        this.client = new LoginClient();
+
+        document.getElementById('LoginUser').addEventListener('click', this.onLogin);
         document.getElementById('eyes').addEventListener('click', this.toggle);
         // await this.alreadyLoggedIn();
 
@@ -30,29 +31,27 @@ class UpdateLoginPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
 
-    async onUpdateEmail(event) {
-        // Prevent the page from refreshing on form submit
+    async onLogin(event) {
         event.preventDefault();
-        // this.dataStore.set("updateEmail", null);
-        const emailInput = document.getElementById("email-entry").value;
-        const newEmailInput = document.getElementById("newEmail-entry").value;
-        const newEmailConfirmInput = document.getElementById("newEmailConfirm-entry").value;
-        const passInput = document.getElementById("password").value;
-        const cPassInput = document.getElementById("confirm-password").value;
+        const loginInput = document.getElementById("email-Login").value;
+        const loginPassInput = document.getElementById("loginPassword").value;
 
         try {
-            await this.validateEmailInput(newEmailInput, newEmailConfirmInput);
-            const validEmail = await this.validEmailFormat(newEmailInput);
-            await this.validatePasswordInput(passInput, cPassInput);
-            const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
-            this.showMessage(`Email: ${newEmailInput} updated successfully!`);
-            window.location.href = "homepage.html";
+            const validEmail = await this.validEmailFormat(loginInput);
+            const login = await this.client.getLogin(validEmail, loginPassInput);
 
-
+            if (login) {
+                const displayName = await this.client.getUserDisplayName(loginInput);
+                console.log("this is the display name: " + displayName);
+                localStorage.setItem("displayName", displayName);
+                localStorage.setItem("LoggedIn", loginInput);
+                 window.location.href = "homepage.html";
+            } else {
+                this.showMessage("incorrect email or password!");
+            }
         } catch (error) {
             console.error(error);
-            this.errorHandler("Error Updating Email! Try again...");
-
+            this.errorHandler("Error Logging in! Try again...");
         }
 
     }
@@ -84,30 +83,6 @@ class UpdateLoginPage extends BaseClass {
         })
     }
 
-    //-------------------checks if passwords match ------------
-    async validatePasswordInput(password, confirmPassword) {
-        if (!this.validatePassword(password, confirmPassword)) {
-            alert("passwords must match");
-            throw new Error('Passwords must match.');
-        }
-    }
-
-    validatePassword(password, newPassword) {
-        return password === newPassword;
-    }
-
-    //-------------------checks if emails match ------------
-    async validateEmailInput(email, confirmEmail) {
-        if (!this.validateEmail(email, confirmEmail)) {
-            alert("Email must match.");
-            throw new Error('Emails must match.');
-        }
-    }
-
-    validateEmail(email, confirmEmail) {
-        return email === confirmEmail;
-    }
-
     //-------------------checks if emails is in valid format ------------
     async validEmailFormat(email) {
         if (!this.checkEmail(email)) {
@@ -121,14 +96,15 @@ class UpdateLoginPage extends BaseClass {
         return emailRegex.test(email);
     }
 
+
 }
 
 /**
  * Main method to run when the page contents have loaded.
  */
 const main = async () => {
-    const updateLoginPage = new UpdateLoginPage();
-    updateLoginPage.mount();
+    const loginPage = new LoginPage();
+    loginPage.mount();
 };
 
 window.addEventListener('DOMContentLoaded', main);

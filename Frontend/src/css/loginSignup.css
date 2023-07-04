@@ -111,7 +111,7 @@ img {
     bottom: -650px;
     cursor: pointer;
 }
-.Update Password{
+.Login{
     position: absolute;
     left: 50%;
     transform: translate(-50%);
@@ -146,11 +146,13 @@ form .input-field-1 {
     position: relative;
     height: 55px;
     width: 100%;
+    margin-top: 20px;
 }
 .input-field-1 input {
     height: 100%;
     width: 88%;
     outline: none;
+    border: white;
     border-radius: 8px;
     padding: 0 15px;
     border: 2px solid purple;
@@ -177,19 +179,11 @@ form .input-field-1 {
     cursor: pointer;
     padding: 10px;
 }
+
 .invalid input {
     border-color: #d93025;
 }
-.input-field-1 .show-hide {
-    position: absolute;
-    right: 13px;
-    top: 50%;
-    transform: translateY(-50%);
-    font-size: 18px;
-    color: #919191;
-    cursor: pointer;
-    padding: 3px;
-}
+
 
 .container-2 {
     position: relative;
@@ -250,7 +244,8 @@ form .input-field-2 {
     cursor: pointer;
     padding: 10px;
 }
-.form-group .error {
+
+.form .error {
     display: flex;
     align-items: center;
     margin-top: 6px;
@@ -259,18 +254,11 @@ form .input-field-2 {
     display: none;
 }
 
-.error .error-icon {
-    margin-right: 6px;
-    font-size: 15px;
-}
 
 .create-password .error {
     align-items: flex-start;
 }
 
-.create-password .error-icon {
-    margin-top: 4px;
-}
 
 .button {
     margin: 10px 18px 0px;
