@@ -39,19 +39,19 @@ class ProfilePage extends BaseClass {
         if (uData) {
             let items ="";
                     items += `
-                   <p>${uData.displayName} </p>                            
+                   ${uData.displayName}                         
                 `;
             let age ="";
             age += `
-                   <p> Age: ${uData.age} </p>                             
+                    Age: ${uData.age}                        
                 `;
             let name ="";
             name += `
-                   <p> Name: ${uData.fullName} </p>                             
+                   Name: ${uData.fullName}                          
                 `;
             let bio ="";
             bio += `
-                   <p> Bio: ${uData.bio} </p>                             
+                    Bio: ${uData.bio}                         
                 `;
           let animeList =""
             /*    for (let anime of uData){
