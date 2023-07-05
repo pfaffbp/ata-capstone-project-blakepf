@@ -109,7 +109,7 @@ public class UserService {
         return existingUser.getFavoriteAnime();
     }
     public void removeFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {

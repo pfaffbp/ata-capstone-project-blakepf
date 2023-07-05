@@ -42,7 +42,6 @@ class LoginPage extends BaseClass {
 
             if (login) {
                 const displayName = await this.client.getUserDisplayName(loginInput);
-                console.log("this is the display name: " + displayName);
                 localStorage.setItem("displayName", displayName);
                 localStorage.setItem("LoggedIn", loginInput);
                  window.location.href = "homepage.html";

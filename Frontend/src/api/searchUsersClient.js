@@ -1,6 +1,6 @@
 import BaseClass from "../util/baseClass";
 import axios from 'axios'
-let displayName = localStorage.getItem('displayName')
+
 
 
 /**
@@ -11,7 +11,7 @@ let displayName = localStorage.getItem('displayName')
  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Classes#Mix-ins
  * https://javascript.info/mixins
  */
-export default class ProfileClient extends BaseClass {
+export default class SearchUsersClient extends BaseClass {
 
     constructor(props = {}){
         super();
@@ -40,6 +40,8 @@ export default class ProfileClient extends BaseClass {
      * @returns The concert
      */
     async getUserData( errorCallback){
+
+        const displayName = document.getElementById('search-bar').value;
 
         try {
             const response = await this.client.get(`/user/${displayName}/searchByDisplayName/`);
