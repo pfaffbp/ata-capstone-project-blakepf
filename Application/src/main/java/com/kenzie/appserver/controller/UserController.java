@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.*;
+import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
@@ -16,9 +17,11 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
+    private final CatalogService catalogService;
 
-    UserController(UserService userService) {
+    UserController(UserService userService, CatalogService catalogService) {
         this.userService = userService;
+        this.catalogService = catalogService;
     }
 
     @GetMapping("/{displayName}/searchByDisplayName")
@@ -119,28 +122,23 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{displayName}/addFavorite/addFavorite")
+    @PostMapping("/{displayName}/addFavorite/{animeId}")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
-            @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
+            @PathVariable("animeId") int animeId
     ) {
         User user = userService.findUserByName(displayName);
 
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        if (user.getFavoriteAnime().size() < 10) {
-            List<String> favoriteAnime = userService.addNewFavorite(user.getDisplayName(),
-                    favoriteAnimeRequest.toString());
 
-            UserResponse response = createUserResponse(user);
-            response.setFavoriteAnime(favoriteAnime);
 
-            return ResponseEntity.ok(response);
-        } else {
-            //not sure how else to let the user know that they are at their limit, will come back to fix this
-            return ResponseEntity.badRequest().build();
-        }
+        UserResponse response = createUserResponse(user);
+        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+
+        return ResponseEntity.ok(response);
+
     }
 
     @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")

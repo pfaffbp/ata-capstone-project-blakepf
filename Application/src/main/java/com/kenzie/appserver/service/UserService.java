@@ -19,9 +19,10 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache) {
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
         this.userRepository = userRepository;
         this.cache = cache;
+        this.animeRepository = animeRepository;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -82,18 +83,28 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (existingUser.getFavoriteAnime().contains(animeId)) {
-            throw new IllegalArgumentException("Anime is already in user's favorites.");
-        }
+//        if (existingUser.getFavoriteAnime().contains(animeId)) {
+//            throw new IllegalArgumentException("Anime is already in user's favorites.");
+//        }
 
-        existingUser.getFavoriteAnime().add(animeId);
+        if (existingUser.getFavoriteAnime() == null) {
+            List<String> favorites = new ArrayList<>();
+            favorites.add(animeId);
+            existingUser.setFavoriteAnime(favorites);
+
+            userRepository.save(existingUser);
+        } else {
+            existingUser.getFavoriteAnime().add(animeId);
+
+            userRepository.save(existingUser);
+        }
 
         return existingUser.getFavoriteAnime();
     }
@@ -105,11 +116,9 @@ public class UserService {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (!existingUser.getFavoriteAnime().contains(animeId)) {
-            throw new IllegalArgumentException("Anime is not in user's favorites.");
-        }
 
         existingUser.getFavoriteAnime().remove(animeId);
+        userRepository.save(existingUser);
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
