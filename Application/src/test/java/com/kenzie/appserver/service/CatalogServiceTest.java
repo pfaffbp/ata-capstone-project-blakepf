@@ -1,7 +1,6 @@
 package com.kenzie.appserver.service;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kenzie.appserver.config.CacheAnimeStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
@@ -21,6 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 import static java.util.UUID.randomUUID;
+import static org.junit.Assert.assertTrue;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Matchers.anyString;
 import static org.mockito.Mockito.*;
@@ -189,18 +189,18 @@ public class CatalogServiceTest {
 
     }
 
-    @Test
-    public void updateAnime_descriptionUpdated() {
-        String animeId = randomUUID().toString();
-        String description = mockNeat.strings().val();
+        @Test
+        public void updateAnime_descriptionUpdated() {
+            String animeId = randomUUID().toString();
+            String description = mockNeat.strings().val();
 
-        Anime anime = new Anime("Title", animeId, description,
-                "image", 2007, "season",300, 90, 500, new ArrayList<>());
+            Anime anime = new Anime("Title", animeId, description,
+                    "image", 2007, "season",300, 90, 500, new ArrayList<>());
 
-        when(cacheStore.get(anime.getDescription())).thenReturn(anime);
+            when(cacheStore.get(anime.getDescription())).thenReturn(anime);
 
-        catalogService.updateAnime(anime);
-    }
+            catalogService.updateAnime(anime);
+        }
 
     @Test
     public void findAllAnime(){
@@ -270,4 +270,12 @@ public class CatalogServiceTest {
         }
     }
 
+    @Test
+    void testGetSeasonAnime() {
+        PaginatedQueryList<CatalogRecord> mockResult = mock(PaginatedQueryList.class);
+        when(mapper.query(any(Class.class), any(DynamoDBQueryExpression.class))).thenReturn(mockResult);
+        PaginatedQueryList<CatalogRecord> result = catalogService.getSeasonAnime();
+        verify(mapper).query(any(Class.class), any(DynamoDBQueryExpression.class));
+        assertEquals(mockResult, result);
+    }
 }
