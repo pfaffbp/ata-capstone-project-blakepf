@@ -1,20 +1,21 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheUserStore;
+import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.*;
 
 import java.util.*;
 
 import static java.util.UUID.randomUUID;
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.when;
+import static org.mockito.Matchers.anyString;
+import static org.mockito.Mockito.*;
 
 public class UserServiceTest {
 
@@ -24,12 +25,16 @@ public class UserServiceTest {
     @Mock
     private CacheUserStore cacheUserStore;
 
+    @Mock
+    private CatalogRepository animeRepository;
+
+    @InjectMocks
     private UserService service;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new UserService(repository, cacheUserStore);
+        service = new UserService(repository, cacheUserStore, animeRepository);
     }
 
     @Test
@@ -41,7 +46,7 @@ public class UserServiceTest {
         int age = 27;
         String displayName = "AnimeLover96";
         String bio = "I am a huge lover of all things Anime";
-        User user = new User(userId, email, fullName, age, displayName, bio);
+        User user = new User(new ArrayList<>(), new ArrayList<>(), email, userId, new ArrayList<>(), fullName, displayName, age, bio);
 
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
@@ -118,8 +123,6 @@ public class UserServiceTest {
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
                 "fullName", "displayName", 27, "bio");
 
-        String updatedEmail = "newEmail";
-
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
         userRecord.setFollowers(user.getFollowers());
@@ -132,8 +135,89 @@ public class UserServiceTest {
         userRecord.setBio(user.getBio());
         repository.save(userRecord);
 
+        User updated = new User(new ArrayList<>(), new ArrayList<>(), "updatedEmail", userId, new ArrayList<>(), user.getFullName(),
+                "newName", 30, user.getBio());
 
+        when(repository.existsById(user.getUserId())).thenReturn(true);
+
+        ArgumentCaptor<UserRecord> argumentCaptor = ArgumentCaptor.forClass(UserRecord.class);
+                when(repository.findById(user.getUserId())).thenReturn(Optional.of(userRecord));
+                when(repository.save(argumentCaptor.capture())).thenReturn(userRecord);
+                when(cacheUserStore.get(user.getUserId())).thenReturn(user);
+
+                service.updateUser(updated);
+
+                UserRecord capturedUserRecord = argumentCaptor.getValue();
+                assertEquals(capturedUserRecord.getUserId(), userRecord.getUserId());
+                assertEquals(capturedUserRecord.getFavoriteAnime(), userRecord.getFavoriteAnime());
+                assertEquals(capturedUserRecord.getFollowers(), userRecord.getFollowers());
+                assertEquals(capturedUserRecord.getFollowing(), userRecord.getFollowing());
+                assertEquals(capturedUserRecord.getAge(), userRecord.getAge());
+                assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
+                assertEquals(capturedUserRecord.getDisplayName(), updated.getDisplayName(), "display name was updated properly");
+                assertEquals(capturedUserRecord.getEmail(), updated.getEmail(), "email was updated properly");
+                assertEquals(capturedUserRecord.getAge(), updated.getAge(), "age was updated properly");
+                assertNotEquals(capturedUserRecord.getAge(), user.getAge(), "saved age is different from initial age");
+                assertNotEquals(capturedUserRecord.getEmail(), user.getEmail(), "saved email is different from initial email");
+                assertNotEquals(capturedUserRecord.getDisplayName(), user.getDisplayName(), "saved display name is different from initial display name");
     }
+    @Test
+    void addNewUserTest() {
+        String userId = randomUUID().toString();
+
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+
+        ArgumentCaptor<UserRecord> userRecordArgumentCaptor = ArgumentCaptor.forClass(UserRecord.class);
+
+        User returnedUser = service.addNewUser(user);
+
+        Assertions.assertNotNull(returnedUser);
+        verify(repository).save(userRecordArgumentCaptor.capture());
+
+        UserRecord record = userRecordArgumentCaptor.getValue();
+
+        Assertions.assertNotNull(record, "The user record is returned");
+        assertEquals(record.getUserId(), user.getUserId(), "The ids match");
+        assertEquals(record.getBio(), user.getBio(), "The bios match");
+        assertEquals(record.getAge(), user.getAge(), "The ages match");
+        assertEquals(record.getEmail(), user.getEmail(), "The emails match");
+        assertEquals(record.getDisplayName(), user.getDisplayName(), "The display names match");
+        assertEquals(record.getFullName(), user.getFullName(), "The full names match");
+    }
+    @Test
+    void deleteUserTest() {
+        String userId = randomUUID().toString();
+
+        UserRecord record = new UserRecord();
+        record.setUserId(userId);
+
+        when(repository.existsById(anyString())).thenReturn(true);
+        when(repository.findById(anyString())).thenReturn(Optional.of(record));
+
+        when(cacheUserStore.get(record.getUserId())).thenReturn(new User(new ArrayList<>(), new ArrayList<>(), "email",
+                userId, new ArrayList<>(), "fullName", "displayName", 27, "bio"));
+
+        service.deleteUser(userId);
+
+        verify(cacheUserStore).evict(record.getUserId());
+
+        verify(repository, times(1)).deleteById(userId);
+    }
+
+//    @Test
+//    void addNewFavorite_badUser_throwsException() {
+//        String userId = randomUUID().toString();
+//
+//        when(repository.existsById(userId)).thenReturn(false);
+//        when(repository.findById(userId)).thenReturn(Optional.empty());
+//
+//        service.addNewFavorite("displayName", "favorite");
+//
+//        Assertions.assertThrows(ResponseStatusException.class, () -> {
+//            reservedTicketService.reserveTicket(ticket);
+//        });
+//    }
 
 
 }

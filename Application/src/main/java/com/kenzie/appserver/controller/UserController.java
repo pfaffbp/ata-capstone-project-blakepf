@@ -176,8 +176,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<UserDisplayNameResponse> fineDisplayNameByEmail(@PathVariable String email) {
-        String displayName = userService.fineDisplayNameByEmail(email);;
+    public ResponseEntity<UserDisplayNameResponse> findDisplayNameByEmail(@PathVariable String email) {
+        String displayName = userService.findDisplayNameByEmail(email);;
 
         if (displayName != null) {
             UserDisplayNameResponse response = new UserDisplayNameResponse();

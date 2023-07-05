@@ -19,9 +19,10 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache) {
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
         this.userRepository = userRepository;
         this.cache = cache;
+        this.animeRepository = animeRepository;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -50,7 +51,7 @@ public class UserService {
 
         return usersList;
     }
-    public void addNewUser(User user) {
+    public User addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
         userRecord.setEmail(user.getEmail());
@@ -59,6 +60,7 @@ public class UserService {
         userRecord.setAge(user.getAge());
         userRecord.setBio(user.getBio());
         userRepository.save(userRecord);
+        return user;
     }
 
     public void updateUser(User user) {
@@ -178,7 +180,7 @@ public class UserService {
         userRepository.save(existingFriend);
     }
 
-    public String fineDisplayNameByEmail(String email) {
+    public String findDisplayNameByEmail(String email) {
         Optional<UserRecord> record = userRepository.findByEmail(email);
         if (record.isPresent()) {
             return record.get().getDisplayName();
