@@ -8,7 +8,6 @@ import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +18,9 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
+    public UserService(UserRepository userRepository, CacheUserStore cache) {
         this.userRepository = userRepository;
         this.cache = cache;
-        this.animeRepository = animeRepository;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -99,7 +97,7 @@ public class UserService {
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
-            throw new IllegalArgumentException("User or anime not found.");
+            throw new IllegalArgumentException("User or Anime not found");
         }
 
         if (existingUser.getFavoriteAnime().contains(animeId)) {

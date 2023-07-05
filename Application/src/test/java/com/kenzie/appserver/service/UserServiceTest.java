@@ -3,6 +3,7 @@ package com.kenzie.appserver.service;
 import com.kenzie.appserver.config.CacheUserStore;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
+import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import org.junit.jupiter.api.Assertions;
@@ -34,7 +35,7 @@ public class UserServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new UserService(repository, cacheUserStore, animeRepository);
+        service = new UserService(repository, cacheUserStore);
     }
 
     @Test
@@ -205,19 +206,25 @@ public class UserServiceTest {
         verify(repository, times(1)).deleteById(userId);
     }
 
-//    @Test
-//    void addNewFavorite_badUser_throwsException() {
-//        String userId = randomUUID().toString();
-//
-//        when(repository.existsById(userId)).thenReturn(false);
-//        when(repository.findById(userId)).thenReturn(Optional.empty());
-//
-//        service.addNewFavorite("displayName", "favorite");
-//
-//        Assertions.assertThrows(ResponseStatusException.class, () -> {
-//            reservedTicketService.reserveTicket(ticket);
-//        });
-//    }
+    @Test
+    void addNewFavorite_badUser_throwsException() {
+        String userId = randomUUID().toString();
+
+        UserRecord record = new UserRecord();
+        record.setUserId(userId);
+        CatalogRecord animeRecord = new CatalogRecord();
+        animeRecord.setAnimeId("favorite");
+
+        when(repository.findById(userId)).thenReturn(Optional.of(record));
+        when(repository.existsById(userId)).thenReturn(false);
+
+
+        when(animeRepository.findById("favorite")).thenReturn(Optional.of(animeRecord));
+
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            service.addNewFavorite("displayName", "favorite");
+        });
+    }
 
 
 }
