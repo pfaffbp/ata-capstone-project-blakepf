@@ -112,5 +112,28 @@ public class UserServiceTest {
         assertEquals(userRecords.size(), users.size(), "The sizes match");
     }
 
+    @Test
+    void updateUser_validUser_UpdatesUser(){
+        String userId = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+
+        String updatedEmail = "newEmail";
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+
+    }
+
 
 }

@@ -62,17 +62,28 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-        if (userRepository.existsById(user.getDisplayName())) {
-            UserRecord userRecord = new UserRecord();
-            userRecord.setUserId(user.getUserId());
-            userRecord.setEmail(user.getEmail());
-            userRecord.setFullName(user.getFullName());
-            userRecord.setDisplayName(user.getDisplayName());
-            userRecord.setAge(user.getAge());
-            userRecord.setBio(user.getBio());
-            userRepository.save(userRecord);
+        if (userRepository.existsById(user.getUserId())) {
+            UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
+            if (userRecord != null) {
+                if (user.getAge() != userRecord.getAge()) {
+                    userRecord.setAge(user.getAge());
+                }
+                if (user.getEmail() != null && !user.getEmail().equals(userRecord.getEmail())) {
+                    userRecord.setEmail(user.getEmail());
+                }
+                if (user.getFullName() != null && !user.getFullName().equals(userRecord.getFullName())) {
+                    userRecord.setFullName(user.getFullName());
+                }
+                if (user.getDisplayName() != null && !user.getDisplayName().equals(userRecord.getDisplayName())) {
+                    userRecord.setDisplayName(user.getDisplayName());
+                }
+                if (user.getBio() != null && !user.getBio().equals(userRecord.getBio())) {
+                    userRecord.setBio(user.getBio());
+                }
+                userRepository.save(userRecord);
 
-            cache.evict(user.getFullName());
+                cache.evict(user.getFullName());
+            }
         }
     }
     public void deleteUser(String displayName) {
