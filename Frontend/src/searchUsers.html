@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script type="text/javascript" src="searchUsersPage.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/searchUsersPage.css">
+</head>
+
+<body>
+    <!-- Navigation Bar Start -->
+    <div class="nav">
+        <img src = "css/aniverse-logo-white.png" class= "logo">
+
+        <div class = "main-links">
+            <a href="landingPage.html">Anime</a>
+            <a href = "holder1">Community</a>
+            <a href = "holder3">Read</a>
+        </div>
+        
+        <div class = "account">
+            <a href = "searchPage.html" class="navigation-buttons">Search</a>
+            <a href = "signup.html">Signup</a>
+            <a href = "login.html">Login</a>
+            <a  id="logout">LogOut</a>
+        </div>
+    </div>
+    <!-- Navigation Bar End -->
+
+    <div class = "flex-container">
+
+        <div class = "leftImage">
+            <img src="css/zenitsu-left.png">
+        </div>
+
+        <div class = "main">
+
+            <form id="search-form">
+                <label for="search-bar" class="search-bar-class">
+                    <h1>Search for Users &#x1F50D;</h1>
+                </label>
+                <div class = "search-bar-button">
+                    <input type="text" id="search-bar" placeholder="Who you looking for?"/>
+                    <button class="button-85" role="button" id="searchButton">Search</button>
+                </div>
+            </form>
+
+            <!-- Insert your profile content here. -->
+            <div class = "display-name">
+                <h1 id="displayName" >Display Name:</h1>
+            </div>
+
+            <hr>
+            <div class = "top-half">
+                <div class = "image-box">
+                    <img src = "https://a0.anyrgb.com/pngimg/1676/410/soma-saito-haruichi-furudate-shoyo-hinata-haikyuu-haikyu-hinata-seiyu-tooth-cool-hairstyle-thumbnail.png">
+                </div>
+
+                <div class = "user-info">
+                    <ul>
+                        <p id="fullName" > Name: </p>
+                        <p id="age" >Age: </p>
+                        <p id="bio">Bio:</p>
+
+                    </ul>
+                </div>
+            </div>
+            
+            <div class = "bottom-half">
+                <div class = "favorite-list">
+                    <h4>Top 10 Favorite Anime</h4>
+                    <ol>
+                        <li>K-ON!!!</li>
+                        <li>Haikyuu</li>
+                        <li>Demon Slayer</li>
+                        <li>Ouran High School Host Club</li>
+                        <li>Tsubasa</li>
+                        <li>Death Parade</li>
+                        <li>My Hero Academia</li>
+                        <li>Spy x Family</li>
+                        <li>Samurai Champloo</li>
+                        <li>Food Wars</li>
+                    </ol>
+                </div>
+
+                <div class = "reviews">
+                    <h4> Reviews Made By Me</h4>
+                    <button class = "review-button">+ Click to load more Reviews +</button>
+                </div>
+            </div>
+        </div>
+    
+    </div>
+
+    <div class= "rightImage">
+        <img src="css/tanjiro-right.png">
+    </div>
+
+
+</body>
+</html>

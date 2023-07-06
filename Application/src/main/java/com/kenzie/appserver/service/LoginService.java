@@ -1,7 +1,10 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.exceptions.NicknameAlreadyExistsException;
 import com.kenzie.appserver.repositories.LoginRepository;
+import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.LoginRecord;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,16 +16,26 @@ import java.util.UUID;
 public class LoginService {
 
     private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public LoginService(LoginRepository loginRepository) {
+    public LoginService(LoginRepository loginRepository, UserRepository userRepository ) {
+
         this.loginRepository = loginRepository;
+        this.userRepository = userRepository;
     }
 
-    public boolean createLogin(String email, String password) {
+    public int createLogin(String email, String password, String nickname) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        Optional<UserRecord> userRecordCheck = userRepository.findByDisplayName(nickname);
+
         if (record.isPresent()) {
-            return false;
+            return 444;
+            // 444 = email already exists
+        }else if (userRecordCheck.isPresent()){
+            throw new NicknameAlreadyExistsException(nickname);
+
         } else {
             String userId = UUID.randomUUID().toString();
 
@@ -32,11 +45,14 @@ public class LoginService {
             loginRecord.setPassword(password);
             loginRepository.save(loginRecord);
 
-        /*    UserRecros userRecord = new UserRecord;
+            UserRecord userRecord = new UserRecord();
             userRecord.setEmail(email);
-            userRecord.setUserid(userId);
-            user*/
-            return true;
+            userRecord.setUserId(userId);
+            userRecord.setDisplayName(nickname);
+            userRecord.setFullName(" ");
+            userRecord.setBio(" ");
+            userRepository.save(userRecord);
+            return 200;
         }
 
     }
