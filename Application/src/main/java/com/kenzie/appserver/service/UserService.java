@@ -6,6 +6,7 @@ import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,6 +19,9 @@ public class UserService {
     private CacheUserStore cache;
 
     private CatalogRepository animeRepository;
+
+    private LambdaServiceClient lambdaServiceClient;
+
 
     public UserService(UserRepository userRepository, CacheUserStore cache) {
         this.userRepository = userRepository;
