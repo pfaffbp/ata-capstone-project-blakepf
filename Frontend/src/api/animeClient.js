@@ -39,7 +39,7 @@ export default class AnimeClient extends BaseClass {
         let query = `
     query findPopularAnime($title: String) {
       Page(page: 1, perPage: 50) {
-        media(search: $title, type: ANIME) {
+        media(search: $title, type: ANIME, isAdult: false) {
           title {
             userPreferred
           }
@@ -162,12 +162,10 @@ export default class AnimeClient extends BaseClass {
                 return response.ok ? json : Promise.reject(json);
             });
         }
-
         function handleError(error) {
             alert('Error, check console');
             console.error(error);
         }
-
 
     }
 
@@ -180,6 +178,37 @@ export default class AnimeClient extends BaseClass {
         }catch(error){
             this.handleError("uploadAnimeToDatabase", error, errorCallback);
         }
+    }
+
+    async getReviewsByAnimeID(ID, lastKey, errorCallback){
+        try{
+            if(lastKey !== null) {
+                console.log(lastKey)
+                const response = await this.client.post(`review/limit`, {
+                    animeID: ID,
+                    valuesForReviews: {
+                        animeID: lastKey.animeID,
+                        postDate: lastKey.postDate,
+                        reviewID: lastKey.reviewID
+                    }
+                });
+                return response.data;
+            } else{
+                const response = await this.client.post(`review/limit`, {
+                    animeID: ID,
+                    valuesForReviews: {
+                        animeID: 0,
+                        postDate: 0,
+                        reviewID: "string"
+                    }
+                });
+                return response.data;
+            }
+
+        }catch(error){
+        this.handleError("uploadAnimeToDatabase", error, errorCallback);
+        }
+
     }
 
     handleError(method, error, errorCallback) {

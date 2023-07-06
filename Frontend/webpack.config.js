@@ -25,6 +25,7 @@ module.exports = {
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
+    searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
     landingSlideshow: path.resolve(__dirname, 'src', 'styles', 'landingSlideshow.js')
   },
 
@@ -92,13 +93,18 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/animepage.html',
-      filename: 'animepage.html',
+      template: './src/animePage.html',
+      filename: 'animePage.html',
       inject: false
     }),
     new HtmlWebpackPlugin({
       template: './src/searchPage.html',
       filename: 'searchPage.html',
+      inject: false
+    }),
+    new HtmlWebpackPlugin({
+      template: './src/landingPage.html',
+      filename: 'landingPage.html',
       inject: false
     }),
 
