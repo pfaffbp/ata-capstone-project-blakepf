@@ -331,6 +331,7 @@ body{
     zoom: 120%;
 }
 
+<<<<<<< HEAD
 .search-bar-button {
     display: block;
     width: 100%;
@@ -433,3 +434,5 @@ p{
     background-size: cover;
     pointer-events: none;
 }
+=======
+>>>>>>> Clean_Dev
