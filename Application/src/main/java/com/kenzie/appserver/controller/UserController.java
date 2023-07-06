@@ -1,7 +1,6 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.*;
-import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
@@ -17,11 +16,9 @@ import java.util.List;
 public class UserController {
 
     private final UserService userService;
-    private final CatalogService catalogService;
 
-    UserController(UserService userService, CatalogService catalogService) {
+    UserController(UserService userService) {
         this.userService = userService;
-        this.catalogService = catalogService;
     }
 
     @GetMapping("/{displayName}/searchByDisplayName")
@@ -174,8 +171,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<UserDisplayNameResponse> fineDisplayNameByEmail(@PathVariable String email) {
-        String displayName = userService.fineDisplayNameByEmail(email);;
+    public ResponseEntity<UserDisplayNameResponse> findDisplayNameByEmail(@PathVariable String email) {
+        String displayName = userService.findDisplayNameByEmail(email);;
 
         if (displayName != null) {
             UserDisplayNameResponse response = new UserDisplayNameResponse();

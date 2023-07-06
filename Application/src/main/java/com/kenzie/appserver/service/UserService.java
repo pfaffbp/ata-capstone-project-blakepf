@@ -176,7 +176,7 @@ public class UserService {
         userRepository.save(existingFriend);
     }
 
-    public String fineDisplayNameByEmail(String email) {
+    public String findDisplayNameByEmail(String email) {
         Optional<UserRecord> record = userRepository.findByEmail(email);
         if (record.isPresent()) {
             return record.get().getDisplayName();
