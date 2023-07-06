@@ -80,7 +80,7 @@ module.exports = {
       inject: false
     }),
     new HtmlWebpackPlugin({
-      template: './src/animepage.html',
+      template: './src/animePage.html',
       filename: 'animePage.html',
       inject: false
     }),
@@ -95,11 +95,7 @@ module.exports = {
       filename: 'landingPage.html',
       inject: false
     }),
-    new HtmlWebpackPlugin({
-      template: './src/searchPage.html',
-      filename: 'searchPage.html',
-      inject: false
-    }),
+
     new CopyPlugin({
       patterns: [
         {
