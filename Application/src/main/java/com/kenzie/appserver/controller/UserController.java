@@ -1,6 +1,7 @@
 package com.kenzie.appserver.controller;
 
 import com.kenzie.appserver.controller.model.*;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import org.springframework.http.HttpStatus;
@@ -29,158 +30,169 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        UserResponse response = createUserResponse(user);
-        return ResponseEntity.ok(response);
+        UserResponse userResponse = new UserResponse();
+        userResponse.setFollowers(userResponse.getFollowers());
+        userResponse.setFollowing(userResponse.getFollowing());
+        userResponse.setEmail(userResponse.getEmail());
+        userResponse.setUserId(userResponse.getUserId());
+        userResponse.setFavoriteAnime(userResponse.getFavoriteAnime());
+        userResponse.setFullName(userResponse.getFullName());
+        userResponse.setDisplayName(userResponse.getDisplayName());
+        userResponse.setAge(userResponse.getAge());
+        userResponse.setBio(userResponse.getBio());
+        return ResponseEntity.ok(userResponse);
+//        UserResponse response = createUserResponse(user);
+//        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<User> userList = userService.findAllUsers();
-        if (userList == null || userList.isEmpty()) {
-            return ResponseEntity.status(204).build();
-        }
+//    @GetMapping("/getAllUsers")
+//    public ResponseEntity<List<UserResponse>> getAllUsers() {
+//        List<User> userList = userService.findAllUsers();
+//        if (userList == null || userList.isEmpty()) {
+//            return ResponseEntity.status(204).build();
+//        }
+//
+//        List<UserResponse> response = new ArrayList<>();
+//
+//        for (User users : userList) {
+//            response.add(this.createUserResponse(users));
+//        }
+//
+//        return ResponseEntity.ok(response);
+//    }
 
-        List<UserResponse> response = new ArrayList<>();
-
-        for (User users : userList) {
-            response.add(this.createUserResponse(users));
-        }
-
-        return ResponseEntity.ok(response);
-    }
-
-    @PutMapping("/updateUser")
-    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
-        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
-
-        userService.updateUser(user);
-
-        UserResponse response = createUserResponse(user);
-
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/addUser")
-    public ResponseEntity<UserResponse> addNewUser(@RequestBody UserCreateRequest request) {
-        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
-
-        userService.addNewUser(user);
-
-        UserResponse response = createUserResponse(user);
-
-        return ResponseEntity.created(URI.create("/user/" + response.getDisplayName())).body(response);
-    }
-
-    @DeleteMapping("/{displayName}/deleteByDisplayName")
-    public ResponseEntity<UserResponse> deleteUserByDisplayName(@PathVariable("displayName") String displayName) {
-        userService.deleteUser(displayName);
-
-        return ResponseEntity.status(204).build();
-    }
-
-    @PostMapping("/{displayName}/followUser/{friendFullName}")
-    public ResponseEntity<UserResponse> followUser(
-            @PathVariable("displayName") String displayName,
-            @PathVariable("friendFullName") String friendDisplayName
-    ) {
-        User user = userService.findUserByName(displayName);
-        User friend = userService.findUserByName(friendDisplayName);
-
-        if (user == null || friend == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        List<String> friends = userService.follow(user.getDisplayName(), friend.getDisplayName());
-
-        UserResponse response = createUserResponse(user);
-        response.setFollowers(friends);
-
-        return ResponseEntity.ok(response);
-    }
-
-
-    @DeleteMapping("/{displayName}/unfollowUser/{friendFullName}")
-    public ResponseEntity<UserResponse> unfollowUser(
-            @PathVariable("displayName") String displayName,
-            @PathVariable("friendFullName") String friendFullName
-    ) {
-        User user = userService.findUserByName(displayName);
-        User friend = userService.findUserByName(friendFullName);
-
-        if (user == null || friend == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        userService.unfollow(user.getDisplayName(), friend.getDisplayName());
-
-        UserResponse response = createUserResponse(user);
-        response.setFollowers(user.getFollowers());
-
-        return ResponseEntity.ok(response);
-    }
-
-    @PostMapping("/{displayName}/addFavorite/{animeId}")
-    public ResponseEntity<UserResponse> addFavorite(
-            @PathVariable("displayName") String displayName,
-            @PathVariable("animeId") int animeId
-    ) {
-        User user = userService.findUserByName(displayName);
-
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-
-        UserResponse response = createUserResponse(user);
-        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
-
-        return ResponseEntity.ok(response);
-
-    }
-
-    @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
-    public ResponseEntity<UserResponse> removeFavorite(
-            @PathVariable("displayName") String displayName,
-            @PathVariable("animeId") String animeId
-    ) {
-        User user = userService.findUserByName(displayName);
-
-        if (user == null) {
-            return ResponseEntity.notFound().build();
-        }
-
-        userService.removeFavorite(user.getDisplayName(), animeId);
-
-        UserResponse response = createUserResponse(user);
-        response.setFavoriteAnime(user.getFavoriteAnime());
-
-        return ResponseEntity.ok(response);
-    }
-
-    private UserResponse createUserResponse(User user) {
-        UserResponse response = new UserResponse();
-        response.setUserId(user.getUserId());
-        response.setEmail(user.getEmail());
-        response.setFullName(user.getFullName());
-        response.setAge(user.getAge());
-        response.setBio(user.getBio());
-        response.setFavoriteAnime(user.getFavoriteAnime());
-        response.setFollowers(user.getFollowers());
-        response.setDisplayName(user.getDisplayName());
-        return response;
-    }
-
-    @GetMapping("/{email}")
-    public ResponseEntity<UserDisplayNameResponse> findDisplayNameByEmail(@PathVariable String email) {
-        String displayName = userService.findDisplayNameByEmail(email);;
-
-        if (displayName != null) {
-            UserDisplayNameResponse response = new UserDisplayNameResponse();
-            response.setDisplayName(displayName);
-            return ResponseEntity.ok(response);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-    }
+//    @PutMapping("/updateUser")
+//    public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
+//        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
+//
+//        userService.updateUser(user);
+//
+//        UserResponse response = createUserResponse(user);
+//
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @PostMapping("/addUser")
+//    public ResponseEntity<UserResponse> addNewUser(@RequestBody UserCreateRequest request) {
+//        User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
+//
+//        userService.addNewUser(user);
+//
+//        UserResponse response = createUserResponse(user);
+//
+//        return ResponseEntity.created(URI.create("/user/" + response.getDisplayName())).body(response);
+//    }
+//
+//    @DeleteMapping("/{displayName}/deleteByDisplayName")
+//    public ResponseEntity<UserResponse> deleteUserByDisplayName(@PathVariable("displayName") String displayName) {
+//        userService.deleteUser(displayName);
+//
+//        return ResponseEntity.status(204).build();
+//    }
+//
+//    @PostMapping("/{displayName}/followUser/{friendFullName}")
+//    public ResponseEntity<UserResponse> followUser(
+//            @PathVariable("displayName") String displayName,
+//            @PathVariable("friendFullName") String friendDisplayName
+//    ) {
+//        User user = userService.findUserByName(displayName);
+//        User friend = userService.findUserByName(friendDisplayName);
+//
+//        if (user == null || friend == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        List<String> friends = userService.follow(user.getDisplayName(), friend.getDisplayName());
+//
+//        UserResponse response = createUserResponse(user);
+//        response.setFollowers(friends);
+//
+//        return ResponseEntity.ok(response);
+//    }
+//
+//
+//    @DeleteMapping("/{displayName}/unfollowUser/{friendFullName}")
+//    public ResponseEntity<UserResponse> unfollowUser(
+//            @PathVariable("displayName") String displayName,
+//            @PathVariable("friendFullName") String friendFullName
+//    ) {
+//        User user = userService.findUserByName(displayName);
+//        User friend = userService.findUserByName(friendFullName);
+//
+//        if (user == null || friend == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        userService.unfollow(user.getDisplayName(), friend.getDisplayName());
+//
+//        UserResponse response = createUserResponse(user);
+//        response.setFollowers(user.getFollowers());
+//
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    @PostMapping("/{displayName}/addFavorite/{animeId}")
+//    public ResponseEntity<UserResponse> addFavorite(
+//            @PathVariable("displayName") String displayName,
+//            @PathVariable("animeId") int animeId
+//    ) {
+//        User user = userService.findUserByName(displayName);
+//
+//        if (user == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//
+//        UserResponse response = createUserResponse(user);
+//        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+//
+//        return ResponseEntity.ok(response);
+//
+//    }
+//
+//    @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
+//    public ResponseEntity<UserResponse> removeFavorite(
+//            @PathVariable("displayName") String displayName,
+//            @PathVariable("animeId") String animeId
+//    ) {
+//        User user = userService.findUserByName(displayName);
+//
+//        if (user == null) {
+//            return ResponseEntity.notFound().build();
+//        }
+//
+//        userService.removeFavorite(user.getDisplayName(), animeId);
+//
+//        UserResponse response = createUserResponse(user);
+//        response.setFavoriteAnime(user.getFavoriteAnime());
+//
+//        return ResponseEntity.ok(response);
+//    }
+//
+//    private UserResponse createUserResponse(User user) {
+//        UserResponse response = new UserResponse();
+//        response.setUserId(user.getUserId());
+//        response.setEmail(user.getEmail());
+//        response.setFullName(user.getFullName());
+//        response.setAge(user.getAge());
+//        response.setBio(user.getBio());
+//        response.setFavoriteAnime(user.getFavoriteAnime());
+//        response.setFollowers(user.getFollowers());
+//        response.setDisplayName(user.getDisplayName());
+//        return response;
+//    }
+//
+//    @GetMapping("/{email}")
+//    public ResponseEntity<UserDisplayNameResponse> findDisplayNameByEmail(@PathVariable String email) {
+//        String displayName = userService.findDisplayNameByEmail(email);;
+//
+//        if (displayName != null) {
+//            UserDisplayNameResponse response = new UserDisplayNameResponse();
+//            response.setDisplayName(displayName);
+//            return ResponseEntity.ok(response);
+//        } else {
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+//        }
+//    }
 
 }

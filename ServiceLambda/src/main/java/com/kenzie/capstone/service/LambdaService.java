@@ -3,9 +3,12 @@ package com.kenzie.capstone.service;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.dao.ExampleDao;
 import com.kenzie.capstone.service.model.ExampleRecord;
+import com.kenzie.capstone.service.model.UserData;
+import com.kenzie.capstone.service.model.UserRecord;
 
 import javax.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -31,4 +34,45 @@ public class LambdaService {
         ExampleRecord record = exampleDao.setExampleData(id, data);
         return new ExampleData(id, data);
     }
+
+    public UserData getDisplayName(String displayName) {
+        List<UserRecord> records = exampleDao.getUserData(displayName);
+        if (records.size() > 0) {
+            UserRecord record = records.get(0);  // Get the first record
+
+            UserData userData = new UserData();
+            userData.setFollowers(record.getFollowers());
+            userData.setFollowing(record.getFollowing());
+            userData.setEmail(record.getEmail());
+            userData.setUserId(record.getUserId());
+            userData.setFavoriteAnime(record.getFavoriteAnime());
+            userData.setFullName(record.getFullName());
+            userData.setDisplayName(record.getDisplayName());
+            userData.setAge(record.getAge());
+            userData.setBio(record.getBio());
+
+            return userData;
+        }
+        return null;
+    }
 }
+//        if (records.size() > 0) {
+            //List<UserData> userDataList = new ArrayList<>();
+//            for (UserRecord record : records) {
+//                UserData userData = new UserData();
+//                userData.setFollowers(record.getFollowers());
+//                userData.setFollowing(record.getFollowing());
+//                userData.setEmail(record.getEmail());
+//                userData.setUserId(record.getUserId());
+//                userData.setFavoriteAnime(record.getFavoriteAnime());
+//                userData.setFullName(record.getFullName());
+//                userData.setDisplayName(record.getDisplayName());
+//                userData.setAge(record.getAge());
+//                userData.setBio(record.getBio());
+//
+//            }
+//            return userData;
+//        }
+//        return null;
+//    }
+//}
