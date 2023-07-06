@@ -2,12 +2,10 @@ package com.kenzie.appserver.service.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
-import java.util.UUID;
 
 public class User {
-    private List<String> friends;
-    //limit to 10
+    private List<String> followers;
+    private List<String> following;
     private String email;
     private String userId;
     private List<String> favoriteAnime;
@@ -16,19 +14,16 @@ public class User {
     private int age;
     private String bio;
 
-
-
-
-
-    public User(String userId, String email, String fullName, int age, String displayName, String bio) {
+    public User(List<String> followers, List<String> following, String email, String userId, List<String> favoriteAnime, String fullName, String displayName, int age, String bio) {
+        this.followers = followers;
+        this.following = following;
+        this.email = email;
         this.userId = userId;
+        this.favoriteAnime = favoriteAnime;
         this.fullName = fullName;
         this.displayName = displayName;
         this.age = age;
         this.bio = bio;
-        this.friends = new ArrayList<>();
-        this.favoriteAnime = new ArrayList<>();
-        this.email = email;
     }
 
     public String getEmail() {
@@ -47,12 +42,20 @@ public class User {
         this.userId = userId;
     }
 
-    public List<String> getFriends() {
-        return friends;
+    public List<String> getFollowers() {
+        return followers;
     }
 
-    public void setFriends(List<String> friends) {
-        this.friends = friends;
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
     }
 
     public List<String> getFavoriteAnime() {

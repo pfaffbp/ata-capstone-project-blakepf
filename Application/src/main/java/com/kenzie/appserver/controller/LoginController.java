@@ -42,8 +42,6 @@ public class LoginController {
     }
 
 
-
-
     @PostMapping("/login")
     public ResponseEntity<LoginGetResponse> login(@RequestBody @Valid LoginRequest loginRequest) {
         String success = loginService.login(loginRequest.getEmail());

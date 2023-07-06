@@ -33,10 +33,12 @@ class SearchUsersPage extends BaseClass {
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
         let bioArea = document.getElementById('bio');
-        let animeArea = document.getElementById('favAnime')
-        let friendArea = document.getElementById('friendsList')
+        let animeArea = document.getElementById('favAnime');
+        let followersArea = document.getElementById('followers');
+        let followingArea = document.getElementById('following');
 
         const uData = this.dataStore.get("userData");
+        console.log("this is the udata: " + uData[0]);
         if (uData) {
             let items ="";
             items += `
@@ -56,13 +58,18 @@ class SearchUsersPage extends BaseClass {
                 `;
             let animeList =""
                   animeList +=`
-                 Name: ${uData.favoriteAnime}
+             ${uData.favoriteAnime}
                   `;
-
-            let followers =""
-                  followers +=`
-                  Name: ${uData.followers}
-                  `;
+            let followersList =""
+            followersList +=`
+              ${uData.followers.length}
+                
+           `;
+            let followingList =""
+            followingList +=`
+              ${uData.following.length}
+                
+           `;
 
 
 
@@ -71,7 +78,8 @@ class SearchUsersPage extends BaseClass {
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
             animeArea.innerHTML = animeList;
-            friendArea.innerHTML = followers;
+            followersArea.innerHTML = followersList;
+            followingArea.innerHTML = followingList;
 
 
         } else {
@@ -79,6 +87,9 @@ class SearchUsersPage extends BaseClass {
             ageArea.innerHTML = "Age:";
             nameArea.innerHTML = "Name:";
             bioArea.innerHTML = "Bio:";
+            animeArea.innerHTML = " ";
+            followersArea.innerHTML = " ";
+            followingArea.innerHTML = " ";
 
         }
     }

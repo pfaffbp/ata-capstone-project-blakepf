@@ -160,7 +160,7 @@ body{
     max-width: inherit;
 }
 
-.anime-poster-class{
+.carousel-cell{
     margin-top: 10px;
     display: flex;
     align-items: stretch;
