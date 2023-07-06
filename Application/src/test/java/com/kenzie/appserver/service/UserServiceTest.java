@@ -35,7 +35,7 @@ public class UserServiceTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new UserService(repository, cacheUserStore);
+        service = new UserService(repository, cacheUserStore, animeRepository);
     }
 
     @Test
@@ -136,8 +136,8 @@ public class UserServiceTest {
         userRecord.setBio(user.getBio());
         repository.save(userRecord);
 
-        User updated = new User(new ArrayList<>(), new ArrayList<>(), "updatedEmail", userId, new ArrayList<>(), user.getFullName(),
-                "newName", 30, user.getBio());
+        User updated = new User(new ArrayList<>(), new ArrayList<>(), "updatedEmail", userId, new ArrayList<>(), "newFullName",
+                "newName", 30, "newBio");
 
         when(repository.existsById(user.getUserId())).thenReturn(true);
 
@@ -148,7 +148,13 @@ public class UserServiceTest {
 
                 service.updateUser(updated);
 
+                verify(repository, times(2)).save(argumentCaptor.capture());
+                verify(repository).findById(user.getUserId());
+                verify(cacheUserStore).evict(updated.getFullName());
+
                 UserRecord capturedUserRecord = argumentCaptor.getValue();
+                assertEquals(capturedUserRecord.getFullName(), userRecord.getFullName());
+                assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
                 assertEquals(capturedUserRecord.getUserId(), userRecord.getUserId());
                 assertEquals(capturedUserRecord.getFavoriteAnime(), userRecord.getFavoriteAnime());
                 assertEquals(capturedUserRecord.getFollowers(), userRecord.getFollowers());
@@ -161,6 +167,8 @@ public class UserServiceTest {
                 assertNotEquals(capturedUserRecord.getAge(), user.getAge(), "saved age is different from initial age");
                 assertNotEquals(capturedUserRecord.getEmail(), user.getEmail(), "saved email is different from initial email");
                 assertNotEquals(capturedUserRecord.getDisplayName(), user.getDisplayName(), "saved display name is different from initial display name");
+                assertNotEquals(capturedUserRecord.getBio(), user.getBio(), "saved bio is different from initial bio");
+                assertNotEquals(capturedUserRecord.getFullName(), user.getFullName(), "saved fullName is different from initial fullName");
     }
     @Test
     void addNewUserTest() {
@@ -207,24 +215,88 @@ public class UserServiceTest {
     }
 
     @Test
-    void addNewFavorite_badUser_throwsException() {
+    void addNewFavorite_validUser_addsToList() {
         String userId = randomUUID().toString();
+        List<String> favoriteAnime = new ArrayList<>();
+        favoriteAnime.add(randomUUID().toString());
+
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, favoriteAnime,
+                "fullName", "displayName", 27, "bio");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        String animeId = randomUUID().toString();
+        CatalogRecord anime = new CatalogRecord();
+        anime.setAnimeId(animeId);
+        anime.setDescription("description");
+        anime.setEpisodes(5);
+        anime.setGenre(new ArrayList<>());
+        anime.setImage("image");
+        anime.setPopularity(10);
+        anime.setRating(8);
+        anime.setSeason("season");
+        anime.setStartDate(0605);
+        animeRepository.save(anime);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
+
+        List<String> updatedList = service.addNewFavorite(userRecord.getDisplayName(), anime.getAnimeId());
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(animeRepository, times(1)).findById(anime.getAnimeId());
+
+        verify(repository, times(2)).save(userRecord);
+
+        assertEquals(userRecord.getFavoriteAnime(), updatedList, "favorite anime list has been updated properly");
+        assertEquals(2, updatedList.size(), "favorite anime list size is correct");
+    }
+
+    @Test
+    void addNewFavorite_animeExists_throwsException() {
+        String animeId = randomUUID().toString();
+        CatalogRecord anime = new CatalogRecord();
+        anime.setAnimeId(animeId);
+        anime.setDescription("description");
+        anime.setEpisodes(5);
+        anime.setGenre(new ArrayList<>());
+        anime.setImage("image");
+        anime.setPopularity(10);
+        anime.setRating(8);
+        anime.setSeason("season");
+        anime.setStartDate(0605);
+        animeRepository.save(anime);
+
+        String userId = randomUUID().toString();
+        List<String> favorites = new ArrayList<>();
+        favorites.add(animeId);
 
         UserRecord record = new UserRecord();
+
         record.setUserId(userId);
-        CatalogRecord animeRecord = new CatalogRecord();
-        animeRecord.setAnimeId("favorite");
-
-        when(repository.findById(userId)).thenReturn(Optional.of(record));
-        when(repository.existsById(userId)).thenReturn(false);
+        record.setFavoriteAnime(favorites);
+        repository.save(record);
 
 
-        when(animeRepository.findById("favorite")).thenReturn(Optional.of(animeRecord));
 
-        Assertions.assertThrows(NullPointerException.class, () -> {
-            service.addNewFavorite("displayName", "favorite");
+        when(repository.findByDisplayName(record.getDisplayName())).thenReturn(Optional.of(record));
+        when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            service.addNewFavorite(record.getDisplayName(), anime.getAnimeId());
         });
     }
+
 
 
 }

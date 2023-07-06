@@ -18,9 +18,10 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache) {
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
         this.userRepository = userRepository;
         this.cache = cache;
+        this.animeRepository = animeRepository;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -93,8 +94,10 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+
+        UserRecord existingUser = userRepository.findByDisplayName(displayName).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
+
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or Anime not found");
@@ -105,6 +108,7 @@ public class UserService {
         }
 
         existingUser.getFavoriteAnime().add(animeId);
+        userRepository.save(existingUser);
 
         return existingUser.getFavoriteAnime();
     }
@@ -186,5 +190,4 @@ public class UserService {
             return null;
         }
     }
-
 }
