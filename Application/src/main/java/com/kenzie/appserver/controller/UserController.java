@@ -119,28 +119,23 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{displayName}/addFavorite/addFavorite")
+    @PostMapping("/{displayName}/addFavorite/{animeId}")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
-            @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
+            @PathVariable("animeId") int animeId
     ) {
         User user = userService.findUserByName(displayName);
 
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        if (user.getFavoriteAnime().size() < 10) {
-            List<String> favoriteAnime = userService.addNewFavorite(user.getDisplayName(),
-                    favoriteAnimeRequest.toString());
 
-            UserResponse response = createUserResponse(user);
-            response.setFavoriteAnime(favoriteAnime);
 
-            return ResponseEntity.ok(response);
-        } else {
-            //not sure how else to let the user know that they are at their limit, will come back to fix this
-            return ResponseEntity.badRequest().build();
-        }
+        UserResponse response = createUserResponse(user);
+        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+
+        return ResponseEntity.ok(response);
+
     }
 
     @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
@@ -176,8 +171,8 @@ public class UserController {
     }
 
     @GetMapping("/{email}")
-    public ResponseEntity<UserDisplayNameResponse> fineDisplayNameByEmail(@PathVariable String email) {
-        String displayName = userService.fineDisplayNameByEmail(email);;
+    public ResponseEntity<UserDisplayNameResponse> findDisplayNameByEmail(@PathVariable String email) {
+        String displayName = userService.findDisplayNameByEmail(email);;
 
         if (displayName != null) {
             UserDisplayNameResponse response = new UserDisplayNameResponse();
@@ -189,6 +184,3 @@ public class UserController {
     }
 
 }
-
-
-

@@ -6,6 +6,8 @@ import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.UserData;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -19,9 +21,14 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache) {
+    private LambdaServiceClient lambdaServiceClient;
+
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository,
+                       LambdaServiceClient lambdaServiceClient) {
         this.userRepository = userRepository;
         this.cache = cache;
+        this.animeRepository = animeRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -29,14 +36,23 @@ public class UserService {
         if(foundUser != null) {
             return foundUser;
         }
-        User storedUser = userRepository
-                .findByDisplayName(displayName)
-                .map(user -> new User(user.getFollowers(), user.getFollowing(), user.getEmail(), user.getUserId(), user.getFavoriteAnime(), user.getFullName(), user.getDisplayName(), user.getAge(), user.getBio()))
-                .orElse(null);
-        if (storedUser != null) {
-            cache.add(storedUser.getDisplayName(), storedUser);
-        }
-        return storedUser;
+
+//        User storedUser = userRepository
+//                .findByDisplayName(displayName)
+//                .map(user -> new User(user.getFollowers(), user.getFollowing(), user.getEmail(), user.getUserId(), user.getFavoriteAnime(), user.getFullName(), user.getDisplayName(), user.getAge(), user.getBio()))
+//                .orElse(null);
+//        if (storedUser != null) {
+//            cache.add(storedUser.getDisplayName(), storedUser);
+//        }
+
+        UserData lambdaData = lambdaServiceClient.getUserDataByDisplayName(displayName);
+        User user = null;
+        if (lambdaData != null)
+            user = new User(lambdaData.getFollowers(), lambdaData.getFollowing(), lambdaData.getEmail(),
+                    lambdaData.getUserId(), lambdaData.getFavoriteAnime(), lambdaData.getFullName(),
+                    lambdaData.getDisplayName(),
+                    lambdaData.getAge(), lambdaData.getBio());
+            return user;
     }
 
     public List<User> findAllUsers() {
@@ -82,34 +98,42 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (existingUser.getFavoriteAnime().contains(animeId)) {
-            throw new IllegalArgumentException("Anime is already in user's favorites.");
-        }
+//        if (existingUser.getFavoriteAnime().contains(animeId)) {
+//            throw new IllegalArgumentException("Anime is already in user's favorites.");
+//        }
 
-        existingUser.getFavoriteAnime().add(animeId);
+        if (existingUser.getFavoriteAnime() == null) {
+            List<String> favorites = new ArrayList<>();
+            favorites.add(animeId);
+            existingUser.setFavoriteAnime(favorites);
+
+            userRepository.save(existingUser);
+        } else {
+            existingUser.getFavoriteAnime().add(animeId);
+
+            userRepository.save(existingUser);
+        }
 
         return existingUser.getFavoriteAnime();
     }
     public void removeFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
             throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (!existingUser.getFavoriteAnime().contains(animeId)) {
-            throw new IllegalArgumentException("Anime is not in user's favorites.");
-        }
 
         existingUser.getFavoriteAnime().remove(animeId);
+        userRepository.save(existingUser);
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
@@ -167,7 +191,7 @@ public class UserService {
         userRepository.save(existingFriend);
     }
 
-    public String fineDisplayNameByEmail(String email) {
+    public String findDisplayNameByEmail(String email) {
         Optional<UserRecord> record = userRepository.findByEmail(email);
         if (record.isPresent()) {
             return record.get().getDisplayName();
