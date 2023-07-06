@@ -2,22 +2,46 @@ package com.kenzie.appserver.controller.model;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.kenzie.appserver.service.model.Anime;
-import com.kenzie.appserver.service.model.User;
 
 import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class UserResponse {
-    @JsonProperty("friends")
-    private List<User> friends;
+    @JsonProperty("followers")
+    private List<String> followers;
+    @JsonProperty("following")
+    private List<String> following;
     @JsonProperty("favoriteAnime")
-    private List<Anime> favoriteAnime;
+    private List<String> favoriteAnime;
     @JsonProperty("fullName")
     private String fullName;
     @JsonProperty("age")
     private int age;
     @JsonProperty("bio")
     private String bio;
+    @JsonProperty("displayName")
+    private String displayName;
+
+    @JsonProperty("email")
+    private String email;
+
+    @JsonProperty("userId")
+    private String userId;
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
     public String getFullName() {
         return fullName;
@@ -27,19 +51,27 @@ public class UserResponse {
         this.fullName = fullName;
     }
 
-    public List<User> getFriends() {
-        return friends;
+    public List<String> getFollowers() {
+        return followers;
     }
 
-    public void setFriends(List<User> friends) {
-        this.friends = friends;
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
     }
 
-    public List<Anime> getFavoriteAnime() {
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public List<String> getFavoriteAnime() {
         return favoriteAnime;
     }
 
-    public void setFavoriteAnime(List<Anime> favoriteAnime) {
+    public void setFavoriteAnime(List<String> favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
     }
 
@@ -58,4 +90,10 @@ public class UserResponse {
     public void setBio(String bio) {
         this.bio = bio;
     }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
+
+    public String getDisplayName() {return displayName; }
 }

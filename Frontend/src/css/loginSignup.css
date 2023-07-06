@@ -245,7 +245,7 @@ form .input-field-2 {
     padding: 10px;
 }
 
-.form-group .error {
+.form .error {
     display: flex;
     align-items: center;
     margin-top: 6px;
@@ -254,18 +254,11 @@ form .input-field-2 {
     display: none;
 }
 
-.error .error-icon {
-    margin-right: 6px;
-    font-size: 15px;
-}
 
 .create-password .error {
     align-items: flex-start;
 }
 
-.create-password .error-icon {
-    margin-top: 4px;
-}
 
 .button {
     margin: 10px 18px 0px;

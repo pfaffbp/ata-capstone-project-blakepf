@@ -67,15 +67,12 @@ img {
 
 /* ------- profile forum ------- */
 .profile{
-
     width: 100%;
     margin-top: 10%;
     font-size: 20px;
     font-weight: bold;
     z-index: 2;
-
 }
-
 
 .form {
     max-width: calc(100vw - 40px);
@@ -91,13 +88,11 @@ img {
 }
 
 .form h1 {
-
     padding-bottom: 10px;
     width: 210px;
     color: #1e439b;
     font-size: 22px;
     border-bottom: 3px solid #ff5501;
-
     margin-bottom: 30px;
 }
 

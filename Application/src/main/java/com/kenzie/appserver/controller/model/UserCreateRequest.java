@@ -10,55 +10,98 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class UserCreateRequest {
-        @JsonProperty("friends")
-        private List<User> friends;
-        @JsonProperty("favoriteAnime")
-        private List<Anime> favoriteAnime;
-        @NotEmpty
-        @JsonProperty("fullName")
-        private String fullName;
-        @JsonProperty("age")
-        private int age;
-        @JsonProperty("bio")
-        private String bio;
+    @JsonProperty("followers")
+    private List<String> followers;
+    @JsonProperty("following")
+    private List<String> following;
+    @JsonProperty("favoriteAnime")
+    private List<String> favoriteAnime;
+    @JsonProperty("fullName")
+    private String fullName;
+    @JsonProperty("age")
+    private int age;
+    @JsonProperty("bio")
+    private String bio;
+    @NotEmpty
+    @JsonProperty("displayName")
+    private String displayName;
 
-        public String getFullName() {
-            return fullName;
-        }
+    @NotEmpty
+    @JsonProperty("userId")
+    private String userId;
 
-        public void setFullName(String fullName) {
-            this.fullName = fullName;
-        }
+    @JsonProperty("email")
+    private String email;
 
-        public List<User> getFriends() {
-            return friends;
-        }
+    public String getUserId() {
+        return userId;
+    }
 
-        public void setFriends(List<User> friends) {
-            this.friends = friends;
-        }
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
 
-        public List<Anime> getFavoriteAnime() {
-            return favoriteAnime;
-        }
+    public String getEmail() {
+        return email;
+    }
 
-        public void setFavoriteAnime(List<Anime> favoriteAnime) {
-            this.favoriteAnime = favoriteAnime;
-        }
+    public void setEmail(String email) {
+        this.email = email;
+    }
 
-        public int getAge() {
-            return age;
-        }
+    public String getFullName() {
+        return fullName;
+    }
 
-        public void setAge(int age) {
-            this.age = age;
-        }
+    public void setFullName(String fullName) {
+        this.fullName = fullName;
+    }
 
-        public String getBio() {
-            return bio;
-        }
+    public List<String> getFollowers() {
+        return followers;
+    }
 
-        public void setBio(String bio) {
-            this.bio = bio;
-        }
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public List<String> getFavoriteAnime() {
+        return favoriteAnime;
+    }
+
+    public void setFavoriteAnime(List<String> favoriteAnime) {
+        this.favoriteAnime = favoriteAnime;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getBio() {
+        return bio;
+    }
+
+    public void setBio(String bio) {
+        this.bio = bio;
+    }
+
+    public String getDisplayName() {
+        return displayName;
+    }
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
+    }
 }

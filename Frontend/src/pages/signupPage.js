@@ -4,6 +4,8 @@ import SignupClient from "../api/signupClient";
 import bcrypt from 'bcryptjs';
 
 
+
+
 /**
  * Logic needed for the view playlist page of the website.
  */
@@ -26,7 +28,6 @@ class SignupPage extends BaseClass {
         document.getElementById('eyes').addEventListener('click', this.toggle);
 
 
-
         // await this.alreadyLoggedIn();
 
 
@@ -41,58 +42,64 @@ class SignupPage extends BaseClass {
         this.dataStore.set("createLogin", null);
 
 
-      const emailInput = document.getElementById("email-entry").value;
-      const passInput = document.getElementById("password").value;
-      const cPassInput = document.getElementById("confirm-password").value;
+        const emailInput = document.getElementById("email-entry").value;
+        const passInput = document.getElementById("password").value;
+        const cPassInput = document.getElementById("confirm-password").value;
+        const nickname = document.getElementById('nickname').value;
 
+        let toLower = nickname;
+        let name = toLower.toLowerCase();
 
         try {
 
             await this.validateUserInput(passInput, cPassInput);
             const validEmail = await this.validEmailFormat(emailInput)
             const hashedPassword = await bcrypt.hash(passInput, 10);
-            const login = await this.client.createLogin(validEmail, hashedPassword);
+            const checkedNickName = await this.validateNickname(name)
+            const login = await this.client.createLogin(validEmail, hashedPassword, checkedNickName);
             this.dataStore.set('login', emailInput)
             this.showMessage(`Login ${emailInput} created successfully!`);
             window.location.href = "login.html";
         } catch (error) {
             console.error(error);
-            this.errorHandler("Error creating Login! Try again...");
+                this.errorHandler("Error creating Login! Try again...");
+            }
         }
-    }
 
-    async toggle(event){
+
+
+    async toggle(event) {
         const container = document.querySelector(".container-1"),
-    pwShowHide = document.querySelectorAll(".showHidePw"),
-    pwFields = document.querySelectorAll(".password");
+            pwShowHide = document.querySelectorAll(".showHidePw"),
+            pwFields = document.querySelectorAll(".password");
 
 //   js code to show/hide password and change icon
-pwShowHide.forEach(eyeIcon =>{
-    eyeIcon.addEventListener("click", ()=>{
-        pwFields.forEach(pwField =>{
-            if(pwField.type ==="password"){
-                pwField.type = "text";
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                pwFields.forEach(pwField => {
+                    if (pwField.type === "password") {
+                        pwField.type = "text";
 
-                pwShowHide.forEach(icon =>{
-                    icon.classList.replace("bx-lock-alt", "bx-lock-open-alt");
-                })
-            }else{
-                pwField.type = "password";
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("bx-lock-alt", "bx-lock-open-alt");
+                        })
+                    } else {
+                        pwField.type = "password";
 
-                pwShowHide.forEach(icon =>{
-                    icon.classList.replace("bx-lock-open-alt", "bx-lock-alt");
+                        pwShowHide.forEach(icon => {
+                            icon.classList.replace("bx-lock-open-alt", "bx-lock-alt");
+                        })
+                    }
                 })
-            }
+            })
         })
-    })
-})
     }
 
 
     //-------------------checks if passwords match ------------
     async validateUserInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
-            alert("passwords must match");
+         //   alert("passwords must match");
             throw new Error('Passwords must match and be at least 8 characters long');
         }
     }
@@ -106,7 +113,7 @@ pwShowHide.forEach(eyeIcon =>{
         if (!this.checkEmail(email)) {
             alert("invalid email");
             throw new Error('Invalid email address.');
-        }else return email;
+        } else return email;
     }
 
     checkEmail(email) {
@@ -114,6 +121,17 @@ pwShowHide.forEach(eyeIcon =>{
         return emailRegex.test(email);
     }
 
+    //-------------------checks nickname Length ------------
+    async validateNickname(nickname) {
+        if (!this.checkNicknameLength(nickname)) {
+            alert("Limit display name to 16 characters or less.")
+            throw new Error('Limit display name to 16 characters or less.')
+        } else return nickname;
+    }
+
+    checkNicknameLength(nickName){
+            return nickName.length <= 16;
+    }
 
 }
 

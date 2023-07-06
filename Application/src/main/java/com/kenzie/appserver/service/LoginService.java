@@ -1,7 +1,10 @@
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.exceptions.NicknameAlreadyExistsException;
 import com.kenzie.appserver.repositories.LoginRepository;
+import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.LoginRecord;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.Login;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -13,23 +16,41 @@ import java.util.UUID;
 public class LoginService {
 
     private final LoginRepository loginRepository;
+    private final UserRepository userRepository;
+
 
     @Autowired
-    public LoginService(LoginRepository loginRepository) {
+    public LoginService(LoginRepository loginRepository, UserRepository userRepository ) {
+
         this.loginRepository = loginRepository;
+        this.userRepository = userRepository;
     }
 
-    public boolean createLogin(String email, String password) {
+    public int createLogin(String email, String password, String nickname) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
+        Optional<UserRecord> userRecordCheck = userRepository.findByDisplayName(nickname);
+
         if (record.isPresent()) {
-            return false;
+            return 444;
+        }else if (userRecordCheck.isPresent()){
+            System.out.println("from login service");
+            throw new NicknameAlreadyExistsException(nickname);
+
         } else {
+            String userId = UUID.randomUUID().toString();
+
             LoginRecord loginRecord = new LoginRecord();
-            loginRecord.setUserId(UUID.randomUUID().toString());
+            loginRecord.setUserId(userId);
             loginRecord.setEmail(email);
             loginRecord.setPassword(password);
             loginRepository.save(loginRecord);
-            return true;
+
+            UserRecord userRecord = new UserRecord();
+            userRecord.setEmail(email);
+            userRecord.setUserId(userId);
+            userRecord.setDisplayName(nickname);
+            userRepository.save(userRecord);
+            return 200;
         }
 
     }

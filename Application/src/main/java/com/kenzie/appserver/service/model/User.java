@@ -4,34 +4,65 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class User {
-
-    private List<User> friends;
-    private List<Anime> favoriteAnime;
+    private List<String> followers;
+    private List<String> following;
+    private String email;
+    private String userId;
+    private List<String> favoriteAnime;
     private String fullName;
+    private String displayName;
     private int age;
     private String bio;
 
-
-    public User(String fullName, int age, String bio) {
+    public User(List<String> followers, List<String> following, String email, String userId, List<String> favoriteAnime, String fullName, String displayName, int age, String bio) {
+        this.followers = followers;
+        this.following = following;
+        this.email = email;
+        this.userId = userId;
+        this.favoriteAnime = favoriteAnime;
         this.fullName = fullName;
+        this.displayName = displayName;
         this.age = age;
         this.bio = bio;
-        this.friends = new ArrayList<>();
-        this.favoriteAnime = new ArrayList<>();
-    }
-    public List<User> getFriends() {
-        return friends;
     }
 
-    public void setFriends(List<User> friends) {
-        this.friends = friends;
+    public String getEmail() {
+        return email;
     }
 
-    public List<Anime> getFavoriteAnime() {
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
+    }
+
+    public List<String> getFollowers() {
+        return followers;
+    }
+
+    public void setFollowers(List<String> followers) {
+        this.followers = followers;
+    }
+
+    public List<String> getFollowing() {
+        return following;
+    }
+
+    public void setFollowing(List<String> following) {
+        this.following = following;
+    }
+
+    public List<String> getFavoriteAnime() {
         return favoriteAnime;
     }
 
-    public void setFavoriteAnime(List<Anime> favoriteAnime) {
+    public void setFavoriteAnime(List<String> favoriteAnime) {
         this.favoriteAnime = favoriteAnime;
     }
 
@@ -57,5 +88,11 @@ public class User {
 
     public void setBio(String bio) {
         this.bio = bio;
+    }
+
+    public String getDisplayName() {return displayName;}
+
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 }

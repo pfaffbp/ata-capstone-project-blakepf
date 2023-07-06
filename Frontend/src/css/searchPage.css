@@ -1,19 +1,211 @@
 *{
     margin: 0;
     padding: 0;
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    box-sizing: border-box;
 }
 
 body{
-    background-color: #eeeedd;
+    background-color: black;
 }
 
 #search-form{
     width: 50vw;
     max-height: 100px;
 }
-#search-bar{
+#search-bar {
+
+}
+
+/* ------- Navigation Bar ------- */
+
+.logo {
+    width: 8%;
+    min-width: 8%;
+    float: left;
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 5px;
+}
+
+.nav {
+    background-color: #333333;
+    position: fixed;
     width: 100%;
-    height: 30px;
+    top: 0;
+    font-size: 20 px;
+    font-weight: bold;
+    z-index: 2;
+}
+
+.nav a {
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 25px 15px;
+    display: inline-block;
+}
+
+.nav a:hover {
+    color: purple;
+}
+
+.main-links {
+    float: left;
+}
+
+.account {
+    float: right;
+    margin-right: 30px;
+}
+
+/* ------- Main Content  ------- */
+
+#flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    border: none;
+}
+
+/* ------- Left side banner  ------- */
+
+.leftImage {
+    width: 40%;
+
+    position: fixed;                        /* Currently Sakura */
+    bottom: 3%;
+    left: 3%;
+}
+
+/* ------- Right side banner  ------- */
+
+.rightImage {
+    width: 40%;
+    position: fixed;                        /* Currently Sakura Flower*/
+    right: 0%;
+    top: 10%;
+}
+
+/* ------- Center Div, Holds All Search Content  ------- */
+
+.flex-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    padding-top: 100px;
+    border: none;
+}
+
+.main {
+    background: none;
+    margin: auto;
+    top: -5%;
+    z-index: 1;
+    font-size: 12px;
+}
+
+.main h2 {
+    margin-left: 20px;
+    margin-top: 10px;                   /* Currently "Search For Anime" */
+    text-transform: capitalize;
+    font-weight: bold;
+}
+
+#search-form {
+    width: 60vw;
+    max-height: 100px;
+    margin: auto;
+    padding-top: 5px;
+}
+
+#search-bar {
+    padding: 10px;
+    font-size: 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ffffff;
+    color: #0a0707;
+    width: 250px;
+}
+
+#search-bar:focus {
+    outline: none;
+}
+
+
+.button-85 { /*//https://getcssscan.com/css-buttons-examples*/
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: 5px;
+}
+
+.button-85:before {
+    content: "";
+    background: linear-gradient(
+            45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-button-85 {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.button-85:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+>>>>>>> Blake_dev
+    width: 100%;
+    height: 100%;
+    background: purple;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
 }
 
 .nav{
@@ -66,10 +258,36 @@ body{
 #work-area{
     display: inline-block;
     flex-wrap: wrap;
+    padding-top: 20px;
+    transition: transform 0.3s ease;
 }
 
-.poster{
+.work-area:hover{
+    transform: scale(1.1);
+}
+
+
+.poster {
+    background: black;
     display: inline-block;
+    width: 160px;
+    height: auto;
+    margin-bottom: 15px; /* Separation between posters */
+    text-align: center;
+    grid-area: 2 / 2 / 3 / 3;
+    border: 2px solid #f4effa;
+    margin-left: 10px;
+
+}
+
+.poster:hover {
+    transform: scale(1.1);
+}
+
+.poster-click {
+    width: 160px;
+    height: 200px;
+    object-fit: cover;
 }
 
 
@@ -89,6 +307,7 @@ body{
     position: sticky;
     top: 0;
 }
+
 
 #genres {
     width: 100%;
@@ -112,3 +331,108 @@ body{
     zoom: 120%;
 }
 
+<<<<<<< HEAD
+.search-bar-button {
+    display: block;
+    width: 100%;
+}
+
+p{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.title-box{
+    max-width: 10%;
+}
+
+.rightSidePic{
+    position: sticky;
+    top: 0;
+}
+
+.button-86 { /*//https://getcssscan.com/css-buttons-examples*/
+    padding: 0.6em 2em;
+    border: none;
+    outline: none;
+    color: rgb(255, 255, 255);
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-left: 5px;
+}
+
+.button-86:before {
+    content: "";
+    background: linear-gradient(
+            45deg,
+            #ff0000,
+            #ff7300,
+            #fffb00,
+            #48ff00,
+            #00ffd5,
+            #002bff,
+            #7a00ff,
+            #ff00c8,
+            #ff0000
+    );
+    position: absolute;
+    top: -2px;
+    left: -2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    -webkit-filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing-button-85 20s linear infinite;
+    transition: opacity 0.3s ease-in-out;
+    border-radius: 10px;
+}
+
+@keyframes glowing-button-86 {
+    0% {
+        background-position: 0 0;
+    }
+    50% {
+        background-position: 400% 0;
+    }
+    100% {
+        background-position: 0 0;
+    }
+}
+
+.button-86:after {
+    z-index: -1;
+    content: "";
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: purple;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+.button-86.active {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+#kero {
+    position: absolute;
+    width: auto;
+    height: 130px;
+    background-image: url(css/Kero1.png);
+    background-size: cover;
+    pointer-events: none;
+}
+=======
+>>>>>>> Clean_Dev
