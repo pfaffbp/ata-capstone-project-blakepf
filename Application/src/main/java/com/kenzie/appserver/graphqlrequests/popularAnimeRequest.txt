@@ -1,0 +1,24 @@
+query findPopularAnime{
+    Page(page : 1, perPage : 50){
+        media(popularity_greater: 200000 type : ANIME){
+            title{
+            userPreferred
+            }
+            id
+      description
+      coverImage{
+        large
+      }
+      startDate {
+        year
+        month
+        day
+      }
+      season
+      popularity
+      averageScore
+      episodes
+      genres
+        }
+    }
+}

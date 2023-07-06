@@ -1,0 +1,114 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    background-color: #eeeedd;
+}
+
+#search-form{
+    width: 50vw;
+    max-height: 100px;
+}
+#search-bar{
+    width: 100%;
+    height: 30px;
+}
+
+.nav{
+    padding-top: 10px;
+    padding-bottom: 10px;
+    background-color: #333333;
+    display: flex;
+    justify-content: center;
+}
+
+.navigation-buttons{
+    padding-left: 30px;
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+}
+
+.signup_href{
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+    margin-left: auto;
+}
+
+.login_href{
+    color: #eaeded;
+    text-decoration: none;
+    font-size: 20px;
+    padding-right: 30px;
+}
+
+.entire-website{
+    /*flex-grow: 1;*/
+    /*display: flex;*/
+    /*!*flex-flow: inherit;*!*/
+    /*height: 100%;*/
+    /*width: 100%;*/
+    /*justify-content: center;*/
+    /*gap: 1vw;*/
+    display: flex;
+    justify-content: center;
+
+}
+.middleBlock{
+    display: inline-block;
+    justify-content: center;
+    max-width: 100%;
+}
+
+#work-area{
+    display: inline-block;
+    flex-wrap: wrap;
+}
+
+.poster{
+    display: inline-block;
+}
+
+
+.leftSideImage{
+}
+
+.leftSidePic{
+    position: sticky;
+    top: 0;
+}
+
+.title-box{
+    max-width: 10%;
+}
+
+.rightSidePic{
+    position: sticky;
+    top: 0;
+}
+
+#genres {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.genre {
+    background: purple;
+    border-radius: 5px;
+    width: 100px;
+    margin: 10px;
+    padding: 5px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.genre:hover {
+    zoom: 120%;
+}
+
