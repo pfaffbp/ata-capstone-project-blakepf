@@ -34,9 +34,10 @@ class SearchUsersPage extends BaseClass {
         let ageArea = document.getElementById("age");
         let bioArea = document.getElementById('bio');
         let animeArea = document.getElementById('favAnime')
-        let friendArea = document.getElementById('friendsList')
+        let friendArea = document.getElementById('followersList')
 
         const uData = this.dataStore.get("userData");
+        console.log(uData);
         if (uData) {
             let items ="";
                     items += `
@@ -55,31 +56,28 @@ class SearchUsersPage extends BaseClass {
                     Bio: ${uData.bio}                           
                 `;
           let animeList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
-                  `;
-              }*/
-            let friendList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
-                  `;
-              }*/
+            animeList += `
+                    Name: ${uData.favoriteAnime}                             
+                `;
+
+            let followers =""
+            followers += `
+                    Name: ${uData.followers}                             
+                `;
 
 
             displayName.innerHTML = items;
             ageArea.innerHTML = age;
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
+            animeArea.innerHTML += animeList;
+            friendArea.innerHTML += followers;
 
         } else {
             displayName.innerHTML = "Display Name:";
             ageArea.innerHTML = "Age:";
             nameArea.innerHTML = "Name:";
             bioArea.innerHTML = "Bio:";
-
-
         }
     }
 

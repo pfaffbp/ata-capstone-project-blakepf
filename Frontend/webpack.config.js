@@ -96,6 +96,11 @@ module.exports = {
       filename: 'animepage.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      template: './src/searchPage.html',
+      filename: 'searchPage.html',
+      inject: false
+    }),
 
     new CopyPlugin({
       patterns: [
