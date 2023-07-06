@@ -39,7 +39,7 @@ class SearchUsersPage extends BaseClass {
         const uData = this.dataStore.get("userData");
         if (uData) {
             let items ="";
-                    items += `
+            items += `
                    ${uData.displayName}                            
                 `;
             let age ="";
@@ -54,31 +54,31 @@ class SearchUsersPage extends BaseClass {
             bio += `
                     Bio: ${uData.bio}                           
                 `;
-          let animeList =""
-            /*    for (let anime of uData){
+            let animeList =""
                   animeList +=`
-                  ${anime.favoriteAnime}
+                 Name: ${uData.favoriteAnime}
                   `;
-              }*/
-            let friendList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
+
+            let followers =""
+                  followers +=`
+                  Name: ${uData.followers}
                   `;
-              }*/
+
 
 
             displayName.innerHTML = items;
             ageArea.innerHTML = age;
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
+            animeArea.innerHTML = animeList;
+            friendArea.innerHTML = followers;
+
 
         } else {
             displayName.innerHTML = "Display Name:";
             ageArea.innerHTML = "Age:";
             nameArea.innerHTML = "Name:";
             bioArea.innerHTML = "Bio:";
-
 
         }
     }

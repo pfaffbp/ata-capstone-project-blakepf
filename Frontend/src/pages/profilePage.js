@@ -54,23 +54,22 @@ class ProfilePage extends BaseClass {
                     Bio: ${uData.bio}                         
                 `;
           let animeList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
+            animeList +=`
+                 Name: ${uData.favoriteAnime}
                   `;
-              }*/
-            let friendList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
+
+            let followers =""
+            followers +=`
+                  Name: ${uData.followers}
                   `;
-              }*/
 
 
             displayName.innerHTML = items;
             ageArea.innerHTML = age;
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
+            animeArea.innerHTML = animeList;
+            friendArea.innerHTML = followers;
 
         } else {
             displayName.innerHTML = "Display Name:";

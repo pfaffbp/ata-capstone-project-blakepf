@@ -175,6 +175,18 @@ hr {
 .favorite-list h4 {
     text-align: center;
 }
+.friend-list {
+    border: 2px double purple;
+    width: 40%;
+    margin: auto;
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.friend-list h4 {
+    text-align: center;
+}
 
 .reviews {
     border: 2px double purple;
