@@ -199,7 +199,7 @@ class HomePage extends BaseClass {
                highRatedItems += `
                <div class="anime-poster-class">
                <div class="anime-poster">
-               <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
+               <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeIdw} src=${response[i].image}></a>
                        <h5>${response[i].title}</h5>
                </div>
            </div>
@@ -213,11 +213,7 @@ class HomePage extends BaseClass {
         let docs = document.querySelectorAll('.poster-click');
 
         docs.forEach(href => {
-<<<<<<< HEAD
-            href.addEventListener('click', async function (){
-=======
             href.addEventListener('click', async function () {
->>>>>>> juvisbranch
                 sessionStorage.setItem("animeCode", href.alt);
             });
         });

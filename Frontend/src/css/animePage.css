@@ -30,7 +30,7 @@ img {
     position: fixed;
     width: 100%;
     top: 0;
-    font-size: 20 px;
+    font-size: 20px;
     font-weight: bold;
     z-index: 2;
 }
@@ -169,7 +169,6 @@ hr {
     margin: auto 10px;
     display: inline-block;
     border-radius: 10px;
-  
 }
 
 .addl-info {
@@ -250,6 +249,96 @@ button:hover {
 
 .anime-container:hover .cover-image h5 {
     opacity: 1;
+}
+
+.rating-box{
+    text-align: center;
+    /* Div holding the Ratings Number */
+    padding: 10px 10px;
+    margin-right: 0.1vw;
+    display: inline-block;
+}
+
+.user-review{
+    display: flex;
+}
+
+.rating{
+
+}
+
+.user-review{
+    /*border-style: solid;*/
+    /*border-width: 1px;*/
+    /*border-color: purple;*/
+    margin-bottom: 1vw;
+    justify-content: space-between;
+}
+
+.comment{
+    width: 100%;
+    text-align: left;
+    justify-items: left;
+    margin-bottom: 30px;
+    padding-top: 1vh;
+    word-wrap: break-word;
+    max-height: 40px;
+    font-size: 14px;
+    color: floralwhite;
+}
+
+.pfp{
+    max-height: 60px;
+    max-width: 60px;
+    border-radius: 50%;
+}
+.display-name{
+    margin-left: 0.5vw;
+    color: gray;
+    height: 5px;
+    text-decoration: none;
+}
+.user-profile{
+    max-width: 100px;
+    display: inline-flex;
+}
+
+.middleBlock{
+    width: 80%;
+}
+
+.misc{
+    display: flex;
+    gap: 0.2vw;
+    align-items: center;
+
+}
+.like-button{
+    width: 30px;
+    height: 30px;
+    background: black;
+    justify-self: center;
+}
+
+.like-button-img{
+    position: relative;
+}
+
+.like-number{
+    font-size: 15px;
+    position: relative;
+}
+
+.dislike-button{
+    width: 30px;
+    height: 30px;
+    background: black;
+    justify-self: center;
+}
+
+.dislike-button-img{
+    padding-top: 1px;
+    position: relative;
 }
 
 

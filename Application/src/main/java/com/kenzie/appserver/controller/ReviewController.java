@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @RequestMapping("/review")
 public class ReviewController {
 
+
     private ReviewService reviewService;
 
     public ReviewController(ReviewService reviewService){
@@ -138,7 +139,10 @@ public class ReviewController {
 
         return exclusiveKey;
     }
-
+//    @PutMapping("/{displayName}")
+//    private ResponseEntity<Integer> addLikes(@PathVariable String displayName){
+//
+//    }
     private boolean ifNull(Object obj){
         return obj == null;
     }
