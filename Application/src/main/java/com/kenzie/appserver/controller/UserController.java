@@ -119,31 +119,26 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @PostMapping("/{displayName}/addFavorite/addFavorite")
+    @PostMapping("/{displayName}/addFavorite/{animeId}")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
-            @RequestBody FavoriteAnimeRequest favoriteAnimeRequest
+            @PathVariable("animeId") int animeId
     ) {
         User user = userService.findUserByName(displayName);
 
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
-        if (user.getFavoriteAnime().size() < 10) {
-            List<String> favoriteAnime = userService.addNewFavorite(user.getDisplayName(),
-                    favoriteAnimeRequest.toString());
 
-            UserResponse response = createUserResponse(user);
-            response.setFavoriteAnime(favoriteAnime);
 
-            return ResponseEntity.ok(response);
-        } else {
-            //not sure how else to let the user know that they are at their limit, will come back to fix this
-            return ResponseEntity.badRequest().build();
-        }
+        UserResponse response = createUserResponse(user);
+        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+
+        return ResponseEntity.ok(response);
     }
 
-    @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
+
+        @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
     public ResponseEntity<UserResponse> removeFavorite(
             @PathVariable("displayName") String displayName,
             @PathVariable("animeId") String animeId
