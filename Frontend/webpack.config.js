@@ -24,7 +24,8 @@ module.exports = {
     updatePasswordPage: path.resolve(__dirname, 'src', 'pages', 'updatePasswordPage.js'),
     updateLoginPage: path.resolve(__dirname, 'src', 'pages', 'updateLoginPage.js'),
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
-    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js')
+    animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
+    landingSlideshow: path.resolve(__dirname, 'src', 'styles', 'landingSlideshow.js')
   },
 
   output: {
@@ -95,6 +96,11 @@ module.exports = {
       filename: 'animepage.html',
       inject: false
     }),
+    new HtmlWebpackPlugin({
+      template: './src/searchPage.html',
+      filename: 'searchPage.html',
+      inject: false
+    }),
 
     new CopyPlugin({
       patterns: [
@@ -110,4 +116,3 @@ module.exports = {
   ]
 
 }
-
