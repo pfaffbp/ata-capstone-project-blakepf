@@ -38,7 +38,7 @@ class SearchUsersPage extends BaseClass {
         let followingArea = document.getElementById('following');
 
         const uData = this.dataStore.get("userData");
-        console.log("this is the udata: " + uData[0]);
+
         if (uData) {
             let items ="";
             items += `
