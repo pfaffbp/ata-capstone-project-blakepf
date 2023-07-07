@@ -263,7 +263,7 @@ public class UserServiceTest {
     }
 
     @Test
-    void addNewFavorite_animeExists_throwsException() {
+    void addNewFavorite_animeNotInFavorites_throwsException() {
         String animeId = randomUUID().toString();
         CatalogRecord anime = new CatalogRecord();
         anime.setAnimeId(animeId);
@@ -293,6 +293,101 @@ public class UserServiceTest {
         Assertions.assertThrows(IllegalArgumentException.class, () -> {
             service.addNewFavorite(record.getDisplayName(), anime.getAnimeId());
         });
+        verify(repository, times(1)).findByDisplayName(record.getDisplayName());
+        verify(animeRepository, times(1)).findById(anime.getAnimeId());
+    }
+    @Test
+    void removeFavoriteTest() {
+        String animeId = randomUUID().toString();
+        CatalogRecord anime = new CatalogRecord();
+        anime.setAnimeId(animeId);
+        anime.setDescription("description");
+        anime.setEpisodes(5);
+        anime.setGenre(new ArrayList<>());
+        anime.setImage("image");
+        anime.setPopularity(10);
+        anime.setRating(8);
+        anime.setSeason("season");
+        anime.setStartDate(0605);
+        animeRepository.save(anime);
+
+        String userId = randomUUID().toString();
+        List<String> favorites = new ArrayList<>();
+        favorites.add(animeId);
+        favorites.add("animeToKeep");
+
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, favorites,
+                        "fullName", "displayName", 27, "bio");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
+
+        List<String> updated = service.removeFavorite(userRecord.getDisplayName(), animeId);
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(animeRepository, times(1)).findById(anime.getAnimeId());
+
+        verify(repository, times(2)).save(userRecord);
+
+        assertEquals(userRecord.getFavoriteAnime(), updated, "favorite anime list has been updated properly");
+        assertEquals(1, updated.size(), "favorite anime list size is correct");
+        assertEquals("animeToKeep", updated.get(0), "correct anime was kept");
+    }
+    @Test
+    void removeFavorite_existingAnime_throwsException() {
+        String animeId = randomUUID().toString();
+        CatalogRecord anime = new CatalogRecord();
+        anime.setAnimeId(animeId);
+        anime.setDescription("description");
+        anime.setEpisodes(5);
+        anime.setGenre(new ArrayList<>());
+        anime.setImage("image");
+        anime.setPopularity(10);
+        anime.setRating(8);
+        anime.setSeason("season");
+        anime.setStartDate(0605);
+        animeRepository.save(anime);
+
+        String userId = randomUUID().toString();
+        List<String> favorites = new ArrayList<>();
+        favorites.add("animeToKeep");
+
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, favorites,
+                "fullName", "displayName", 27, "bio");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            service.removeFavorite(userRecord.getDisplayName(), anime.getAnimeId());
+        });
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(animeRepository, times(1)).findById(anime.getAnimeId());
     }
 
 }

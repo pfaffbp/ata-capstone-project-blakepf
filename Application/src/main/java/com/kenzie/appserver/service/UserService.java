@@ -100,7 +100,7 @@ public class UserService {
 
 
         if (existingUser == null || existingAnime == null) {
-            throw new IllegalArgumentException("User or Anime not found");
+            throw new NullPointerException("User or Anime not found");
         }
 
         if (existingUser.getFavoriteAnime().contains(animeId)) {
@@ -112,12 +112,12 @@ public class UserService {
 
         return existingUser.getFavoriteAnime();
     }
-    public void removeFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(displayName).orElse(null);
+    public List<String> removeFavorite(String displayName, String animeId) {
+        UserRecord existingUser = userRepository.findByDisplayName(displayName).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
-            throw new IllegalArgumentException("User or anime not found.");
+            throw new NullPointerException("User or anime not found.");
         }
 
         if (!existingUser.getFavoriteAnime().contains(animeId)) {
@@ -125,6 +125,8 @@ public class UserService {
         }
 
         existingUser.getFavoriteAnime().remove(animeId);
+        userRepository.save(existingUser);
+        return existingUser.getFavoriteAnime();
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
@@ -136,7 +138,7 @@ public class UserService {
         UserRecord existingFriend = userRepository.findById(findUserByName(friendDisplayName).getUserId()).orElse(null);
 
         if (existingUser == null || existingFriend == null) {
-            throw new IllegalArgumentException("One or both users do not exist.");
+            throw new NullPointerException("One or both users do not exist.");
         }
 
         if (existingUser.getFollowing() == null) {
@@ -158,8 +160,6 @@ public class UserService {
             existingFriend.getFollowers().add(existingUser.getDisplayName());
             userRepository.save(existingFriend);
         }
-
-
         return existingUser.getFollowing();
     }
 
