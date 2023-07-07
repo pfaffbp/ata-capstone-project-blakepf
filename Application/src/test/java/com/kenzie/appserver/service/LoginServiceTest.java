@@ -1,12 +1,14 @@
-/*
 package com.kenzie.appserver.service;
 
+import com.kenzie.appserver.exceptions.NicknameAlreadyExistsException;
 import com.kenzie.appserver.repositories.LoginRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.LoginRecord;
+import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.Login;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
@@ -18,48 +20,72 @@ import static org.mockito.Mockito.*;
 
 class LoginServiceTest {
 
-
     @Mock
     private LoginRepository loginRepository;
 
-    private LoginService loginService;
-     @Mock
-    UserRepository userRepository;
+    @Mock
+    private UserRepository userRepository;
 
-     private UserService userService;
+    @InjectMocks
+    private LoginService loginService;
+
+    @InjectMocks
+    private UserService userService;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        loginService = new LoginService(loginRepository);
-        userService = new UserService(userRepository);
-    }
+        loginService = new LoginService(loginRepository, userRepository);
 
+    }
     @Test
-    void createLogin_NewEmailAndPassword_ReturnsTrue() {
+    void createLogin_NewEmailAndPassword_Returns200() {
         String email = "test@example.com";
         String password = "password";
+        String nickname = "testuser";
+        String userId = UUID.randomUUID().toString();
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(userRepository.findByDisplayName(nickname)).thenReturn(Optional.empty());
 
-        boolean result = loginService.createLogin(email, password);
+        int result = loginService.createLogin(email, password, nickname);
 
-        assertTrue(result);
+        assertEquals(200, result);
         verify(loginRepository, times(1)).save(any(LoginRecord.class));
+        verify(userRepository, times(1)).save(any(UserRecord.class));
     }
 
     @Test
-    void createLogin_ExistingEmailAndPassword_ReturnsFalse() {
+    void createLogin_ExistingEmail_Returns444() {
         String email = "test@example.com";
         String password = "password";
+        String nickname = "testuser";
         LoginRecord existingRecord = new LoginRecord();
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.of(existingRecord));
 
-        boolean result = loginService.createLogin(email, password);
+        int result = loginService.createLogin(email, password, nickname);
 
-        assertFalse(result);
+        assertEquals(444, result);
         verify(loginRepository, never()).save(any(LoginRecord.class));
+        verify(userRepository, never()).save(any(UserRecord.class));
+    }
+
+    @Test
+    void createLogin_ExistingNickname_ThrowsNicknameAlreadyExistsException() {
+        String email = "test@example.com";
+        String password = "password";
+        String nickname = "testuser";
+        UserRecord existingUser = new UserRecord();
+
+        when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(userRepository.findByDisplayName(nickname)).thenReturn(Optional.of(existingUser));
+
+        assertThrows(NicknameAlreadyExistsException.class, () ->
+                loginService.createLogin(email, password, nickname));
+
+        verify(loginRepository, never()).save(any(LoginRecord.class));
+        verify(userRepository, never()).save(any(UserRecord.class));
     }
 
     @Test
@@ -222,4 +248,4 @@ class LoginServiceTest {
         assertNull(result);
     }
 
-}*/
+}

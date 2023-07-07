@@ -166,6 +166,7 @@ public class UserController {
         response.setBio(user.getBio());
         response.setFavoriteAnime(user.getFavoriteAnime());
         response.setFollowers(user.getFollowers());
+        response.setFollowing(user.getFollowing());
         response.setDisplayName(user.getDisplayName());
         return response;
     }
