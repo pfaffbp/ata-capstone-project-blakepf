@@ -10,28 +10,28 @@ import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 public class UserCreateRequest {
-        @JsonProperty("followers")
-        private List<String> followers;
-        @JsonProperty("following")
-        private List<String> following;
-        @JsonProperty("favoriteAnime")
-        private List<String> favoriteAnime;
-        @JsonProperty("fullName")
-        private String fullName;
-        @JsonProperty("age")
-        private int age;
-        @JsonProperty("bio")
-        private String bio;
-        @NotEmpty
-        @JsonProperty("displayName")
-        private String displayName;
+    @JsonProperty("followers")
+    private List<String> followers;
+    @JsonProperty("following")
+    private List<String> following;
+    @JsonProperty("favoriteAnime")
+    private List<String> favoriteAnime;
+    @JsonProperty("fullName")
+    private String fullName;
+    @JsonProperty("age")
+    private int age;
+    @JsonProperty("bio")
+    private String bio;
+    @NotEmpty
+    @JsonProperty("displayName")
+    private String displayName;
 
-        @NotEmpty
-        @JsonProperty("userId")
-        private String userId;
+    @NotEmpty
+    @JsonProperty("userId")
+    private String userId;
 
-        @JsonProperty("email")
-        private String email;
+    @JsonProperty("email")
+    private String email;
 
     public String getUserId() {
         return userId;
@@ -50,8 +50,8 @@ public class UserCreateRequest {
     }
 
     public String getFullName() {
-            return fullName;
-        }
+        return fullName;
+    }
 
     public void setFullName(String fullName) {
         this.fullName = fullName;

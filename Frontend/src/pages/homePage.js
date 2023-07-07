@@ -20,7 +20,7 @@ class HomePage extends BaseClass {
     async renderHomePage() {
         let workArea = document.getElementById('popular-anime-container');
         let seasonAnime = document.getElementById("seasonal-anime-container");
-        let highlyRatedAnime = document.getElementById("highly-rated-container");
+            let highlyRatedAnime = document.getElementById("highly-rated-container");
 
         let response = await this.client.getFrontPage(this.errorHandler);
 
@@ -199,7 +199,7 @@ class HomePage extends BaseClass {
                highRatedItems += `
                <div class="anime-poster-class">
                <div class="anime-poster">
-               <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
+               <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeIdw} src=${response[i].image}></a>
                        <h5>${response[i].title}</h5>
                </div>
            </div>
