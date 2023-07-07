@@ -34,7 +34,7 @@ export default class ProfileClient extends BaseClass {
     }
 
     /**
-     * Gets the concert for the given ID.
+     * Gets the User for the given ID.
      * @param id Unique identifier for a concert
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
@@ -46,6 +46,16 @@ export default class ProfileClient extends BaseClass {
             return response.data;
         }catch (error){
             this.handleError('getUserData', error, errorCallback)
+        }
+    }
+    async updateUser(user, errorCallback) {
+        try {
+            // Make the API call to update the user on the backend
+            const response = await this.client.put(`/user/updateUser/`, user);
+            // Handle the response as needed
+            console.log("User updated successfully:", response.data);
+        } catch (error) {
+            this.handleError('updateUser', error, errorCallback);
         }
     }
 
