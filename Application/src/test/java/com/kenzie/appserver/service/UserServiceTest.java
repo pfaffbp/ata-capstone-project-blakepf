@@ -287,8 +287,6 @@ public class UserServiceTest {
         record.setFavoriteAnime(favorites);
         repository.save(record);
 
-
-
         when(repository.findByDisplayName(record.getDisplayName())).thenReturn(Optional.of(record));
         when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
 
@@ -296,7 +294,5 @@ public class UserServiceTest {
             service.addNewFavorite(record.getDisplayName(), anime.getAnimeId());
         });
     }
-
-
 
 }
