@@ -38,18 +38,6 @@ public class UserService {
         }
         return storedUser;
     }
-
-    public List<User> findAllUsers() {
-        List<User> usersList = new ArrayList<>();
-
-        Iterable<UserRecord> userIterator = userRepository.findAll();
-
-        for(UserRecord record : userIterator) {
-            usersList.add(new User(record.getFollowers(), record.getFollowing(), record.getEmail(), record.getUserId(), record.getFavoriteAnime(), record.getFullName(), record.getDisplayName(), record.getAge(), record.getBio()));
-        }
-
-        return usersList;
-    }
     public User addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
