@@ -187,18 +187,18 @@ public class UserController {
 
     }
 
-    @PostMapping("test")
-    public ResponseEntity<?> Notification(@RequestBody NotificationRequest request){
+    @PostMapping("test/{displayName}")
+    public ResponseEntity<?> Notification(@PathVariable String displayName, @RequestBody NotificationRequest request){
         UserRequest userRequest = new UserRequest();
         userRequest.setDisplayName(request.getUserRequest().getDisplayName());
         userRequest.setAction(request.getUserRequest().getAction());
 
         NotificationRequest notificationData = new NotificationRequest();
-        notificationData.setRequestedUUID(request.getRequestedUUID());
+        notificationData.setRequestedUUID(displayName);
         notificationData.setUserRequest(userRequest);
         notificationData.setHasBeenViewed(false);
 
-        NotificationData data = userService.notification(notificationData);
+        NotificationData data = userService.notification(notificationData, displayName);
         System.out.println(data);
         return ResponseEntity.ok(data);
     }

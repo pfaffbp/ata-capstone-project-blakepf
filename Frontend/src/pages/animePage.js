@@ -8,7 +8,7 @@ let lastEvaluatedKey = null;
 class AnimePage extends BaseClass{
     constructor() {
         super();
-        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID'], this);
+        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification'], this);
         this.dataStore = new DataStore();
     }
 
@@ -17,6 +17,7 @@ class AnimePage extends BaseClass{
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
+        this.notification();
 
     }
 
@@ -131,6 +132,14 @@ class AnimePage extends BaseClass{
         console.log(response[1]);
         console.log(lastEvaluatedKey);
     }
+
+    async notification(){
+        let response = await this.client.getNotification("testMike", this.errorHandler)
+
+        alert(response);
+        setInterval(this.notification, 5000);
+    }
+
 }
 
 function getMonth(date){
@@ -183,7 +192,6 @@ function getMonth(date){
     let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0,4);
     return posted;
 }
-
 
 
 const main = async () => {

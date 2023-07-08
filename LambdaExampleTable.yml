@@ -5,9 +5,13 @@ Resources:
       "AttributeDefinitions":
         - "AttributeName": "requestedUUID"
           "AttributeType": "S"
+        - "AttributeName": "userRequest"
+          "AttributeType": "S"
       "KeySchema":
         - "AttributeName": "requestedUUID"
           "KeyType": "HASH"
+        - "AttributeName": "userRequest"
+          "KeyType": "RANGE"
       PointInTimeRecoverySpecification:
         PointInTimeRecoveryEnabled: false
       BillingMode: PAY_PER_REQUEST

@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.capstone.service.dao.NotificationDao;
@@ -38,17 +39,24 @@ public class LambdaService {
 //    }
 
 
-    public NotificationRecord createRequest(String data) throws JsonProcessingException {
-        System.out.println("IN CREATE REQUEST " + data);
+    public NotificationRecord createRequest(String data, String displayName){
         ObjectMapper objectMapper = new ObjectMapper();
-        NotificationData record = objectMapper.readValue(data, NotificationData.class);
-
-         NotificationRecord notificationRecord =  notificationDao.createNotification(record.getRequestedUUID(),
+        NotificationData record = null;
+        try {
+            record = objectMapper.readValue(data, NotificationData.class);
+        } catch(JsonProcessingException e){
+            e.getCause();
+        }
+         NotificationRecord notificationRecord =  notificationDao.createNotification(displayName,
                  record.getRequest().getDisplayName(),
                  record.getRequest().getAction(),
                  record.isHasBeenViewed());
-        System.out.println("IN CREATE REQUEST" + notificationRecord.toString());
         return notificationRecord;
+    }
+
+    public PaginatedQueryList<NotificationRecord> getNotification(String displayName){
+        PaginatedQueryList<NotificationRecord> notificationRecords = notificationDao.getNotification(displayName);
+        return notificationRecords;
     }
 
 }

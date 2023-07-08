@@ -1,5 +1,6 @@
 package com.kenzie.appserver.service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.kenzie.appserver.config.CacheUserStore;
 import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
@@ -192,7 +193,7 @@ public class UserService {
         }
     }
 
-    public NotificationData notification(NotificationRequest request){
+    public NotificationData notification(NotificationRequest request, String displayName){
 
        NotificationData data = new NotificationData();
        data.setHasBeenViewed(request.isHasBeenViewed());
@@ -200,12 +201,14 @@ public class UserService {
        data.setRequest(request.getUserRequest());
 
        try {
-           NotificationData data2 = lambdaServiceClient.setNotificationData(data);
+           NotificationData data2 = lambdaServiceClient.setNotificationData(data, displayName);
        }catch(Exception e){
            e.getMessage();
        }
        return data;
     }
+
+    public PaginatedQueryList<NotificationData>
 
 //    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
 //        UserRequest request = new UserRequest();

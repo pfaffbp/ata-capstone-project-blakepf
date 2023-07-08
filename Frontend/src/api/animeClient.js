@@ -221,6 +221,22 @@ export default class AnimeClient extends BaseClass {
 
     }
 
+    async getNotification(displayName, errorCallBack){
+        try{
+            const response = await this.client.post(`https://7pf753cq4i.execute-api.us-east-1.amazonaws.com/Prod/user/test/${displayName}`, {
+                requestUUID: displayName,
+                userRequest: {
+                    displayName: "test",
+                    action: "Followed You"
+                }
+            });
+            console.log(response.data)
+            return response.data;
+        }catch(error){
+            // this.handleError("getNotification", error, errorCallback);
+        }
+    }
+
     handleError(method, error, errorCallback) {
         console.error(method + " failed - " + error);
         if (error.response.data.message !== undefined) {

@@ -1,9 +1,6 @@
 package com.kenzie.capstone.service.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBRangeKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
 import java.util.Map;
 import java.util.Objects;
@@ -12,6 +9,7 @@ import java.util.Objects;
 
 public class NotificationRecord {
 
+    public static final String NOTIFICATION_GET = "GrabNotification";
     private String requestedUUID;
 
     private UserRequest userRequest;
@@ -19,6 +17,7 @@ public class NotificationRecord {
     private boolean hasBeenViewed;
 
     @DynamoDBHashKey(attributeName = "requestedUUID")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = NOTIFICATION_GET, attributeName = "requestUUID")
     public String getRequestedUUID() {
         return requestedUUID;
     }
@@ -28,9 +27,9 @@ public class NotificationRecord {
     }
 
 
-    @DynamoDBAttribute(attributeName = "userRequest")
-    public UserRequest getUserRequest() {
-        return userRequest;
+    @DynamoDBRangeKey(attributeName = "userRequest")
+    public String getUserRequest() {
+         return userRequest.getDisplayName() + ":" + userRequest.getAction();
     }
 
     public void setUserRequest(UserRequest request) {
@@ -38,6 +37,7 @@ public class NotificationRecord {
     }
 
     @DynamoDBAttribute( attributeName = "hasBeenViewed")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = NOTIFICATION_GET, attributeName = "hasBeenViewed")
     public boolean isHasBeenViewed() {
         return hasBeenViewed;
     }

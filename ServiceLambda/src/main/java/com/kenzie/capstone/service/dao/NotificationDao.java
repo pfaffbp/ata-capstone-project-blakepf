@@ -1,15 +1,24 @@
 package com.kenzie.capstone.service.dao;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.model.AttributeAction;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
 import com.kenzie.capstone.service.model.NotificationRecord;
 import com.kenzie.capstone.service.model.UserRequest;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class NotificationDao {
     private DynamoDBMapper mapper;
+
+    private final String NOTIFICATION_TABLE = "NotificationTable";
 
     public NotificationDao(DynamoDBMapper mapper){
         this.mapper = mapper;
@@ -53,27 +62,18 @@ public class NotificationDao {
         notificationRecord.setUserRequest(request);
         notificationRecord.setHasBeenViewed(viewed);
 
-
-        System.out.println(mapper);
-        System.out.println(mapper.getClass());
-        System.out.println(mapper.getTableModel(NotificationRecord.class).toString());
-
-        System.out.println("mapper chain prints end here");
-
-        System.out.println("IN THE LAMBDA number 1");
-        System.out.println(mapper.toString());
         try {
-            mapper.save(notificationRecord, new DynamoDBSaveExpression()
-                    .withExpected(ImmutableMap.of(
-                            "requestUUID",
-                            new ExpectedAttributeValue().withExists(false)
-                    )));
-            System.out.println("IN THE LAMBDA number 23");
+//            mapper.save(notificationRecord, new DynamoDBSaveExpression()
+//                    .withExpected(ImmutableMap.of(
+//                            "requestUUID",
+//                            new ExpectedAttributeValue().withExists(false)
+//                    )));
+
+            mapper.save(notificationRecord);
         } catch (ConditionalCheckFailedException e) {
             throw new IllegalArgumentException("id already exists");
         }
-        System.out.println("IN THE LAMBDA number 23");
-        return notificationRecord;
+       return notificationRecord;
     }
 
 //        System.out.println("IN THE LAMBDA number 1");
@@ -87,18 +87,20 @@ public class NotificationDao {
 //        return notificationRecord;
 //    }
 
-    public NotificationRecord notificationViewed(String requestedUUID, String displayName, String action){
-        UserRequest request = new UserRequest();
-        request.setAction(action);
-        request.setDisplayName(displayName);
+    public PaginatedQueryList<NotificationRecord> getNotification(String displayName){
+        Map<String, AttributeValue> attributeValueMap = new HashMap<>();
+        attributeValueMap.put("displayName:", new AttributeValue().withS(displayName));
+        attributeValueMap.put("hasBeenViewed:", new AttributeValue().withBOOL(false));
 
-        NotificationRecord notificationRecord = new NotificationRecord();
-        notificationRecord.setRequestedUUID(requestedUUID);
-        notificationRecord.setHasBeenViewed(false);
-//        notificationRecord.setRequest(request);
+        DynamoDBQueryExpression<NotificationRecord> queryExpression = new DynamoDBQueryExpression<NotificationRecord>()
+                .withIndexName(NotificationRecord.NOTIFICATION_GET)
+                .withConsistentRead(false)
+                .withKeyConditionExpression("displayName = :displayName and hasBeenViewed = :hasBeenViewed")
+                .withExpressionAttributeValues(attributeValueMap);
 
-        mapper.delete(notificationRecord);
-        return notificationRecord;
+
+        PaginatedQueryList<NotificationRecord> queryList = mapper.query(NotificationRecord.class, queryExpression);
+        return queryList;
     }
 
 
