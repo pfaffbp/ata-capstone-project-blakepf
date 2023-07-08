@@ -15,7 +15,7 @@ public class ReviewRecord {
 
     private int animeID;
     private String reviewID;
-    private String userID;
+    private String displayName;
     private int rating;
     private int postDate;
     private String review;
@@ -40,16 +40,16 @@ public class ReviewRecord {
         this.reviewID = reviewID;
     }
 
-    @DynamoDBIndexHashKey(globalSecondaryIndexName = USER_LOOK_UP, attributeName = "userID")
-    public String getUserID() {
-        return userID;
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = USER_LOOK_UP, attributeName = "displayName")
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setDisplayName(String userID) {
+        this.displayName = userID;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexName = AVERAGE_SCORE, attributeName = "rating")
+    @DynamoDBAttribute(attributeName = "rating")
     public int getRating() {
         return rating;
     }
@@ -58,7 +58,7 @@ public class ReviewRecord {
         this.rating = rating;
     }
 
-    @DynamoDBIndexRangeKey(globalSecondaryIndexNames = {REVIEW_lOOK_UP, USER_LOOK_UP}, attributeName = "postDate")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = REVIEW_lOOK_UP, attributeName = "postDate")
     public int getPostDate() {
         return postDate;
     }

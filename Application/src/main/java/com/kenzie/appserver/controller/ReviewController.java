@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.stream.Collectors;
 
 @RestController
@@ -78,10 +79,19 @@ public class ReviewController {
     @GetMapping("/{animeID}")
     public ResponseEntity<Integer> calculateAverageScore(@PathVariable int animeID){
         Integer averageScore = reviewService.calculateAverageRatingByAnime(animeID);
-        if(averageScore == null){
-            return ResponseEntity.badRequest().build();
-        }
-        return ResponseEntity.ok(averageScore);
+        return ResponseEntity.ok(Objects.requireNonNullElse(averageScore, 0));
+        // if non null return average score, if null return 0
+    }
+
+    @GetMapping("username/{displayName}")
+    public ResponseEntity<List<ReviewResponse>> getReviewsByDisplayName(@PathVariable String displayName){
+        PaginatedQueryList<ReviewRecord> reviewRecords = reviewService.getListOfAnimeByDisplayName(displayName);
+
+        List<ReviewResponse> reviewResponseList = reviewRecords.stream()
+                .map(this::reviewRecordToResponse)
+                .collect(Collectors.toList());
+
+        return ResponseEntity.ok(reviewResponseList);
     }
 
     private ReviewResponse reviewToResponse(Review review){
@@ -90,7 +100,7 @@ public class ReviewController {
         reviewResponse.setReview(review.getReview());
         reviewResponse.setRating(review.getRating());
         reviewResponse.setAnimeID(review.getAnimeID());
-        reviewResponse.setUserID(review.getUserID());
+        reviewResponse.setUserID(review.getDisplayName());
         reviewResponse.setPostDate(review.getPostDate());
 
         return reviewResponse;
@@ -102,7 +112,7 @@ public class ReviewController {
         reviewResponse.setReview(review.getReview());
         reviewResponse.setRating(review.getRating());
         reviewResponse.setAnimeID(review.getAnimeID());
-        reviewResponse.setUserID(review.getUserID());
+        reviewResponse.setUserID(review.getDisplayName());
         reviewResponse.setPostDate(review.getPostDate());
 
         return reviewResponse;

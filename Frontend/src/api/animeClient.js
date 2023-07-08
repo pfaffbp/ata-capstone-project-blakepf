@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase', 'getRatingForAnime'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -207,6 +207,16 @@ export default class AnimeClient extends BaseClass {
 
         }catch(error){
         this.handleError("uploadAnimeToDatabase", error, errorCallback);
+        }
+
+    }
+
+    async getRatingForAnime(animeID, errorCallback){
+        try {
+            const response = await this.client.get(`review/${animeID}`)
+            return response.data;
+        }catch(error){
+            this.handleError("getRatingForAnime", error, errorCallback)
         }
 
     }

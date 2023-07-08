@@ -7,16 +7,16 @@ import java.util.UUID;
 public class Review {
     private int animeID;
     private String reviewID;
-    private String userID;
+    private String displayName;
     private int rating;
     private int postDate;
     private String review;
     private int likes;
 
-    public Review(int animeID, String userID, int rating, String review) {
+    public Review(int animeID, String displayName, int rating, String review) {
         this.animeID = animeID;
         this.reviewID = UUID.randomUUID().toString();
-        this.userID = userID;
+        this.displayName = displayName;
         this.rating = rating;
         this.postDate = Integer.parseInt(LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE));
         this.review = review;
@@ -41,12 +41,12 @@ public class Review {
         this.reviewID = reviewID;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public int getRating() {

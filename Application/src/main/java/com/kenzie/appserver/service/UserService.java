@@ -1,11 +1,15 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheUserStore;
+import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -19,10 +23,13 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
+    private LambdaServiceClient lambdaServiceClient;
+
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository, LambdaServiceClient client) {
         this.userRepository = userRepository;
         this.cache = cache;
         this.animeRepository = animeRepository;
+        this.lambdaServiceClient = client;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -142,7 +149,6 @@ public class UserService {
             existingUser.getFollowing().add(existingFriend.getDisplayName());
             userRepository.save(existingUser);
         }
-
         if (existingFriend.getFollowers() == null) {
             List<String> followers = new ArrayList<>();
             followers.add(existingUser.getDisplayName());
@@ -153,6 +159,7 @@ public class UserService {
             userRepository.save(existingFriend);
         }
 
+//        notification(existingUser.getDisplayName(), existingFriend.getDisplayName(), "A User Has Followed You!");
 
         return existingUser.getFollowing();
     }
@@ -185,4 +192,36 @@ public class UserService {
         }
     }
 
+    public NotificationData notification(NotificationRequest request){
+
+       NotificationData data = new NotificationData();
+       data.setHasBeenViewed(request.isHasBeenViewed());
+       data.setRequestedUUID(request.getRequestedUUID());
+       data.setRequest(request.getUserRequest());
+
+       try {
+           NotificationData data2 = lambdaServiceClient.setNotificationData(data);
+       }catch(Exception e){
+           e.getMessage();
+       }
+       return data;
+    }
+
+//    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
+//        UserRequest request = new UserRequest();
+//        request.setAction(action);
+//        request.setDisplayName(requesterDisplayName);
+//
+//        NotificationData data = new NotificationData();
+//        data.setHasBeenViewed(false);
+//        data.setRequestedUUID(requestedDisplayName);
+//        data.setRequest(request);
+//
+//        try {
+//            NotificationData data2 = lambdaServiceClient.setNotificationData(data, requesterDisplayName);
+//        }catch(Exception e){
+//            e.getMessage();
+//        }
+//        return data;
+//    }
 }

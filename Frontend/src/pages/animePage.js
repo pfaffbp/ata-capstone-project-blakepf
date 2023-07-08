@@ -24,7 +24,7 @@ class AnimePage extends BaseClass{
     async renderAnimeInfo(){
         let workArea = document.getElementById("main");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
-
+        const getRating = await this.client.getRatingForAnime(sessionStorage.getItem("animeCode"), this.errorHandler);
 
         console.log(response);
         workArea.innerHTML += `
@@ -41,7 +41,7 @@ class AnimePage extends BaseClass{
 
                     <div class = "ratings">
                         Ratings
-                        <h1>88</h1>
+                        <h1>${getRating}</h1>
                     </div>
 
                     <div class = "addl-info">
@@ -102,7 +102,7 @@ class AnimePage extends BaseClass{
                 <div class="user-profile">
                
                 <img class="pfp" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688487914/r8oojdcdeetn66r2ihkp-media_lib_thumb_oplful.jpg"/>
-                <a href="userProfilePage.js" class ="display-name">MichaelMichael</a>
+                <a href="userProfilePage.js" class ="display-name">${response[1][i].displayName}</a>
                 </div>
                 <div class="middleBlock">
                 <p class="comment">${response[1][i].review}</p>
