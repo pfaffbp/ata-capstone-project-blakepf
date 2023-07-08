@@ -5,7 +5,7 @@ import AnimeClient from "../api/animeClient";
 let lastEvaluatedKey = null;
 
 
-class AnimePage extends BaseClass{
+class AnimePage extends BaseClass {
     constructor() {
         super();
         this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID'], this);
@@ -21,8 +21,8 @@ class AnimePage extends BaseClass{
     }
 
 
-    async renderAnimeInfo(){
-        let workArea = document.getElementById("main");
+    async renderAnimeInfo() {
+        let workArea = document.getElementById("core");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
 
 
@@ -41,7 +41,7 @@ class AnimePage extends BaseClass{
 
                     <div class = "ratings">
                         Ratings
-                        <h1>88</h1>
+                        <h1>${response.ratings}</h1>
                     </div>
 
                     <div class = "addl-info">
@@ -65,39 +65,49 @@ class AnimePage extends BaseClass{
                     </div>
                 </div>
             </div>
-            <div class = "reviews">
+            <div class="reviews">
                 <h3>Reviews:</h3>
                 <hr>
-                <div id ="reviewBox"></div>
+                <div id = "reviewBox"></div>
+
+                <div id = "create-box" class = "hide">
+                    <h3> Have some thoughts? Share them! This is a safe space, trust us! </h3>
+                    <button id = "create">Create a Review</button>  
+                    
+                    <form id = "create-form" class = "hide">
+                        <label for = "create-textbox" class = "create-textbox-class">
+                        </label>
+
+                        <textarea id = "create-textbox" rows = "5" cols = "115" placeholder = "Write something...."></textarea>
+                        <button id = "submit-review">Submit</button>
+                    </form>
+                </div>
+                
+                
                 <button id = "load">
-                    <span> 
-                        &#10533; Load Reviews &#10534; 
-                    </span>
+                    <span> &#10533; Load Reviews &#10534; </span>
                 </button>
             </div>
-            <div id ="reviewBox"></div>
-            <!-- <div class = "reccomended-anime">
-                <h3> If you like , check these out: </h3>
-                <hr>
-            </div> -->
-        
             `
         document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
-        }
+    }
 
-    async getReviewsFromAnimeID(){
+    async getReviewsFromAnimeID() {
         const response = await this.client.getReviewsByAnimeID(sessionStorage.getItem("animeCode"), lastEvaluatedKey, this.errorHandler);
-        if(response[1].length < 9){
+        if (response[1].length < 9) {
             document.getElementById("load").remove();
         }
 
         let reviewArea = document.getElementById("reviewBox");
         console.log(reviewArea)
         console.log(response)
-        let reviews = "";
-            for(let i = 0; i < response[1].length; i++){
-                let month = getMonth(response[1][i].postDate)
-                reviews +=`
+        let reviews = `       
+        
+        `;
+
+        for (let i = 0; i < response[1].length; i++) {
+            let month = getMonth(response[1][i].postDate)
+            reviews += `
                 <div class="user-review">
                 <div class="user-profile">
                
@@ -125,28 +135,36 @@ class AnimePage extends BaseClass{
                 </div>
                 </div>
                 `;
-            }
-            reviewArea.innerHTML += reviews
+        }
+        reviewArea.innerHTML += reviews
         lastEvaluatedKey = response[2];
         console.log(response[1]);
         console.log(lastEvaluatedKey);
+
+        document.getElementById("create-box").classList.remove("hide");
+
+        document.getElementById("create").addEventListener("click", () => {
+            document.getElementById("create-form").classList.remove("hide"); 
+            document.getElementById("create").classList.add("hide");}
+        );
+
     }
 }
 
-function getMonth(date){
+function getMonth(date) {
     console.log(date)
     let string = parseInt(date.toString().substring(4, 6));
     console.log(string)
 
     let month;
 
-    switch(string){
+    switch (string) {
         case 1:
             month = "January";
-        break;
+            break;
         case 2:
             month = "February";
-        break;
+            break;
         case 3:
             month = "March";
             break;
@@ -180,7 +198,7 @@ function getMonth(date){
         default:
             break;
     }
-    let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0,4);
+    let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0, 4);
     return posted;
 }
 

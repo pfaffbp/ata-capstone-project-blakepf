@@ -169,10 +169,6 @@ hr {
     margin: auto 10px;
     display: inline-block;
     border-radius: 10px;
-<<<<<<< HEAD
-
-=======
->>>>>>> Clean_Dev
 }
 
 .addl-info {
@@ -195,13 +191,32 @@ hr {
 
 }
 
+.hide {
+    display: none;                              /* Class name created to hide specfic data until an event happens */
+}
+
 .reviews {
     width: 80%;
-    /* border: 2px silver double; */
     padding: 10px;
     margin: 50px auto;
     border-radius: 10px;
     position: relative;
+}
+
+#create-box {
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    font-weight: bold;
+}
+
+textarea {
+    margin: 10px;
+}
+
+#submit-review {
+    background: plum;
 }
 
 button {
@@ -213,6 +228,7 @@ button {
     text-decoration: none;
     font-weight: bold;
     border: none;
+    border-radius: 5px;
     width: 100%;
     height: 20px;
 }
@@ -254,8 +270,6 @@ button:hover {
 .anime-container:hover .cover-image h5 {
     opacity: 1;
 }
-<<<<<<< HEAD
-=======
 
 .rating-box{
     text-align: center;
@@ -267,6 +281,9 @@ button:hover {
 
 .user-review{
     display: flex;
+    margin: 40px;
+    border: 2px solid silver;
+    border-radius: 10px;
 }
 
 .rating{
@@ -347,5 +364,3 @@ button:hover {
     position: relative;
 }
 
-
->>>>>>> Clean_Dev
