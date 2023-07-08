@@ -566,4 +566,28 @@ public class UserServiceTest {
             service.unfollow(user.getDisplayName(), user2.getDisplayName());
         });
     }
+    @Test
+    void findDisplayByEmail_validEmail_returnsDisplayName() {
+        String userId = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        when(repository.findByEmail("email")).thenReturn(Optional.of(userRecord));
+        String foundName = service.findDisplayNameByEmail("email");
+
+        verify(repository).findByEmail("email");
+        assertEquals(foundName, userRecord.getDisplayName());
+    }
 }
