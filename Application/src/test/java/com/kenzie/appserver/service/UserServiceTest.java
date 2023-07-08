@@ -390,4 +390,180 @@ public class UserServiceTest {
         verify(animeRepository, times(1)).findById(anime.getAnimeId());
     }
 
+    @Test
+    void follow_happyCase() {
+        String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", userId2, new ArrayList<>(),
+                        "name2", "displayName2", 27, "bio2");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        UserRecord userRecord2 = new UserRecord();
+        userRecord2.setUserId(user2.getUserId());
+        userRecord2.setFollowers(user2.getFollowers());
+        userRecord2.setFollowing(user2.getFollowing());
+        userRecord2.setFavoriteAnime(user2.getFavoriteAnime());
+        userRecord2.setEmail(user2.getEmail());
+        userRecord2.setFullName(user2.getFullName());
+        userRecord2.setAge(user2.getAge());
+        userRecord2.setDisplayName(user2.getDisplayName());
+        userRecord2.setBio(user2.getBio());
+        repository.save(userRecord2);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(repository.findByDisplayName(userRecord2.getDisplayName())).thenReturn(Optional.of(userRecord2));
+
+        List<String> updatedFollowers = service.follow(user.getDisplayName(), user2.getDisplayName());
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(repository, times(1)).findByDisplayName(userRecord2.getDisplayName());
+        verify(repository, times(2)).save(userRecord);
+        verify(repository, times(2)).save(userRecord2);
+
+        assertEquals(updatedFollowers, user.getFollowing(), "friend was properly followed");
+        assertEquals(user.getFollowing().get(0), "displayName2", "user's following should consist of friend's display name");
+        assertEquals(user2.getFollowers().get(0), "displayName", "user should be added to friend's followers");
+    }
+
+    @Test
+    void follow_sameDisplayName_throwsException() {
+        String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", userId2, new ArrayList<>(),
+                "name2", "displayName", 27, "bio2");
+
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            service.follow(user.getDisplayName(), user2.getDisplayName());
+        });
+    }
+
+    @Test
+    void follow_nullFollowing_stillFollows() {
+        String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+        User user = new User(new ArrayList<>(), null, "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", userId2, new ArrayList<>(),
+                "name2", "displayName2", 27, "bio2");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        UserRecord userRecord2 = new UserRecord();
+        userRecord2.setUserId(user2.getUserId());
+        userRecord2.setFollowers(user2.getFollowers());
+        userRecord2.setFollowing(user2.getFollowing());
+        userRecord2.setFavoriteAnime(user2.getFavoriteAnime());
+        userRecord2.setEmail(user2.getEmail());
+        userRecord2.setFullName(user2.getFullName());
+        userRecord2.setAge(user2.getAge());
+        userRecord2.setDisplayName(user2.getDisplayName());
+        userRecord2.setBio(user2.getBio());
+        repository.save(userRecord2);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(repository.findByDisplayName(userRecord2.getDisplayName())).thenReturn(Optional.of(userRecord2));
+
+        List<String> updatedFollowers = service.follow(user.getDisplayName(), user2.getDisplayName());
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(repository, times(1)).findByDisplayName(userRecord2.getDisplayName());
+        verify(repository, times(2)).save(userRecord);
+        verify(repository, times(2)).save(userRecord2);
+
+        assertEquals(updatedFollowers, userRecord.getFollowing(), "friend was properly followed");
+        assertEquals(userRecord.getFollowing().get(0), "displayName2", "user's following should consist of friend's display name");
+        assertEquals(user2.getFollowers().get(0), "displayName", "user should be added to friend's followers");
+    }
+
+    @Test
+    void unfollow_happyCase() {
+        String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+        List<String> following = new ArrayList<>();
+        following.add("displayName2");
+        List<String> followers = new ArrayList<>();
+        followers.add("displayName");
+        User user = new User(new ArrayList<>(), following, "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        User user2 = new User(followers, new ArrayList<>(), "email2", userId2, new ArrayList<>(),
+                "name2", "displayName2", 27, "bio2");
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+        repository.save(userRecord);
+
+        UserRecord userRecord2 = new UserRecord();
+        userRecord2.setUserId(user2.getUserId());
+        userRecord2.setFollowers(user2.getFollowers());
+        userRecord2.setFollowing(user2.getFollowing());
+        userRecord2.setFavoriteAnime(user2.getFavoriteAnime());
+        userRecord2.setEmail(user2.getEmail());
+        userRecord2.setFullName(user2.getFullName());
+        userRecord2.setAge(user2.getAge());
+        userRecord2.setDisplayName(user2.getDisplayName());
+        userRecord2.setBio(user2.getBio());
+        repository.save(userRecord2);
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(repository.findByDisplayName(userRecord2.getDisplayName())).thenReturn(Optional.of(userRecord2));
+
+        service.unfollow(user.getDisplayName(), user2.getDisplayName());
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(repository, times(1)).findByDisplayName(userRecord2.getDisplayName());
+        verify(repository, times(2)).save(userRecord);
+        verify(repository, times(2)).save(userRecord2);
+
+        assertEquals(userRecord.getFollowing().size(), 0, "friend was properly unfollowed");
+        assertEquals(userRecord2.getFollowers().size(), 0, "user's following should now be an empty list");
+    }
+
+    @Test
+    void unfollow_sameName_throwsException() {
+        String userId = randomUUID().toString();
+        String userId2 = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", userId2, new ArrayList<>(),
+                "name2", "displayName", 27, "bio2");
+
+
+        Assertions.assertThrows(IllegalArgumentException.class, () -> {
+            service.unfollow(user.getDisplayName(), user2.getDisplayName());
+        });
+    }
 }

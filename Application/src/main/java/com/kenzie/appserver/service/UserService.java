@@ -130,12 +130,13 @@ public class UserService {
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
+
         if (userDisplayName.equals(friendDisplayName)) {
             throw new IllegalArgumentException("Cannot add oneself as a friend.");
         }
 
-        UserRecord existingUser = userRepository.findById(findUserByName(userDisplayName).getUserId()).orElse(null);
-        UserRecord existingFriend = userRepository.findById(findUserByName(friendDisplayName).getUserId()).orElse(null);
+        UserRecord existingUser = userRepository.findByDisplayName(userDisplayName).orElse(null);
+        UserRecord existingFriend = userRepository.findByDisplayName(friendDisplayName).orElse(null);
 
         if (existingUser == null || existingFriend == null) {
             throw new NullPointerException("One or both users do not exist.");
@@ -168,8 +169,8 @@ public class UserService {
             throw new IllegalArgumentException("Cannot remove oneself as a friend.");
         }
 
-        UserRecord existingUser = userRepository.findById(findUserByName(userDisplayName).getUserId()).orElse(null);
-        UserRecord existingFriend = userRepository.findById(findUserByName(friendDisplayName).getUserId()).orElse(null);
+        UserRecord existingUser = userRepository.findByDisplayName(userDisplayName).orElse(null);
+        UserRecord existingFriend = userRepository.findByDisplayName(friendDisplayName).orElse(null);
 
         if (existingUser == null || existingFriend == null) {
             throw new IllegalArgumentException("One or both users do not exist.");
