@@ -1,5 +1,6 @@
 package com.kenzie.capstone.service.dao;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.kenzie.capstone.service.model.ExampleData;
 import com.kenzie.capstone.service.model.ExampleRecord;
 
@@ -77,5 +78,10 @@ public class ExampleDao {
                 .withConsistentRead(false);
 
         return mapper.query(UserRecord.class, queryExpression);
+    }
+
+    public List <UserRecord> getAllUsers() {
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        return mapper.scan(UserRecord.class, scanExpression);
     }
 }

@@ -11,6 +11,7 @@ import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class LambdaService {
 
@@ -38,7 +39,7 @@ public class LambdaService {
     public UserData getDisplayName(String displayName) {
         List<UserRecord> records = exampleDao.getUserData(displayName);
         if (records.size() > 0) {
-            UserRecord record = records.get(0);  // Get the first record
+            UserRecord record = records.get(0);
 
             UserData userData = new UserData();
             userData.setFollowers(record.getFollowers());
@@ -54,6 +55,23 @@ public class LambdaService {
             return userData;
         }
         return null;
+    }
+
+    public List<UserData> getAllUsers() {
+        List<UserRecord> records = exampleDao.getAllUsers();
+
+        return records.stream()
+                .map(record -> new UserData(
+                        record.getFollowers(),
+                        record.getFollowing(),
+                        record.getEmail(),
+                        record.getUserId(),
+                        record.getFavoriteAnime(),
+                        record.getFullName(),
+                        record.getDisplayName(),
+                        record.getAge(),
+                        record.getBio()))
+                .collect(Collectors.toList());
     }
 }
 //        if (records.size() > 0) {

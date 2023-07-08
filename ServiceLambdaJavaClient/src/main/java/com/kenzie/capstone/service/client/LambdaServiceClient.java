@@ -50,7 +50,7 @@ public class LambdaServiceClient {
 
     public UserData getUserDataByDisplayName(String displayName) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_USER_ENDPOINT.replace("{displayName}", displayName));
+        String response = endpointUtility.getEndpoint(GET_USER_ENDPOINT.replace("user/{displayName}/searchByDisplayName", displayName));
         UserData userData;
         try {
             userData = mapper.readValue(response, UserData.class);
@@ -78,7 +78,7 @@ public class LambdaServiceClient {
         return updatedUserData;
     }
 
-    public List<UserData> getAllUsersData() {
+    public List<UserData> getAllUsers() {
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.getEndpoint(GET_ALL_USERS_ENDPOINT);
         List<UserData> usersData;
