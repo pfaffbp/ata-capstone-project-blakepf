@@ -8,7 +8,7 @@ let lastEvaluatedKey = null;
 class AnimePage extends BaseClass{
     constructor() {
         super();
-        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification'], this);
+        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'onLoad'], this);
         this.dataStore = new DataStore();
     }
 
@@ -17,8 +17,22 @@ class AnimePage extends BaseClass{
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
-        this.notification();
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
+    }
 
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
 
@@ -192,7 +206,6 @@ function getMonth(date){
     let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0,4);
     return posted;
 }
-
 
 const main = async () => {
     const animePage = new AnimePage();

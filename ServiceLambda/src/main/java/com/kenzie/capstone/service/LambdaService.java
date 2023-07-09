@@ -25,21 +25,6 @@ public class LambdaService {
         this.notificationDao = notificationDao;
     }
 
-//    public ExampleData getExampleData(String id) {
-//        List<ExampleRecord> records = exampleDao.getExampleData(id);
-//        if (records.size() > 0) {
-//            return new ExampleData(records.get(0).getId(), records.get(0).getData());
-//        }
-//        return null;
-//    }
-//
-//    public ExampleData setExampleData(String data) {
-//        String id = UUID.randomUUID().toString();
-//        ExampleRecord record = exampleDao.setExampleData(id, data);
-//        return new ExampleData(id, data);
-//    }
-
-
     public NotificationRecord createRequest(String data, String displayName){
         ObjectMapper objectMapper = new ObjectMapper();
         SetNotificationData record = null;
@@ -48,21 +33,11 @@ public class LambdaService {
         } catch(JsonProcessingException e){
             e.getCause();
         }
-         NotificationRecord notificationRecord =  notificationDao.createNotification(displayName,
-                 record.getUserRequest().getDisplayName(),
-                 record.getUserRequest().getAction(),
-                 record.isHasBeenViewed());
+        NotificationRecord notificationRecord =  notificationDao.createNotification(displayName,
+                record.getUserRequest().getDisplayName(),
+                record.getUserRequest().getAction(),
+                record.isHasBeenViewed());
 
-//        log.info(record.getUserRequest());
-//        String userDisplay = record.getUserRequest().substring(0, record.getUserRequest().charAt(':'));
-//        String action = record.getUserRequest().substring(record.getUserRequest().charAt(':'), record.getUserRequest().length() - 1);
-//
-//        log.info(userDisplay);
-//        log.info(action);
-//
-//        System.out.println("line here 58 lambdaSrevice " + record);
-//        NotificationRecord notificationRecord = notificationDao.createNotification(displayName, userDisplay, action, record.isHasBeenViewed());
-//        System.out.println("line here 60 lamdaservice" + notificationRecord);
         return notificationRecord;
     }
 

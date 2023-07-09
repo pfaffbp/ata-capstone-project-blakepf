@@ -42,7 +42,7 @@ public class LambdaServiceClient {
         String jsonData = null;
 
         try {
-             jsonData = mapper.writeValueAsString(data);
+            jsonData = mapper.writeValueAsString(data);
         }catch(Exception e){
             e.getMessage();
         }

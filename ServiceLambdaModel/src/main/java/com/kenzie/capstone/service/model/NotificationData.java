@@ -22,16 +22,6 @@ public class NotificationData {
     }
 
 
-//    @DynamoDBRangeKey(attributeName = "userRequest")
-//    public String getUserRequest() {
-//         return userRequest.getDisplayName() + ":" + userRequest.getAction();
-//    }
-//
-//    public void setUserRequest(UserRequest request) {
-//        this.userRequest = request;
-//    }
-
-
     public String getUserRequest() {
         return userRequest;
     }
@@ -62,5 +52,4 @@ public class NotificationData {
         return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
     }
 }
-
 

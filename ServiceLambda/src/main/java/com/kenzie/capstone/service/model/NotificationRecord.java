@@ -27,15 +27,6 @@ public class NotificationRecord {
     }
 
 
-//    @DynamoDBRangeKey(attributeName = "userRequest")
-//    public String getUserRequest() {
-//         return userRequest.getDisplayName() + ":" + userRequest.getAction();
-//    }
-//
-//    public void setUserRequest(UserRequest request) {
-//        this.userRequest = request;
-//    }
-
     @DynamoDBRangeKey(attributeName = "userRequest")
     public String getUserRequest() {
         return userRequest;
@@ -69,5 +60,4 @@ public class NotificationRecord {
     }
 
 }
-
 
