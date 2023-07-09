@@ -77,7 +77,6 @@ public class UserController {
         List<String> followed = userService.follow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFollowing(followed);
 
         return ResponseEntity.ok(response);
     }
@@ -98,8 +97,6 @@ public class UserController {
         userService.unfollow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFollowers(user.getFollowers());
-        response.setFollowing(user.getFollowing());
 
         return ResponseEntity.ok(response);
     }
@@ -107,7 +104,7 @@ public class UserController {
     @PostMapping("/{displayName}/addFavorite/{animeId}")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
-            @PathVariable("animeId") int animeId
+            @PathVariable("animeId") String animeId
     ) {
         User user = userService.findUserByName(displayName);
 
@@ -115,9 +112,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-
+        userService.addNewFavorite(user.getDisplayName(), animeId);
         UserResponse response = createUserResponse(user);
-        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), animeId));
 
         return ResponseEntity.ok(response);
     }

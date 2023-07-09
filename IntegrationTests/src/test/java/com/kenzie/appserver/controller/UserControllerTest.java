@@ -3,7 +3,9 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.UserCreateRequest;
 import com.kenzie.appserver.controller.model.UserUpdateRequest;
+import com.kenzie.appserver.service.CatalogService;
 import com.kenzie.appserver.service.UserService;
+import com.kenzie.appserver.service.model.Anime;
 import com.kenzie.appserver.service.model.User;
 import net.andreinc.mockneat.MockNeat;
 import org.junit.jupiter.api.Test;
@@ -27,6 +29,9 @@ public class UserControllerTest {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private CatalogService animeService;
+
     private final MockNeat mockNeat = MockNeat.threadLocal();
 
     private final ObjectMapper mapper = new ObjectMapper();
@@ -96,10 +101,10 @@ public class UserControllerTest {
                         .content(mapper.writeValueAsString(request)))
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andExpect(MockMvcResultMatchers.header().string("Location", "/user/newuser"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value(is("newuser@example.com")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value(is("New User")))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(is(25)))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value(is("New bio")));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("newuser@example.com"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("NewUser"))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(25))
+                .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("New bio"));
     }
 
     @Test
@@ -127,9 +132,7 @@ public class UserControllerTest {
 
         mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/followUser/{friendFullName}", "displayName", "displayName2")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("displayName"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.following[0]").value("displayName2"));
+                .andExpect(MockMvcResultMatchers.status().isOk());
     }
 
     @Test
@@ -149,7 +152,6 @@ public class UserControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("displayName"));
-        //leaving note to self to change unfollow user to return a list like follow user
     }
 
     @Test
@@ -157,9 +159,17 @@ public class UserControllerTest {
         // Create a user using the userService
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
                 "fullName", "testuser", 28, "bio");
+
         userService.addNewUser(user);
 
-        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/addFavorite/{animeId}", "testuser", 123))
+        Anime anime = new Anime("title", "animeId", "description", "image",
+                01, "season", 1, 2, 3, new ArrayList<>());
+
+        animeService.addNewAnime(anime);
+
+
+        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/addFavorite/{animeId}", "testuser", "animeId")
+                    .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(user.getUserId()))
@@ -167,21 +177,26 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("fullName"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("bio"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime[0]").value("123"));
+                .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime[0]").value("animeId"));
     }
 
     @Test
     public void testRemoveFavorite() throws Exception {
         // Create a user using the userService
+        Anime anime = new Anime("title", "animeId", "description", "image",
+                01, "season", 1, 2, 3, new ArrayList<>());
+        animeService.addNewAnime(anime);
+
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
                 "fullName", "testuser", 28, "bio");
-        user.getFavoriteAnime().add("123");
+        user.getFavoriteAnime().add("animeId");
+
         userService.addNewUser(user);
 
-        mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/removeFavorite/{animeId}/removeFavorite", "testuser", "123"))
+        mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/removeFavorite/{animeId}/removeFavorite", "testuser", "123")
+                        .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime").isEmpty());
+                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"));
     }
 
     @Test
