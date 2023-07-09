@@ -13,7 +13,7 @@ class SignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onCreateLogin', 'toggle'], this);
+        this.bindClassMethods(['onCreateLogin', 'toggle', 'onLoad'], this);
         this.dataStore = new DataStore();
 
 
@@ -26,7 +26,8 @@ class SignupPage extends BaseClass {
         this.client = new SignupClient();
         document.getElementById('createUser').addEventListener('click', this.onCreateLogin);
         document.getElementById('eyes').addEventListener('click', this.toggle);
-
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
 
         // await this.alreadyLoggedIn();
 
@@ -132,6 +133,20 @@ class SignupPage extends BaseClass {
 
     checkNicknameLength(nickName){
             return nickName.length <= 16;
+    }
+
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
 }
