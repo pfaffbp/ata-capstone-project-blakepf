@@ -33,22 +33,6 @@ public class UserController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/getAllUsers")
-    public ResponseEntity<List<UserResponse>> getAllUsers() {
-        List<User> userList = userService.findAllUsers();
-        if (userList == null || userList.isEmpty()) {
-            return ResponseEntity.status(204).build();
-        }
-
-        List<UserResponse> response = new ArrayList<>();
-
-        for (User users : userList) {
-            response.add(this.createUserResponse(users));
-        }
-
-        return ResponseEntity.ok(response);
-    }
-
     @PutMapping("/updateUser")
     public ResponseEntity<UserResponse> updateUser(@RequestBody UserUpdateRequest request) {
         User user = new User(request.getFollowers(), request.getFollowing(), request.getEmail(), request.getUserId(), request.getFavoriteAnime(), request.getFullName(), request.getDisplayName(), request.getAge(), request.getBio());
@@ -72,16 +56,16 @@ public class UserController {
     }
 
     @DeleteMapping("/{displayName}/deleteByDisplayName")
-    public ResponseEntity<UserResponse> deleteUserByDisplayName(@PathVariable("displayName") String displayName) {
+    public ResponseEntity deleteUserByDisplayName(@PathVariable("displayName") String displayName) {
         userService.deleteUser(displayName);
 
         return ResponseEntity.status(204).build();
     }
 
-    @PostMapping("/{displayName}/followUser/{friendFullName}")
+    @PostMapping("/{displayName}/followUser/{friendDisplayName}")
     public ResponseEntity<UserResponse> followUser(
             @PathVariable("displayName") String displayName,
-            @PathVariable("friendFullName") String friendDisplayName
+            @PathVariable("friendDisplayName") String friendDisplayName
     ) {
         User user = userService.findUserByName(displayName);
         User friend = userService.findUserByName(friendDisplayName);
@@ -90,10 +74,9 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-        List<String> friends = userService.follow(user.getDisplayName(), friend.getDisplayName());
+        List<String> followed = userService.follow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFollowers(friends);
 
         return ResponseEntity.ok(response);
     }
@@ -114,7 +97,6 @@ public class UserController {
         userService.unfollow(user.getDisplayName(), friend.getDisplayName());
 
         UserResponse response = createUserResponse(user);
-        response.setFollowers(user.getFollowers());
 
         return ResponseEntity.ok(response);
     }
@@ -122,7 +104,7 @@ public class UserController {
     @PostMapping("/{displayName}/addFavorite/{animeId}")
     public ResponseEntity<UserResponse> addFavorite(
             @PathVariable("displayName") String displayName,
-            @PathVariable("animeId") int animeId
+            @PathVariable("animeId") String animeId
     ) {
         User user = userService.findUserByName(displayName);
 
@@ -130,15 +112,15 @@ public class UserController {
             return ResponseEntity.notFound().build();
         }
 
-
+        userService.addNewFavorite(user.getDisplayName(), animeId);
         UserResponse response = createUserResponse(user);
-        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), String.valueOf(animeId)));
+        response.setFavoriteAnime(userService.addNewFavorite(user.getDisplayName(), animeId));
 
         return ResponseEntity.ok(response);
-
     }
 
-    @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
+
+        @DeleteMapping("/{displayName}/removeFavorite/{animeId}/removeFavorite")
     public ResponseEntity<UserResponse> removeFavorite(
             @PathVariable("displayName") String displayName,
             @PathVariable("animeId") String animeId
@@ -166,7 +148,6 @@ public class UserController {
         response.setBio(user.getBio());
         response.setFavoriteAnime(user.getFavoriteAnime());
         response.setFollowers(user.getFollowers());
-        response.setFollowing(user.getFollowing());
         response.setDisplayName(user.getDisplayName());
         return response;
     }
@@ -185,5 +166,6 @@ public class UserController {
     }
 
 }
+
 
 

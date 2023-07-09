@@ -21,6 +21,7 @@ class ProfilePage extends BaseClass {
 
         this.client = new ProfileClient();
         document.getElementById('logout').addEventListener('click', this.Logout);
+        document.getElementById('updateProfileBtn').addEventListener('click', this.redirectToUpdateProfile);
         this.dataStore.addChangeListener(this.renderUserProfile)
         this.onLoad();
     }
@@ -93,7 +94,7 @@ class ProfilePage extends BaseClass {
     // Event Handlers --------------------------------------------------------------------------------------------------
 
 
-    async onLoad(){
+    async onLoad() {
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
     }
@@ -102,6 +103,9 @@ class ProfilePage extends BaseClass {
         event.preventDefault();
         localStorage.clear();
         window.location.href = "login.html";
+    }
+    async redirectToUpdateProfile() {
+        window.location.href = "updateProfile.html";
     }
 }
 
