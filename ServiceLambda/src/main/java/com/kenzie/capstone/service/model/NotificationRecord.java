@@ -12,7 +12,7 @@ public class NotificationRecord {
     public static final String NOTIFICATION_GET = "GrabNotification";
     private String requestedUUID;
 
-    private UserRequest userRequest;
+    private String userRequest;
 
     private boolean hasBeenViewed;
 
@@ -27,16 +27,25 @@ public class NotificationRecord {
     }
 
 
+//    @DynamoDBRangeKey(attributeName = "userRequest")
+//    public String getUserRequest() {
+//         return userRequest.getDisplayName() + ":" + userRequest.getAction();
+//    }
+//
+//    public void setUserRequest(UserRequest request) {
+//        this.userRequest = request;
+//    }
+
     @DynamoDBRangeKey(attributeName = "userRequest")
     public String getUserRequest() {
-         return userRequest.getDisplayName() + ":" + userRequest.getAction();
+        return userRequest;
     }
 
-    public void setUserRequest(UserRequest request) {
-        this.userRequest = request;
+    public void setUserRequest(String userRequest) {
+        this.userRequest = userRequest;
     }
 
-    @DynamoDBAttribute( attributeName = "hasBeenViewed")
+    @DynamoDBAttribute(attributeName = "hasBeenViewed")
     @DynamoDBIndexRangeKey(globalSecondaryIndexName = NOTIFICATION_GET, attributeName = "hasBeenViewed")
     public boolean isHasBeenViewed() {
         return hasBeenViewed;

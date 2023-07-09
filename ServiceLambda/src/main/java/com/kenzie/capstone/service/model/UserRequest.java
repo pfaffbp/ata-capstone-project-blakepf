@@ -5,14 +5,14 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 import java.util.Objects;
-@DynamoDBDocument
+
 public class UserRequest {
     String displayName;
     
     String action;
 
 
-    @DynamoDBAttribute(attributeName = "displayName")
+
     public String getDisplayName() {
         return displayName;
     }
@@ -20,7 +20,7 @@ public class UserRequest {
     public void setDisplayName(String displayName) {
         this.displayName = displayName;
     }
-    @DynamoDBAttribute(attributeName = "action")
+
     public String getAction() {
         return action;
     }
@@ -42,11 +42,8 @@ public class UserRequest {
 //        return Objects.hash(displayName, action);
 //    }
 
-//    @Override
-//    public String toString() {
-//        return "UserRequest{" +
-//                "displayName='" + displayName + '\'' +
-//                ", action='" + action + '\'' +
-//                '}';
-//    }
+    @Override
+    public String toString() {
+        return this.getDisplayName() + ":" + this.getAction();
+    }
 }

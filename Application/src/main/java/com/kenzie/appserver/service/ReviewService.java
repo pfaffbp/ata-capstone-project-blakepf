@@ -26,10 +26,6 @@ import static com.kenzie.appserver.repositories.model.ReviewRecord.USER_LOOK_UP;
 
 @Service
 public class ReviewService {
-
-    private int animeId = 0;
-
-    private boolean lastPage = false;
     private ReviewRepository reviewRepository;
     private final DynamoDBMapper mapper;
 

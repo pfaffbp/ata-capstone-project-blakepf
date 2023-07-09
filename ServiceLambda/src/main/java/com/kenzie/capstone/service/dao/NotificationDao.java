@@ -13,7 +13,9 @@ import com.kenzie.capstone.service.model.NotificationRecord;
 import com.kenzie.capstone.service.model.UserRequest;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class NotificationDao {
     private DynamoDBMapper mapper;
@@ -59,7 +61,7 @@ public class NotificationDao {
 
         NotificationRecord notificationRecord = new NotificationRecord();
         notificationRecord.setRequestedUUID(requestedUUID);
-        notificationRecord.setUserRequest(request);
+        notificationRecord.setUserRequest(request.toString());
         notificationRecord.setHasBeenViewed(viewed);
 
         try {
@@ -87,20 +89,26 @@ public class NotificationDao {
 //        return notificationRecord;
 //    }
 
-    public PaginatedQueryList<NotificationRecord> getNotification(String displayName){
+    public List<NotificationRecord> getNotification(String displayName){
         Map<String, AttributeValue> attributeValueMap = new HashMap<>();
-        attributeValueMap.put("displayName:", new AttributeValue().withS(displayName));
-        attributeValueMap.put("hasBeenViewed:", new AttributeValue().withBOOL(false));
+        attributeValueMap.put(":requestedUUID", new AttributeValue().withS(displayName));
+//        attributeValueMap.put("hasBeenViewed:", new AttributeValue().withBOOL(false));
 
         DynamoDBQueryExpression<NotificationRecord> queryExpression = new DynamoDBQueryExpression<NotificationRecord>()
-                .withIndexName(NotificationRecord.NOTIFICATION_GET)
                 .withConsistentRead(false)
-                .withKeyConditionExpression("displayName = :displayName and hasBeenViewed = :hasBeenViewed")
+//                .withKeyConditionExpression("displayName = :displayName and hasBeenViewed = :hasBeenViewed")
+                .withKeyConditionExpression("requestedUUID = :requestedUUID")
                 .withExpressionAttributeValues(attributeValueMap);
 
 
         PaginatedQueryList<NotificationRecord> queryList = mapper.query(NotificationRecord.class, queryExpression);
-        return queryList;
+        System.out.println(queryList.toString());
+        return queryList.stream()
+                .filter(notificationRecord -> notificationRecord.isHasBeenViewed() == false)
+                .collect(Collectors.toList());
+
+
+//        return queryList;
     }
 
 

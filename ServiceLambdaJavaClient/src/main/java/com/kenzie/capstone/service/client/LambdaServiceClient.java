@@ -1,21 +1,22 @@
 package com.kenzie.capstone.service.client;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.NotificationData;
-import com.kenzie.capstone.service.model.UserRequest;
+import com.kenzie.capstone.service.model.*;
 
 import javax.management.Notification;
+import java.util.List;
 
 
 public class LambdaServiceClient {
 
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
 
-    private static final String NOTIFICATION_GET_ENDPOINT = "user/test/{displayName}";
+    private static final String NOTIFICATION_GET_ENDPOINT = "notification/getNotification/{displayName}";
 
-    private static final String NOTIFICATION_SET_ENDPOINT = "user/notification/{displayName}";
+    private static final String NOTIFICATION_SET_ENDPOINT = "notification/setNotification/{displayName}";
 
     private ObjectMapper mapper;
 
@@ -23,44 +24,21 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-//    public ExampleData getExampleData(String id) {
-//        EndpointUtility endpointUtility = new EndpointUtility();
-//        String response = endpointUtility.getEndpoint(GET_EXAMPLE_ENDPOINT.replace("{id}", id));
-//        ExampleData exampleData;
-//        try {
-//            exampleData = mapper.readValue(response, ExampleData.class);
-//        } catch (Exception e) {
-//            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-//        }
-//        return exampleData;
-//    }
-
-//    public ExampleData setExampleData(String data) {
-//        EndpointUtility endpointUtility = new EndpointUtility();
-//        String response = endpointUtility.postEndpoint(SET_EXAMPLE_ENDPOINT, data);
-//        ExampleData exampleData;
-//        try {
-//            exampleData = mapper.readValue(response, ExampleData.class);
-//        } catch (Exception e) {
-//            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
-//        }
-//        return exampleData;
-//    }
-
-    public NotificationData getNotificationData(String displayName){
+    public List<NotificationData> getNotificationData(String displayName){
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(NOTIFICATION_GET_ENDPOINT.replace("{displayName}", displayName));
+        String response = endpointUtility.getEndpoint(NOTIFICATION_GET_ENDPOINT.replace("{displayName}",
+                displayName));
 
-        NotificationData notificationData = null;
+        List<NotificationData> notificationData = null;
         try{
-            notificationData = mapper.readValue(response, NotificationData.class);
+            notificationData = mapper.readValue(response, new TypeReference<List<NotificationData>>(){});
         }catch(JsonProcessingException e){
-            e.getCause();
+            System.out.println( "Line 64 " + e.getCause());
         }
         return notificationData;
     }
 
-    public NotificationData setNotificationData(NotificationData data, String displayName) {
+    public NotificationData setNotificationData(SetNotificationData data, String displayName) {
         String jsonData = null;
 
         try {
@@ -68,13 +46,12 @@ public class LambdaServiceClient {
         }catch(Exception e){
             e.getMessage();
         }
-
         EndpointUtility endpointUtility = new EndpointUtility();
         String response = endpointUtility.postEndpoint(NOTIFICATION_SET_ENDPOINT.replace("{displayName}", displayName), jsonData);
+
         NotificationData stringData;
         try{
             stringData = mapper.readValue(response, NotificationData.class);
-            System.out.println(stringData);
         } catch (Exception e){
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }

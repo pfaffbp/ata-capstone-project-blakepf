@@ -18,6 +18,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class GetNotifications implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
@@ -48,7 +49,8 @@ public class GetNotifications implements RequestHandler<APIGatewayProxyRequestEv
         }
 
         try {
-            PaginatedQueryList<NotificationRecord> notificationData = lambdaService.getNotification(id);
+            List<NotificationRecord> notificationData = lambdaService.getNotification(id);
+            log.info("line 53 of GetNotificiation " + notificationData);
             String output = gson.toJson(notificationData);
 
             return response

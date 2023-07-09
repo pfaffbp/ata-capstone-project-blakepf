@@ -1,18 +1,22 @@
 package com.kenzie.capstone.service.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
-
-import java.util.Map;
 import java.util.Objects;
 
+public class SetNotificationData {
 
-public class NotificationData {
     private String requestedUUID;
 
-    private String userRequest;
+    private UserRequest userRequest;
 
     private boolean hasBeenViewed;
 
+    public SetNotificationData(){}
+
+    public SetNotificationData(String value){
+        String[] strings = value.split(":", 2);
+        userRequest.setDisplayName(strings[0]);
+        userRequest.setAction(strings[1]);
+    }
     public String getRequestedUUID() {
         return requestedUUID;
     }
@@ -32,11 +36,11 @@ public class NotificationData {
 //    }
 
 
-    public String getUserRequest() {
+    public UserRequest getUserRequest() {
         return userRequest;
     }
 
-    public void setUserRequest(String userRequest) {
+    public void setUserRequest(UserRequest userRequest) {
         this.userRequest = userRequest;
     }
 
@@ -53,8 +57,8 @@ public class NotificationData {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NotificationData data = (NotificationData) o;
-        return hasBeenViewed == data.hasBeenViewed && Objects.equals(requestedUUID, data.requestedUUID) && Objects.equals(userRequest, data.userRequest);
+        SetNotificationData data = (SetNotificationData) o;
+        return hasBeenViewed == data.isHasBeenViewed() && Objects.equals(requestedUUID, data.getRequestedUUID()) && Objects.equals(userRequest, data.getUserRequest());
     }
 
     @Override
@@ -62,5 +66,3 @@ public class NotificationData {
         return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
     }
 }
-
-

@@ -1,6 +1,5 @@
 package com.kenzie.appserver.service;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.kenzie.appserver.config.CacheUserStore;
 import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
@@ -10,10 +9,9 @@ import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.NotificationData;
-import com.kenzie.capstone.service.model.UserRequest;
+import com.kenzie.capstone.service.model.SetNotificationData;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -193,38 +191,4 @@ public class UserService {
         }
     }
 
-    public NotificationData notification(NotificationRequest request, String displayName){
-
-       NotificationData data = new NotificationData();
-       data.setHasBeenViewed(request.isHasBeenViewed());
-       data.setRequestedUUID(request.getRequestedUUID());
-       data.setRequest(request.getUserRequest());
-
-       try {
-           NotificationData data2 = lambdaServiceClient.setNotificationData(data, displayName);
-       }catch(Exception e){
-           e.getMessage();
-       }
-       return data;
-    }
-
-    public PaginatedQueryList<NotificationData>
-
-//    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
-//        UserRequest request = new UserRequest();
-//        request.setAction(action);
-//        request.setDisplayName(requesterDisplayName);
-//
-//        NotificationData data = new NotificationData();
-//        data.setHasBeenViewed(false);
-//        data.setRequestedUUID(requestedDisplayName);
-//        data.setRequest(request);
-//
-//        try {
-//            NotificationData data2 = lambdaServiceClient.setNotificationData(data, requesterDisplayName);
-//        }catch(Exception e){
-//            e.getMessage();
-//        }
-//        return data;
-//    }
 }
