@@ -6,6 +6,7 @@ import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -29,13 +30,16 @@ public class UserServiceTest {
     @Mock
     private CatalogRepository animeRepository;
 
+    @Mock
+    private LambdaServiceClient client;
+
     @InjectMocks
     private UserService service;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new UserService(repository, cacheUserStore, animeRepository);
+        service = new UserService(repository, cacheUserStore, animeRepository, client);
     }
 
     @Test

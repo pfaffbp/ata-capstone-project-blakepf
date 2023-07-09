@@ -1,15 +1,12 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheUserStore;
-import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
-import com.kenzie.capstone.service.model.NotificationData;
-import com.kenzie.capstone.service.model.SetNotificationData;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -57,7 +54,7 @@ public class UserService {
 
         return usersList;
     }
-    public void addNewUser(User user) {
+    public User addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
         userRecord.setEmail(user.getEmail());
@@ -66,6 +63,7 @@ public class UserService {
         userRecord.setAge(user.getAge());
         userRecord.setBio(user.getBio());
         userRepository.save(userRecord);
+        return user;
     }
 
     public void updateUser(User user) {
@@ -114,7 +112,7 @@ public class UserService {
 
         return existingUser.getFavoriteAnime();
     }
-    public void removeFavorite(String displayName, String animeId) {
+    public List<String> removeFavorite(String displayName, String animeId) {
         UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
@@ -125,6 +123,7 @@ public class UserService {
 
         existingUser.getFavoriteAnime().remove(animeId);
         userRepository.save(existingUser);
+        return existingUser.getFavoriteAnime();
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
