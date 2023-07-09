@@ -78,8 +78,6 @@ public class Application {
                 mediaLists.add(graphQLResponse.getData().getPage().getMedia());
             }
 
-
-
             for(List<Media> mediaList : mediaLists){
                 for (Media media : mediaList) {
                     Anime anime = new Anime(media.getTitle().getUserPreferred(), String.valueOf(media.getId()),

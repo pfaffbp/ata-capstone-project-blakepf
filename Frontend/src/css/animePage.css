@@ -30,6 +30,7 @@ img {
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     font-size: 20px;
     font-weight: bold;
     z-index: 2;
@@ -102,6 +103,7 @@ hr {
     background-color: purple;
     height: 3px;                                /* Horizontal line and style */
     border: none;
+    margin-bottom: 10px;
 }
 
 .back {
@@ -154,11 +156,17 @@ hr {
     padding: 10px;                            /* Div that holds the title, description, and other anime content */
     height: fit-content;
     display: inline-block;
-    position: absolute;
+    position: relative;
 }
 
 .anime-info h1 {
     margin: 0;                                 /* Style of Title */
+}
+
+.info-dos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .ratings {
@@ -169,36 +177,63 @@ hr {
     margin: auto 10px;
     display: inline-block;
     border-radius: 10px;
-
 }
 
 .addl-info {
-    width: 35%;
-    display: inline-block;
-    margin: 10px 10px;                          /* Div holding the Air Date, Genres, Episodes */
+    width: 250px;
+    min-height: 120px;
+    height: fit-content;
+    /* display: inline-block; */
+    margin: 10px 10px;    
+    padding-right: 5px;                     /* Div holding the Air Date, Genres, Episodes */
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
-
 }
 
 .addl-info-2 {
-    width: 35%;
-    display: inline-block;                      /* Div holding the Popularity, Seasons, Value */
+    width: 250px;
+    min-height: 120px;
+    height: fit-content;
+    /* display: inline-block;                      Div holding the Popularity, Seasons, Value */
     margin: 10px 10px;
+    padding-right: 5px;                     
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
+    height: 100px;
+}
 
+.hide {
+    display: none;                              /* Class name created to hide specfic data until an event happens */
 }
 
 .reviews {
     width: 80%;
-    /* border: 2px silver double; */
     padding: 10px;
     margin: 50px auto;
     border-radius: 10px;
     position: relative;
+}
+
+#create-box {
+    text-align: center;
+    margin: auto;
+    padding: 20px;
+    width: 80%;
+    font-weight: bold;
+}
+
+textarea {
+    margin: 20px;
+}
+
+#submit-review {
+    background: plum;
+}
+
+#submit-review:hover {
+    background: purple;
 }
 
 button {
@@ -210,6 +245,7 @@ button {
     text-decoration: none;
     font-weight: bold;
     border: none;
+    border-radius: 5px;
     width: 100%;
     height: 20px;
 }
@@ -251,3 +287,98 @@ button:hover {
 .anime-container:hover .cover-image h5 {
     opacity: 1;
 }
+
+.rating-box{
+    text-align: center;
+    /* Div holding the Ratings Number */
+    padding: 10px 10px;
+    margin-right: 0.1vw;
+    display: inline-block;
+}
+
+.user-review{
+    display: flex;
+    margin: 40px;
+    border: 2px solid silver;
+    border-radius: 10px;
+}
+
+.rating {
+
+}
+
+.user-review{
+    /*border-style: solid;*/
+    /*border-width: 1px;*/
+    /*border-color: purple;*/
+    margin-bottom: 1vw;
+    justify-content: space-between;
+}
+
+.comment{
+    width: 100%;
+    text-align: left;
+    justify-items: left;
+    margin-bottom: 30px;
+    padding-top: 1vh;
+    word-wrap: break-word;
+    max-height: 40px;
+    font-size: 14px;
+    color: floralwhite;
+}
+
+.pfp{
+    max-height: 60px;
+    max-width: 60px;
+    border-radius: 50%;
+}
+
+.display-name{
+    margin-left: 0.5vw;
+    color: gray;
+    height: 5px;
+    text-decoration: none;
+}
+.user-profile{
+    max-width: 100px;
+    display: inline-flex;
+}
+
+.middleBlock{
+    width: 80%;
+}
+
+.misc{
+    display: flex;
+    gap: 0.2vw;
+    align-items: center;
+
+}
+.like-button{
+    width: 30px;
+    height: 30px;
+    background: black;
+    justify-self: center;
+}
+
+.like-button-img{
+    position: relative;
+}
+
+.like-number{
+    font-size: 15px;
+    position: relative;
+}
+
+.dislike-button{
+    width: 30px;
+    height: 30px;
+    background: black;
+    justify-self: center;
+}
+
+.dislike-button-img{
+    padding-top: 1px;
+    position: relative;
+}
+

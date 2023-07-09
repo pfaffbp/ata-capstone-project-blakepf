@@ -1,4 +1,3 @@
-
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import ProfileClient from "../api/profileClient";

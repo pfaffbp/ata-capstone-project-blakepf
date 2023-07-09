@@ -23,6 +23,20 @@ class SearchPage extends BaseClass {
     }
 
     async renderSearchPage(event) {
+        event.preventDefault()
+
+        let workArea = document.getElementById("work-area");
+        let searchValue = document.getElementById("search-bar").value;
+        let searchValueIntoString = `${searchValue}`;
+
+        console.log(searchValue);
+
+        const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
+        document.getElementById("genre-form").addEventListener("submit", this.renderSearchPage);
+        this.client = new AnimeClient();
+    }
+
+    async renderSearchPage(event) {
         event.preventDefault();
         let workArea = document.getElementById("work-area");
         let searchValue = document.getElementById("search-bar").value;
@@ -31,6 +45,7 @@ class SearchPage extends BaseClass {
         console.log(searchValue);
 
         const newResponse = await this.client.getAnimeBySearch(searchValueIntoString, this.errorHandler);
+
 
         let items = "";
 
@@ -90,7 +105,7 @@ class SearchPage extends BaseClass {
         const animationDuration = 7000;
         const startX = 0; // Initial X coordinate
         const startY = 0; // Initial Y coordinate
-        const endX = 1500; // Final X coordinate
+        const endX = 1050; // Final X coordinate
         const endY = 40; // Final Y coordinate
 
         // Apply the animation using CSS transitions

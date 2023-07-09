@@ -12,7 +12,6 @@ public class LambdaServiceClient {
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
     private static final String SET_EXAMPLE_ENDPOINT = "example";
 
-
     private ObjectMapper mapper;
 
     public LambdaServiceClient() {
