@@ -10,7 +10,7 @@ Resources:
     Type: AWS::Serverless::Function
     Properties:
       CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-      Handler: com.kenzie.capstone.service.lambda.GetNotification
+      Handler: com.kenzie.capstone.service.lambda.GetNotifications
       Runtime: java11
       Description: Get Example Data for given id
       MemorySize: 512
@@ -28,7 +28,7 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: user/notification/{displayName}
+            Path: /notification/getNotification/{displayName}
             Method: get
   SetNotificationFunction:
     Type: AWS::Serverless::Function
@@ -52,7 +52,7 @@ Resources:
         UpdateResource:
           Type: Api
           Properties:
-            Path: /user/test/{displayName}
+            Path: /notification/setNotification/{displayName}
             Method: post
 SendingMessagesFunction:
   Type: AWS::Serverless::Function

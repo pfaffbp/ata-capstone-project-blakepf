@@ -1,7 +1,11 @@
 package com.kenzie.capstone.service.model;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBDocument;
+
 import java.util.Objects;
 
+@DynamoDBDocument
 public class UserRequest {
     String displayName;
 
@@ -16,7 +20,13 @@ public class UserRequest {
         this.action = action;
     }
 
+    public UserRequest(String value) {
+        String[] parts = value.split(":", 2);
+        this.displayName = parts[0];
+        this.action = parts[1];
+    }
 
+    @DynamoDBAttribute(attributeName = "displayName")
     public String getDisplayName() {
         return displayName;
     }
@@ -25,6 +35,7 @@ public class UserRequest {
         this.displayName = displayName;
     }
 
+    @DynamoDBAttribute(attributeName = "action")
     public String getAction() {
         return action;
     }
@@ -48,9 +59,6 @@ public class UserRequest {
 
     @Override
     public String toString() {
-        return "UserRequest{" +
-                "displayName='" + displayName + '\'' +
-                ", action='" + action + '\'' +
-                '}';
+        return this.getDisplayName() + ":" + this.getAction();
     }
 }

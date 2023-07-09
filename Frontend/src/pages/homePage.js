@@ -7,14 +7,16 @@ class HomePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['renderHomePage'], this);
+        this.bindClassMethods(['renderHomePage', 'onLoad'], this);
         this.dataStore = new DataStore();
     }
 
     async mount() {
         this.dataStore.addChangeListener(this.renderHomePage)
+        document.getElementById('logout').addEventListener('click', this.Logout);
         this.client = new HomePageClient();
         this.renderHomePage();
+        this.onLoad();
     }
 
     async renderHomePage() {
@@ -219,6 +221,19 @@ class HomePage extends BaseClass {
         });
         await console.log(sessionStorage.getItem("animeCode")); // stores the animeId to get data;
         console.log(docs);
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
+    }
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
     }
 
 }

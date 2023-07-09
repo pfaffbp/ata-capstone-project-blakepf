@@ -4,6 +4,7 @@ import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.SetNotificationData;
 import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -186,30 +187,6 @@ public class UserController {
         }
 
     }
-
-    @PostMapping("test/{displayName}")
-    public ResponseEntity<?> Notification(@PathVariable String displayName, @RequestBody NotificationRequest request){
-        UserRequest userRequest = new UserRequest();
-        userRequest.setDisplayName(request.getUserRequest().getDisplayName());
-        userRequest.setAction(request.getUserRequest().getAction());
-
-        NotificationRequest notificationData = new NotificationRequest();
-        notificationData.setRequestedUUID(displayName);
-        notificationData.setUserRequest(userRequest);
-        notificationData.setHasBeenViewed(false);
-
-        NotificationData data = userService.notification(notificationData, displayName);
-        System.out.println(data);
-        return ResponseEntity.ok(data);
-    }
-
-    public String toStringUserRequest(UserRequest request){
-        return "UserRequest{" +
-                "displayName='" + request.getDisplayName() + '\'' +
-                ", action='" + request.getAction() + '\'' +
-                '}';
-    }
-
 }
 
 

@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.kenzie.appserver.config.CacheUserStore;
+import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
@@ -8,13 +9,12 @@ import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
 import com.kenzie.capstone.service.client.LambdaServiceClient;
 import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.SetNotificationData;
 import org.springframework.stereotype.Service;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -24,11 +24,11 @@ public class UserService {
 
     private LambdaServiceClient lambdaServiceClient;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository, LambdaServiceClient lambdaServiceClient) {
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository, LambdaServiceClient client) {
         this.userRepository = userRepository;
         this.cache = cache;
         this.animeRepository = animeRepository;
-        this.lambdaServiceClient = lambdaServiceClient;
+        this.lambdaServiceClient = client;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -128,12 +128,6 @@ public class UserService {
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
-        String id = UUID.randomUUID().toString();
-        String message = userDisplayName + ":" + friendDisplayName + " is following you!";
-
-        NotificationData notificationData = lambdaServiceClient.setNotificatioNData(userDisplayName, friendDisplayName;
-
-
         if (userDisplayName.equals(friendDisplayName)) {
             throw new IllegalArgumentException("Cannot add oneself as a friend.");
         }
@@ -150,12 +144,10 @@ public class UserService {
             following.add(existingFriend.getDisplayName());
             existingUser.setFollowing(following);
             userRepository.save(existingUser);
-
         } else {
             existingUser.getFollowing().add(existingFriend.getDisplayName());
             userRepository.save(existingUser);
         }
-
         if (existingFriend.getFollowers() == null) {
             List<String> followers = new ArrayList<>();
             followers.add(existingUser.getDisplayName());
@@ -166,6 +158,7 @@ public class UserService {
             userRepository.save(existingFriend);
         }
 
+//        notification(existingUser.getDisplayName(), existingFriend.getDisplayName(), "A User Has Followed You!");
 
         return existingUser.getFollowing();
     }

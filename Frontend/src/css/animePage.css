@@ -50,13 +50,51 @@ img {
     color: purple;
 }
 
+.account ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #333333;
+}
+
+.account li {
+    display: inline-block;
+}
+
+.account li a {
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* Style the dropdown menu */
+.account ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
+.account ul ul li {
+    display: block;
+}
+
+.account li:hover ul {
+    display: block;
+}
+
+/* Change the background color of dropdown links on hover */
+.account ul ul li a:hover {
+    background-color: #555;
+}
+
 .main-links {
     float: left;
 }
 
 .account {
     float: right;
-    margin-right: 30px;
+    margin-right: 10px;
+    width: 150px;
 }
 
 /* ------- Main Content  ------- */
@@ -93,7 +131,7 @@ img {
 
 #main {
     background: black;
-    width: 60%;        
+    width: 60%;
     height: 100%;
     margin: auto;                               /* Div holding all the content below */
     z-index: 1;
@@ -184,8 +222,7 @@ hr {
     width: 250px;
     min-height: 120px;
     height: fit-content;
-    /* display: inline-block; */
-    margin: 10px 10px;    
+    margin: 10px 10px;
     padding-right: 5px;                     /* Div holding the Air Date, Genres, Episodes */
     padding-left: 30px;
     border: 2px purple double;
@@ -196,9 +233,8 @@ hr {
     width: 250px;
     min-height: 120px;
     height: fit-content;
-    /* display: inline-block;                      Div holding the Popularity, Seasons, Value */
     margin: 10px 10px;
-    padding-right: 5px;                     
+    padding-right: 5px;
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
@@ -309,6 +345,9 @@ button:hover {
     border: 2px solid silver;
     border-radius: 10px;
     height: fit-content;
+}
+
+.user-review{
     margin-bottom: 1vw;
     justify-content: space-between;
 }
@@ -329,6 +368,43 @@ button:hover {
     max-width: 60px;
     border-radius: 50%;
     margin: auto 10px;
+}
+
+.account ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #333333;
+}
+
+.account li {
+    display: inline-block;
+}
+
+.account li a {
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* Style the dropdown menu */
+.account ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
+.account ul ul li {
+    display: block;
+}
+
+.account li:hover ul {
+    display: block;
+}
+
+/* Change the background color of dropdown links on hover */
+.account ul ul li a:hover {
+    background-color: #555;
 }
 
 .display-name{

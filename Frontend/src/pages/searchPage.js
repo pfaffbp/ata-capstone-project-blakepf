@@ -6,7 +6,7 @@ import AnimeClient from "../api/animeClient";
 class SearchPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['renderSearchPage', 'searchByGenre', 'animateKero'], this);
+        this.bindClassMethods(['renderSearchPage', 'searchByGenre', 'animateKero', 'onLoad'], this);
         this.dataStore = new DataStore();
         this.genreButtons = Array.from(document.querySelectorAll('.button-86'));
         this.keroElement = document.getElementById('kero');
@@ -20,6 +20,8 @@ class SearchPage extends BaseClass {
         this.genreButtons.forEach(button => button.addEventListener("click", this.searchByGenre));
         this.keroElement.addEventListener("animationstart", this.animateKero);
         this.client = new AnimeClient();
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
     }
 
     async renderSearchPage(event) {
@@ -119,6 +121,21 @@ class SearchPage extends BaseClass {
             this.animateKero(); // Repeat the animation
         }, animationDuration);
     }
+
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
+    }
+
 }
 
 const main = async () => {

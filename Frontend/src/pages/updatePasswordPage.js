@@ -10,7 +10,7 @@ class UpdatePasswordPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdatePassword', 'toggle'], this);
+        this.bindClassMethods(['onUpdatePassword', 'toggle', 'onLoad'], this);
         this.dataStore = new DataStore();
 
 
@@ -23,6 +23,8 @@ class UpdatePasswordPage extends BaseClass {
         this.client = new updatePasswordClient();
         document.getElementById('updatePasswordButton').addEventListener('click', this.onUpdatePassword);
         document.getElementById('eyes').addEventListener('click', this.toggle);
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
         // await this.alreadyLoggedIn();
 
 
@@ -54,25 +56,25 @@ class UpdatePasswordPage extends BaseClass {
         }
     }
 
-    async toggle(event){
+    async toggle(event) {
         const container = document.querySelector(".container-1"),
             pwShowHide = document.querySelectorAll(".showHidePw"),
             pwFields = document.querySelectorAll(".password");
 
 //   js code to show/hide password and change icon
-        pwShowHide.forEach(eyeIcon =>{
-            eyeIcon.addEventListener("click", ()=>{
-                pwFields.forEach(pwField =>{
-                    if(pwField.type ==="password"){
+        pwShowHide.forEach(eyeIcon => {
+            eyeIcon.addEventListener("click", () => {
+                pwFields.forEach(pwField => {
+                    if (pwField.type === "password") {
                         pwField.type = "text";
 
-                        pwShowHide.forEach(icon =>{
+                        pwShowHide.forEach(icon => {
                             icon.classList.replace("bx-lock-alt", "bx-lock-open-alt");
                         })
-                    }else{
+                    } else {
                         pwField.type = "password";
 
-                        pwShowHide.forEach(icon =>{
+                        pwShowHide.forEach(icon => {
                             icon.classList.replace("bx-lock-open-alt", "bx-lock-alt");
                         })
                     }
@@ -94,17 +96,32 @@ class UpdatePasswordPage extends BaseClass {
     }
 
 
-async validEmailFormat(email) {
-    if (!this.checkEmail(email)) {
-        alert("invalid email");
-        throw new Error('Invalid email address.');
-    }else return email;
-}
+    async validEmailFormat(email) {
+        if (!this.checkEmail(email)) {
+            alert("invalid email");
+            throw new Error('Invalid email address.');
+        } else return email;
+    }
 
-checkEmail(email) {
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return emailRegex.test(email);
-}
+    checkEmail(email) {
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        return emailRegex.test(email);
+    }
+
+    async Logout(event) {
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+
+    async onLoad() {
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null) {
+            LoggedInArea.innerHTML = user;
+        } else
+            LoggedInArea.innerHTML = "Login";
+    }
 
 }
 

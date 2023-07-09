@@ -48,6 +48,7 @@ public class SetNotification implements RequestHandler<APIGatewayProxyRequestEve
         }
 
         try {
+
             NotificationRecord exampleData = lambdaService.createRequest(data, displayName);
             String output = gson.toJson(exampleData);
 
