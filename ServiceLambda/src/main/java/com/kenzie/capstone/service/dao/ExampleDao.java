@@ -10,8 +10,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBSaveExpression;
 import com.amazonaws.services.dynamodbv2.model.ConditionalCheckFailedException;
 import com.amazonaws.services.dynamodbv2.model.ExpectedAttributeValue;
 import com.google.common.collect.ImmutableMap;
-import com.kenzie.capstone.service.model.UserData;
-import com.kenzie.capstone.service.model.UserRecord;
+
 
 import java.util.List;
 
@@ -67,21 +66,5 @@ public class ExampleDao {
         }
 
         return exampleRecord;
-    }
-
-    public List<UserRecord> getUserData (String displayName) {
-        UserRecord record = new UserRecord();
-        record.setDisplayName(displayName);
-
-        DynamoDBQueryExpression<UserRecord> queryExpression = new DynamoDBQueryExpression<UserRecord>()
-                .withHashKeyValues(record)
-                .withConsistentRead(false);
-
-        return mapper.query(UserRecord.class, queryExpression);
-    }
-
-    public List <UserRecord> getAllUsers() {
-        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
-        return mapper.scan(UserRecord.class, scanExpression);
     }
 }
