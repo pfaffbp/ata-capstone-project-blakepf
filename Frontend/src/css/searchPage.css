@@ -1,20 +1,25 @@
-*{
-    margin: 0;
-    padding: 0;
+* {
     font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
     box-sizing: border-box;
 }
 
-body{
-    background-color: black;
+body {
+    width: 100%;
+    background: black;
+    color: white;
+    overflow-x: hidden;
 }
 
-#search-form{
+img {
+    width: 100%;
+}
+
+background-color: black;
+
+
+#search-form {
     width: 50vw;
     max-height: 100px;
-}
-#search-bar {
-
 }
 
 /* ------- Navigation Bar ------- */
@@ -33,6 +38,7 @@ body{
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     font-size: 20 px;
     font-weight: bold;
     z-index: 2;
@@ -74,20 +80,22 @@ body{
 /* ------- Left side banner  ------- */
 
 .leftImage {
-    width: 40%;
-
-    position: fixed;                        /* Currently Sakura */
-    bottom: 3%;
-    left: 3%;
+    width: 30%;
+    position: fixed;
+    /* Currently Sakura */
+    top: 10%;
+    left: 1px;
+    transform: scaleX(-1);
 }
 
 /* ------- Right side banner  ------- */
 
 .rightImage {
-    width: 40%;
-    position: fixed;                        /* Currently Sakura Flower*/
-    right: 0%;
-    top: 10%;
+    width: 30%;
+    position: fixed;                                        /* Currently Sakura Flower*/
+    right: -4%;
+    bottom: 3%;
+    z-index: 2;
 }
 
 /* ------- Center Div, Holds All Search Content  ------- */
@@ -103,26 +111,38 @@ body{
 }
 
 .main {
-    background: none;
     margin: auto;
     top: -5%;
     z-index: 1;
     font-size: 12px;
+    width: 60%;
+    background-color: black;
 }
 
 .main h2 {
     margin-left: 20px;
-    margin-top: 10px;                   /* Currently "Search For Anime" */
+    margin-top: 10px;
+    /* Currently "Search For Anime" */
     text-transform: capitalize;
     font-weight: bold;
 }
 
 #search-form {
-    width: 60vw;
-    max-height: 100px;
-    margin: auto;
+    width: 100%;
+    margin: auto;                                    /* Contains Search Bar and Buttons */
     padding-top: 5px;
 }
+
+.search-bar-button {
+    margin: auto;
+    text-align: center;
+    padding-bottom: 20px;
+}
+
+label {
+    margin-bottom: 5px;
+}
+
 
 #search-bar {
     padding: 10px;
@@ -138,8 +158,26 @@ body{
     outline: none;
 }
 
+#kero {
+    position: absolute;
+    width: auto;
+    height: 130px;
+    background-image: url(css/Kero1.png);
+    background-size: cover;
+    pointer-events: none;
+}
 
-.button-85 { /*//https://getcssscan.com/css-buttons-examples*/
+hr {
+    background-color: purple;
+    height: 3px;
+    border: none;
+    width: 97%;
+    margin-top: 20px;
+}
+
+
+.button-85 {
+    /*//https://getcssscan.com/css-buttons-examples*/
     padding: 0.6em 2em;
     border: none;
     outline: none;
@@ -157,8 +195,7 @@ body{
 
 .button-85:before {
     content: "";
-    background: linear-gradient(
-            45deg,
+    background: linear-gradient(45deg,
             #ff0000,
             #ff7300,
             #fffb00,
@@ -167,8 +204,7 @@ body{
             #002bff,
             #7a00ff,
             #ff00c8,
-            #ff0000
-    );
+            #ff0000);
     position: absolute;
     top: -2px;
     left: -2px;
@@ -187,9 +223,11 @@ body{
     0% {
         background-position: 0 0;
     }
+
     50% {
         background-position: 400% 0;
     }
+
     100% {
         background-position: 0 0;
     }
@@ -199,7 +237,6 @@ body{
     z-index: -1;
     content: "";
     position: absolute;
->>>>>>> Blake_dev
     width: 100%;
     height: 100%;
     background: purple;
@@ -208,76 +245,34 @@ body{
     border-radius: 10px;
 }
 
-.nav{
-    padding-top: 10px;
-    padding-bottom: 10px;
-    background-color: #333333;
-    display: flex;
-    justify-content: center;
-}
-
-.navigation-buttons{
-    padding-left: 30px;
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-}
-
-.signup_href{
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-    margin-left: auto;
-}
-
-.login_href{
-    color: #eaeded;
-    text-decoration: none;
-    font-size: 20px;
-    padding-right: 30px;
-}
-
-.entire-website{
-    /*flex-grow: 1;*/
-    /*display: flex;*/
-    /*!*flex-flow: inherit;*!*/
-    /*height: 100%;*/
-    /*width: 100%;*/
-    /*justify-content: center;*/
-    /*gap: 1vw;*/
-    display: flex;
-    justify-content: center;
-
-}
-.middleBlock{
-    display: inline-block;
-    justify-content: center;
-    max-width: 100%;
-}
-
-#work-area{
-    display: inline-block;
+#work-area {
     flex-wrap: wrap;
     padding-top: 20px;
-    transition: transform 0.3s ease;
+    transition: transform .5s ease;
+    width: 90%;
+    margin: auto;
+    text-align: center;
 }
-
-.work-area:hover{
-    transform: scale(1.1);
-}
-
 
 .poster {
     background: black;
     display: inline-block;
-    width: 160px;
+    width: 180px;
     height: auto;
-    margin-bottom: 15px; /* Separation between posters */
+    margin-bottom: 15px;
+    /* Separation between posters */
     text-align: center;
     grid-area: 2 / 2 / 3 / 3;
     border: 2px solid #f4effa;
     margin-left: 10px;
+    overflow-x: hidden;
 
+}
+
+p {
+    text-transform: uppercase;
+    font-weight: bold;
+    font-size: 12px;
 }
 
 .poster:hover {
@@ -285,28 +280,14 @@ body{
 }
 
 .poster-click {
-    width: 160px;
-    height: 200px;
-    object-fit: cover;
+    width: 180px;
+    height: 250px;
 }
 
-
-.leftSideImage{
-}
-
-.leftSidePic{
-    position: sticky;
-    top: 0;
-}
-
-.title-box{
+.title-box {
     max-width: 10%;
 }
 
-.rightSidePic{
-    position: sticky;
-    top: 0;
-}
 
 
 #genres {
@@ -331,29 +312,20 @@ body{
     zoom: 120%;
 }
 
-<<<<<<< HEAD
-.search-bar-button {
-    display: block;
-    width: 100%;
-}
-
-p{
+p {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 200px;
 }
 
-.title-box{
+.title-box {
     max-width: 10%;
 }
 
-.rightSidePic{
-    position: sticky;
-    top: 0;
-}
 
-.button-86 { /*//https://getcssscan.com/css-buttons-examples*/
+.button-86 {
+    /*//https://getcssscan.com/css-buttons-examples*/
     padding: 0.6em 2em;
     border: none;
     outline: none;
@@ -371,8 +343,7 @@ p{
 
 .button-86:before {
     content: "";
-    background: linear-gradient(
-            45deg,
+    background: linear-gradient(45deg,
             #ff0000,
             #ff7300,
             #fffb00,
@@ -381,8 +352,7 @@ p{
             #002bff,
             #7a00ff,
             #ff00c8,
-            #ff0000
-    );
+            #ff0000);
     position: absolute;
     top: -2px;
     left: -2px;
@@ -401,9 +371,11 @@ p{
     0% {
         background-position: 0 0;
     }
+
     50% {
         background-position: 400% 0;
     }
+
     100% {
         background-position: 0 0;
     }
@@ -426,13 +398,3 @@ p{
     text-decoration: underline;
 }
 
-#kero {
-    position: absolute;
-    width: auto;
-    height: 130px;
-    background-image: url(css/Kero1.png);
-    background-size: cover;
-    pointer-events: none;
-}
-=======
->>>>>>> Clean_Dev

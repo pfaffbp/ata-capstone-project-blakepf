@@ -17,6 +17,10 @@ public class LambdaServiceClient {
 
     private static final String NOTIFICATION_SET_ENDPOINT = "user/notification/{displayName}";
 
+    private static final String NOTIFICATION_SET_ENDPOINT = "user/test/{displayName}";
+
+    private static final String NOTIFICATION_GET_ENDPOINT = "user/notification/{displayName}";
+
     private ObjectMapper mapper;
 
     public LambdaServiceClient() {

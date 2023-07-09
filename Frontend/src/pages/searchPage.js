@@ -22,7 +22,7 @@ class SearchPage extends BaseClass {
         this.client = new AnimeClient();
     }
 
-    async renderSearchPage(event){
+    async renderSearchPage(event) {
         event.preventDefault()
 
         let workArea = document.getElementById("work-area");
@@ -105,7 +105,7 @@ class SearchPage extends BaseClass {
         const animationDuration = 7000;
         const startX = 0; // Initial X coordinate
         const startY = 0; // Initial Y coordinate
-        const endX = 1500; // Final X coordinate
+        const endX = 1050; // Final X coordinate
         const endY = 40; // Final Y coordinate
 
         // Apply the animation using CSS transitions
