@@ -3,6 +3,9 @@ package com.kenzie.appserver.controller;
 import com.kenzie.appserver.controller.model.*;
 import com.kenzie.appserver.service.UserService;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.SetNotificationData;
+import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -166,6 +169,7 @@ public class UserController {
         response.setBio(user.getBio());
         response.setFavoriteAnime(user.getFavoriteAnime());
         response.setFollowers(user.getFollowers());
+        response.setFollowing(user.getFollowing());
         response.setDisplayName(user.getDisplayName());
         return response;
     }
@@ -181,6 +185,6 @@ public class UserController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
-    }
 
+    }
 }

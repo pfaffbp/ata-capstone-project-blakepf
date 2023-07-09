@@ -47,6 +47,7 @@ class SignupPage extends BaseClass {
         const cPassInput = document.getElementById("confirm-password").value;
         const nickname = document.getElementById('nickname').value;
 
+        //forces nickname to lower case
         let toLower = nickname;
         let name = toLower.toLowerCase();
 
@@ -99,7 +100,7 @@ class SignupPage extends BaseClass {
     //-------------------checks if passwords match ------------
     async validateUserInput(password, confirmPassword) {
         if (!this.validatePassword(password, confirmPassword)) {
-         //   alert("passwords must match");
+            alert("Passwords must match and be at least 8 characters long");
             throw new Error('Passwords must match and be at least 8 characters long');
         }
     }

@@ -45,7 +45,8 @@ class UpdatePasswordPage extends BaseClass {
             const hashedNewPassword = await bcrypt.hash(newPassInput, 10);
             const updatePassword = await this.client.updatePasswordByEmail(validEmail, passInput, hashedNewPassword);
             this.showMessage(`Password for: ${emailInput} updated successfully!`);
-            window.location.href = "homepage.html";
+            localStorage.clear();
+            window.location.href = "login.html";
 
         } catch (error) {
             console.error(error);
