@@ -6,12 +6,15 @@ import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.NotificationData;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class UserService {
@@ -19,10 +22,13 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
+    private LambdaServiceClient lambdaServiceClient;
+
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository, LambdaServiceClient lambdaServiceClient) {
         this.userRepository = userRepository;
         this.cache = cache;
         this.animeRepository = animeRepository;
+        this.lambdaServiceClient = lambdaServiceClient;
     }
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
@@ -122,6 +128,12 @@ public class UserService {
     }
 
     public List<String> follow(String userDisplayName, String friendDisplayName) {
+        String id = UUID.randomUUID().toString();
+        String message = userDisplayName + ":" + friendDisplayName + " is following you!";
+
+        NotificationData notificationData = lambdaServiceClient.setNotificatioNData(userDisplayName, friendDisplayName;
+
+
         if (userDisplayName.equals(friendDisplayName)) {
             throw new IllegalArgumentException("Cannot add oneself as a friend.");
         }
@@ -138,6 +150,7 @@ public class UserService {
             following.add(existingFriend.getDisplayName());
             existingUser.setFollowing(following);
             userRepository.save(existingUser);
+
         } else {
             existingUser.getFollowing().add(existingFriend.getDisplayName());
             userRepository.save(existingUser);

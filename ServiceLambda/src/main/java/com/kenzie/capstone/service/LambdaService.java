@@ -33,5 +33,10 @@ public class LambdaService {
     }
 
 
+    public ExampleData setMessageData() {
 
+        return null;
+    }
+
+    // Create special exception class.
 }
