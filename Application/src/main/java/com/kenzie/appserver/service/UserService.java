@@ -24,10 +24,11 @@ public class UserService {
         this.cache = cache;
         this.animeRepository = animeRepository;
     }
+
     public User findUserByName(String displayName) {
         User foundUser = cache.get(displayName);
 
-        if(foundUser != null) {
+        if (foundUser != null) {
             return foundUser;
         }
         User storedUser = userRepository
@@ -45,12 +46,13 @@ public class UserService {
 
         Iterable<UserRecord> userIterator = userRepository.findAll();
 
-        for(UserRecord record : userIterator) {
+        for (UserRecord record : userIterator) {
             usersList.add(new User(record.getFollowers(), record.getFollowing(), record.getEmail(), record.getUserId(), record.getFavoriteAnime(), record.getFullName(), record.getDisplayName(), record.getAge(), record.getBio()));
         }
 
         return usersList;
     }
+
     public void addNewUser(User user) {
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
@@ -76,6 +78,7 @@ public class UserService {
             cache.evict(user.getFullName());
         }
     }
+
     public void deleteUser(String displayName) {
         userRepository.deleteById(findUserByName(displayName).getUserId());
         cache.evict(displayName);
@@ -108,6 +111,7 @@ public class UserService {
 
         return existingUser.getFavoriteAnime();
     }
+
     public void removeFavorite(String displayName, String animeId) {
         UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
@@ -185,4 +189,39 @@ public class UserService {
         }
     }
 
+
+//    public NotificationData notification(NotificationRequest request, String displayName) {
+//
+//        NotificationData data = new NotificationData();
+//        data.setHasBeenViewed(request.isHasBeenViewed());
+//        data.setRequestedUUID(request.getRequestedUUID());
+//        data.setRequest(request.getUserRequest());
+//
+//        try {
+//            NotificationData data2 = lambdaServiceClient.setNotificationData(data, displayName);
+//        } catch (Exception e) {
+//            e.getMessage();
+//        }
+//        return data;
+//    }
+
+//    public PaginatedQueryList<NotificationData>
+
+//    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
+//        UserRequest request = new UserRequest();
+//        request.setAction(action);
+//        request.setDisplayName(requesterDisplayName);
+//
+//        NotificationData data = new NotificationData();
+//        data.setHasBeenViewed(false);
+//        data.setRequestedUUID(requestedDisplayName);
+//        data.setRequest(request);
+//
+//        try {
+//            NotificationData data2 = lambdaServiceClient.setNotificationData(data, requesterDisplayName);
+//        }catch(Exception e){
+//            e.getMessage();
+//        }
+//        return data;
+//    }
 }

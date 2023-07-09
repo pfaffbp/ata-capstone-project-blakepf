@@ -30,6 +30,7 @@ img {
     position: fixed;
     width: 100%;
     top: 0;
+    left: 0;
     font-size: 20px;
     font-weight: bold;
     z-index: 2;
@@ -102,6 +103,7 @@ hr {
     background-color: purple;
     height: 3px;                                /* Horizontal line and style */
     border: none;
+    margin-bottom: 10px;
 }
 
 .back {
@@ -154,11 +156,17 @@ hr {
     padding: 10px;                            /* Div that holds the title, description, and other anime content */
     height: fit-content;
     display: inline-block;
-    position: absolute;
+    position: relative;
 }
 
 .anime-info h1 {
     margin: 0;                                 /* Style of Title */
+}
+
+.info-dos {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .ratings {
@@ -172,23 +180,28 @@ hr {
 }
 
 .addl-info {
-    width: 35%;
-    display: inline-block;
-    margin: 10px 10px;                          /* Div holding the Air Date, Genres, Episodes */
+    width: 250px;
+    min-height: 120px;
+    height: fit-content;
+    /* display: inline-block; */
+    margin: 10px 10px;    
+    padding-right: 5px;                     /* Div holding the Air Date, Genres, Episodes */
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
-
 }
 
 .addl-info-2 {
-    width: 35%;
-    display: inline-block;                      /* Div holding the Popularity, Seasons, Value */
+    width: 250px;
+    min-height: 120px;
+    height: fit-content;
+    /* display: inline-block;                      Div holding the Popularity, Seasons, Value */
     margin: 10px 10px;
+    padding-right: 5px;                     
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
-
+    height: 100px;
 }
 
 .hide {
@@ -212,11 +225,15 @@ hr {
 }
 
 textarea {
-    margin: 10px;
+    margin: 20px;
 }
 
 #submit-review {
     background: plum;
+}
+
+#submit-review:hover {
+    background: purple;
 }
 
 button {
@@ -286,7 +303,7 @@ button:hover {
     border-radius: 10px;
 }
 
-.rating{
+.rating {
 
 }
 
@@ -315,6 +332,7 @@ button:hover {
     max-width: 60px;
     border-radius: 50%;
 }
+
 .display-name{
     margin-left: 0.5vw;
     color: gray;

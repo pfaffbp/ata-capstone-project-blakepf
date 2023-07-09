@@ -13,7 +13,8 @@ class AnimePage extends BaseClass {
     }
 
     async mount() {
-
+        
+        document.getElementById("create-form").addEventListener('submit', this.onSubmit)
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
@@ -22,11 +23,16 @@ class AnimePage extends BaseClass {
 
 
     async renderAnimeInfo() {
-        let workArea = document.getElementById("core");
+        let workArea = document.getElementById("main");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
 
 
         console.log(response);
+
+        if (response.rating == null) {
+            response.rating = "N/A";
+        } 
+
         workArea.innerHTML += `
             <div class = "image-box">
                 <img src = "${response.image}">
@@ -39,30 +45,33 @@ class AnimePage extends BaseClass {
                         ${response.description}
                     </p>
 
-                    <div class = "ratings">
-                        Ratings
-                        <h1>${response.ratings}</h1>
-                    </div>
 
-                    <div class = "addl-info">
-                        <p>
-                            <b>Start Date:</b> N/A
-                            <br>
-                            <b>Genres:</b> ${response.genre}
-                            <br>
-                            <b>Episodes:</b> ${response.episodes}
-                        </p>
-                    </div>
+                    <div class = "info-dos">
+                        <div class = "ratings">
+                            Ratings
+                            <h1>${response.rating}</h1>
+                        </div>
 
-                    <div class = "addl-info-2">
-                        <p>
-                            <b>Popularity #:</b> N/A
-                            <br>
-                            <b>Seasons:</b> N/A
-                            <br>
-                            <b>Property:</b> N/A
-                        </p>
-                    </div>
+                        <div class = "addl-info">
+                            <p>
+                                <b>Year Released:</b>  ${response.startDate}
+                                <br>
+                                <b>Genres:</b> ${response.genre}
+                                <br>
+                                <b>Episodes:</b> ${response.episodes}
+                            </p>
+                        </div>
+
+                        <div class = "addl-info-2">
+                            <p>
+                                <b>Popularity #:</b> ${response.popularity}
+                                <br>
+                                <b>Season:</b> ${response.season}
+                                <br>
+                                <b>Property:</b> N/A
+                            </p>
+                        </div>
+                    </div>    
                 </div>
             </div>
             <div class="reviews">
@@ -77,9 +86,12 @@ class AnimePage extends BaseClass {
                     <form id = "create-form" class = "hide">
                         <label for = "create-textbox" class = "create-textbox-class">
                         </label>
+                        <hr>
+                        Rating: <input type = "number" id = "rating-field" min = "0" max = "100" size = "1"></input> / 100
 
-                        <textarea id = "create-textbox" rows = "5" cols = "115" placeholder = "Write something...."></textarea>
-                        <button id = "submit-review">Submit</button>
+                        <textarea id = "create-textbox" rows = "5" cols = "100" placeholder = "Write something...."></textarea>
+
+                        <button id = "submit-review" type = "submit"> Submit </button>
                     </form>
                 </div>
                 
@@ -89,7 +101,21 @@ class AnimePage extends BaseClass {
                 </button>
             </div>
             `
+
         document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
+    }
+
+    async onSubmit(event) {
+        event.preventDefault();                 // Prevents the page from refreshing on Submit.
+
+        let createReview = document.getElementById('submit-review');
+        createReview.innerText = "Processing...";
+        createReview.disabled = true;
+
+        const rating = document.getElementById("rating-field").value;
+        const review = document.getElementById("create-textbox").value;
+
+        const createdReview
     }
 
     async getReviewsFromAnimeID() {
@@ -136,6 +162,7 @@ class AnimePage extends BaseClass {
                 </div>
                 `;
         }
+
         reviewArea.innerHTML += reviews
         lastEvaluatedKey = response[2];
         console.log(response[1]);
