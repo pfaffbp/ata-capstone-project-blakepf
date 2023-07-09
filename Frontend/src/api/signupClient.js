@@ -51,12 +51,12 @@ export default class SignupClient extends BaseClass {
             return response.data;
         } catch (error) {
             console.log("this is the error " + error);
-            if (error.response.status === 449){
+            if (error.response.status === 449) {
                 alert("Nickname already exists.")
-            }else if (error.response.status === 444){
+            } else if (error.response.status === 444) {
                 alert("Email already exists.")
-            }else
-            this.handleError("createLogin", error, errorCallback);
+            } else
+                this.handleError("createLogin", error, errorCallback);
             throw error;
         }
     }

@@ -15,7 +15,7 @@ export default class ProfileClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getUserData' ];
+        const methodsToBind = ['clientLoaded', 'getUserData', 'getNotifications'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -46,6 +46,15 @@ export default class ProfileClient extends BaseClass {
             return response.data;
         }catch (error){
             this.handleError('getUserData', error, errorCallback)
+        }
+    }
+
+    async getNotifications (errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/{displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
         }
     }
 

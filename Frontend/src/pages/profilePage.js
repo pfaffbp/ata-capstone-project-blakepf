@@ -29,6 +29,11 @@ class ProfilePage extends BaseClass {
 
     async renderUserProfile() {
         let user = localStorage.getItem('displayName')
+
+        if (user != null) {
+            document.getElementById("bell").classList.remove("hide");
+        }
+        
         let nameArea = document.getElementById("fullName");
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
