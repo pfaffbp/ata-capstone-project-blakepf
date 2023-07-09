@@ -1,3 +1,4 @@
+
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import ProfileClient from "../api/profileClient";
@@ -32,7 +33,8 @@ class ProfilePage extends BaseClass {
         let ageArea = document.getElementById("age");
         let bioArea = document.getElementById('bio');
         let animeArea = document.getElementById('favAnime')
-        let friendArea = document.getElementById('friendsList')
+        let followersArea = document.getElementById('followers');
+        let followingArea = document.getElementById('following');
 
         const uData = this.dataStore.get("userData");
         if (uData) {
@@ -53,30 +55,37 @@ class ProfilePage extends BaseClass {
                     Bio: ${uData.bio}                         
                 `;
           let animeList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
+            animeList +=`
+                 Name: ${uData.favoriteAnime}
                   `;
-              }*/
-            let friendList =""
-            /*    for (let anime of uData){
-                  animeList +=`
-                  ${anime.favoriteAnime}
-                  `;
-              }*/
 
+            let followersList =""
+            followersList +=`
+              ${uData.followers.length}
+                
+           `;
+            let followingList =""
+            followingList +=`
+              ${uData.following.length}
+                
+           `;
 
             displayName.innerHTML = items;
             ageArea.innerHTML = age;
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
+            animeArea.innerHTML = animeList;
+            followersArea.innerHTML = followersList;
+            followingArea.innerHTML = followingList;
 
         } else {
             displayName.innerHTML = "Display Name:";
             ageArea.innerHTML = "Age:";
             nameArea.innerHTML = "Name:";
             bioArea.innerHTML = "Bio:";
-
+            animeArea.innerHTML = " ";
+            followersArea.innerHTML = " ";
+            followingArea.innerHTML = " ";
 
         }
     }

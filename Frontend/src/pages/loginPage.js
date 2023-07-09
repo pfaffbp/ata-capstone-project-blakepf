@@ -44,7 +44,7 @@ class LoginPage extends BaseClass {
                 const displayName = await this.client.getUserDisplayName(loginInput);
                 localStorage.setItem("displayName", displayName);
                 localStorage.setItem("LoggedIn", loginInput);
-                 window.location.href = "homepage.html";
+                 window.location.href = "landingPage.html";
             } else {
                 this.showMessage("incorrect email or password!");
             }

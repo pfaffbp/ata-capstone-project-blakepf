@@ -4,9 +4,18 @@
 
 
 body {
-    width: 100%;
-    background: black;
-    color: white;
+    background: #151515;  /* fallback for old browsers */
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+    background:
+            linear-gradient(27deg, #151515 5px, transparent 5px) 0 5px,
+            linear-gradient(207deg, #151515 5px, transparent 5px) 10px 0px,
+            linear-gradient(27deg, #222 5px, transparent 5px) 0px 10px,
+            linear-gradient(207deg, #222 5px, transparent 5px) 10px 5px,
+            linear-gradient(90deg, #1b1b1b 10px, transparent 10px),
+            linear-gradient(#1d1d1d 25%, #1a1a1a 25%, #1a1a1a 50%, transparent 50%, transparent 75%, #242424 75%, #242424);
+    background-color: #131313;
+    background-size: 20px 20px;
 }
 
 img {
@@ -29,7 +38,7 @@ img {
     position: fixed;
     width: 100%;
     top: 0;
-    font-size: 20 px;
+    font-size: 20px;
     font-weight: bold;
     z-index: 2;
 }
@@ -46,6 +55,8 @@ img {
     color: purple;
 }
 
+
+
 .main-links {
     float: left;
 }
@@ -54,6 +65,8 @@ img {
     float: right;
     margin-right: 30px;
 }
+
+
 
 /* ------- Main Content  ------- */
 
@@ -88,7 +101,8 @@ img {
 /* ------- Center Div, Holds All Search Content  ------- */
 
 .main {
-    background: transparent;              
+    background: #242924;
+    color: white;
     border: 2px solid white;         /* <----- Remove this once you've styled the rest of the page. */
     width: 60%;                        /* I pretty much only put the border there so you can separate the content from the background." */
     margin: auto;
@@ -159,6 +173,18 @@ hr {
 }
 
 .favorite-list h4 {
+    text-align: center;
+}
+.friend-list {
+    border: 2px double purple;
+    width: 40%;
+    margin: auto;
+    padding: 10px;
+    display: inline-block;
+    position: relative;
+}
+
+.friend-list h4 {
     text-align: center;
 }
 

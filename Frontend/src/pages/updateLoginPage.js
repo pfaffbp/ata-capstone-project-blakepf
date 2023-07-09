@@ -46,7 +46,8 @@ class UpdateLoginPage extends BaseClass {
             await this.validatePasswordInput(passInput, cPassInput);
             const emailUpdate = await this.client.updateEmailByEmail(emailInput, validEmail, passInput);
             this.showMessage(`Email: ${newEmailInput} updated successfully!`);
-            window.location.href = "homepage.html";
+            localStorage.clear();
+            window.location.href = "login.html";
 
 
         } catch (error) {

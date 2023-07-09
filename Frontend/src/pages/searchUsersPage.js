@@ -33,14 +33,15 @@ class SearchUsersPage extends BaseClass {
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
         let bioArea = document.getElementById('bio');
-        let animeArea = document.getElementById('favAnime')
-        let friendArea = document.getElementById('followersList')
+        let animeArea = document.getElementById('favAnime');
+        let followersArea = document.getElementById('followers');
+        let followingArea = document.getElementById('following');
 
         const uData = this.dataStore.get("userData");
-        console.log(uData);
+
         if (uData) {
             let items ="";
-                    items += `
+            items += `
                    ${uData.displayName}                            
                 `;
             let age ="";
@@ -55,29 +56,41 @@ class SearchUsersPage extends BaseClass {
             bio += `
                     Bio: ${uData.bio}                           
                 `;
-          let animeList =""
-            animeList += `
-                    Name: ${uData.favoriteAnime}                             
-                `;
+            let animeList =""
+                  animeList +=`
+             ${uData.favoriteAnime}
+                  `;
+            let followersList =""
+            followersList +=`
+              ${uData.followers.length}
+                
+           `;
+            let followingList =""
+            followingList +=`
+              ${uData.following.length}
+                
+           `;
 
-            let followers =""
-            followers += `
-                    Name: ${uData.followers}                             
-                `;
 
 
             displayName.innerHTML = items;
             ageArea.innerHTML = age;
             nameArea.innerHTML = name;
             bioArea.innerHTML = bio;
-            animeArea.innerHTML += animeList;
-            friendArea.innerHTML += followers;
+            animeArea.innerHTML = animeList;
+            followersArea.innerHTML = followersList;
+            followingArea.innerHTML = followingList;
+
 
         } else {
             displayName.innerHTML = "Display Name:";
             ageArea.innerHTML = "Age:";
             nameArea.innerHTML = "Name:";
             bioArea.innerHTML = "Bio:";
+            animeArea.innerHTML = " ";
+            followersArea.innerHTML = " ";
+            followingArea.innerHTML = " ";
+
         }
     }
 

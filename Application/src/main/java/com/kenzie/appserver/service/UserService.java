@@ -1,11 +1,16 @@
 package com.kenzie.appserver.service;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.kenzie.appserver.config.CacheUserStore;
+import com.kenzie.appserver.controller.model.NotificationRequest;
 import com.kenzie.appserver.repositories.CatalogRepository;
 import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
+import com.kenzie.capstone.service.client.LambdaServiceClient;
+import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.UserRequest;
 import org.springframework.stereotype.Service;
 
 import java.lang.reflect.Array;
@@ -19,10 +24,13 @@ public class UserService {
     private CacheUserStore cache;
     private CatalogRepository animeRepository;
 
-    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository) {
+    private LambdaServiceClient lambdaServiceClient;
+
+    public UserService(UserRepository userRepository, CacheUserStore cache, CatalogRepository animeRepository, LambdaServiceClient client) {
         this.userRepository = userRepository;
         this.cache = cache;
         this.animeRepository = animeRepository;
+        this.lambdaServiceClient = client;
     }
 
     public User findUserByName(String displayName) {
@@ -146,7 +154,6 @@ public class UserService {
             existingUser.getFollowing().add(existingFriend.getDisplayName());
             userRepository.save(existingUser);
         }
-
         if (existingFriend.getFollowers() == null) {
             List<String> followers = new ArrayList<>();
             followers.add(existingUser.getDisplayName());
@@ -157,6 +164,7 @@ public class UserService {
             userRepository.save(existingFriend);
         }
 
+//        notification(existingUser.getDisplayName(), existingFriend.getDisplayName(), "A User Has Followed You!");
 
         return existingUser.getFollowing();
     }
@@ -188,24 +196,23 @@ public class UserService {
             return null;
         }
     }
+  
+    public NotificationData notification(NotificationRequest request, String displayName){
 
+       NotificationData data = new NotificationData();
+       data.setHasBeenViewed(request.isHasBeenViewed());
+       data.setRequestedUUID(request.getRequestedUUID());
+       data.setRequest(request.getUserRequest());
 
-//    public NotificationData notification(NotificationRequest request, String displayName) {
-//
-//        NotificationData data = new NotificationData();
-//        data.setHasBeenViewed(request.isHasBeenViewed());
-//        data.setRequestedUUID(request.getRequestedUUID());
-//        data.setRequest(request.getUserRequest());
-//
-//        try {
-//            NotificationData data2 = lambdaServiceClient.setNotificationData(data, displayName);
-//        } catch (Exception e) {
-//            e.getMessage();
-//        }
-//        return data;
-//    }
+       try {
+           NotificationData data2 = lambdaServiceClient.setNotificationData(data, displayName);
+       }catch(Exception e){
+           e.getMessage();
+       }
+       return data;
+    }
 
-//    public PaginatedQueryList<NotificationData>
+    public PaginatedQueryList<NotificationData>
 
 //    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
 //        UserRequest request = new UserRequest();

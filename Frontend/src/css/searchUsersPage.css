@@ -96,6 +96,15 @@ img {
 
 /* ------------- Search Bar -------------- */
 
+#search-form {
+    width: 60vw;
+    max-height: 100px;
+    margin-top: 2%;
+    margin-left: 2%;
+    margin-bottom: 4%;
+    padding-top: 5px;
+}
+
 #search-bar {
     padding: 10px;
     font-size: 12px;

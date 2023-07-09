@@ -22,7 +22,3 @@ npm install --save-dev crypto-browserify stream-browserify assert stream-http ht
 When you try to ./gradlew :Application:bootRunDev
 you may get prompted to install additional things.
 Big red warnings/errors. you will know.
-you may have to install buffer its just s simple buffer it will tell you in the error
-you may have to install browserify
-it will tell you the npm in the error if it does
-https://www.npmjs.com/package/browserify
