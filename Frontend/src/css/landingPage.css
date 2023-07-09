@@ -49,13 +49,58 @@ img {
 .main-links {
 	display: inline-block;
 	line-height: 80px;
-
 }
 
 .nav a:hover {
     color: purple;
 }
 
+#bell {
+	display: inline-block;
+	line-height: 80px;
+	width: 50px;
+	height: 50px;
+	margin-right: auto;
+	padding-top: 10px;
+	padding-right: 50px;
+}
+
+.icon-button {
+	position: relative;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 50px;
+	height: 50px;
+	color: #333333;
+	background: #dddddd;
+	border: none;
+	outline: none;
+	border-radius: 50%;
+  }
+  
+  .icon-button:hover {
+	cursor: pointer;
+  }
+  
+  .icon-button:active {
+	background: #cccccc;
+  }
+  
+  .icon-button__badge {
+	position: absolute;
+	top: 0px;
+	right: -10px;
+	width: 25px;
+	height: 25px;
+	background: red;
+	color: #ffffff;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	border-radius: 50%;
+  }
+  
 
 
 .account ul {
@@ -103,7 +148,7 @@ img {
 .account {
 	float: right;
 	margin-right: 10px;
-	width: 150px;
+	width: 200px;
 }
 
 /* ------- All content  ------- */
