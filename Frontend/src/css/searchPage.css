@@ -14,8 +14,6 @@ img {
     width: 100%;
 }
 
-background-color: black;
-
 
 #search-form {
     width: 50vw;
@@ -95,7 +93,6 @@ background-color: black;
     position: fixed;                                        /* Currently Sakura Flower*/
     right: -4%;
     bottom: 3%;
-    z-index: 2;
 }
 
 /* ------- Center Div, Holds All Search Content  ------- */
@@ -116,7 +113,7 @@ background-color: black;
     z-index: 1;
     font-size: 12px;
     width: 60%;
-    background-color: black;
+
 }
 
 .main h2 {
@@ -160,6 +157,8 @@ label {
 
 #kero {
     position: absolute;
+    top: 40%;
+    left: 30%;
     width: auto;
     height: 130px;
     background-image: url(css/Kero1.png);
@@ -252,6 +251,7 @@ hr {
     width: 90%;
     margin: auto;
     text-align: center;
+    margin-top: 200px;
 }
 
 .poster {

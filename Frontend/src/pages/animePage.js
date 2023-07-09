@@ -25,7 +25,7 @@ class AnimePage extends BaseClass{
     async renderAnimeInfo(){
         let workArea = document.getElementById("main");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
-        const getRating = await this.client.getRatingForAnime(sessionStorage.getItem("animeCode"), this.errorHandler);
+        //const getRating = await this.client.getRatingForAnime(sessionStorage.getItem("animeCode"), this.errorHandler);
 
         console.log(response);
         workArea.innerHTML += `
@@ -40,10 +40,7 @@ class AnimePage extends BaseClass{
                         ${response.description}
                     </p>
 
-                    <div class = "ratings">
-                        Ratings
-                        <h1>${getRating}</h1>
-                    </div>
+             
 
                     <div class = "addl-info">
                         <p>
