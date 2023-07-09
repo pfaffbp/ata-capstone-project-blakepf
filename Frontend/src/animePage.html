@@ -1,68 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="animePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/animePage.css">
+    <script>
+        let limitChar = (element) => {
+            const maxChar = 400;
+
+            let ele = document.getElementById(element.id);
+            let charLen = ele.value.length;
+
+            let p = document.getElementById('charCounter');
+            p.innerHTML = maxChar - charLen + '/400';
+
+            if (charLen > maxChar) {
+                ele.value = ele.value.substring(0, maxChar);
+                p.innerHTML = 0 + ' characters remaining';
+            }
+    </script>
 </head>
 
 <body>
 
     <div class="nav">
-        <img src = "css/aniverse-logo-white.png" class= "logo">
+        <img src="css/aniverse-logo-white.png" class="logo">
 
-        <div class = "main-links">
+        <div class="main-links">
             <a href="holder">Anime</a>
-            <a href = "holder1">Community</a>
-            <a href = "holder2">Friends</a>
-            <a href = "holder3">Read</a>
+            <a href="holder1">Community</a>
+            <a href="holder2">Friends</a>
+            <a href="holder3">Read</a>
         </div>
-        
-        <div class = "account">
-            <a href = "searchPage.html" class="navigation-buttons">Search</a>
-            <a href = "holder5">Signup</a>
-            <a href = "holder4">Login</a>
+
+        <div class="account">
+            <a href="searchPage.html" class="navigation-buttons">Search</a>
+            <a href="holder5">Signup</a>
+            <a href="holder4">Login</a>
         </div>
     </div>
 
-<div class = "flex-container">
 
-    <div class = "leftSideImage">
-        <img class = "leftSidePic" src = "src/tanjiro-right.png">
+    <div class="leftSideImage">
+        <img class="leftSidePic" src="src/tanjiro-right.png">
     </div>
 
-    <div class = "nav">
-        <img src = "css/aniverse-logo-white.png" class= "logo">
+    <div class="nav">
+        <img src="css/aniverse-logo-white.png" class="logo">
 
-        <div class = "main-links">
+        <div class="main-links">
             <a href="landingPage.html">Anime</a>
-            <a href = "holder1">Community</a>
-            <a href = "holder2">Friends</a>
-            <a href = "holder3">Read</a>
+            <a href="holder1">Community</a>
+            <a href="holder2">Friends</a>
+            <a href="holder3">Read</a>
         </div>
-        
-        <div class = "account">
-            <a href = "searchPage.html" class="navigation-buttons">Search</a>
-            <a href = "holder5">Signup</a>
-            <a href = "holder4">Login</a>
+
+        <div class="account">
+            <a href="searchPage.html" class="navigation-buttons">Search</a>
+            <a href="holder5">Signup</a>
+            <a href="holder4">Login</a>
         </div>
     </div>
 
 
-    <div id = "flex-container">
-
-
-        <div class = "leftImage">
+    <div id="flex-container">
+        <div class="leftImage">
             <img src="css/zenitsu-left.png">
         </div>
 
 
-        <div id = "main">
+        <div id="main">
         </div>
 
-        <div class= "rightImage">
+        <div class="rightImage">
             <img src="css/tanjiro-right.png">
         </div>
     </div>
+
 </body>
+
 </html>

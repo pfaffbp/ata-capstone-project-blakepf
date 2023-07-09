@@ -7,6 +7,7 @@ body {
     width: 100%;
     background: black;
     color: white;
+    overflow-x: hidden;
 }
 
 img {
@@ -222,6 +223,8 @@ hr {
     padding: 20px;
     width: 80%;
     font-weight: bold;
+    border: 2px double #333333;
+    border-radius: 10px;
 }
 
 textarea {
@@ -234,6 +237,10 @@ textarea {
 
 #submit-review:hover {
     background: purple;
+}
+
+#post-submit {
+    color: rgb(74, 219, 74);
 }
 
 button {
@@ -301,16 +308,7 @@ button:hover {
     margin: 40px;
     border: 2px solid silver;
     border-radius: 10px;
-}
-
-.rating {
-
-}
-
-.user-review{
-    /*border-style: solid;*/
-    /*border-width: 1px;*/
-    /*border-color: purple;*/
+    height: fit-content;
     margin-bottom: 1vw;
     justify-content: space-between;
 }
@@ -320,9 +318,8 @@ button:hover {
     text-align: left;
     justify-items: left;
     margin-bottom: 30px;
-    padding-top: 1vh;
     word-wrap: break-word;
-    max-height: 40px;
+    max-height: 50px;
     font-size: 14px;
     color: floralwhite;
 }
@@ -331,34 +328,38 @@ button:hover {
     max-height: 60px;
     max-width: 60px;
     border-radius: 50%;
+    margin: auto 10px;
 }
 
 .display-name{
-    margin-left: 0.5vw;
+    margin: 5px;
     color: gray;
-    height: 5px;
     text-decoration: none;
 }
+
 .user-profile{
     max-width: 100px;
     display: inline-flex;
 }
 
 .middleBlock{
-    width: 80%;
+    width: 75%;
+    margin: 5px;
+    padding: 5px;
 }
 
 .misc{
     display: flex;
     gap: 0.2vw;
     align-items: center;
-
+    margin: 5px;
 }
 .like-button{
     width: 30px;
     height: 30px;
     background: black;
     justify-self: center;
+    color: green;
 }
 
 .like-button-img{
@@ -380,5 +381,11 @@ button:hover {
 .dislike-button-img{
     padding-top: 1px;
     position: relative;
+}
+
+#charCounter {
+    float: right;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 

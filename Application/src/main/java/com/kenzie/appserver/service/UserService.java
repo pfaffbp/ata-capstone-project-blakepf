@@ -212,7 +212,7 @@ public class UserService {
        return data;
     }
 
-    public PaginatedQueryList<NotificationData>
+//    public PaginatedQueryList<NotificationData>
 
 //    public NotificationData notification(String requestedDisplayName, String requesterDisplayName, String action){
 //        UserRequest request = new UserRequest();

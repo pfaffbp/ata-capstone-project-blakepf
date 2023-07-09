@@ -14,7 +14,7 @@ class AnimePage extends BaseClass {
     }
 
     async mount() {
-        
+
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
@@ -32,7 +32,7 @@ class AnimePage extends BaseClass {
 
         if (response.rating == null) {
             response.rating = "N/A";
-        } 
+        }
 
         workArea.innerHTML += `
             <div class = "image-box">
@@ -71,36 +71,38 @@ class AnimePage extends BaseClass {
                                 <b>Property:</b> N/A
                             </p>
                         </div>
-                    </div>    
+                    </div>
                 </div>
             </div>
             <div class="reviews">
                 <h3>Reviews:</h3>
                 <hr>
-                <div id = "reviewBox"></div>
 
                 <div id = "create-box" class = "hide">
-                    <h3 id = "title-create"> Have some thoughts? Share them! This is a safe space, trust us! </h3>
-                    <button id = "create">Create a Review</button>  
-                    
+                    <h3 id = "title-create"> Have some thoughts of your own? Share them! </h3>
+                    <h4 id = "title-create-2"><i> This is a safe space, trust us! </i></h4>
+                    <button id = "create">Create a Review</button>
+
                     <form id = "create-form" class = "hide">
                         <label for = "create-textbox" class = "create-textbox-class">
                         </label>
                         <hr>
                         Rating: <input type = "number" id = "rating-field" min = "0" max = "100" size = "1"></input> / 100
 
-                        <textarea id = "create-textbox" rows = "5" cols = "100" placeholder = "Write something...."></textarea>
+                        <textarea id = "create-textbox" rows = "5" cols = "100" placeholder = "Write something...." oninput = "limitChar(this)" maxlength = "400"></textarea>
+                        <span id = "charCounter">400 character limit!</span>
 
                         <button id = "submit-review" type = "submit"> Submit </button>
                     </form>
 
                     <div id = "post-submit" class = "hide">
-                        <h3> Just submitted your beautifully crafted review! Refresh to check it out! </h3>
+                        <h3> Just submitted your beautiful, hand-crafted review! </h3>
+                        <h4> Click 'Refresh' below to check it out! </h4>
                         <button id = "refresh" type = "click">Refresh</button>
                     </div>
                 </div>
-                
-                
+
+                <div id = "reviewBox"></div>
                 <button id = "load">
                     <span> &#10533; Load Reviews &#10534; </span>
                 </button>
@@ -126,10 +128,11 @@ class AnimePage extends BaseClass {
 
         document.getElementById("create-form").classList.add("hide");
         document.getElementById("title-create").classList.add("hide");
+        document.getElementById("title-create-2").classList.add("hide");
         document.getElementById("post-submit").classList.remove("hide");
 
         document.getElementById("refresh").addEventListener("click", () => window.location.reload())
-    
+
     }
 
     async getReviewsFromAnimeID() {
@@ -141,8 +144,8 @@ class AnimePage extends BaseClass {
         let reviewArea = document.getElementById("reviewBox");
         console.log(reviewArea)
         console.log(response)
-        let reviews = `       
-        
+        let reviews = `
+
         `;
 
         for (let i = 0; i < response[1].length; i++) {
@@ -150,23 +153,24 @@ class AnimePage extends BaseClass {
             reviews += `
                 <div class="user-review">
                 <div class="user-profile">
-               
+
                 <img class="pfp" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688487914/r8oojdcdeetn66r2ihkp-media_lib_thumb_oplful.jpg"/>
-                <a href="userProfilePage.js" class ="display-name">${response[1][i].displayName}</a>
+               
                 </div>
                 <div class="middleBlock">
+                <a href="userProfilePage.js" class ="display-name">${response[1][i].displayName}</a>
                 <p class="comment">${response[1][i].review}</p>
                 <div class = "misc">
                 <button class="like-button">
                     <img class="like-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495058/thumbs_up_dggckt.png"
-                            
-                    </img>   
+
+                    </img>
                 </button>
-                <p class="like-number">1000</p> 
+                <p class="like-number">1000</p>
                 <button class="dislike-button">
-                    <img class="dislike-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495063/thumbs_down_cbadvq.png"</img> 
+                    <img class="dislike-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495063/thumbs_down_cbadvq.png"</img>
                     </button>
-                    <h5 class="postedDate">Posted: ${month}</h5>  
+                    <h5 class="postedDate">Posted: ${month}</h5>
                 </div>
                 </div>
                 <div class="rating-box">
@@ -185,13 +189,14 @@ class AnimePage extends BaseClass {
         document.getElementById("create-box").classList.remove("hide");
 
         document.getElementById("create").addEventListener("click", () => {
-            document.getElementById("create-form").classList.remove("hide"); 
-            document.getElementById("create").classList.add("hide");}
+            document.getElementById("create-form").classList.remove("hide");
+            document.getElementById("create").classList.add("hide");
+        }
         );
 
     }
 
-    async notification(){
+    async notification() {
         let response = await this.client.getNotification("testMike", this.errorHandler)
 
         alert(response);
