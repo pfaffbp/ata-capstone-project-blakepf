@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase', 'getRatingForAnime'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -209,6 +209,32 @@ export default class AnimeClient extends BaseClass {
         this.handleError("uploadAnimeToDatabase", error, errorCallback);
         }
 
+    }
+
+    async getRatingForAnime(animeID, errorCallback){
+        try {
+            const response = await this.client.get(`review/${animeID}`)
+            return response.data;
+        }catch(error){
+            this.handleError("getRatingForAnime", error, errorCallback)
+        }
+
+    }
+
+    async getNotification(displayName, errorCallBack){
+        try{
+            const response = await this.client.post(`https://7pf753cq4i.execute-api.us-east-1.amazonaws.com/Prod/user/test/${displayName}`, {
+                requestUUID: displayName,
+                userRequest: {
+                    displayName: "test",
+                    action: "Followed You"
+                }
+            });
+            console.log(response.data)
+            return response.data;
+        }catch(error){
+            // this.handleError("getNotification", error, errorCallback);
+        }
     }
 
     handleError(method, error, errorCallback) {

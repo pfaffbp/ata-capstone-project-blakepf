@@ -9,15 +9,19 @@ import com.google.gson.GsonBuilder;
 import com.kenzie.capstone.service.LambdaService;
 import com.kenzie.capstone.service.dependency.DaggerServiceComponent;
 import com.kenzie.capstone.service.dependency.ServiceComponent;
+import com.kenzie.capstone.service.model.ExampleData;
+import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.NotificationRecord;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class SendMessagesData implements RequestHandler <APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
+public class SetNotification implements RequestHandler<APIGatewayProxyRequestEvent, APIGatewayProxyResponseEvent> {
 
     static final Logger log = LogManager.getLogger();
+
 
     @Override
     public APIGatewayProxyResponseEvent handleRequest(APIGatewayProxyRequestEvent input, Context context) {
@@ -34,8 +38,28 @@ public class SendMessagesData implements RequestHandler <APIGatewayProxyRequestE
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
-        return response;
+        String data = input.getBody();
+        String displayName = input.getPathParameters().get("displayName");
+
+        if (data == null || data.length() == 0) {
+            return response
+                    .withStatusCode(400)
+                    .withBody("data is invalid");
+        }
+
+        try {
+
+            NotificationRecord exampleData = lambdaService.createRequest(data, displayName);
+            String output = gson.toJson(exampleData);
+
+            return response
+                    .withStatusCode(200)
+                    .withBody(output);
+
+        } catch (Exception e) {
+            return response
+                    .withStatusCode(400)
+                    .withBody(gson.toJson(e.getMessage()));
+        }
     }
-
-
 }

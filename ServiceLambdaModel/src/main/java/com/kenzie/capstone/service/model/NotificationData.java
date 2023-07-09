@@ -1,65 +1,55 @@
 package com.kenzie.capstone.service.model;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
+
+import java.util.Map;
 import java.util.Objects;
 
+
 public class NotificationData {
-    public String message;
-    private String messageId;
-    private String follower;
-    private String following;
+    private String requestedUUID;
 
-    public NotificationData(String message, String messageId, String follower, String following) {
-        this.message = message;
-        this.messageId = messageId;
-        this.follower = follower;
-        this.following = following;
+    private String userRequest;
+
+    private boolean hasBeenViewed;
+
+    public String getRequestedUUID() {
+        return requestedUUID;
     }
 
-    public NotificationData() {
+    public void setRequestedUUID(String requestedUUID) {
+        this.requestedUUID = requestedUUID;
     }
 
-    public String getMessage() {
-        return message;
+
+    public String getUserRequest() {
+        return userRequest;
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setUserRequest(String userRequest) {
+        this.userRequest = userRequest;
     }
 
-    public String getMessageId() {
-        return messageId;
+
+    public boolean isHasBeenViewed() {
+        return hasBeenViewed;
     }
 
-    public void setMessageId(String messageId) {
-        this.messageId = messageId;
-    }
-
-    public String getFollower() {
-        return follower;
-    }
-
-    public void setFollower(String follower) {
-        this.follower = follower;
-    }
-
-    public String getFollowing() {
-        return following;
-    }
-
-    public void setFollowing(String following) {
-        this.following = following;
+    public void setHasBeenViewed(boolean hasBeenViewed) {
+        this.hasBeenViewed = hasBeenViewed;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        NotificationData that = (NotificationData) o;
-        return Objects.equals(message, that.message) && Objects.equals(messageId, that.messageId) && Objects.equals(follower, that.follower) && Objects.equals(following, that.following);
+        NotificationData data = (NotificationData) o;
+        return hasBeenViewed == data.hasBeenViewed && Objects.equals(requestedUUID, data.requestedUUID) && Objects.equals(userRequest, data.userRequest);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(message, messageId, follower, following);
+        return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
     }
 }
+

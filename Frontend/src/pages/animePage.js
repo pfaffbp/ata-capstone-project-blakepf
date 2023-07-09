@@ -19,7 +19,6 @@ class AnimePage extends BaseClass{
         this.renderAnimeInfo();
         document.getElementById('logout').addEventListener('click', this.Logout);
         this.onLoad();
-
     }
 
     async Logout(event){
@@ -40,7 +39,7 @@ class AnimePage extends BaseClass{
     async renderAnimeInfo(){
         let workArea = document.getElementById("main");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
-
+        const getRating = await this.client.getRatingForAnime(sessionStorage.getItem("animeCode"), this.errorHandler);
 
         console.log(response);
         workArea.innerHTML += `
@@ -57,7 +56,7 @@ class AnimePage extends BaseClass{
 
                     <div class = "ratings">
                         Ratings
-                        <h1>88</h1>
+                        <h1>${getRating}</h1>
                     </div>
 
                     <div class = "addl-info">
@@ -118,7 +117,7 @@ class AnimePage extends BaseClass{
                 <div class="user-profile">
                
                 <img class="pfp" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688487914/r8oojdcdeetn66r2ihkp-media_lib_thumb_oplful.jpg"/>
-                <a href="userProfilePage.js" class ="display-name">MichaelMichael</a>
+                <a href="userProfilePage.js" class ="display-name">${response[1][i].displayName}</a>
                 </div>
                 <div class="middleBlock">
                 <p class="comment">${response[1][i].review}</p>
@@ -147,6 +146,14 @@ class AnimePage extends BaseClass{
         console.log(response[1]);
         console.log(lastEvaluatedKey);
     }
+
+    async notification(){
+        let response = await this.client.getNotification("testMike", this.errorHandler)
+
+        alert(response);
+        setInterval(this.notification, 5000);
+    }
+
 }
 
 function getMonth(date){
@@ -199,10 +206,6 @@ function getMonth(date){
     let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0,4);
     return posted;
 }
-
-
-
-
 
 const main = async () => {
     const animePage = new AnimePage();

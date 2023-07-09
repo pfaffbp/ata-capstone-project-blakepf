@@ -20,8 +20,8 @@ public class UserReviewPostRequest {
 
     @NotEmpty
     @NotNull
-    @JsonProperty("userID")
-    private String userID;
+    @JsonProperty("displayName")
+    private String displayName;
 
     @Min(0)
     @Max(100)
@@ -44,12 +44,12 @@ public class UserReviewPostRequest {
         this.animeID = animeID;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setDisplayName(String displayName) {
+        this.displayName = displayName;
     }
 
     public int getRating() {
