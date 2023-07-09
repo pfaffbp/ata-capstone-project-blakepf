@@ -46,6 +46,9 @@ class LoginPage extends BaseClass {
                 localStorage.setItem("displayName", displayName);
                 localStorage.setItem("LoggedIn", loginInput);
                  window.location.href = "landingPage.html";
+
+                document.getElementById("bell").classList.remove("hide");
+                 
             } else {
                 this.showMessage("incorrect email or password!");
             }

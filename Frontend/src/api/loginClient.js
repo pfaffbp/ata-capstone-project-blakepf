@@ -15,7 +15,7 @@ export default class LoginClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['clientLoaded', 'getLogin', 'getUserDisplayName'];
+        const methodsToBind = ['clientLoaded', 'getLogin', 'getUserDisplayName', 'getNotifications'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -63,6 +63,15 @@ export default class LoginClient extends BaseClass {
             return response.data.displayName;
         } catch (error) {
             this.handleError("getUserDisplayName", error, errorCallback)
+        }
+    }
+
+    async getNotifications (errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/{displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
         }
     }
 
