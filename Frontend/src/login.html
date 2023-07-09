@@ -1,94 +1,100 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
-    <script type = "text/javascript" src="loginPage.js"></script>
+    <script type="text/javascript" src="loginPage.js"></script>
     <title>Aniverse: Login</title>
-    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'></head>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+</head>
 
 <body>
-<div class="nav">
-    <img src = "css/aniverse-logo-white.png" class= "logo">
 
-    <div class = "main-links">
-        <a href="landingPage.html">Anime</a>
-        <a href = "holder1">Community</a>
-        <a href = "searchUsers.html">Find Friends</a>
-        <a href = "holder3">Read</a>
+    <div class="nav">
+        <img src="css/aniverse-logo-white.png" class="logo">
+
+
+        <div class="main-links">
+            <a href="landingPage.html">Home</a>
+            <a href="holder1">Community</a>
+            <a href="holder3">Manga</a>
+            <a href="searchUsers.html" style="color: plum">Search Users</a>
+            <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
+        </div>
+
+        <div class="account">
+            <ul>
+                <li>
+                    <a class="userLoggedIn" id="userLoggedIn">Login </a>
+                    <ul>
+                        <li><a href="userProfilePage.html">Profile</a></li>
+                        <li><a href="searchUsers.html">Search Users</a></li>
+                        <li><a href="signup.html">Signup</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="updatePassword.html">Update Password</a></li>
+                        <li><a href="updateLogin.html">Update Email</a></li>
+                        <li><a id="logout">LogOut</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+
     </div>
 
-    <div class = "account">
-        <a href = "searchPage.html" class="navigation-buttons">Search</a>
-        <a href = "signup.html">Signup</a>
-    </div>
-</div>
+    <div class="flex-container">
+<!-- 
+        <div class="leftImage">
+            <img src="css/zenitsu-left.png">
+        </div> -->
 
-<div class = "flex-container">
+        <div class="main">
 
-    <div class = "leftImage">
-        <img src="css/zenitsu-left.png">
-    </div>
+            <img src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c325.png" id = "pikachu">
 
-    <div class = "main">
+            <div class="container-2">
+                <div class="col-2">
 
-        <div class = "slideshow-section">
+                    <h2>LOGIN</h2>
 
-            <div class="slider">
+                    <form id="login-forum">
 
-                <div class="myslide fade">
-                    <div class="txt">
-                        <h1>JUJUTSU KAISEN:</h1>
-                        <h1> SEASON 2</h1>
-                        <p></p>
-                    </div>
-                    <img src="https://rare-gallery.com/mocahbig/396613-wallpaper-jujutsu-kaisen-yuji-megumi-nobara-satoru.jpg" style="width: 100%; height: 100%;">
-                </div>
+                        <div class="field-2 login-email-field">
 
-                <div class="myslide fade">
-                    <div class="txt">
-                        <h1>DEMON SLAYER: </h1>
-                        <h1>SWORDSMITH VILLAGE ARC</h1>
-                        <p></p>
-                    </div>
-                    <img src="https://i0.wp.com/animeindia.in/wp-content/uploads/2023/02/image-1-5.jpg?fit=1280%2C720&ssl=1" style="height: 100%;">
-                </div>
+                            <div class="input-field-2">
+                                <input type="email" id="email-Login" placeholder="Enter your email" class="email" />
+                            </div>
 
+                            <span class="error email-error">
+                                <p class="error-text"></p>
+                            </span>
 
-                <div class="myslide fade">
-                    <div class="txt">
-                        <h1>ONE PIECE</h1>
-                        <p></p>
-                    </div>
-                    <img src="https://sm.ign.com/ign_in/photo/b/best-anime/best-anime-series-on-netflix-right-now-june-2022_1ym8.jpg">
-                </div>
+                        </div>
 
-                <div class="myslide fade">
-                    <div class="txt">
-                        <h1>ATTACK ON TITAN:</h1>
-                        <h1>SEASON 4 PART 2</h1>
-                        <p></p>
-                    </div>
-                    <img src="https://assets.puzzlefactory.com/puzzle/318/550/original.jpg" style="width: 100%; height: 100%;">
-                </div>
+                        <div class="field login-password">
+                            <b> Double click the lock to show/hide text </b>
+                            <br>
 
+                            <div class="input-field-2">
+                                <input type="password" id="loginPassword" placeholder="Enter password" class="password" />
+                                <i class='bx bx-lock-alt showHidePw' id="eyes" style = "color: white"></i>
+                            </div>
 
-                <div class="myslide fade">
-                    <div class="txt">
-                        <h1>SPY X FAMILY: SEASON 2</h1>
-                        <p></p>
-                    </div>
-                    <img src="https://sm.ign.com/t/ign_br/screenshot/default/spy-x-family_jk5a.1200.jpg" style="width: 100%; height: 100%;">
-                </div>
+                            <span class="error password-error">
+                            </span>
+                        </div>
 
-                <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
-                <a class="next" onclick="plusSlides(1)">&#10095;</a>
+                        <div class="input-field-2 button">
+                            <input type="submit" id="LoginUser" value="Login" />
+                        </div>
 
-                <div class="dotsbox" style="text-align:center">
-                    <span class="dot" onclick="currentSlide(1)"></span>
-                    <span class="dot" onclick="currentSlide(2)"></span>
-                    <span class="dot" onclick="currentSlide(3)"></span>
-                    <span class="dot" onclick="currentSlide(4)"></span>
-                    <span class="dot" onclick="currentSlide(5)"></span>
+                        <h3>
+                            New to Aniverse? 
+                            <br>
+                            Click <a href = "signup.html">here</a> to create an account!
+                        </h3>
+
+                    </form>
+
                 </div>
 
             </div>
@@ -96,53 +102,14 @@
         </div>
 
 
+        <!-- <div class="rightImage">
+            <img src="css/tanjiro-right.png">
+        </div> -->
 
-        <!--     <div class="login" style="text-align:center">-->
-        <div class="container-2">
-            <div class="col-2">
-                <h2>Login</h2>
-                <form  id="login-forum">
-                    <div class="field-2 login-email-field">
-                        <div class="input-field-2">
-                            <input type="email" id="email-Login" placeholder="Enter your email" class="email" />
-                        </div>
-                        <span class="error email-error">
-
-            <p class="error-text"></p>
-          </span>
-                    </div>
-                    <div class="field login-password">
-                        <p>Double click the lock to show/hide text.</p>
-                        <div class="input-field-2">
-                            <input
-                                    type="password"
-                                    id="loginPassword"
-                                    placeholder="Enter password"
-                                    class="password"
-                            />
-                            <i class='bx bx-lock-alt showHidePw' id="eyes" ></i>
-                        </div>
-                        <span class="error password-error">
-          </span>
-                    </div>
-                    <div class="input-field-2 button">
-                        <input type="submit" id="LoginUser" value="Login" />
-                    </div>
-                </form>
-            </div>
-        </div>
-        </div>
-
-
-    <div class= "rightImage">
-        <img src="css/tanjiro-right.png">
     </div>
 
-</div>
 
 
 
 
-
-<script src = "landingSlideshow.js"></script>
 </body>

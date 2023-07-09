@@ -29,6 +29,7 @@ class ProfilePage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderUserProfile() {
+        let user = localStorage.getItem('displayName')
         let nameArea = document.getElementById("fullName");
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
@@ -36,6 +37,8 @@ class ProfilePage extends BaseClass {
         let animeArea = document.getElementById('favAnime')
         let followersArea = document.getElementById('followers');
         let followingArea = document.getElementById('following');
+        let LoggedInArea = document.getElementById('userLoggedIn');
+
 
         const uData = this.dataStore.get("userData");
         if (uData) {
@@ -62,12 +65,12 @@ class ProfilePage extends BaseClass {
 
             let followersList =""
             followersList +=`
-              ${uData.followers.length}
+              ${uData.followers}
                 
            `;
             let followingList =""
             followingList +=`
-              ${uData.following.length}
+              ${uData.following}
                 
            `;
 
@@ -78,6 +81,7 @@ class ProfilePage extends BaseClass {
             animeArea.innerHTML = animeList;
             followersArea.innerHTML = followersList;
             followingArea.innerHTML = followingList;
+            LoggedInArea.innerHTML =  user;
 
         } else {
             displayName.innerHTML = "Display Name:";
@@ -87,6 +91,7 @@ class ProfilePage extends BaseClass {
             animeArea.innerHTML = " ";
             followersArea.innerHTML = " ";
             followingArea.innerHTML = " ";
+
 
         }
     }

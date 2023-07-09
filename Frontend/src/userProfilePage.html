@@ -1,89 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Profile</title>
-    <script type="text/javascript" src="pages/profilePage.js"></script>
-    <link rel="stylesheet" type="text/css" href="css/userProfilePage.css">
+  <meta charset="UTF-8">
+  <title>Aniverse: Profile </title>
+  <script type="text/javascript" src="profilePage.js"></script>
+  <link rel="stylesheet" type="text/css" href="css/userProfilePage.css">
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
 <!-- Navigation Bar Start -->
 <div class="nav">
-    <img src = "css/aniverse-logo-white.png" class= "logo">
+  <img src="css/aniverse-logo-white.png" class="logo">
 
-    <div class = "main-links">
-        <a href="landingPage.html">Anime</a>
-        <a href = "holder1">Community</a>
-        <a href = "searchUsers.html">Find Friends</a>
-        <a href = "holder3">Read</a>
-    </div>
 
-    <div class = "account">
-        <a href = "searchPage.html" class="navigation-buttons">Search</a>
-        <a href = "signup.html">Signup</a>
-        <a href = "login.html">Login</a>
-        <a  id="logout">LogOut</a>
+  <div class="main-links">
+      <a href="landingPage.html">Home</a>
+      <a href="holder1">Community</a>
+      <a href="holder3">Manga</a>
+      <a href="searchUsers.html" style = "color: plum">Search Users</a>
+      <a href="searchPage.html" class="navigation-buttons" style = "color: plum">Search Titles</a>
+  </div>
 
-    </div>
+  <div class="account">
+      <ul>
+          <li>
+              <a class="userLoggedIn" id="userLoggedIn">Login </a>
+              <ul>
+                  <li><a href="userProfilePage.html">Profile</a></li>
+                  <li><a href="searchUsers.html">Search Users</a></li>
+                  <li><a href="signup.html">Signup</a></li>
+                  <li><a href="login.html">Login</a></li>
+                  <li><a href="updatePassword.html">Update Password</a></li>
+                  <li><a href="updateLogin.html">Update Email</a></li>
+                  <li><a id="logout">LogOut</a></li>
+              </ul>
+          </li>
+      </ul>
+  </div>
+
 </div>
 <!-- Navigation Bar End -->
 
 <div class = "flex-container">
 
-    <div class = "leftImage">
-        <img src="css/zenitsu-left.png">
+  <div class = "leftImage">
+    <img src="css/zenitsu-left.png">
+  </div>
+
+  <div class = "main">
+    <!-- Insert your profile content here. -->
+    <div class = "display-name">
+      <h1 id="displayName" >Display Name</h1>
     </div>
 
-    <div class = "main">
-        <!-- Insert your profile content here. -->
-        <div class = "display-name">
-            <h1 id="displayName" >Display Name</h1>
-        </div>
+    <hr>
+    <div class = "top-half">
+      <div class = "image-box">
+        <img src = "https://a0.anyrgb.com/pngimg/1676/410/soma-saito-haruichi-furudate-shoyo-hinata-haikyuu-haikyu-hinata-seiyu-tooth-cool-hairstyle-thumbnail.png">
+      </div>
 
-        <hr>
-        <div class = "top-half">
-            <div class = "image-box">
-                <img src = "https://a0.anyrgb.com/pngimg/1676/410/soma-saito-haruichi-furudate-shoyo-hinata-haikyuu-haikyu-hinata-seiyu-tooth-cool-hairstyle-thumbnail.png">
-            </div>
+      <div class = "user-info">
+        <ul>
+          <p id="fullName" > Fullname</p>
+          <p id="age" >Age</p>
+          <p id="bio"> This will be the bio.</p>
 
-            <div class = "user-info">
-                <ul>
-                    <p id="fullName" > Fullname</p>
-                    <p id="age" >Age</p>
-                    <p id="bio"> This will be the bio.</p>
-                    <a href = "updateUser.html" class = "updateProfileBtn" id="updateProfileBtn">Update Profile</a>
-                </ul>
-            </div>
-
-        <div class = "bottom-half">
-            <div class = "favorite-list">
-                <h4>Top 10 Favorite Anime</h4>
-                <ol>
-                    <li>K-ON!!!</li>
-                    <li>Haikyuu</li>
-                    <li>Demon Slayer</li>
-                    <li>Ouran High School Host Club</li>
-                    <li>Tsubasa</li>
-                    <li>Death Parade</li>
-                    <li>My Hero Academia</li>
-                    <li>Spy x Family</li>
-                    <li>Samurai Champloo</li>
-                    <li>Food Wars</li>
-                </ol>
-            </div>
-
-            <div class = "reviews">
-                <h4> Reviews Made By Me</h4>
-                <button class = "review-button">+ Click to load more Reviews +</button>
-            </div>
-        </div>
+        </ul>
+      </div>
     </div>
+
+    <div class = "bottom-half">
+      <div class = "favorite-list">
+        <h4>Top 10 Favorite Anime</h4>
+        <ol id="favAnime">
+
+        </ol>
+      </div>
+      <div class = "favorite-list">
+        <h4>Followers: </h4>
+        <ol id="followers">
+
+        </ol>
+      </div>
+      <div class = "favorite-list">
+        <h4>Following: </h4>
+        <ol id="following">
+
+        </ol>
+      </div>
+
+      <div class = "reviews">
+        <h4> Reviews Made By Me</h4>
+        <button class = "review-button">+ Click to load more Reviews +</button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
 <div class= "rightImage">
-    <img src="css/tanjiro-right.png">
+  <img src="css/tanjiro-right.png">
 </div>
 
 

@@ -34,6 +34,7 @@ public class SendMessagesData implements RequestHandler <APIGatewayProxyRequestE
         APIGatewayProxyResponseEvent response = new APIGatewayProxyResponseEvent()
                 .withHeaders(headers);
 
+        return response;
     }
 
 

@@ -6,7 +6,7 @@ import AnimeClient from "../api/animeClient";
 class SearchPage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['renderSearchPage', 'searchByGenre', 'animateKero'], this);
+        this.bindClassMethods(['renderSearchPage', 'searchByGenre', 'animateKero', 'onLoad'], this);
         this.dataStore = new DataStore();
         this.genreButtons = Array.from(document.querySelectorAll('.button-86'));
         this.keroElement = document.getElementById('kero');
@@ -20,9 +20,11 @@ class SearchPage extends BaseClass {
         this.genreButtons.forEach(button => button.addEventListener("click", this.searchByGenre));
         this.keroElement.addEventListener("animationstart", this.animateKero);
         this.client = new AnimeClient();
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
     }
 
-    async renderSearchPage(event){
+    async renderSearchPage(event) {
         event.preventDefault()
 
         let workArea = document.getElementById("work-area");
@@ -53,7 +55,7 @@ class SearchPage extends BaseClass {
         for (let i = 0; i < newResponse.length; i++) {
             items += `
         <div class="poster">
-          <a href="animepage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
+          <a href="animePage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
           <p>${newResponse[i].title.userPreferred}</p>
         </div>
       `;
@@ -81,7 +83,7 @@ class SearchPage extends BaseClass {
         for (let i = 0; i < newResponse.length; i++) {
             items += `
         <div class="poster">
-          <a href="animepage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
+          <a href="animePage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
           <p>${newResponse[i].title.userPreferred}</p>
         </div>
       `;
@@ -105,7 +107,7 @@ class SearchPage extends BaseClass {
         const animationDuration = 7000;
         const startX = 0; // Initial X coordinate
         const startY = 0; // Initial Y coordinate
-        const endX = 1500; // Final X coordinate
+        const endX = 1050; // Final X coordinate
         const endY = 40; // Final Y coordinate
 
         // Apply the animation using CSS transitions
@@ -119,6 +121,21 @@ class SearchPage extends BaseClass {
             this.animateKero(); // Repeat the animation
         }, animationDuration);
     }
+
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
+    }
+
 }
 
 const main = async () => {
