@@ -3,18 +3,18 @@ import DataStore from "../util/DataStore";
 import ExampleClient from "../api/exampleClient";
 import AnimeClient from "../api/animeClient";
 let lastEvaluatedKey = null;
+let displayName = localStorage.getItem('displayName')
 
 
 class AnimePage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification'], this);
+        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification', 'onSubmit'], this);
         this.dataStore = new DataStore();
     }
 
     async mount() {
         
-        document.getElementById("create-form").addEventListener('submit', this.onSubmit)
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
@@ -80,7 +80,7 @@ class AnimePage extends BaseClass {
                 <div id = "reviewBox"></div>
 
                 <div id = "create-box" class = "hide">
-                    <h3> Have some thoughts? Share them! This is a safe space, trust us! </h3>
+                    <h3 id = "title-create"> Have some thoughts? Share them! This is a safe space, trust us! </h3>
                     <button id = "create">Create a Review</button>  
                     
                     <form id = "create-form" class = "hide">
@@ -93,6 +93,11 @@ class AnimePage extends BaseClass {
 
                         <button id = "submit-review" type = "submit"> Submit </button>
                     </form>
+
+                    <div id = "post-submit" class = "hide">
+                        <h3> Just submitted your beautifully crafted review! Refresh to check it out! </h3>
+                        <button id = "refresh" type = "click">Refresh</button>
+                    </div>
                 </div>
                 
                 
@@ -103,6 +108,8 @@ class AnimePage extends BaseClass {
             `
 
         document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
+        document.getElementById("create-form").addEventListener('submit', this.onSubmit)
+
     }
 
     async onSubmit(event) {
@@ -115,7 +122,14 @@ class AnimePage extends BaseClass {
         const rating = document.getElementById("rating-field").value;
         const review = document.getElementById("create-textbox").value;
 
-        const createdReview
+        await this.client.postReview(review, sessionStorage.getItem("animeCode"), "string", rating, this.errorHandler)
+
+        document.getElementById("create-form").classList.add("hide");
+        document.getElementById("title-create").classList.add("hide");
+        document.getElementById("post-submit").classList.remove("hide");
+
+        document.getElementById("refresh").addEventListener("click", () => window.location.reload())
+    
     }
 
     async getReviewsFromAnimeID() {

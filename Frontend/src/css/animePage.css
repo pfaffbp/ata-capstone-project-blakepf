@@ -84,7 +84,7 @@ img {
 .rightImage {
     width: 30%;
     position: fixed;                        /* Currently Tanjiro from Demon Slayer. May also change it to something else! */
-    right: 0%;
+    right: -3%;
     top: 8%;
 }
 
