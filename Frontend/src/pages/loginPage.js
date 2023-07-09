@@ -20,9 +20,10 @@ class LoginPage extends BaseClass {
      */
     async mount() {
         this.client = new LoginClient();
-
+        document.getElementById('logout').addEventListener('click', this.Logout);
         document.getElementById('LoginUser').addEventListener('click', this.onLogin);
         document.getElementById('eyes').addEventListener('click', this.toggle);
+        this.onLoad();
         // await this.alreadyLoggedIn();
 
 
@@ -93,6 +94,19 @@ class LoginPage extends BaseClass {
     checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
 

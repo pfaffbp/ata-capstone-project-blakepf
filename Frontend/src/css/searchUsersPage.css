@@ -54,6 +54,42 @@ img {
 .nav a:hover {
     color: purple;
 }
+.account ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #333333;
+}
+
+.account li {
+    display: inline-block;
+}
+
+.account li a {
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* Style the dropdown menu */
+.account ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
+.account ul ul li {
+    display: block;
+}
+
+.account li:hover ul {
+    display: block;
+}
+
+/* Change the background color of dropdown links on hover */
+.account ul ul li a:hover {
+    background-color: #555;
+}
 
 .main-links {
     float: left;
@@ -61,7 +97,8 @@ img {
 
 .account {
     float: right;
-    margin-right: 30px;
+    margin-right: 10px;
+    width: 150px;
 }
 
 /* ------- Main Content  ------- */

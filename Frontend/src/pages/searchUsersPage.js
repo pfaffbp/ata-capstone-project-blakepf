@@ -10,7 +10,7 @@ class SearchUsersPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'renderUserProfile', 'onSearch'], this);
+        this.bindClassMethods([ 'renderUserProfile', 'onSearch', 'onLoad' ], this);
         this.dataStore = new DataStore();
     }
 
@@ -21,8 +21,9 @@ class SearchUsersPage extends BaseClass {
 
         this.client = new SearchUserClient();
         this.dataStore.addChangeListener(this.renderUserProfile)
-        document.getElementById('logout').addEventListener('click', this.Logout);
         document.getElementById('searchButton').addEventListener('click', this.onSearch);
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
 
     }
 
@@ -62,12 +63,12 @@ class SearchUsersPage extends BaseClass {
                   `;
             let followersList =""
             followersList +=`
-              ${uData.followers.length}
+              ${uData.followers}
                 
            `;
             let followingList =""
             followingList +=`
-              ${uData.following.length}
+              ${uData.following}
                 
            `;
 
@@ -108,6 +109,15 @@ class SearchUsersPage extends BaseClass {
         localStorage.clear();
         window.location.href = "login.html";
     }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+        LoggedInArea.innerHTML = "Login" ;
+    }
+
 }
 
 
