@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase'];
+        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase', 'getRatingForAnime', 'postReview'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -25,11 +25,11 @@ export default class AnimeClient extends BaseClass {
         }
     }
 
-    async getAnimeInfo(id, errorCallback){
-        try{
+    async getAnimeInfo(id, errorCallback) {
+        try {
             const response = await this.client.get(`/anime/${id}`)
             return response.data;
-        }catch(error){
+        } catch (error) {
             this.handleError("getAnimeInfo", error, errorCallback);
         }
     }
@@ -169,20 +169,35 @@ export default class AnimeClient extends BaseClass {
 
     }
 
-    async uploadAnimeToDatabase(array, errorCallback){
+    async uploadAnimeToDatabase(array, errorCallback) {
         console.log(array)
-        try{
+        try {
             const response = await this.client.post(`/anime/postSearch`, {
-                graphQLResponse : array
+                graphQLResponse: array
             });
-        }catch(error){
+        } catch (error) {
             this.handleError("uploadAnimeToDatabase", error, errorCallback);
         }
     }
 
-    async getReviewsByAnimeID(ID, lastKey, errorCallback){
-        try{
-            if(lastKey !== null) {
+    async postReview(review, ID, userID, rating) {
+        try {
+            const response = await this.client.post('review', {
+                review: review,
+                animeID: ID,
+                userID: userID,
+                rating: rating
+            });
+
+            return response.data;
+        } catch {
+            this.handleError(("postReview", error, errorCallback));
+        }
+    }
+
+    async getReviewsByAnimeID(ID, lastKey, errorCallback) {
+        try {
+            if (lastKey !== null) {
                 console.log(lastKey)
                 const response = await this.client.post(`review/limit`, {
                     animeID: ID,
@@ -193,7 +208,7 @@ export default class AnimeClient extends BaseClass {
                     }
                 });
                 return response.data;
-            } else{
+            } else {
                 const response = await this.client.post(`review/limit`, {
                     animeID: ID,
                     valuesForReviews: {
@@ -205,11 +220,37 @@ export default class AnimeClient extends BaseClass {
                 return response.data;
             }
 
-        }catch(error){
-        this.handleError("uploadAnimeToDatabase", error, errorCallback);
+        } catch (error) {
+            this.handleError("uploadAnimeToDatabase", error, errorCallback);
         }
 
     }
+
+    async getRatingForAnime(animeID, errorCallback){
+        try {
+            const response = await this.client.get(`review/${animeID}`)
+            return response.data;
+        }catch(error){
+            this.handleError("getRatingForAnime", error, errorCallback)
+        }
+
+    }
+
+//    async getNotification(displayName, errorCallBack){
+//        try{
+//            const response = await this.client.post(`https://7pf753cq4i.execute-api.us-east-1.amazonaws.com/Prod/user/test/${displayName}`, {
+//                requestUUID: displayName,
+//                userRequest: {
+//                    displayName: "test",
+//                    action: "Followed You"
+//                }
+//            });
+//            console.log(response.data)
+//            return response.data;
+//        }catch(error){
+//            // this.handleError("getNotification", error, errorCallback);
+//        }
+//    }
 
     handleError(method, error, errorCallback) {
         console.error(method + " failed - " + error);

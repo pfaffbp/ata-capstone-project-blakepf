@@ -96,7 +96,6 @@ img {
 
 /* ------------- Search Bar -------------- */
 
-
 #search-form {
     width: 60vw;
     max-height: 100px;
@@ -114,6 +113,8 @@ img {
     background-color: #ffffff;
     color: #0a0707;
     width: 250px;
+    margin: auto;
+    text-align: center;
 }
 
 #search-bar:focus {
@@ -134,7 +135,7 @@ img {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
-    margin-left: 5px;
+    margin-left: 10px;
 }
 
 .button-85:before {
@@ -196,10 +197,9 @@ img {
 /* ------- Center Div, Holds All Search Content  ------- */
 
 .main {
-    background: #242924;
+    background: transparent;
     color: white;
-    border: 2px solid white;         /* <----- Remove this once you've styled the rest of the page. */
-    width: 60%;                        /* I pretty much only put the border there so you can separate the content from the background." */
+    width: 60%;                       
     margin: auto;
     top: -5%;
     z-index: 1;
@@ -211,6 +211,17 @@ img {
     margin-top: 10px;                   
     text-transform: capitalize;
     font-weight: bold;
+}
+
+.search-div {
+    margin: auto;
+    text-align: center;
+    width: fit-content;                 /* Holds Search Bar, Search Button, and the "Search for Users" header." */
+    padding-bottom: 20px;
+}
+
+.profile-content {
+    background: blue;
 }
 
 .display-name {
@@ -270,8 +281,6 @@ hr {
 .favorite-list h4 {
     text-align: center;
 }
-
-
 
 .reviews {
     border: 2px double purple;

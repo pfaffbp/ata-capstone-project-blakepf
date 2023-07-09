@@ -3,12 +3,13 @@ import DataStore from "../util/DataStore";
 import ExampleClient from "../api/exampleClient";
 import AnimeClient from "../api/animeClient";
 let lastEvaluatedKey = null;
+let displayName = localStorage.getItem('displayName')
 
 
-class AnimePage extends BaseClass{
+class AnimePage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID'], this);
+        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification', 'onSubmit'], this);
         this.dataStore = new DataStore();
     }
 
@@ -17,16 +18,22 @@ class AnimePage extends BaseClass{
         this.client = new AnimeClient();
         this.dataStore.addChangeListener(this.renderAnimeInfo);
         this.renderAnimeInfo();
+        this.notification();
 
     }
 
 
-    async renderAnimeInfo(){
+    async renderAnimeInfo() {
         let workArea = document.getElementById("main");
         const response = await this.client.getAnimeInfo(sessionStorage.getItem("animeCode"), this.errorHandler);
-
+        const getRating = await this.client.getRatingForAnime(sessionStorage.getItem("animeCode"), this.errorHandler);
 
         console.log(response);
+
+        if (response.rating == null) {
+            response.rating = "N/A";
+        }
+
         workArea.innerHTML += `
             <div class = "image-box">
                 <img src = "${response.image}">
@@ -39,84 +46,131 @@ class AnimePage extends BaseClass{
                         ${response.description}
                     </p>
 
-                    <div class = "ratings">
-                        Ratings
-                        <h1>88</h1>
-                    </div>
+                    <div class = "info-dos">
+                        <div class = "ratings">
+                            Ratings
+                            <h1>${response.rating}</h1>
+                        </div>
 
-                    <div class = "addl-info">
-                        <p>
-                            <b>Start Date:</b> N/A
-                            <br>
-                            <b>Genres:</b> ${response.genre}
-                            <br>
-                            <b>Episodes:</b> ${response.episodes}
-                        </p>
-                    </div>
+                        <div class = "addl-info">
+                            <p>
+                                <b>Year Released:</b>  ${response.startDate}
+                                <br>
+                                <b>Genres:</b> ${response.genre}
+                                <br>
+                                <b>Episodes:</b> ${response.episodes}
+                            </p>
+                        </div>
 
-                    <div class = "addl-info-2">
-                        <p>
-                            <b>Popularity #:</b> N/A
-                            <br>
-                            <b>Seasons:</b> N/A
-                            <br>
-                            <b>Property:</b> N/A
-                        </p>
+                        <div class = "addl-info-2">
+                            <p>
+                                <b>Popularity #:</b> ${response.popularity}
+                                <br>
+                                <b>Season:</b> ${response.season}
+                                <br>
+                                <b>Property:</b> N/A
+                            </p>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class = "reviews">
+            <div class="reviews">
                 <h3>Reviews:</h3>
                 <hr>
-                <div id ="reviewBox"></div>
+
+                <div id = "create-box" class = "hide">
+                    <h3 id = "title-create"> Have some thoughts of your own? Share them! </h3>
+                    <h4 id = "title-create-2"><i> This is a safe space, trust us! </i></h4>
+                    <button id = "create">Create a Review</button>
+
+                    <form id = "create-form" class = "hide">
+                        <label for = "create-textbox" class = "create-textbox-class">
+                        </label>
+                        <hr>
+                        Rating: <input type = "number" id = "rating-field" min = "0" max = "100" size = "1"></input> / 100
+
+                        <textarea id = "create-textbox" rows = "5" cols = "100" placeholder = "Write something...." oninput = "limitChar(this)" maxlength = "400"></textarea>
+                        <span id = "charCounter">400 character limit!</span>
+
+                        <button id = "submit-review" type = "submit"> Submit </button>
+                    </form>
+
+                    <div id = "post-submit" class = "hide">
+                        <h3> Just submitted your beautiful, hand-crafted review! </h3>
+                        <h4> Click 'Refresh' below to check it out! </h4>
+                        <button id = "refresh" type = "click">Refresh</button>
+                    </div>
+                </div>
+
+                <div id = "reviewBox"></div>
                 <button id = "load">
-                    <span> 
-                        &#10533; Load Reviews &#10534; 
-                    </span>
+                    <span> &#10533; Load Reviews &#10534; </span>
                 </button>
             </div>
-            <div id ="reviewBox"></div>
-            <!-- <div class = "reccomended-anime">
-                <h3> If you like , check these out: </h3>
-                <hr>
-            </div> -->
-        
             `
-        document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
-        }
 
-    async getReviewsFromAnimeID(){
+        document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
+        document.getElementById("create-form").addEventListener('submit', this.onSubmit)
+
+    }
+
+    async onSubmit(event) {
+        event.preventDefault();                 // Prevents the page from refreshing on Submit.
+
+        let createReview = document.getElementById('submit-review');
+        createReview.innerText = "Processing...";
+        createReview.disabled = true;
+
+        const rating = document.getElementById("rating-field").value;
+        const review = document.getElementById("create-textbox").value;
+
+        await this.client.postReview(review, sessionStorage.getItem("animeCode"), "string", rating, this.errorHandler)
+
+        document.getElementById("create-form").classList.add("hide");
+        document.getElementById("title-create").classList.add("hide");
+        document.getElementById("title-create-2").classList.add("hide");
+        document.getElementById("post-submit").classList.remove("hide");
+
+        document.getElementById("refresh").addEventListener("click", () => window.location.reload())
+
+    }
+
+    async getReviewsFromAnimeID() {
         const response = await this.client.getReviewsByAnimeID(sessionStorage.getItem("animeCode"), lastEvaluatedKey, this.errorHandler);
-        if(response[1].length < 9){
+        if (response[1].length < 9) {
             document.getElementById("load").remove();
         }
 
         let reviewArea = document.getElementById("reviewBox");
         console.log(reviewArea)
         console.log(response)
-        let reviews = "";
-            for(let i = 0; i < response[1].length; i++){
-                let month = getMonth(response[1][i].postDate)
-                reviews +=`
+        let reviews = `
+
+        `;
+
+        for (let i = 0; i < response[1].length; i++) {
+            let month = getMonth(response[1][i].postDate)
+            reviews += `
                 <div class="user-review">
                 <div class="user-profile">
-               
+
                 <img class="pfp" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688487914/r8oojdcdeetn66r2ihkp-media_lib_thumb_oplful.jpg"/>
-                <a href="userProfilePage.js" class ="display-name">MichaelMichael</a>
+               
                 </div>
                 <div class="middleBlock">
+                <a href="userProfilePage.js" class ="display-name">${response[1][i].displayName}</a>
                 <p class="comment">${response[1][i].review}</p>
                 <div class = "misc">
                 <button class="like-button">
                     <img class="like-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495058/thumbs_up_dggckt.png"
-                            
-                    </img>   
+
+                    </img>
                 </button>
-                <p class="like-number">1000</p> 
+                <p class="like-number">1000</p>
                 <button class="dislike-button">
-                    <img class="dislike-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495063/thumbs_down_cbadvq.png"</img> 
+                    <img class="dislike-button-img" src="https://res.cloudinary.com/devbshzwb/image/upload/v1688495063/thumbs_down_cbadvq.png"</img>
                     </button>
-                    <h5 class="postedDate">Posted: ${month}</h5>  
+                    <h5 class="postedDate">Posted: ${month}</h5>
                 </div>
                 </div>
                 <div class="rating-box">
@@ -125,28 +179,46 @@ class AnimePage extends BaseClass{
                 </div>
                 </div>
                 `;
-            }
-            reviewArea.innerHTML += reviews
+        }
+
+        reviewArea.innerHTML += reviews
         lastEvaluatedKey = response[2];
         console.log(response[1]);
         console.log(lastEvaluatedKey);
+
+        document.getElementById("create-box").classList.remove("hide");
+
+        document.getElementById("create").addEventListener("click", () => {
+            document.getElementById("create-form").classList.remove("hide");
+            document.getElementById("create").classList.add("hide");
+        }
+        );
+
     }
+
+    async notification() {
+        let response = await this.client.getNotification("testMike", this.errorHandler)
+
+        alert(response);
+        setInterval(this.notification, 5000);
+    }
+
 }
 
-function getMonth(date){
+function getMonth(date) {
     console.log(date)
     let string = parseInt(date.toString().substring(4, 6));
     console.log(string)
 
     let month;
 
-    switch(string){
+    switch (string) {
         case 1:
             month = "January";
-        break;
+            break;
         case 2:
             month = "February";
-        break;
+            break;
         case 3:
             month = "March";
             break;
@@ -180,10 +252,9 @@ function getMonth(date){
         default:
             break;
     }
-    let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0,4);
+    let posted = month + " " + date.toString().substring(6, 8) + ", " + date.toString().substring(0, 4);
     return posted;
 }
-
 
 
 const main = async () => {

@@ -7,8 +7,8 @@ public class ReviewResponse {
     private int animeID;
     @JsonProperty("reviewID")
     private String reviewID;
-    @JsonProperty("userID")
-    private String userID;
+    @JsonProperty("displayName")
+    private String displayName;
     @JsonProperty("rating")
     private int rating;
     @JsonProperty("postDate")
@@ -34,12 +34,12 @@ public class ReviewResponse {
         this.reviewID = reviewID;
     }
 
-    public String getUserID() {
-        return userID;
+    public String getDisplayName() {
+        return displayName;
     }
 
-    public void setUserID(String userID) {
-        this.userID = userID;
+    public void setUserID(String displayName) {
+        this.displayName = displayName;
     }
 
     public int getRating() {
