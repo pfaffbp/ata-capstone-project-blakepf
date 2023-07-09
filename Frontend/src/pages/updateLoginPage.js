@@ -9,7 +9,7 @@ class UpdateLoginPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdateEmail','toggle'], this);
+        this.bindClassMethods(['onUpdateEmail','toggle', 'onLoad'], this);
         this.dataStore = new DataStore();
 
 
@@ -22,6 +22,8 @@ class UpdateLoginPage extends BaseClass {
         this.client = new updateLoginClient();
         document.getElementById('updateEmailButton').addEventListener('click', this.onUpdateEmail);
         document.getElementById('eyes').addEventListener('click', this.toggle);
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
         // await this.alreadyLoggedIn();
 
 
@@ -120,6 +122,19 @@ class UpdateLoginPage extends BaseClass {
     checkEmail(email) {
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         return emailRegex.test(email);
+    }
+    async Logout(event){
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
 }
