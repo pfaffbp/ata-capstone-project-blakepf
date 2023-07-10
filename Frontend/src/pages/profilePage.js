@@ -1,4 +1,3 @@
-
 import BaseClass from "../util/baseClass";
 import DataStore from "../util/DataStore";
 import ProfileClient from "../api/profileClient";
@@ -10,7 +9,7 @@ class ProfilePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onLoad', 'renderUserProfile'], this);
+        this.bindClassMethods(['onLoad', 'renderUserProfile', 'getNotifications'], this);
         this.dataStore = new DataStore();
     }
 
@@ -21,6 +20,7 @@ class ProfilePage extends BaseClass {
 
         this.client = new ProfileClient();
         document.getElementById('logout').addEventListener('click', this.Logout);
+        document.getElementById('updateProfileBtn').addEventListener('click', this.redirectToUpdateProfile);
         this.dataStore.addChangeListener(this.renderUserProfile)
         this.onLoad();
     }
@@ -28,6 +28,12 @@ class ProfilePage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderUserProfile() {
+        let user = localStorage.getItem('displayName')
+
+        if (user != null) {
+            document.getElementById("bell").classList.remove("hide");
+        }
+
         let nameArea = document.getElementById("fullName");
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
@@ -35,11 +41,13 @@ class ProfilePage extends BaseClass {
         let animeArea = document.getElementById('favAnime')
         let followersArea = document.getElementById('followers');
         let followingArea = document.getElementById('following');
+        let LoggedInArea = document.getElementById('userLoggedIn');
+
 
         const uData = this.dataStore.get("userData");
         if (uData) {
             let items ="";
-                    items += `
+            items += `
                    ${uData.displayName}                         
                 `;
             let age ="";
@@ -54,19 +62,19 @@ class ProfilePage extends BaseClass {
             bio += `
                     Bio: ${uData.bio}                         
                 `;
-          let animeList =""
+            let animeList =""
             animeList +=`
                  Name: ${uData.favoriteAnime}
                   `;
 
             let followersList =""
             followersList +=`
-              ${uData.followers.length}
+              ${uData.followers}
                 
            `;
             let followingList =""
             followingList +=`
-              ${uData.following.length}
+              ${uData.following}
                 
            `;
 
@@ -77,6 +85,7 @@ class ProfilePage extends BaseClass {
             animeArea.innerHTML = animeList;
             followersArea.innerHTML = followersList;
             followingArea.innerHTML = followingList;
+            LoggedInArea.innerHTML =  user;
 
         } else {
             displayName.innerHTML = "Display Name:";
@@ -87,21 +96,49 @@ class ProfilePage extends BaseClass {
             followersArea.innerHTML = " ";
             followingArea.innerHTML = " ";
 
+
         }
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
 
 
-    async onLoad(){
+    async onLoad() {
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
+
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+
+        let notification = this.client.getNotifications(user);
+        console.log(notification);
+
+        if (user != null){
+
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
     async Logout(event){
         event.preventDefault();
         localStorage.clear();
         window.location.href = "login.html";
+    }
+    async redirectToUpdateProfile() {
+        window.location.href = "updateProfile.html";
+    }
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
     }
 }
 

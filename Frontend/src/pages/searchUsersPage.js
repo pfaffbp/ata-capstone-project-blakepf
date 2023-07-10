@@ -9,7 +9,7 @@ class SearchUsersPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods([ 'renderUserProfile', 'onSearch'], this);
+        this.bindClassMethods([ 'renderUserProfile', 'onSearch', 'onLoad', 'getNotifications'], this);
         this.dataStore = new DataStore();
     }
 
@@ -20,8 +20,9 @@ class SearchUsersPage extends BaseClass {
 
         this.client = new SearchUserClient();
         this.dataStore.addChangeListener(this.renderUserProfile)
-        document.getElementById('logout').addEventListener('click', this.Logout);
         document.getElementById('searchButton').addEventListener('click', this.onSearch);
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
 
     }
 
@@ -61,12 +62,12 @@ class SearchUsersPage extends BaseClass {
                   `;
             let followersList =""
             followersList +=`
-              ${uData.followers.length}
+              ${uData.followers}
                 
            `;
             let followingList =""
             followingList +=`
-              ${uData.following.length}
+              ${uData.following}
                 
            `;
 
@@ -107,6 +108,26 @@ class SearchUsersPage extends BaseClass {
         localStorage.clear();
         window.location.href = "login.html";
     }
+    async onLoad(){
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null){
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
+    }
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name.
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one.
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
+    }
+
 }
 
 

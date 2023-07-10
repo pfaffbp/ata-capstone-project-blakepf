@@ -15,20 +15,15 @@ img {
 }
 
 
-#search-form {
-    width: 50vw;
-    max-height: 100px;
-}
-
 /* ------- Navigation Bar ------- */
 
 .logo {
-    width: 8%;
-    min-width: 8%;
-    float: left;
+    width: 200px;
+    min-width: 175px;
     margin-left: 20px;
     margin-right: 30px;
     margin-top: 5px;
+    float: left;
 }
 
 .nav {
@@ -37,6 +32,7 @@ img {
     width: 100%;
     top: 0;
     left: 0;
+    height: 80px;
     font-size: 20 px;
     font-weight: bold;
     z-index: 2;
@@ -47,12 +43,105 @@ img {
     text-transform: uppercase;
     text-decoration: none;
     padding: 25px 15px;
+}
+
+.main-links {
     display: inline-block;
+    line-height: 80px;
 }
 
 .nav a:hover {
     color: purple;
 }
+
+#bell {
+    display: inline-block;
+    line-height: 80px;
+    width: 50px;
+    height: 50px;
+    margin-right: auto;
+    padding-top: 10px;
+    padding-right: 50px;
+}
+
+.icon-button {
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
+}
+
+.icon-button:hover {
+    cursor: pointer;
+}
+
+.icon-button:active {
+    background: #cccccc;
+}
+
+.icon-button__badge {
+    position: absolute;
+    top: 0px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    background: red;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+}
+
+.hide {
+    visibility: hidden;
+}
+
+
+.account ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background: #333333;
+}
+
+.account li {
+    display: inline-block;
+}
+
+.account li a {
+    color: white;
+    display: block;
+    text-decoration: none;
+}
+
+/* Style the dropdown menu */
+.account ul ul {
+    position: absolute;
+    top: 100%;
+    display: none;
+}
+
+.account ul ul li {
+    display: block;
+}
+
+.account li:hover ul {
+    display: block;
+}
+
+/* Change the background color of dropdown links on hover */
+.account ul ul li a:hover {
+    background-color: #555;
+}
+
 
 .main-links {
     float: left;
@@ -60,7 +149,8 @@ img {
 
 .account {
     float: right;
-    margin-right: 30px;
+    margin-right: 10px;
+    width: 200px;
 }
 
 /* ------- Main Content  ------- */
@@ -251,7 +341,6 @@ hr {
     width: 90%;
     margin: auto;
     text-align: center;
-    margin-top: 200px;
 }
 
 .poster {

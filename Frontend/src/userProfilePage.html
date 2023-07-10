@@ -5,34 +5,59 @@
     <title>Aniverse: Profile </title>
     <script type="text/javascript" src="profilePage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/userProfilePage.css">
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
 
 <body>
 <!-- Navigation Bar Start -->
 <div class="nav">
-    <img src = "css/aniverse-logo-white.png" class= "logo">
+    <img src="css/aniverse-logo-white.png" class="logo">
 
-    <div class = "main-links">
-        <a href="landingPage.html">Anime</a>
-        <a href = "holder1">Community</a>
-        <a href = "searchUsers.html">Find Friends</a>
-        <a href = "holder3">Read</a>
-    </div>
 
-    <div class = "account">
-        <a href = "searchPage.html" class="navigation-buttons">Search</a>
-        <a href = "signup.html">Signup</a>
-        <a href = "login.html">Login</a>
-        <a  id="logout">LogOut</a>
+    <div class="main-links">
+        <a href="landingPage.html">Home</a>
+        <a href="holder1">Community</a>
+        <a href="holder3">Manga</a>
+        <a href="searchUsers.html" style="color: plum">Search Users</a>
+        <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
+
+        </a>
 
     </div>
+
+
+
+    <div class="account">
+
+        <ul>
+            <div id="bell" class = "hide">
+                <button type="button" class="icon-button">
+                    <span class="material-icons">notifications</span>
+                    <span class="icon-button__badge">2</span>
+                </button>
+            </div>
+            <li>
+                <a class="userLoggedIn" id="userLoggedIn">Login </a>
+                <ul>
+                    <li><a href="userProfilePage.html">Profile</a></li>
+                    <li><a href="searchUsers.html">Search Users</a></li>
+                    <li><a href="signup.html">Signup</a></li>
+                    <li><a href="login.html">Login</a></li>
+                    <li><a href="updatePassword.html">Update Password</a></li>
+                    <li><a href="updateLogin.html">Update Email</a></li>
+                    <li><a id="logout">LogOut</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+
 </div>
 <!-- Navigation Bar End -->
 
 <div class = "flex-container">
 
     <div class = "leftImage">
-        <img src="css/zenitsu-left.png">
+        <img src="css/LDN.png">
     </div>
 
     <div class = "main">
@@ -86,8 +111,8 @@
 
 </div>
 
-<div class= "rightImage">
-    <img src="css/tanjiro-right.png">
+<div class="rightImage">
+    <img src="css/Ryuk.png" class="floating-image">
 </div>
 
 
