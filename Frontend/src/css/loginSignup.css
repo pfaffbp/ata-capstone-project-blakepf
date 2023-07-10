@@ -46,7 +46,7 @@ img {
 }
 
 .main-links {
-	display: inline-block;
+	display: inline-block;					/*	 Home, Community, Manga, Search Users, Search Titles	*/
 	line-height: 80px;
 }
 
@@ -54,15 +54,15 @@ img {
 	color: purple;
 }
 
+
 #bell {
-	display: inline-block;
-	line-height: 80px;
-	width: 50px;
-	height: 50px;
-	margin-right: auto;
-	padding-top: 10px;
-	padding-right: 50px;
+	display: block;
+	position: absolute;						/*	 Notification Bell Div	*/
+	right: 250px;
+	top: 15px;
 }
+
+/*	----  Notification Bell Styling	---- */
 
 .icon-button {
 	position: relative;
@@ -80,6 +80,7 @@ img {
 
 .icon-button:hover {
 	cursor: pointer;
+	background: plum;
 }
 
 .icon-button:active {
@@ -92,7 +93,7 @@ img {
 	right: -10px;
 	width: 25px;
 	height: 25px;
-	background: red;
+	background: purple;
 	color: #ffffff;
 	display: flex;
 	justify-content: center;
@@ -105,9 +106,59 @@ img {
 }
 
 
+	/*	----  Notifications Box	---- */
+
+#notification-items {
+	visibility: hidden;
+	position: absolute;
+	right: 0px;
+	top: 55px;
+	background-color: #333333;
+	width: 400px;
+	height: 300px;
+	max-height: 500px;
+	display: block;
+	border-radius: 10px;
+	overflow-y: scroll;
+	transition: visibility 0s .5s, opacity .5s ease-in;
+}
+
+#notification-items::-webkit-scrollbar {
+	width: 0;												/* Hide scrollbar, but still can scroll! */
+}
+
+.notification {
+	background: silver;
+	height: fit-content;
+	max-height: 100px;
+	margin: 20px;
+	text-align: center;
+	word-wrap: break-word;
+	border-radius: 10px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+}
+
+.notification-img {
+	height: 50px;
+	width: fit-content;
+	margin: auto;
+	border-radius: 50%;
+	padding: 5px;
+}
+
+.notification p {
+	margin: auto;
+	margin-left: -10px;
+	width: 70%;
+	padding: 5px;
+	color: rgb(109, 113, 208)
+}
+
 .account ul {
 	list-style-type: none;
-	margin: 0;
+	margin: 0;										/* Dropdown */
 	padding: 0;
 	background: #333333;
 }
@@ -122,7 +173,7 @@ img {
 	text-decoration: none;
 }
 
-/* Style the dropdown menu */
+
 .account ul ul {
 	position: absolute;
 	top: 100%;
@@ -137,11 +188,9 @@ img {
 	display: block;
 }
 
-/* Change the background color of dropdown links on hover */
 .account ul ul li a:hover {
-	background-color: #555;
+	background-color: #555;					/* Change the background color of dropdown links on hover */
 }
-
 
 .main-links {
 	float: left;

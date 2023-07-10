@@ -6,13 +6,23 @@
     <script type="text/javascript" src="loginPage.js"></script>
     <title>Aniverse: Login</title>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script>
+        //show and hide dropdown list item on button click
+        function reveal() {
+           var click = document.getElementById("notification-items");
+           if (click.style.visibility === "hidden") {
+              click.style.visibility = "visible";
+           } else {
+              click.style.visibility = "hidden";
+           }
+        }
+     </script>
 </head>
 
 <body>
-
     <div class="nav">
         <img src="css/aniverse-logo-white.png" class="logo">
-
 
         <div class="main-links">
             <a href="landingPage.html">Home</a>
@@ -20,21 +30,23 @@
             <a href="holder3">Manga</a>
             <a href="searchUsers.html" style="color: plum">Search Users</a>
             <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
-
-            </a>
-
         </div>
 
-        
-
         <div class="account">
-          
             <ul>
-                <div id="bell" class = "hide">
-                    <button type="button" class="icon-button">
+                <div id="bell" class="hide">
+                    <button type="button" class="icon-button" onClick="reveal()">
                         <span class="material-icons">notifications</span>
                         <span class="icon-button__badge">2</span>
                     </button>
+                    <div id="notification-items">
+                        <!-- <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: added Fruits Basket: 1st Season to their Favorites List! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div> -->
+
+                    </div>
                 </div>
                 <li>
                     <a class="userLoggedIn" id="userLoggedIn">Login </a>
@@ -50,7 +62,6 @@
                 </li>
             </ul>
         </div>
-
     </div>
 
     <div class="flex-container">
