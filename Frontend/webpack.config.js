@@ -26,7 +26,7 @@ module.exports = {
     homePage: path.resolve(__dirname, 'src', 'pages', 'homePage.js'),
     animePage: path.resolve(__dirname, 'src', 'pages', 'animePage.js'),
     searchPage: path.resolve(__dirname, 'src', 'pages', 'searchPage.js'),
-    landingSlideshow: path.resolve(__dirname, 'src', 'styles', 'landingSlideshow.js')
+    landingSlideshow: path.resolve(__dirname, 'src', 'styles', 'landingSlideshow.js'),
   },
 
   output: {

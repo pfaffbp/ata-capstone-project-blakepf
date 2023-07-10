@@ -82,7 +82,7 @@ img {
     position: fixed;
     /* Currently Sakura */
     top: 10%;
-    left: 1px;
+    left: 2px;
     transform: scaleX(-1);
 }
 

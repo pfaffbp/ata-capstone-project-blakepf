@@ -53,7 +53,7 @@ class SearchPage extends BaseClass {
         for (let i = 0; i < newResponse.length; i++) {
             items += `
         <div class="poster">
-          <a href="animepage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
+          <a href="animePage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
           <p>${newResponse[i].title.userPreferred}</p>
         </div>
       `;
@@ -81,7 +81,7 @@ class SearchPage extends BaseClass {
         for (let i = 0; i < newResponse.length; i++) {
             items += `
         <div class="poster">
-          <a href="animepage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
+          <a href="animePage.html"><img class="poster-click" alt=${newResponse[i].id} src=${newResponse[i].coverImage.large}></a>  
           <p>${newResponse[i].title.userPreferred}</p>
         </div>
       `;
@@ -105,7 +105,7 @@ class SearchPage extends BaseClass {
         const animationDuration = 7000;
         const startX = 0; // Initial X coordinate
         const startY = 0; // Initial Y coordinate
-        const endX = 1050; // Final X coordinate
+        const endX = 800; // Final X coordinate
         const endY = 40; // Final Y coordinate
 
         // Apply the animation using CSS transitions
