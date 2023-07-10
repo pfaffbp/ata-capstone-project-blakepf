@@ -8,6 +8,18 @@
         integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
         crossorigin="anonymous" referrerpolicy="no-referrer" />
     <script type="text/javascript" src="homePage.js"></script>
+    <script>
+        //show and hide dropdown list item on button click
+        function reveal() {
+           var click = document.getElementById("notification-items");
+           if (click.style.display === "none") {
+              click.style.display = "block";
+           } else {
+              click.style.display = "none";
+           }
+        }
+     </script>
+
     <title>Aniverse: Home</title>
 
 </head>
@@ -30,11 +42,17 @@
 
         <div class="account">
             <ul>
-                <div id="bell" class = "hide">
-                    <button type="button" class="icon-button">
+                <div id="bell" class="hide">
+                    <button type="button" class="icon-button" onClick="reveal()">
                         <span class="material-icons">notifications</span>
                         <span class="icon-button__badge">2</span>
                     </button>
+                    <div id="notification-items">
+                        <a href="#"> Tutorials </a>
+                        <a href="#"> About Us </a>
+                        <a href="#"> Contact Us</a>
+                        <a href="#"> career </a>
+                    </div>
                 </div>
                 <li>
                     <a class="userLoggedIn" id="userLoggedIn">Login </a>
@@ -110,7 +128,7 @@
                         </div>
                         <img src="https://sm.ign.com/t/ign_br/screenshot/default/spy-x-family_jk5a.1200.jpg">
                     </div>
-
+                    <!-- 
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
                     <a class="next" onclick="plusSlides(1)">&#10095;</a>
 
@@ -120,7 +138,7 @@
                         <span class="dot" onclick="currentSlide(3)"></span>
                         <span class="dot" onclick="currentSlide(4)"></span>
                         <span class="dot" onclick="currentSlide(5)"></span>
-                    </div>
+                    </div> -->
 
                 </div>
 

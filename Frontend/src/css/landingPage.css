@@ -54,7 +54,7 @@ img {
 	color: purple;
 }
 
-#bell {
+/* #bell {
 	display: inline-block;
 	line-height: 80px;
 	width: 50px;
@@ -62,6 +62,34 @@ img {
 	margin-right: auto;
 	padding-top: 10px;
 	padding-right: 50px;
+} */
+
+#bell {
+	display: block;
+	position: absolute;
+	right: 250px;
+	top: 15px;
+}
+
+#notification-items {
+	display: none;
+	position: absolute;
+	right: 0px;
+	top: 55px;
+	background-color: #333333;
+	width: 500px;
+	height: 300px;
+	max-height: 500px;
+}
+
+#notification-items a {
+	display: block;
+	font-size: 15px;
+	color: white;
+	background-color: silver;
+	text-decoration: none;
+	padding: 10px;
+	text-align: center;
 }
 
 .icon-button {
@@ -80,6 +108,7 @@ img {
 
 .icon-button:hover {
 	cursor: pointer;
+	background: plum;
 }
 
 .icon-button:active {
@@ -92,7 +121,7 @@ img {
 	right: -10px;
 	width: 25px;
 	height: 25px;
-	background: red;
+	background: purple;
 	color: #ffffff;
 	display: flex;
 	justify-content: center;
