@@ -6,7 +6,6 @@ import com.kenzie.appserver.repositories.UserRepository;
 import com.kenzie.appserver.repositories.model.CatalogRecord;
 import com.kenzie.appserver.repositories.model.UserRecord;
 import com.kenzie.appserver.service.model.User;
-import com.kenzie.capstone.service.client.LambdaServiceClient;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -30,16 +29,13 @@ public class UserServiceTest {
     @Mock
     private CatalogRepository animeRepository;
 
-    @Mock
-    private LambdaServiceClient client;
-
     @InjectMocks
     private UserService service;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.initMocks(this);
-        service = new UserService(repository, cacheUserStore, animeRepository, client);
+        service = new UserService(repository, cacheUserStore, animeRepository);
     }
 
     @Test
@@ -110,33 +106,33 @@ public class UserServiceTest {
         when(repository.existsById(user.getUserId())).thenReturn(true);
 
         ArgumentCaptor<UserRecord> argumentCaptor = ArgumentCaptor.forClass(UserRecord.class);
-                when(repository.findById(user.getUserId())).thenReturn(Optional.of(userRecord));
-                when(repository.save(argumentCaptor.capture())).thenReturn(userRecord);
-                when(cacheUserStore.get(user.getUserId())).thenReturn(user);
+        when(repository.findById(user.getUserId())).thenReturn(Optional.of(userRecord));
+        when(repository.save(argumentCaptor.capture())).thenReturn(userRecord);
+        when(cacheUserStore.get(user.getUserId())).thenReturn(user);
 
-                service.updateUser(updated);
+        service.updateUser(updated);
 
-                verify(repository, times(2)).save(argumentCaptor.capture());
-                verify(repository).findById(user.getUserId());
-                verify(cacheUserStore).evict(updated.getFullName());
+        verify(repository, times(2)).save(argumentCaptor.capture());
+        verify(repository).findById(user.getUserId());
+        verify(cacheUserStore).evict(updated.getFullName());
 
-                UserRecord capturedUserRecord = argumentCaptor.getValue();
-                assertEquals(capturedUserRecord.getFullName(), userRecord.getFullName());
-                assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
-                assertEquals(capturedUserRecord.getUserId(), userRecord.getUserId());
-                assertEquals(capturedUserRecord.getFavoriteAnime(), userRecord.getFavoriteAnime());
-                assertEquals(capturedUserRecord.getFollowers(), userRecord.getFollowers());
-                assertEquals(capturedUserRecord.getFollowing(), userRecord.getFollowing());
-                assertEquals(capturedUserRecord.getAge(), userRecord.getAge());
-                assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
-                assertEquals(capturedUserRecord.getDisplayName(), updated.getDisplayName(), "display name was updated properly");
-                assertEquals(capturedUserRecord.getEmail(), updated.getEmail(), "email was updated properly");
-                assertEquals(capturedUserRecord.getAge(), updated.getAge(), "age was updated properly");
-                assertNotEquals(capturedUserRecord.getAge(), user.getAge(), "saved age is different from initial age");
-                assertNotEquals(capturedUserRecord.getEmail(), user.getEmail(), "saved email is different from initial email");
-                assertNotEquals(capturedUserRecord.getDisplayName(), user.getDisplayName(), "saved display name is different from initial display name");
-                assertNotEquals(capturedUserRecord.getBio(), user.getBio(), "saved bio is different from initial bio");
-                assertNotEquals(capturedUserRecord.getFullName(), user.getFullName(), "saved fullName is different from initial fullName");
+        UserRecord capturedUserRecord = argumentCaptor.getValue();
+        assertEquals(capturedUserRecord.getFullName(), userRecord.getFullName());
+        assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
+        assertEquals(capturedUserRecord.getUserId(), userRecord.getUserId());
+        assertEquals(capturedUserRecord.getFavoriteAnime(), userRecord.getFavoriteAnime());
+        assertEquals(capturedUserRecord.getFollowers(), userRecord.getFollowers());
+        assertEquals(capturedUserRecord.getFollowing(), userRecord.getFollowing());
+        assertEquals(capturedUserRecord.getAge(), userRecord.getAge());
+        assertEquals(capturedUserRecord.getBio(), userRecord.getBio());
+        assertEquals(capturedUserRecord.getDisplayName(), updated.getDisplayName(), "display name was updated properly");
+        assertEquals(capturedUserRecord.getEmail(), updated.getEmail(), "email was updated properly");
+        assertEquals(capturedUserRecord.getAge(), updated.getAge(), "age was updated properly");
+        assertNotEquals(capturedUserRecord.getAge(), user.getAge(), "saved age is different from initial age");
+        assertNotEquals(capturedUserRecord.getEmail(), user.getEmail(), "saved email is different from initial email");
+        assertNotEquals(capturedUserRecord.getDisplayName(), user.getDisplayName(), "saved display name is different from initial display name");
+        assertNotEquals(capturedUserRecord.getBio(), user.getBio(), "saved bio is different from initial bio");
+        assertNotEquals(capturedUserRecord.getFullName(), user.getFullName(), "saved fullName is different from initial fullName");
     }
     @Test
     void addNewUserTest() {
@@ -285,7 +281,7 @@ public class UserServiceTest {
         favorites.add("animeToKeep");
 
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, favorites,
-                        "fullName", "displayName", 27, "bio");
+                "fullName", "displayName", 27, "bio");
 
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
@@ -365,7 +361,7 @@ public class UserServiceTest {
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
                 "fullName", "displayName", 27, "bio");
         User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", userId2, new ArrayList<>(),
-                        "name2", "displayName2", 27, "bio2");
+                "name2", "displayName2", 27, "bio2");
 
         UserRecord userRecord = new UserRecord();
         userRecord.setUserId(user.getUserId());
