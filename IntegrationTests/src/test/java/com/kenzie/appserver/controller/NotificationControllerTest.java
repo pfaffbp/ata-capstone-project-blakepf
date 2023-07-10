@@ -3,6 +3,7 @@ package com.kenzie.appserver.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.kenzie.appserver.IntegrationTest;
 import com.kenzie.appserver.controller.model.NotificationRequest;
+import com.kenzie.appserver.model.NotificationData;
 import com.kenzie.appserver.service.NotificationService;
 import net.andreinc.mockneat.MockNeat;
 import org.junit.jupiter.api.Test;
@@ -14,6 +15,10 @@ import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import org.testcontainers.shaded.com.fasterxml.jackson.core.JsonProcessingException;
 
 import static groovy.json.JsonOutput.toJson;
+import static org.springframework.http.RequestEntity.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.testcontainers.shaded.org.awaitility.Awaitility.given;
 
 @IntegrationTest
 public class NotificationControllerTest {
@@ -24,8 +29,17 @@ public class NotificationControllerTest {
     @Autowired
     NotificationService notificationService;
 
-    private final MockNeat mockNeat = MockNeat.threadLocal();
 
-    private final ObjectMapper mapper = new ObjectMapper();
+    @Test
+    public void testGetNotificationsBadRequest() throws Exception {
+        // Prepare test data
+        String displayName = "invalid.display.name";
 
+        // Perform the request
+        mvc.perform(get("/notification/getNotification/{displayName}", displayName))
+                .andExpect(status().is(200));
+    }
 }
+
+
+

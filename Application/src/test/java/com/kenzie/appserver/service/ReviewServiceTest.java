@@ -4,27 +4,18 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.kenzie.appserver.controller.reviewModels.ReviewResponse;
 import com.kenzie.appserver.controller.reviewModels.UserReviewPostRequest;
 import com.kenzie.appserver.repositories.ReviewRepository;
 import com.kenzie.appserver.repositories.model.ReviewRecord;
 import com.kenzie.appserver.service.model.Review;
-import org.junit.Assert;
-import org.junit.Before;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.ArgumentCaptor;
-import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.internal.stubbing.defaultanswers.ForwardsInvocations;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.*;
 import static org.mockito.Mockito.*;
@@ -174,73 +165,6 @@ public class ReviewServiceTest {
         Assertions.assertNotNull(resultPage);
     }
 
-//    @Test
-//    void getReviewsForAnime_shouldQueryMapperWithCorrectParameters() {
-//        int animeId = 123;
-//        String currentDate = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-//
-//        QueryResultPage<ReviewRecord> expectedPage = new QueryResultPage<>();
-//        when(mapper.queryPage(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(expectedPage);
-//
-//        QueryResultPage<ReviewRecord> result = reviewService.getReviewsForAnime(animeId);
-//
-//        Map<String, AttributeValue> expectedValueMap = new HashMap<>();
-//        expectedValueMap.put(":animeID", new AttributeValue().withN(String.valueOf(animeId)));
-//        expectedValueMap.put(":postDate", new AttributeValue().withN(currentDate));
-//
-//        DynamoDBQueryExpression<ReviewRecord> expectedExpression =
-//                new DynamoDBQueryExpression<ReviewRecord>()
-//                        .withIndexName("REVIEW_lOOK_UP")
-//                        .withConsistentRead(false)
-//                        .withLimit(10)
-//                        .withKeyConditionExpression("animeID = :animeID and postDate <= :postDate")
-//                        .withExpressionAttributeValues(expectedValueMap);
-//
-//        verify(mapper).queryPage(eq(ReviewRecord.class), eq(expectedExpression));
-//        Assertions.assertEquals(expectedPage, result);
-//    }
-//
-//    @Test
-//    void getReviewsForAnime_withLastKey_shouldQueryMapperWithExclusiveStartKey() {
-//        int animeId = 123;
-//        String currentDate = LocalDateTime.now().format(DateTimeFormatter.BASIC_ISO_DATE);
-//        Map<String, AttributeValue> lastKey = new HashMap<>();
-//        lastKey.put("postDate", new AttributeValue().withN("0"));
-//
-//        QueryResultPage<ReviewRecord> expectedPage = new QueryResultPage<>();
-//        when(mapper.queryPage(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(expectedPage);
-//
-//        QueryResultPage<ReviewRecord> result = reviewService.getReviewsForAnime(animeId, lastKey);
-//
-//        Map<String, AttributeValue> expectedValueMap = new HashMap<>();
-//        expectedValueMap.put(":animeID", new AttributeValue().withN(String.valueOf(animeId)));
-//        expectedValueMap.put(":postDate", new AttributeValue().withN(currentDate));
-//
-//        DynamoDBQueryExpression<ReviewRecord> expectedExpression =
-//                new DynamoDBQueryExpression<ReviewRecord>()
-//                        .withIndexName("REVIEW_lOOK_UP")
-//                        .withConsistentRead(false)
-//                        .withLimit(10)
-//                        .withExclusiveStartKey(lastKey)
-//                        .withKeyConditionExpression("animeID = :animeID and postDate <= :postDate")
-//                        .withExpressionAttributeValues(expectedValueMap);
-//
-//        verify(mapper).queryPage(eq(ReviewRecord.class), eq(expectedExpression));
-//        Assertions.assertSame(expectedPage, result);
-//    }
-
-    @Test
-    void calculateAverageRatingByAnime_shouldReturnNullIfNoReviewRecords() {
-        when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-                .thenReturn(mock(PaginatedQueryList.class, withSettings().defaultAnswer(new ForwardsInvocations(null))));
-
-        Integer result = reviewService.calculateAverageRatingByAnime(1);
-
-        Assertions.assertNull(result);
-    }
-
     @Test
     void calculateAverageRatingByAnime() {
 
@@ -264,8 +188,6 @@ public class ReviewServiceTest {
 
         when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
                 .thenReturn(mock(PaginatedQueryList.class, withSettings().defaultAnswer(new ForwardsInvocations(reviewRecordList))));
-//        when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(emptyList);
 
         Integer result = reviewService.calculateAverageRatingByAnime(52);
 
@@ -293,66 +215,25 @@ public class ReviewServiceTest {
 
         List<ReviewRecord> reviewRecordList = new ArrayList<>(Arrays.asList(reviewRecord, reviewRecord2));
 
-        // Set up the mock behavior
         when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
                 .thenReturn(mock(PaginatedQueryList.class, withSettings().defaultAnswer(new ForwardsInvocations(reviewRecordList))));
 
-        // Call the method under test
         PaginatedQueryList<ReviewRecord> result = reviewService.getListOfAnimeByDisplayName("Hohoho");
 
-        // Verify the interactions and assertions
         verify(mapper).query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class));
         assertEquals(2,result.size());
     }
+
+    @Test
+    public void calculate_null(){
+        List<ReviewRecord> reviewRecordList = new ArrayList<>();
+
+        when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
+                .thenReturn(mock(PaginatedQueryList.class, withSettings().defaultAnswer(new ForwardsInvocations(reviewRecordList))));
+
+        Integer data = reviewService.calculateAverageRatingByAnime(1);
+
+        Assertions.assertNull(data);
+    }
+
 }
-
-//    @Test
-//    void testGetReviewsForAnime() {
-//        // Mock data
-//        int animeId = 1;
-//        Map<String, AttributeValue> valueMap = new HashMap<>();
-//        // Set up the mock behavior
-//        when(mapper.queryPage(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(new QueryResultPage<>());
-//
-//        // Call the method under test
-//        QueryResultPage<ReviewRecord> result = reviewService.getReviewsForAnime(animeId);
-//
-//        // Verify the interactions and assertions
-//        verify(mapper).queryPage(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class));
-//        assertEquals(new QueryResultPage<>(), result);
-//    }
-
-//    @Test
-//    void testCalculateAverageRatingByAnime() {
-//        // Mock data
-//        int animeId = 1;
-//        Map<String, AttributeValue> valueMap = new HashMap<>();
-//        // Set up the mock behavior
-//        when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(new PaginatedQueryList<>());
-//
-//        // Call the method under test
-//        Integer result = reviewService.calculateAverageRatingByAnime(animeId);
-//
-//        // Verify the interactions and assertions
-//        verify(mapper).query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class));
-//        assertEquals(null, result);
-//    }
-
-//    @Test
-//    void testGetListOfAnimeByDisplayName() {
-//        // Mock data
-//        String displayName = "John Doe";
-//        Map<String, AttributeValue> valueMap = new HashMap<>();
-//        // Set up the mock behavior
-//        when(mapper.query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class)))
-//                .thenReturn(new PaginatedQueryList<>());
-//
-//        // Call the method under test
-//        PaginatedQueryList<ReviewRecord> result = reviewService.getListOfAnimeByDisplayName(displayName);
-//
-//        // Verify the interactions and assertions
-//        verify(mapper).query(eq(ReviewRecord.class), any(DynamoDBQueryExpression.class));
-//        assertEquals(new PaginatedQueryList<>(), result);
-//    }

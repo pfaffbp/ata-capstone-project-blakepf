@@ -1,4 +1,4 @@
-package com.kenzie.capstone.service.model;
+package com.kenzie.appserver.model;
 
 import java.util.Objects;
 
@@ -59,5 +59,3 @@ public class NotificationData {
         return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
     }
 }
-
-

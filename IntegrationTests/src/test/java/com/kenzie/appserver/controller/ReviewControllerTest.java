@@ -33,8 +33,6 @@ public class ReviewControllerTest {
     @Autowired
     ReviewService reviewService;
 
-    private final MockNeat mockNeat = MockNeat.threadLocal();
-
     private final ObjectMapper mapper = new ObjectMapper();
 
 
@@ -59,26 +57,6 @@ public class ReviewControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is(400));
     }
-
-//    @Test
-//    public void testReviewsFromAnimeID() throws Exception {
-//        // Create a mock get reviews request
-//        GetReviewsRequest getReviewsRequest = new GetReviewsRequest();
-//        // Set the required fields of the get reviews request
-//
-//        // Convert the get reviews request to JSON
-//        String requestJson = mapper.writeValueAsString(getReviewsRequest);
-//
-//        // Perform the POST request and validate the response
-//        mvc.perform(MockMvcRequestBuilders.post("/review/limit")
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .content(requestJson))
-//                .andExpect(MockMvcResultMatchers.status().isOk())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
-//                .andExpect(MockMvcResultMatchers.jsonPath("$").exists())
-//                // Validate other fields in the response
-//                .andReturn();
-//    }
 
     @Test
     public void testCalculateAverageScore() throws Exception {
