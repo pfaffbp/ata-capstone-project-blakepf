@@ -75,18 +75,34 @@ img {
 
 .leftImage {
     width: 20%;
-    position: fixed;                        /* Currently Zenitsu from Demon Slayer. May change it to something else! */
-    bottom: 1%;
-    left: 3%;
+    position: fixed;                        /* Currently Sailor Moon */
+    bottom: 10%;
+    left: 1%;
+}
+
+@keyframes floating {
+    0% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-10px);
+    }
+    100% {
+        transform: translateY(0);
+    }
+}
+
+.floating-image {
+    animation: floating 3s ease-in-out infinite;
 }
 
 /* ------- Right side banner  ------- */
 
 .rightImage {
-    width: 30%;
-    position: fixed;                        /* Currently Tanjiro from Demon Slayer. May also change it to something else! */
+    width: 25%;
+    position: fixed;                        /* Currently Chibi */
     right: -3%;
-    top: 8%;
+    top: 10%;
 }
 
 /* ------- Center Div, Holds All Anime Info Content  ------- */

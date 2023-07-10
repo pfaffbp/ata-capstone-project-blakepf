@@ -334,6 +334,7 @@ function getMonth(date) {
     return posted;
 }
 
+
 const main = async () => {
     const animePage = new AnimePage();
     animePage.mount();

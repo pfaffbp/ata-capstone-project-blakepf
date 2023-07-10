@@ -4,6 +4,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.datamodeling.QueryResultPage;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kenzie.appserver.controller.reviewModels.UserReviewPostRequest;
 import com.kenzie.appserver.repositories.ReviewRepository;
 import com.kenzie.appserver.repositories.model.ReviewRecord;
@@ -234,6 +235,42 @@ public class ReviewServiceTest {
         Integer data = reviewService.calculateAverageRatingByAnime(1);
 
         Assertions.assertNull(data);
+    }
+
+    @Test
+    public void getReviewsForAnime_withID_LastKey(){
+        Map<String, AttributeValue> exclusiveKey = new HashMap<>();
+        exclusiveKey.put("animeID", new AttributeValue().withN("1"));
+        exclusiveKey.put("postDate", new AttributeValue().withN("0"));
+        exclusiveKey.put("reviewID", new AttributeValue("string"));
+
+        ReviewRecord reviewRecord = new ReviewRecord();
+        reviewRecord.setPostDate(20230102);
+        reviewRecord.setDisplayName("test");
+        reviewRecord.setAnimeID(1);
+        reviewRecord.setRating(99);
+        reviewRecord.setReviewID("test-id");
+        reviewRecord.setReview("Cool");
+
+        ReviewRecord reviewRecord2 = new ReviewRecord();
+        reviewRecord2.setPostDate(20230103);
+        reviewRecord2.setDisplayName("test-2");
+        reviewRecord2.setAnimeID(1);
+        reviewRecord2.setRating(12);
+        reviewRecord2.setReviewID("test-id2");
+        reviewRecord2.setReview("Awesome");
+
+        List<ReviewRecord> reviewRecordList = new ArrayList<>(Arrays.asList(reviewRecord, reviewRecord2));
+
+        when(mapper.queryPage(eq(ReviewRecord.class),
+                any(DynamoDBQueryExpression.class)))
+                .thenReturn(mock(QueryResultPage.class,
+                        withSettings().defaultAnswer(new ForwardsInvocations(reviewRecordList))));
+
+
+        QueryResultPage<ReviewRecord> page = reviewService.getReviewsForAnime(1, exclusiveKey);
+
+        Assertions.assertNotNull(page);
     }
 
 }
