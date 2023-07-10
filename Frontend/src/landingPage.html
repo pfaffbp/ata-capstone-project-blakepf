@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/landingPage.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.2/css/all.min.css"
+        integrity="sha512-1sCRPdkRXhBV2PBLUdRb4tMg1w2YPf37qatUFeS7zlBy7jJI8Lf4VHwWfZZfpXtYSLy85pkm9GaYVYMfw5BC1A=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script type="text/javascript" src="homePage.js"></script>
+    <script>
+        //show and hide dropdown list item on button click
+        function reveal() {
+            var click = document.getElementById("notification-items");
+            if (click.style.visibility === "hidden") {
+                click.style.visibility = "visible";
+            } else {
+                click.style.visibility = "hidden";
+            }
+        }
+    </script>
+
+    <title>Aniverse: Home</title>
+
+</head>
+
+<body>
+    <div class="nav">
+        <img src="css/aniverse-logo-white.png" class="logo">
+
+        <div class="main-links">
+            <a href="landingPage.html">Home</a>
+            <a href="holder1">Community</a>
+            <a href="holder3">Manga</a>
+            <a href="searchUsers.html" style="color: plum">Search Users</a>
+            <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
+        </div>
+
+        <div class="account">
+            <ul>
+                <div id="bell" class="hide">
+                    <button type="button" class="icon-button" onClick="reveal()">
+                        <span class="material-icons">notifications</span>
+                        <span class="icon-button__badge">2</span>
+                    </button>
+                    <div id="notification-items">
+                        <!-- <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: added Fruits Basket: 1st Season to their Favorites List! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div> -->
+
+                    </div>
+                </div>
+                <li>
+                    <a class="userLoggedIn" id="userLoggedIn">Login </a>
+                    <ul>
+                        <li><a href="userProfilePage.html">Profile</a></li>
+                        <li><a href="searchUsers.html">Search Users</a></li>
+                        <li><a href="signup.html">Signup</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="updatePassword.html">Update Password</a></li>
+                        <li><a href="updateLogin.html">Update Email</a></li>
+                        <li><a id="logout">LogOut</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex-container">
+
+        <div class="leftImage">
+            <img src="css/zenitsu-left.png">
+        </div>
+
+        <div class="main">
+
+            <div class="slideshow-section">
+
+                <div class="slider">
+
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>JUJUTSU KAISEN:</h1>
+                            <h1> SEASON 2</h1>
+                        </div>
+                        <img
+                            src="https://www.hindustantimes.com/ht-img/img/2023/03/25/1600x900/Jujutsu_Kaisen_season_2_1679711090740_1679711112751_1679711112751.jpg">
+                    </div>
+
+                    <div class=" myslide fade">
+                        <div class="txt">
+                            <h1>DEMON SLAYER: </h1>
+                            <h1>SWORDSMITH VILLAGE</h1>
+                        </div>
+                        <img
+                            src="https://i0.wp.com/animeindia.in/wp-content/uploads/2023/02/image-1-5.jpg?fit=1280%2C720&ssl=1">
+                    </div>
+
+
+                    <div class=" myslide fade">
+                        <div class="txt">
+                            <h1>ONE PIECE</h1>
+                            <p></p>
+                        </div>
+                        <img
+                            src="https://sm.ign.com/ign_in/photo/b/best-anime/best-anime-series-on-netflix-right-now-june-2022_1ym8.jpg">
+                    </div>
+
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>ATTACK ON TITAN:</h1>
+                            <h1>SEASON 4 PART 2</h1>
+                            <p></p>
+                        </div>
+                        <img src="https://assets.puzzlefactory.com/puzzle/318/550/original.jpg">
+                    </div>
+
+
+                    <div class="myslide fade">
+                        <div class="txt">
+                            <h1>SPY X FAMILY: SEASON 2</h1>
+                            <p></p>
+                        </div>
+                        <img src="https://sm.ign.com/t/ign_br/screenshot/default/spy-x-family_jk5a.1200.jpg">
+                    </div>
+                    
+                    <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+                    <a class="next" onclick="plusSlides(1)">&#10095;</a>
+
+                    <div class="dotsbox" style="text-align:center">
+                        <span class="dot" onclick="currentSlide(1)"></span>
+                        <span class="dot" onclick="currentSlide(2)"></span>
+                        <span class="dot" onclick="currentSlide(3)"></span>
+                        <span class="dot" onclick="currentSlide(4)"></span>
+                        <span class="dot" onclick="currentSlide(5)"></span>
+                    </div>
+
+                </div>
+
+            </div>
+
+            <h2>Popular Titles</h2>
+            <hr>
+            <div class="container">
+
+                <div class="button-outline-left">
+                    <i class="fa-solid fa-arrow-left fa-lg" style="color: #9c2bc5;" id="prev-1"></i>
+                </div>
+
+                <div class="anime-container" id="popular-anime-container">
+                </div>
+
+                <div class="button-outline-right">
+                    <i class="fa-solid fa-arrow-right fa-lg" style="color: #9c2bc5;" id="next-1"></i>
+                </div>
+
+            </div>
+
+
+            <h2>Seasonal Titles</h2>
+            <hr>
+            <div class="container">
+
+                <div class="button-outline-left">
+                    <i class="fa-solid fa-arrow-left fa-lg" style="color: #9c2bc5;" id="prev-2"></i>
+                </div>
+
+                <div class="anime-container" id="seasonal-anime-container">
+                </div>
+
+                <div class="button-outline-right">
+                    <i class="fa-solid fa-arrow-right fa-lg" style="color: #9c2bc5;" id="next-2"></i>
+                </div>
+
+            </div>
+
+            <h2>Highly Rated Titles</h2>
+            <hr>
+            <div class="container">
+
+                <div class="button-outline-left">
+                    <i class="fa-solid fa-arrow-left fa-lg" style="color: #9c2bc5;" id="prev-3"></i>
+                </div>
+
+                <div class="anime-container" id="highly-rated-container">
+                </div>
+
+                <div class="button-outline-right">
+                    <i class="fa-solid fa-arrow-right fa-lg" style="color: #9c2bc5;" id="next-3"></i>
+
+                </div>
+            </div>
+        </div>
+
+
+
+    </div>
+
+    <div class="rightImage">
+        <img src="css/tanjiro-right.png">
+    </div>
+
+    <script>
+        const myslide = document.querySelectorAll('.myslide'),
+            dot = document.querySelectorAll('.dot');
+        let counter = 1;
+        slidefun(counter);
+
+        let timer = setInterval(autoSlide, 8000);
+        function autoSlide() {
+            counter += 1;
+            slidefun(counter);
+        }
+        function plusSlides(n) {
+            counter += n;
+            slidefun(counter);
+            resetTimer();
+        }
+        function currentSlide(n) {
+            counter = n;
+            slidefun(counter);
+            resetTimer();
+        }
+        function resetTimer() {
+            clearInterval(timer);
+            timer = setInterval(autoSlide, 8000);
+        }
+
+        function slidefun(n) {
+
+            let i;
+            for (i = 0; i < myslide.length; i++) {
+                myslide[i].style.display = "none";
+            }
+            for (i = 0; i < dot.length; i++) {
+                dot[i].className = dot[i].className.replace(' active', '');
+            }
+            if (n > myslide.length) {
+                counter = 1;
+            }
+            if (n < 1) {
+                counter = myslide.length;
+            }
+            myslide[counter - 1].style.display = "block";
+            dot[counter - 1].className += " active";
+        }
+    </script>
+</body>
