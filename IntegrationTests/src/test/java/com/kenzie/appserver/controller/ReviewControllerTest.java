@@ -6,6 +6,9 @@ import com.kenzie.appserver.controller.reviewModels.GetReviewsRequest;
 import com.kenzie.appserver.controller.reviewModels.UserReviewPostRequest;
 import com.kenzie.appserver.service.NotificationService;
 import com.kenzie.appserver.service.ReviewService;
+import com.kenzie.appserver.service.model.Anime;
+import com.kenzie.appserver.service.model.Review;
+import com.kenzie.appserver.service.model.User;
 import net.andreinc.mockneat.MockNeat;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +17,12 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
+import java.util.UUID;
+
+import static org.assertj.core.api.Assertions.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @IntegrationTest
 public class ReviewControllerTest {
@@ -29,35 +37,28 @@ public class ReviewControllerTest {
 
     private final ObjectMapper mapper = new ObjectMapper();
 
+
     @Test
     public void testPostReview() throws Exception {
-        // Create a mock user review request
         UserReviewPostRequest userReviewPostRequest = new UserReviewPostRequest();
-        // Set the required fields of the user review request
 
-        // Convert the user review request to JSON
         String requestJson = mapper.writeValueAsString(userReviewPostRequest);
 
-        // Perform the POST request and validate the response
         mvc.perform(MockMvcRequestBuilders.post("/review")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestJson))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.reviewID").exists())
-                // Validate other fields in the response
                 .andReturn();
     }
 
-//    @Test
-//    public void testDeleteReviewByID() throws Exception {
-//        // Create a review ID for testing
-//        String reviewID = "exampleReviewID";
-//
-//        // Perform the DELETE request and validate the response
-//        mvc.perform(delete("/review/{reviewID}", reviewID))
-//                .andExpect(MockMvcResultMatchers.status().isNoContent())
-//                .andReturn();
-//    }
+    @Test
+    public void getReview_ReviewDoesNotExist() throws Exception {
+        String reviewId = UUID.randomUUID().toString();
+        mvc.perform(get("/review/{reviewID}", reviewId)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is(400));
+    }
 
 //    @Test
 //    public void testReviewsFromAnimeID() throws Exception {
@@ -81,10 +82,8 @@ public class ReviewControllerTest {
 
     @Test
     public void testCalculateAverageScore() throws Exception {
-        // Create a mock anime ID for testing
         int animeID = 123;
 
-        // Perform the GET request and validate the response
         mvc.perform(MockMvcRequestBuilders.get("/review/{animeID}", animeID))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isNumber())
@@ -93,10 +92,8 @@ public class ReviewControllerTest {
 
     @Test
     public void testGetReviewsByDisplayName() throws Exception {
-        // Create a mock display name for testing
         String displayName = "exampleDisplayName";
 
-        // Perform the GET request and validate the response
         mvc.perform(MockMvcRequestBuilders.get("/review/username/{displayName}", displayName))
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andExpect(MockMvcResultMatchers.jsonPath("$").isArray())
