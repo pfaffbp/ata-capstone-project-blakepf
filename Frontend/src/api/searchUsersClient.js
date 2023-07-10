@@ -39,7 +39,7 @@ export default class SearchUsersClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-    async getUserData( errorCallback){
+    async getUserData(errorCallback) {
 
         const displayName = document.getElementById('search-bar').value;
 
@@ -50,6 +50,29 @@ export default class SearchUsersClient extends BaseClass {
             this.handleError('getUserData', error, errorCallback)
         }
     }
+
+    async getNotifications (displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/${displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
+        }
+    }
+
+    
+    async setNotification (displayName, notificationRequest, errorCallback) {
+        try {
+            const response = await this.client.post(`notification/setNotification/${displayName}`, {
+                requestedUUID: displayName,
+                notificationRequest:  notificationRequest});
+            return response.data;
+        } catch (error) {
+            this.handleError('setNotifications', error, errorCallback);
+        }
+    }
+
+
 
 
 

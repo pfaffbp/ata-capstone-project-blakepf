@@ -101,7 +101,7 @@ img {
 }
 
 .hide {
-	display: none;
+	visibility: hidden;
 }
 
 

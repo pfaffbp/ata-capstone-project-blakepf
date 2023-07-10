@@ -10,7 +10,7 @@ class ProfilePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onLoad', 'renderUserProfile'], this);
+        this.bindClassMethods(['onLoad', 'renderUserProfile', 'getNotifications'], this);
         this.dataStore = new DataStore();
     }
 
@@ -107,6 +107,21 @@ class ProfilePage extends BaseClass {
     async onLoad() {
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
+
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+
+        let notification = this.client.getNotifications(user);
+        console.log(notification);
+        
+        if (user != null){
+
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+
+            LoggedInArea.innerHTML =  user;
+        }else
+            LoggedInArea.innerHTML = "Login" ;
     }
 
     async Logout(event){
@@ -116,6 +131,15 @@ class ProfilePage extends BaseClass {
     }
     async redirectToUpdateProfile() {
         window.location.href = "updateProfile.html";
+    }
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
     }
 }
 

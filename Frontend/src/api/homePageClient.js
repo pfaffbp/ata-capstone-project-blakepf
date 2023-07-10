@@ -33,6 +33,15 @@ export default class HomePageClient extends BaseClass{
         }
     }
 
+    async getNotifications (displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/${displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
+        }
+    }
+
 
 
     handleError(method, error, errorCallback) {

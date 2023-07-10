@@ -59,9 +59,9 @@ export default class ProfileClient extends BaseClass {
         }
     }
 
-    async getNotifications (errorCallback) {
+    async getNotifications (displayName, errorCallback) {
         try {
-            const response = await this.client.get(`notification/getNotification/{displayName}`)
+            const response = await this.client.get(`notification/getNotification/${displayName}`)
             return response.data;
         } catch (error) {
             this.handleError('getNotifications', error, errorCallback)

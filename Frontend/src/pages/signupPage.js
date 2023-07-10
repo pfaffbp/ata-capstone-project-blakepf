@@ -13,7 +13,7 @@ class SignupPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onCreateLogin', 'toggle', 'onLoad'], this);
+        this.bindClassMethods(['onCreateLogin', 'toggle', 'onLoad', 'getNotifications'], this);
         this.dataStore = new DataStore();
 
 
@@ -144,11 +144,23 @@ class SignupPage extends BaseClass {
         let user = localStorage.getItem('displayName')
         let LoggedInArea = document.getElementById('userLoggedIn');
         if (user != null){
+
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+
             LoggedInArea.innerHTML =  user;
         }else
             LoggedInArea.innerHTML = "Login" ;
     }
 
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
+    }
 }
 
 /**

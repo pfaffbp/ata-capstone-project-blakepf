@@ -72,6 +72,15 @@ export default class updateLoginClient extends BaseClass {
         }
     }
 
+    async getNotifications (displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/${displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
+        }
+    }
+
 
     /**
      * Helper method to log the error and run any error functions.

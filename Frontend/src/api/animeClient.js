@@ -11,7 +11,7 @@ export default class AnimeClient extends BaseClass {
 
     constructor(props = {}) {
         super();
-        const methodsToBind = ['getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase', 'getRatingForAnime', 'postReview'];
+        const methodsToBind = ['clientLoaded', 'getAnimeInfo','getAnimeBySearch', 'getAnimeByGenre', 'uploadAnimeToDatabase', 'postReview', 'getReviewsByAnimeID', 'getRatingForAnime', 'getUserData', 'addToFavorites', 'getNotifications', 'setNotification', 'handleError'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -243,6 +243,52 @@ export default class AnimeClient extends BaseClass {
         }
         if (errorCallback) {
             errorCallback(method + " failed - " + error);
+        }
+    }
+
+    async getUserData(displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`/user/${displayName}/searchByDisplayName/`);
+            return response.data;
+        }catch (error){
+            this.handleError('getUserData', error, errorCallback)
+        }
+    }
+
+    async addToFavorites(displayName, animeId, errorCallback) {
+        try {
+            const response = await this.client.post(`user/${displayName}/addFavorite/${animeId}`, {
+                displayName: displayName,
+                animeId: animeId
+            });
+            return response.data;
+        } catch (error) {
+            this.handleError('addToFavorites', error, errorCallback);
+        }
+    }
+
+    async getNotifications (displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`notification/getNotification/${displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
+        }
+    }
+
+
+    async setNotification (displayName, notificationRequest, requester, errorCallback) {
+        try {
+            const response = await this.client.post(`/notification/setNotification/${displayName}`, {
+                requestedUUID: displayName,
+                userRequest: {
+                    displayName: requester,
+                    action: notificationRequest
+                },
+                hasBeenViewed:  false});
+            return response.data;
+        } catch (error) {
+            this.handleError('setNotifications', error, errorCallback);
         }
     }
 

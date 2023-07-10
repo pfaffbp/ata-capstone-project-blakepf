@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <script type="text/javascript" src="animePage.js"></script>
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="css/animePage.css">
     <script>
         let limitChar = (element) => {
@@ -19,6 +20,7 @@
                 ele.value = ele.value.substring(0, maxChar);
                 p.innerHTML = 0 + ' characters remaining';
             }
+        }
     </script>
 </head>
 
@@ -38,12 +40,12 @@
 
         </div>
 
-        
+
 
         <div class="account">
-          
+
             <ul>
-                <div id="bell" class = "hide">
+                <div id="bell" class="hide">
                     <button type="button" class="icon-button">
                         <span class="material-icons">notifications</span>
                         <span class="icon-button__badge">2</span>
@@ -65,20 +67,21 @@
         </div>
 
     </div>
-<div class = "flex-container">
 
-        <div class = "leftImage">
+    <div class="flex-container">
+
+        <div class="leftImage">
             <img src="css/zenitsu-left.png">
         </div>
 
-        <div id = "main">
+        <div id="main">
         </div>
 
         <div class="rightImage">
             <img src="css/tanjiro-right.png">
         </div>
 
-</div>
+    </div>
 
 </body>
 

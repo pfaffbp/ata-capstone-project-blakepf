@@ -19,41 +19,40 @@ img {
 /* ------- Navigation Bar ------- */
 
 .logo {
-    width: 200px;
-    min-width: 175px;
-    margin-left: 20px;
-    margin-right: 30px;
-    margin-top: 5px;
-	float: left;	
+	width: 200px;
+	min-width: 175px;
+	margin-left: 20px;
+	margin-right: 30px;
+	margin-top: 5px;
+	float: left;
 }
 
 .nav {
-    background-color: #333333;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+	background-color: #333333;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
 	height: 80px;
-    font-size: 20 px;
-    font-weight: bold;
-    z-index: 2;
+	font-size: 20 px;
+	font-weight: bold;
+	z-index: 3;
 }
 
 .nav a {
-    color: white;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 25px 15px;
+	color: white;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 25px 15px;
 }
 
 .main-links {
 	display: inline-block;
 	line-height: 80px;
-
 }
 
 .nav a:hover {
-    color: purple;
+	color: purple;
 }
 
 #bell {
@@ -106,6 +105,7 @@ img {
 	display: none;
 }
 
+
 .account ul {
 	list-style-type: none;
 	margin: 0;
@@ -145,13 +145,13 @@ img {
 
 
 .main-links {
-    float: left;
+	float: left;
 }
 
 .account {
 	float: right;
 	margin-right: 10px;
-	width: 150px;
+	width: 200px;
 }
 
 
@@ -191,9 +191,8 @@ img {
     background: black;
     width: 60%;
     height: 100%;
-    margin: auto;                               /* Div holding all the content below */
-    z-index: 1;
-    position: relative;
+    margin: 150px auto;                               /* Div holding all the content below */
+    z-index: 2;
 }
 
 hr {
@@ -232,6 +231,10 @@ hr {
 .image-box img {
     margin: auto;                               /* Style of the image itself */
     border: 2px solid white;
+}
+
+#add-to-fav {
+    margin-top: 15px;
 }
 
 .anime-links {
@@ -300,7 +303,7 @@ hr {
 }
 
 .hide {
-    display: none;                              /* Class name created to hide specfic data until an event happens */
+	visibility: hidden;
 }
 
 .reviews {

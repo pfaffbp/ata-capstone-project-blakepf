@@ -9,7 +9,7 @@ let displayName = localStorage.getItem('displayName')
 class AnimePage extends BaseClass {
     constructor() {
         super();
-        this.bindClassMethods(['renderAnimeInfo', 'getReviewsFromAnimeID', 'notification', 'onSubmit', 'onLoad'], this);
+        this.bindClassMethods(['Logout', 'onLoad', 'renderAnimeInfo', 'onSubmit', 'getReviewsFromAnimeID', 'addToFavorites', 'getNotifications'], this);
         this.dataStore = new DataStore();
     }
 
@@ -21,18 +21,21 @@ class AnimePage extends BaseClass {
         this.onLoad();
     }
 
-    async Logout(event){
+    async Logout(event) {
         event.preventDefault();
         localStorage.clear();
         window.location.href = "login.html";
     }
-    async onLoad(){
+
+    async onLoad() {
         let user = localStorage.getItem('displayName')
         let LoggedInArea = document.getElementById('userLoggedIn');
-        if (user != null){
-            LoggedInArea.innerHTML =  user;
-        }else
-            LoggedInArea.innerHTML = "Login" ;
+        if (user != null) {
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+            LoggedInArea.innerHTML = user;
+        } else
+            LoggedInArea.innerHTML = "Login";
     }
 
 
@@ -50,6 +53,8 @@ class AnimePage extends BaseClass {
         workArea.innerHTML += `
             <div class = "image-box">
                 <img src = "${response.image}">
+
+                <button id = "add-to-fav">+ Add to Favorites +</button>
             </div>
 
                 <div class = "anime-info">
@@ -123,8 +128,8 @@ class AnimePage extends BaseClass {
             `
 
         document.getElementById("load").addEventListener('click', this.getReviewsFromAnimeID);
-        document.getElementById("create-form").addEventListener('submit', this.onSubmit)
-
+        document.getElementById("create-form").addEventListener('submit', this.onSubmit);
+        document.getElementById("add-to-fav").addEventListener("click", this.addToFavorites);
     }
 
     async onSubmit(event) {
@@ -202,19 +207,79 @@ class AnimePage extends BaseClass {
         document.getElementById("create-box").classList.remove("hide");
 
         document.getElementById("create").addEventListener("click", () => {
-            document.getElementById("create-form").classList.remove("hide");
-            document.getElementById("create").classList.add("hide");
-        }
+                document.getElementById("create-form").classList.remove("hide");
+                document.getElementById("create").classList.add("hide");
+            }
         );
 
     }
 
-    async notification() {
-        let response = await this.client.getNotification("testMike", this.errorHandler)
+    async addToFavorites() {
+        console.log("In the addToFavorites method!");
 
-        alert(response);
-        setInterval(this.notification, 5000);
+        let displayName = localStorage.getItem("displayName");
+        console.log(displayName);
+
+        const animeId = sessionStorage.getItem("animeCode");
+        console.log(animeId);
+
+        const animeInfo = await this.client.getAnimeInfo(animeId);
+
+        const response = await this.client.addToFavorites(displayName, animeId, this.errorHandler);
+        console.log(response)                                               // On submit, checking to see what the response is.
+
+        let notificationRequest = " added " + animeInfo.title + " to their Favorites List!";
+        console.log(notificationRequest);
+
+        console.log("hi")
+
+        let userFollowers = await this.client.getUserData(displayName);
+        console.log(userFollowers);
+
+        userFollowers = userFollowers.followers;
+        console.log(userFollowers);
+
+        for (let i = 0; i < userFollowers.length; i++) {
+            console.log ("In the forEach of setNotifications");                                                                                   // Check to see if we're in the method.
+            const response = await this.client.setNotification(userFollowers[i], notificationRequest, displayName, this.errorHandler);
+            console.log(response);                                                                                                                // Check to see if it returns a proper response.
+        }
+
     }
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name.
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one.
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
+    }
+
+    // async setNotifications() {
+    //     console.log("In setNotification");
+    //     let user = localStorage.getItem("displayName");
+    //     console.log(user);                                                                                          // Check to see if it pulls the proper user aka the one currently signed in.
+
+    //     let notificationRequest = user + " added to their Anime List";
+
+    //     const followers = await this.client.getUserData(user).followers;                                            // Iterate through all the followers.
+    //     console.log(followers);
+
+    //     for (let i = 0; i < followers.length; i++) {
+    //         console.log ("In the forEach of setNotifications");                                                     // Check to see if we're in the method.
+    //         const response = this.client.setNotification(followers[i], notificationRequest, this.errorHandler);
+    //         console.log(response);                                                                                  // Check to see if it returns a proper response.
+    //         return response;
+    //     }
+    // }
+
+    // async notification() {
+    //     let response = await this.client.getNotification("testMike", this.errorHandler)
+
+    //     alert(response);
+    //     setInterval(this.notification, 5000);
+    // }
 
 }
 

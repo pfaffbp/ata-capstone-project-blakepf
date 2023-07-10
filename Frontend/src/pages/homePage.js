@@ -7,7 +7,7 @@ class HomePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['renderHomePage', 'onLoad'], this);
+        this.bindClassMethods(['renderHomePage', 'onLoad', 'getNotifications'], this);
         this.dataStore = new DataStore();
     }
 
@@ -19,10 +19,28 @@ class HomePage extends BaseClass {
         this.onLoad();
     }
 
+    async onLoad() {
+        let user = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (user != null) {
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+
+            LoggedInArea.innerHTML = user;
+        } else
+            LoggedInArea.innerHTML = "Login";
+    }
+
+    async Logout(event) {
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+
     async renderHomePage() {
         let workArea = document.getElementById('popular-anime-container');
         let seasonAnime = document.getElementById("seasonal-anime-container");
-            let highlyRatedAnime = document.getElementById("highly-rated-container");
+        let highlyRatedAnime = document.getElementById("highly-rated-container");
 
         let response = await this.client.getFrontPage(this.errorHandler);
 
@@ -51,12 +69,12 @@ class HomePage extends BaseClass {
 
         // (Popular) When you click on the right arrow, loads the next 6 items using this function.
 
-       document.getElementById("next-1").addEventListener("click", function loadNext1() {
-           items = "";
-           for (let i = 5; i < 11; i++) {
-               console.log("Inside here")
+        document.getElementById("next-1").addEventListener("click", function loadNext1() {
+            items = "";
+            for (let i = 5; i < 11; i++) {
+                console.log("Inside here")
 
-               items += `
+                items += `
                <div class="anime-poster-class">
                <div class="anime-poster">
                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
@@ -65,19 +83,19 @@ class HomePage extends BaseClass {
            </div>
                `;
 
-           }
+            }
 
-           workArea.innerHTML = items;
-       }
-       )
+            workArea.innerHTML = items;
+        }
+        )
 
         // (Popular) When you click on the left arrow, loads the original 6 items using this function.
 
-       document.getElementById("prev-1").addEventListener("click", function loadPrev1() {
-           items = "";
-           for (let i = 0; i < 6; i++) {
-               console.log("Inside here")
-               items += `
+        document.getElementById("prev-1").addEventListener("click", function loadPrev1() {
+            items = "";
+            for (let i = 0; i < 6; i++) {
+                console.log("Inside here")
+                items += `
                <div class="anime-poster-class">
                <div class="anime-poster">
                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
@@ -85,11 +103,11 @@ class HomePage extends BaseClass {
                </div>
            </div>
                `;
-           }
+            }
 
-           workArea.innerHTML = items;
-       }
-       )
+            workArea.innerHTML = items;
+        }
+        )
 
 
         // (Seasonal) On load, the page renders the first 6 items of the list.
@@ -111,12 +129,12 @@ class HomePage extends BaseClass {
 
         // (Seasonal) When you click on the right arrow, loads the next 6 items using this function.
 
-       document.getElementById("next-2").addEventListener("click", function loadNext2() {
-           seasonalItems = "";
-           for (let i = 16; i < 22; i++) {
-               console.log("Inside here")
+        document.getElementById("next-2").addEventListener("click", function loadNext2() {
+            seasonalItems = "";
+            for (let i = 16; i < 22; i++) {
+                console.log("Inside here")
 
-               seasonalItems += `
+                seasonalItems += `
                <div class="anime-poster-class">
                 <div class="anime-poster">
                 <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
@@ -125,20 +143,20 @@ class HomePage extends BaseClass {
             </div>
                `;
 
-           }
+            }
 
-           seasonAnime.innerHTML = seasonalItems;
-       }
-       )
+            seasonAnime.innerHTML = seasonalItems;
+        }
+        )
 
         // (Popular) When you click on the left arrow, loads the original 6 items using this function.
 
-       document.getElementById("prev-2").addEventListener("click", function loadPrev2() {
-           seasonalItems = "";
-           for (let i = 10; i < 16; i++) {
-               console.log("Inside here")
+        document.getElementById("prev-2").addEventListener("click", function loadPrev2() {
+            seasonalItems = "";
+            for (let i = 10; i < 16; i++) {
+                console.log("Inside here")
 
-               seasonalItems += `
+                seasonalItems += `
                <div class="anime-poster-class">
                <div class="anime-poster">
                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
@@ -146,10 +164,10 @@ class HomePage extends BaseClass {
                </div>
            </div>
                `;
-           }
-           seasonAnime.innerHTML = seasonalItems;
-       }
-       )
+            }
+            seasonAnime.innerHTML = seasonalItems;
+        }
+        )
 
 
         // (Highly Rated) On load, the page renders the first 6 items of the list.
@@ -171,12 +189,12 @@ class HomePage extends BaseClass {
 
         // (Highly Rated) When you click on the right arrow, loads the next 6 items using this function.
 
-       document.getElementById("next-3").addEventListener("click", function loadNext2() {
-           highRatedItems = "";
-           for (let i = 28; i < 34; i++) {
-               console.log("Inside here")
+        document.getElementById("next-3").addEventListener("click", function loadNext2() {
+            highRatedItems = "";
+            for (let i = 28; i < 34; i++) {
+                console.log("Inside here")
 
-               highRatedItems += `
+                highRatedItems += `
                <div class="anime-poster-class">
                <div class="anime-poster">
                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeId} src=${response[i].image}></a>
@@ -185,20 +203,20 @@ class HomePage extends BaseClass {
            </div>
                `;
 
-           }
+            }
 
-           highlyRatedAnime.innerHTML = highRatedItems;
-       }
-       )
+            highlyRatedAnime.innerHTML = highRatedItems;
+        }
+        )
 
         // (Highly Rated) When you click on the left arrow, loads the original 6 items using this function.
 
-       document.getElementById("prev-3").addEventListener("click", function loadPrev2() {
-           highRatedItems = "";
-           for (let i = 22; i < 28; i++) {
-               console.log("Inside here")
+        document.getElementById("prev-3").addEventListener("click", function loadPrev2() {
+            highRatedItems = "";
+            for (let i = 22; i < 28; i++) {
+                console.log("Inside here")
 
-               highRatedItems += `
+                highRatedItems += `
                <div class="anime-poster-class">
                <div class="anime-poster">
                <a href="animePage.html"><img class = "poster-click" alt=${response[i].animeIdw} src=${response[i].image}></a>
@@ -206,11 +224,11 @@ class HomePage extends BaseClass {
                </div>
            </div>
                `;
-           }
+            }
 
-           highlyRatedAnime.innerHTML = highRatedItems;
-       }
-       )
+            highlyRatedAnime.innerHTML = highRatedItems;
+        }
+        )
 
         let docs = document.querySelectorAll('.poster-click');
 
@@ -222,18 +240,14 @@ class HomePage extends BaseClass {
         await console.log(sessionStorage.getItem("animeCode")); // stores the animeId to get data;
         console.log(docs);
     }
-    async onLoad(){
-        let user = localStorage.getItem('displayName')
-        let LoggedInArea = document.getElementById('userLoggedIn');
-        if (user != null){
-            LoggedInArea.innerHTML =  user;
-        }else
-            LoggedInArea.innerHTML = "Login" ;
-    }
-    async Logout(event){
-        event.preventDefault();
-        localStorage.clear();
-        window.location.href = "login.html";
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+        console.log(response);
     }
 
 }

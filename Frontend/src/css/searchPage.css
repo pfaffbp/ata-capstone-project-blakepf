@@ -19,41 +19,40 @@ img {
 /* ------- Navigation Bar ------- */
 
 .logo {
-    width: 200px;
-    min-width: 175px;
-    margin-left: 20px;
-    margin-right: 30px;
-    margin-top: 5px;
-	float: left;	
+	width: 200px;
+	min-width: 175px;
+	margin-left: 20px;
+	margin-right: 30px;
+	margin-top: 5px;
+	float: left;
 }
 
 .nav {
-    background-color: #333333;
-    position: fixed;
-    width: 100%;
-    top: 0;
-    left: 0;
+	background-color: #333333;
+	position: fixed;
+	width: 100%;
+	top: 0;
+	left: 0;
 	height: 80px;
-    font-size: 20 px;
-    font-weight: bold;
-    z-index: 2;
+	font-size: 20 px;
+	font-weight: bold;
+	z-index: 2;
 }
 
 .nav a {
-    color: white;
-    text-transform: uppercase;
-    text-decoration: none;
-    padding: 25px 15px;
+	color: white;
+	text-transform: uppercase;
+	text-decoration: none;
+	padding: 25px 15px;
 }
 
 .main-links {
 	display: inline-block;
 	line-height: 80px;
-
 }
 
 .nav a:hover {
-    color: purple;
+	color: purple;
 }
 
 #bell {
@@ -103,8 +102,9 @@ img {
 }
 
 .hide {
-	display: none;
+	visibility: hidden;
 }
+
 
 .account ul {
 	list-style-type: none;
@@ -138,20 +138,20 @@ img {
 	display: block;
 }
 
-/* Change the background color of dropdown links on hover */
+
 .account ul ul li a:hover {
-	background-color: #555;
+	background-color: #555;                                     /* Change the background color of dropdown links on hover */
 }
 
 
 .main-links {
-    float: left;
+	float: left;
 }
 
 .account {
 	float: right;
 	margin-right: 10px;
-	width: 150px;
+	width: 200px;
 }
 
 
@@ -171,9 +171,8 @@ img {
 
 .leftImage {
     width: 30%;
-    position: fixed;
-    /* Currently Sakura */
-    top: 10%;
+    position: fixed;                                        /* Currently Sakura */
+    top: 3%;
     left: 1px;
     transform: scaleX(-1);
 }
