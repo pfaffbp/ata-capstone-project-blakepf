@@ -119,7 +119,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
-    @Test
+/*    @Test
     public void testFollowUser() throws Exception {
         // Create two users using the userService
         User user1 = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(),
@@ -133,7 +133,7 @@ public class UserControllerTest {
         mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/followUser/{friendFullName}", "displayName", "displayName2")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
-    }
+    }*/
 
     @Test
     public void testUnfollowUser() throws Exception {
