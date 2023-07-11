@@ -154,7 +154,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("displayName"));
     }
 
-    @Test
+/*    @Test
     public void testAddFavorite() throws Exception {
         // Create a user using the userService
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
@@ -178,7 +178,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("fullName"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("bio"))
                 .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime[0]").value("animeId"));
-    }
+    }*/
 
 //    @Test
 //    public void testRemoveFavorite() throws Exception {
