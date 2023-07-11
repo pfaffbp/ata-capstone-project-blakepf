@@ -108,6 +108,12 @@ module.exports = {
       inject: false
     }),
 
+    new HtmlWebpackPlugin({
+      template: './src/updateUser.html',
+      filename: 'updateUser.html',
+      inject: false
+    }),
+
     new CopyPlugin({
       patterns: [
         {

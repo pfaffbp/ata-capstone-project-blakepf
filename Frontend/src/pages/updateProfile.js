@@ -11,7 +11,7 @@ class UpdateProfilePage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['updateUserProfile', 'getNotifications'], this);
+        this.bindClassMethods(['updateUserProfile', 'getNotifications', 'onLoad'], this);
         this.dataStore = new DataStore();
     }
 
@@ -20,6 +20,8 @@ class UpdateProfilePage extends BaseClass {
      */
     async mount() {
         this.client = new ProfileClient();
+        document.getElementById('logout').addEventListener('click', this.Logout);
+        this.onLoad();
 
     }
 
@@ -72,8 +74,21 @@ class UpdateProfilePage extends BaseClass {
         // Handle the error as needed
         console.error(error);
     }
-    
 
+    async Logout(event) {
+        event.preventDefault();
+        localStorage.clear();
+        window.location.href = "login.html";
+    }
+
+    async onLoad() {
+        let name = localStorage.getItem('displayName')
+        let LoggedInArea = document.getElementById('userLoggedIn');
+        if (name != null) {
+            LoggedInArea.innerHTML = name;
+        } else
+            LoggedInArea.innerHTML = " ";
+    }
     
 }
 
