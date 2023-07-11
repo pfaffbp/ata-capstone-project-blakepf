@@ -270,4 +270,13 @@ public class CatalogServiceTest {
         }
     }
 
+    @Test
+    void testGetSeasonAnime() {
+        PaginatedQueryList<CatalogRecord> mockResult = mock(PaginatedQueryList.class);
+        when(mapper.query(any(Class.class), any(DynamoDBQueryExpression.class))).thenReturn(mockResult);
+        PaginatedQueryList<CatalogRecord> result = catalogService.getSeasonAnime();
+        verify(mapper).query(any(Class.class), any(DynamoDBQueryExpression.class));
+        assertEquals(mockResult, result);
+    }
+
 }
