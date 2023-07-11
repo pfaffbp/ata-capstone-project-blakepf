@@ -93,7 +93,7 @@ class LoginControllerTest {
         mvc.perform(post("/login/createLogin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().is(HttpStatus.ACCEPTED.value()));
+                .andExpect(status().is(200));
     }
 
 
