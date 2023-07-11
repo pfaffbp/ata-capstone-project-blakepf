@@ -107,7 +107,7 @@ class SearchPage extends BaseClass {
         const animationDuration = 7000;
         const startX = 0; // Initial X coordinate
         const startY = 0; // Initial Y coordinate
-        const endX = 1050; // Final X coordinate
+        const endX = 800; // Final X coordinate
         const endY = 40; // Final Y coordinate
 
         // Apply the animation using CSS transitions

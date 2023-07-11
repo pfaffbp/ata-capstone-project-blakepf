@@ -42,8 +42,8 @@ public class CacheManagerAnimeTest {
         int episodes = 50;
         List<String> genre = new ArrayList<>();
 
-        Anime anime = new Anime("Title", animeId, "description",
-                "image", 2008, "season",100, 90, 50, new ArrayList<>());
+        Anime anime = new Anime(title, animeId, description,
+                image, startDate, season, popularity, rating, episodes, genre);
         catalogService.addNewAnime(anime);
         catalogService.findAnimeById(animeId);
 
@@ -66,8 +66,8 @@ public class CacheManagerAnimeTest {
         int episodes = 50;
         List<String> genre = new ArrayList<>();
 
-        Anime anime = new Anime("Title", animeId, "description",
-                "image", 2008, "season",100, 90, 50, new ArrayList<>());
+        Anime anime = new Anime(title, animeId, description,
+                image, startDate, season, popularity, rating, episodes, genre);
         catalogService.addNewAnime(anime);
         catalogService.findAnimeById(animeId);
 
@@ -82,4 +82,3 @@ public class CacheManagerAnimeTest {
         assertThat(updatedAnimeFromCache).isNull();
     }
 }
-

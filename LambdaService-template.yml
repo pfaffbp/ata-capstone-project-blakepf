@@ -54,28 +54,51 @@ Resources:
           Properties:
             Path: /notification/setNotification/{displayName}
             Method: post
-SendingMessagesFunction:
-  Type: AWS::Serverless::Function
-  Properties:
-    CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
-    Handler: com.kenzie.capstone.service.lambda.SendMessagesData
-    Runtime: java11
-    Description: Set Message Data
-    MemorySize: 512
-    Timeout: 240
-    # Function's execution role
-    Policies:
-      - AWSLambdaBasicExecutionRole
-      - AWSLambda_ReadOnlyAccess
-      - AWSXrayWriteOnlyAccess
-      - AWSLambdaVPCAccessExecutionRole
-      - AmazonS3FullAccess
-      - AmazonDynamoDBFullAccess
-    Tracing: Active
-    Events:
-      UpdateResource:
-        Type: Api
-        Properties:
-          Path: /messages/add
-          Method: post
-
+  GetDisplayNameDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.GetUserData
+      Runtime: java11
+      Description: Get User Data for given Display Name
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /user/{displayName}/searchByDisplayName
+            Method: get
+  GetAllUsersDataFunction:
+    Type: AWS::Serverless::Function
+    Properties:
+      CodeUri: ServiceLambda/build/distributions/ServiceLambda.zip
+      Handler: com.kenzie.capstone.service.lambda.GetAllUsers
+      Runtime: java11
+      Description: Get All Users
+      MemorySize: 512
+      Timeout: 240
+      # Function's execution role
+      Policies:
+        - AWSLambdaBasicExecutionRole
+        - AWSLambda_ReadOnlyAccess
+        - AWSXrayWriteOnlyAccess
+        - AWSLambdaVPCAccessExecutionRole
+        - AmazonS3FullAccess
+        - AmazonDynamoDBFullAccess
+      Tracing: Active
+      Events:
+        UpdateResource:
+          Type: Api
+          Properties:
+            Path: /user/getAllUsers
+            Method: get
