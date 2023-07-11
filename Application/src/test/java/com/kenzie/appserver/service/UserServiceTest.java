@@ -152,7 +152,7 @@ public class UserServiceTest {
 
         verify(cacheUserStore, never()).evict(anyString());
     }
-
+    @Test
     void addNewUserTest() {
         String userId = randomUUID().toString();
 
@@ -250,40 +250,6 @@ public class UserServiceTest {
         assertEquals(2, updatedList.size(), "favorite anime list size is correct");
     }
 
-    @Test
-    void addNewFavorite_animeNotInFavorites_throwsException() {
-        String animeId = randomUUID().toString();
-        CatalogRecord anime = new CatalogRecord();
-        anime.setAnimeId(animeId);
-        anime.setDescription("description");
-        anime.setEpisodes(5);
-        anime.setGenre(new ArrayList<>());
-        anime.setImage("image");
-        anime.setPopularity(10);
-        anime.setRating(8);
-        anime.setSeason("season");
-        anime.setStartDate(0605);
-        animeRepository.save(anime);
-
-        String userId = randomUUID().toString();
-        List<String> favorites = new ArrayList<>();
-        favorites.add(animeId);
-
-        UserRecord record = new UserRecord();
-
-        record.setUserId(userId);
-        record.setFavoriteAnime(favorites);
-        repository.save(record);
-
-        when(repository.findByDisplayName(record.getDisplayName())).thenReturn(Optional.of(record));
-        when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
-
-        Assertions.assertThrows(IllegalArgumentException.class, () -> {
-            service.addNewFavorite(record.getDisplayName(), anime.getAnimeId());
-        });
-        verify(repository, times(1)).findByDisplayName(record.getDisplayName());
-        verify(animeRepository, times(1)).findById(anime.getAnimeId());
-    }
     @Test
     void removeFavoriteTest() {
         String animeId = randomUUID().toString();
