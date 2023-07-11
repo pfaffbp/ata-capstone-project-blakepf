@@ -82,21 +82,28 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-
-        UserRecord existingUser = userRepository.findByDisplayName(displayName).orElse(null);
+        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
-
         if (existingUser == null || existingAnime == null) {
-            throw new NullPointerException("User or Anime not found");
+            throw new IllegalArgumentException("User or anime not found.");
         }
 
-        if (existingUser.getFavoriteAnime().contains(animeId)) {
-            throw new IllegalArgumentException("Anime is already in user's favorites.");
-        }
+//        if (existingUser.getFavoriteAnime().contains(animeId)) {
+//            throw new IllegalArgumentException("Anime is already in user's favorites.");
+//        }
 
-        existingUser.getFavoriteAnime().add(animeId);
-        userRepository.save(existingUser);
+        if (existingUser.getFavoriteAnime() == null) {
+            List<String> favorites = new ArrayList<>();
+            favorites.add(animeId);
+            existingUser.setFavoriteAnime(favorites);
+
+            userRepository.save(existingUser);
+        } else {
+            existingUser.getFavoriteAnime().add(animeId);
+
+            userRepository.save(existingUser);
+        }
 
         return existingUser.getFavoriteAnime();
     }

@@ -207,9 +207,9 @@ class AnimePage extends BaseClass {
         document.getElementById("create-box").classList.remove("hide");
 
         document.getElementById("create").addEventListener("click", () => {
-                document.getElementById("create-form").classList.remove("hide");
-                document.getElementById("create").classList.add("hide");
-            }
+            document.getElementById("create-form").classList.remove("hide");
+            document.getElementById("create").classList.add("hide");
+        }
         );
 
     }
@@ -236,13 +236,17 @@ class AnimePage extends BaseClass {
         let userFollowers = await this.client.getUserData(displayName);
         console.log(userFollowers);
 
-        userFollowers = userFollowers.followers;
-        console.log(userFollowers);
+        if (userFollowers.followers != null) {
+            userFollowers = userFollowers.followers;
+            console.log(userFollowers);
 
-        for (let i = 0; i < userFollowers.length; i++) {
-            console.log ("In the forEach of setNotifications");                                                                                   // Check to see if we're in the method.
-            const response = await this.client.setNotification(userFollowers[i], notificationRequest, displayName, this.errorHandler);
-            console.log(response);                                                                                                                // Check to see if it returns a proper response.
+            for (let i = 0; i < userFollowers.length; i++) {
+                console.log("In the forEach of setNotifications");                                                                                   // Check to see if we're in the method.
+                const response = await this.client.setNotification(userFollowers[i], notificationRequest, displayName, this.errorHandler);
+                console.log(response);                                                                                                                // Check to see if it returns a proper response.
+            }
+        } else {
+            console.log("No followers to send notifications to!");
         }
 
     }

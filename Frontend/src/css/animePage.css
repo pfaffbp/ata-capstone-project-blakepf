@@ -206,8 +206,10 @@ img {
     width: 60%;
     height: 100%;
     margin: auto;                               /* Div holding all the content below */
+    margin-top: 100px;
     z-index: 1;
     position: relative;
+   
 }
 
 hr {
