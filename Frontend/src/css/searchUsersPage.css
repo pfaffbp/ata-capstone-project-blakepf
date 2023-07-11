@@ -157,50 +157,46 @@ img {
     color: rgb(109, 113, 208)
 }
 
-.account ul {
-    list-style-type: none;
-    margin: 0;										/* Dropdown */
-    padding: 0;
-    background: #333333;
+.dropdown {
+	display: inline-block;
+	position: relative;
+	height: 50px;
+	line-height: 50px;
 }
 
-.account li {
-    display: inline-block;
+.dropdown-content {
+	display: none;
+	position: absolute;
+	overflow: hidden;
+	height: fit-content;
+	color: white;
+	background: #333333;
+	text-align: left;
 }
 
-.account li a {
-    color: white;
-    display: block;
-    text-decoration: none;
+.dropdown-content li {
+	padding: 15px;
+	width: 250px;
+	color: white;
+	border-bottom: 2px white;
 }
 
-
-.account ul ul {
-    position: absolute;
-    top: 100%;
-    display: none;
+.dropdown-content li:first-child {
+	padding-top: 40px
 }
 
-.account ul ul li {
-    display: block;
-}
-
-.account li:hover ul {
-    display: block;
-}
-
-.account ul ul li a:hover {
-    background-color: #555;					/* Change the background color of dropdown links on hover */
+.dropdown:hover .dropdown-content {
+	display: block;
 }
 
 .main-links {
-    float: left;
+	float: left;
 }
 
 .account {
-    float: right;
-    margin-right: 10px;
-    width: 200px;
+	float: right;
+	margin-right: 10px;
+	width: 250px;
 }
 
 /* ------- Main Content  ------- */
