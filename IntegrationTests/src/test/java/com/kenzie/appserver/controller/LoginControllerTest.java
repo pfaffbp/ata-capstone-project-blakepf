@@ -104,7 +104,7 @@ class LoginControllerTest {
         String newPassword = "newpassword";
 
 
-        when(loginRepository.findByEmail(email)).thenReturn(Optional.empty());
+        when(loginRepository.findByEmail(email)).thenReturn(Optional.ofNullable(null));
 
 
         LoginUpdatePasswordRequest request = new LoginUpdatePasswordRequest();
@@ -115,7 +115,7 @@ class LoginControllerTest {
         mvc.perform(put("/login/changePassword")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().isConflict());
+                .andExpect(status().is(409));
     }
 
 
