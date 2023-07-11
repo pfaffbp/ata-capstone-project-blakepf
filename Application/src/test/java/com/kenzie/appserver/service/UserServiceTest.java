@@ -136,6 +136,23 @@ public class UserServiceTest {
     }
 
     @Test
+    void testUpdateUser_NonExistingUser() {
+        String userId = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+
+        when(repository.existsById(user.getUserId())).thenReturn(false);
+
+        service.updateUser(user);
+
+        verify(repository, never()).findById(anyString());
+        verify(repository, never()).save(any(UserRecord.class));
+
+
+        verify(cacheUserStore, never()).evict(anyString());
+    }
+
+    @Test
     public void testUpdateUser_ThrowsNullPointerException() {
         // Arrange
         User invalidUser = new User(new ArrayList<>(), new ArrayList<>(), "email", randomUUID().toString(), new ArrayList<>(),

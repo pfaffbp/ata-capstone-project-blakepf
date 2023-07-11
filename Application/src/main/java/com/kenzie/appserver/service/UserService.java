@@ -51,29 +51,29 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-            userRepository.findByDisplayName(user.getDisplayName()).ifPresent(userRecord -> {
-                throw new NullPointerException("User with display name is not found!");
-            });
+        userRepository.findByDisplayName(user.getDisplayName()).ifPresent(userRecord -> {
+            throw new NullPointerException("User with display name is not found!");
+        });
 
-            UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
-                if (user.getAge() != userRecord.getAge()) {
-                    userRecord.setAge(user.getAge());
-                }
-                if (user.getEmail() != null && !user.getEmail().equals(userRecord.getEmail())) {
-                    userRecord.setEmail(user.getEmail());
-                }
-                if (user.getFullName() != null && !user.getFullName().equals(userRecord.getFullName())) {
-                    userRecord.setFullName(user.getFullName());
-                }
-                if (user.getDisplayName() != null && !user.getDisplayName().equals(userRecord.getDisplayName())) {
-                    userRecord.setDisplayName(user.getDisplayName());
-                }
-                if (user.getBio() != null && !user.getBio().equals(userRecord.getBio())) {
-                    userRecord.setBio(user.getBio());
-                }
-                userRepository.save(userRecord);
+        UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
+        if (user.getAge() != userRecord.getAge()) {
+            userRecord.setAge(user.getAge());
+        }
+        if (user.getEmail() != null && !user.getEmail().equals(userRecord.getEmail())) {
+            userRecord.setEmail(user.getEmail());
+        }
+        if (user.getFullName() != null && !user.getFullName().equals(userRecord.getFullName())) {
+            userRecord.setFullName(user.getFullName());
+        }
+        if (user.getDisplayName() != null && !user.getDisplayName().equals(userRecord.getDisplayName())) {
+            userRecord.setDisplayName(user.getDisplayName());
+        }
+        if (user.getBio() != null && !user.getBio().equals(userRecord.getBio())) {
+            userRecord.setBio(user.getBio());
+        }
+        userRepository.save(userRecord);
 
-                cache.evict(user.getFullName());
+        cache.evict(user.getFullName());
     }
 
 
