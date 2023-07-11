@@ -51,11 +51,9 @@ public class UserService {
     }
 
     public void updateUser(User user) {
-            userRepository.findByDisplayName(user.getDisplayName()).ifPresent(userRecord -> {
-                throw new NullPointerException("User with display name is not found!");
-            });
-
+        if (userRepository.existsById(user.getUserId())) {
             UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
+            if (userRecord != null) {
                 if (user.getAge() != userRecord.getAge()) {
                     userRecord.setAge(user.getAge());
                 }
@@ -74,10 +72,9 @@ public class UserService {
                 userRepository.save(userRecord);
 
                 cache.evict(user.getFullName());
+            }
+        }
     }
-
-
-
     public void deleteUser(String displayName) {
         userRepository.deleteById(findUserByName(displayName).getUserId());
         cache.evict(displayName);

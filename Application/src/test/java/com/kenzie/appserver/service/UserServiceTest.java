@@ -136,18 +136,6 @@ public class UserServiceTest {
     }
 
     @Test
-    public void testUpdateUser_ThrowsNullPointerException() {
-        // Arrange
-        User invalidUser = new User(new ArrayList<>(), new ArrayList<>(), "email", randomUUID().toString(), new ArrayList<>(),
-                "fullName", "displayName", 27, "bio");
-
-        // Mock the behavior of the userRepository
-        when(repository.findByDisplayName(invalidUser.getDisplayName())).thenReturn(Optional.empty());
-
-        // Act and Assert
-        assertThrows(NullPointerException.class, () -> service.updateUser(invalidUser));
-    }
-    @Test
     void addNewUserTest() {
         String userId = randomUUID().toString();
 
