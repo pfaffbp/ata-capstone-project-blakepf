@@ -29,6 +29,7 @@ class AnimePage extends BaseClass {
 
     async onLoad() {
         let user = localStorage.getItem('displayName')
+
         let LoggedInArea = document.getElementById('userLoggedIn');
         if (user != null) {
             document.getElementById("bell").classList.remove("hide");
@@ -36,6 +37,9 @@ class AnimePage extends BaseClass {
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response);
     }
 
 
@@ -75,8 +79,6 @@ class AnimePage extends BaseClass {
                                 <b>Year Released:</b>  ${response.startDate}
                                 <br>
                                 <b>Genres:</b> ${response.genre}
-                                <br>
-                                <b>Episodes:</b> ${response.episodes}
                             </p>
                         </div>
 
@@ -86,7 +88,7 @@ class AnimePage extends BaseClass {
                                 <br>
                                 <b>Season:</b> ${response.season}
                                 <br>
-                                <b>Property:</b> N/A
+                                <b>Episodes:</b> ${response.episodes}
                             </p>
                         </div>
                     </div>
@@ -259,31 +261,6 @@ class AnimePage extends BaseClass {
         const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
         console.log(response);
     }
-
-    // async setNotifications() {
-    //     console.log("In setNotification");
-    //     let user = localStorage.getItem("displayName");
-    //     console.log(user);                                                                                          // Check to see if it pulls the proper user aka the one currently signed in.
-
-    //     let notificationRequest = user + " added to their Anime List";
-
-    //     const followers = await this.client.getUserData(user).followers;                                            // Iterate through all the followers.
-    //     console.log(followers);
-
-    //     for (let i = 0; i < followers.length; i++) {
-    //         console.log ("In the forEach of setNotifications");                                                     // Check to see if we're in the method.
-    //         const response = this.client.setNotification(followers[i], notificationRequest, this.errorHandler);
-    //         console.log(response);                                                                                  // Check to see if it returns a proper response.
-    //         return response;
-    //     }
-    // }
-
-    // async notification() {
-    //     let response = await this.client.getNotification("testMike", this.errorHandler)
-
-    //     alert(response);
-    //     setInterval(this.notification, 5000);
-    // }
 
 }
 

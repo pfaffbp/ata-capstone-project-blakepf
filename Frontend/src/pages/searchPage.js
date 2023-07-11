@@ -129,6 +129,7 @@ class SearchPage extends BaseClass {
     }
     async onLoad() {
         let user = localStorage.getItem('displayName')
+
         let LoggedInArea = document.getElementById('userLoggedIn');
         if (user != null) {
             document.getElementById("bell").addEventListener("click", this.getNotifications);
@@ -137,6 +138,9 @@ class SearchPage extends BaseClass {
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response);
     }
 
 

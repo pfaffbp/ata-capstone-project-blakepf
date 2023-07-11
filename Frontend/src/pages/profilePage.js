@@ -106,19 +106,18 @@ class ProfilePage extends BaseClass {
     async onLoad() {
         let result = await this.client.getUserData(this.errorHandler);
         this.dataStore.set("userData", result);
-
         let user = localStorage.getItem('displayName')
-
 
         let notification = this.client.getNotifications(user);
         console.log(notification);
 
         if (user != null) {
-
             document.getElementById("bell").classList.remove("hide");
             document.getElementById("bell").addEventListener("click", this.getNotifications);
-
         }
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response)
     }
 
     async Logout(event) {
