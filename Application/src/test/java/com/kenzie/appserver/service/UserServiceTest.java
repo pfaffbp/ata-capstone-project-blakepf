@@ -176,6 +176,27 @@ public class UserServiceTest {
         assertEquals(record.getDisplayName(), user.getDisplayName(), "The display names match");
         assertEquals(record.getFullName(), user.getFullName(), "The full names match");
     }
+
+    @Test
+    void testAddNewUser_RecordPopulation() {
+        String userId = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+
+        ArgumentCaptor<UserRecord> captor = ArgumentCaptor.forClass(UserRecord.class);
+        when(repository.save(captor.capture())).thenReturn(any(UserRecord.class));
+
+        service.addNewUser(user);
+
+        UserRecord savedRecord = captor.getValue();
+        assertEquals(user.getUserId(), savedRecord.getUserId());
+        assertEquals(user.getEmail(), savedRecord.getEmail());
+        assertEquals(user.getFullName(), savedRecord.getFullName());
+        assertEquals(user.getDisplayName(), savedRecord.getDisplayName());
+        assertEquals(user.getAge(), savedRecord.getAge());
+        assertEquals(user.getBio(), savedRecord.getBio());
+    }
+
     @Test
     void deleteUserTest() {
         String userId = randomUUID().toString();
@@ -342,6 +363,48 @@ public class UserServiceTest {
 
         verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
         verify(animeRepository, times(1)).findById(anime.getAnimeId());
+    }
+
+    @Test
+    void removeFavorite_nonExistingAnime_throwsException() {
+        String animeId = randomUUID().toString();
+        String userId = randomUUID().toString();
+
+        List<String> favorites = new ArrayList<>();
+        favorites.add("animeToKeep");
+
+        User user = new User(
+                new ArrayList<>(),
+                new ArrayList<>(),
+                "email",
+                userId,
+                favorites,
+                "fullName",
+                "displayName",
+                27,
+                "bio"
+        );
+
+        UserRecord userRecord = new UserRecord();
+        userRecord.setUserId(user.getUserId());
+        userRecord.setFollowers(user.getFollowers());
+        userRecord.setFollowing(user.getFollowing());
+        userRecord.setFavoriteAnime(user.getFavoriteAnime());
+        userRecord.setEmail(user.getEmail());
+        userRecord.setFullName(user.getFullName());
+        userRecord.setAge(user.getAge());
+        userRecord.setDisplayName(user.getDisplayName());
+        userRecord.setBio(user.getBio());
+
+        when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
+        when(animeRepository.findById(animeId)).thenReturn(Optional.empty());
+
+        Assertions.assertThrows(NullPointerException.class, () -> {
+            service.removeFavorite(userRecord.getDisplayName(), animeId);
+        });
+
+        verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
+        verify(animeRepository, times(1)).findById(animeId);
     }
 
     @Test
@@ -544,4 +607,32 @@ public class UserServiceTest {
         verify(repository).findByEmail("email");
         assertEquals(foundName, userRecord.getDisplayName());
     }
+
+    @Test
+    void testFindDisplayNameByEmail_WhenUserRecordDoesNotExist_ReturnsNull() {
+        String email = "not valid email";
+        when(repository.findByEmail(email)).thenReturn(Optional.empty());
+
+        String displayName = service.findDisplayNameByEmail(email);
+
+        assertEquals(null, displayName);
+    }
+
+    @Test
+    public void testUpdateUser_UserNotFound() {
+        String userId = randomUUID().toString();
+        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, new ArrayList<>(),
+                "fullName", "displayName", 27, "bio");
+        user.setUserId(userId); // Assuming user with ID 123 does not exist in the repository
+        when(repository.findById(userId)).thenReturn(null); // Mocking userRepository behavior
+
+        // Act
+        service.updateUser(user);
+
+        // Assert
+        // Verify that the update and cache eviction methods are not called
+        verify(repository, times(0)).save(any(UserRecord.class));
+        verify(cacheUserStore, times(0)).evict(any(String.class));
+    }
+
 }
