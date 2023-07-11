@@ -1,8 +1,5 @@
 package com.kenzie.capstone.service.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.*;
-
-import java.util.Map;
 import java.util.Objects;
 
 
@@ -20,6 +17,16 @@ public class NotificationData {
     public void setRequestedUUID(String requestedUUID) {
         this.requestedUUID = requestedUUID;
     }
+
+
+//    @DynamoDBRangeKey(attributeName = "userRequest")
+//    public String getUserRequest() {
+//         return userRequest.getDisplayName() + ":" + userRequest.getAction();
+//    }
+//
+//    public void setUserRequest(UserRequest request) {
+//        this.userRequest = request;
+//    }
 
 
     public String getUserRequest() {
@@ -52,3 +59,4 @@ public class NotificationData {
         return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
     }
 }
+
