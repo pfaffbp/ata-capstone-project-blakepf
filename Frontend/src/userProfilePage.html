@@ -20,6 +20,7 @@
       }
     }
   </script>
+
 </head>
 
 <body>
@@ -52,10 +53,9 @@
           </div>
         </div>
         <li>
-          <a class="userLoggedIn" id="userLoggedIn">Login </a>
+          <a onmouseover="menu(this)" class="userLoggedIn" id="userLoggedIn">Login </a>
           <ul>
             <li><a href="userProfilePage.html">Profile</a></li>
-            <li><a href="searchUsers.html">Search Users</a></li>
             <li><a href="signup.html">Signup</a></li>
             <li><a href="login.html">Login</a></li>
             <li><a href="updatePassword.html">Update Password</a></li>
@@ -75,45 +75,41 @@
     </div>
 
     <div class="main">
-      <!-- Insert your profile content here. -->
+
       <div class="display-name">
         <h1 id="displayName">Display Name</h1>
+
+        <div class="follower-count">
+          <div class="wah">
+            <h5>Followers</h5><span id="followers"></p>
+              <h5>Following</h5><span id="following"></p>
+
+          </div>
+          <button id="follow">FOLLOW</button>
+        </div>
       </div>
 
       <hr>
+
       <div class="top-half">
         <div class="image-box">
-          <img
-            src="https://a0.anyrgb.com/pngimg/1676/410/soma-saito-haruichi-furudate-shoyo-hinata-haikyuu-haikyu-hinata-seiyu-tooth-cool-hairstyle-thumbnail.png">
+          <img src="	https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg">
         </div>
 
         <div class="user-info">
           <ul>
-            <p id="fullName"> Fullname</p>
-            <p id="age">Age</p>
-            <p id="bio"> This will be the bio.</p>
-
+            <li id="fullName"> Fullname</li>
+            <li id="age">Age</li>
+            <li id="bio"> This will be the bio.</li>
           </ul>
         </div>
+
       </div>
 
       <div class="bottom-half">
         <div class="favorite-list">
           <h4>Top 10 Favorite Anime</h4>
           <ol id="favAnime">
-
-          </ol>
-        </div>
-        <div class="favorite-list">
-          <h4>Followers: </h4>
-          <ol id="followers">
-
-          </ol>
-        </div>
-        <div class="favorite-list">
-          <h4>Following: </h4>
-          <ol id="following">
-
           </ol>
         </div>
 
@@ -122,13 +118,12 @@
           <button class="review-button">+ Click to load more Reviews +</button>
         </div>
       </div>
+
     </div>
 
-  </div>
-
-  <div class="rightImage">
-    <img src="css/tanjiro-right.png">
-  </div>
+    <div class="rightImage">
+      <img src="css/tanjiro-right.png">
+    </div>
 
 
 </body>

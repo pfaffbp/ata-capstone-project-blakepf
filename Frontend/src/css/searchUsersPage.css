@@ -16,6 +16,7 @@ img {
 }
 
 
+
 /* ------- Navigation Bar ------- */
 
 .logo {
@@ -190,7 +191,8 @@ img {
 }
 
 .account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
+	background-color: #555;	
+	display: block;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {
@@ -359,88 +361,149 @@ img {
     padding-bottom: 20px;
 }
 
-.profile-content {
-    background: blue;
+.display-name {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 90%;
+	margin: auto;
 }
 
-.display-name {
-    margin-left: 50px;
-    padding: 0;
+#displayName {
+	margin-top: auto;
 }
+
+.follower-count {
+	width: 250px;
+	height: 100px;
+	background: gray;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin-top: 10px;
+}
+
+.wah {
+	width: 100px;
+	margin: auto;
+}
+
+#follow {
+	display: inline-block;
+	height: 50px;
+	margin-right: 15px;
+}
+
+#follow {
+	background: purple;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	margin: auto 0;
+}
+
+
 
 hr {
-    background-color: purple;
-    height: 3px;                                /* Horizontal line and style */
-    border: none;
-    width: 95%;
+	background-color: purple;
+	height: 3px;
+	/* Horizontal line and style */
+	border: none;
+	width: 95%;
 }
 
 .image-box {
-    width: 20%;
-    margin: 50px;
-    display: inline-block;
+	width: 20%;
+	margin: 50px;
+	margin-left: 60px;
+	display: inline-block;
 }
 
 .user-info {
-    border: 2px double silver;
-    background: purple;
-    border-radius: 10px;;
-    width: 60%;
-    height: fit-content;
-    position: absolute;
-    display: inline-block;
-    margin: 50px 30px;
-    padding: 5px;
+	border: 2px double silver;
+	background: purple;
+	border-radius: 10px;
+	;
+	width: 60%;
+	height: fit-content;
+	position: absolute;
+	display: inline-block;
+	margin: 50px 30px;
+	padding: 5px;
 }
 
 .user-info ul {
-    list-style: none;
+	list-style: none;
 }
 
 .user-info p {
-    margin: 30px;
+	margin: 30px;
 }
 
 .bottom-half {
-    margin: auto;
-    display: flex;
-    width: 100%;
-    justify-content: center;;
+	margin: auto;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	;
 }
 
 .favorite-list {
-    border: 2px double purple;
-    width: 40%;
-    margin: auto;
-    padding: 10px;
-    display: inline-block;
-    position: relative;
+	border: 2px double purple;
+	width: 40%;
+	margin: auto;
+	padding: 10px;
+	display: inline-block;
+	position: relative;
 }
 
 .favorite-list h4 {
-    text-align: center;
+	text-align: center;
+}
+
+.friend-list {
+	border: 2px double purple;
+	width: 40%;
+	margin: auto;
+	padding: 10px;
+	display: inline-block;
+	position: relative;
+}
+
+.friend-list h4 {
+	text-align: center;
 }
 
 .reviews {
-    border: 2px double purple;
-    width: 40%;
-    height: inherit;
-    margin: auto;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    text-align: center;
+	border: 2px double purple;
+	width: 40%;
+	height: inherit;
+	margin: auto;
+	display: inline-block;
+	padding: 10px;
+	position: relative;
+	top: 0%;
+	text-align: center;
 }
 
 .review-button {
-    background: purple;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    width: 100%;
-    height: 20px;
+	width: 100%;
+	height: 20px;
+}
+
+.updateProfileBtn {
+	background: white;
+	color: purple;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	border: none;
+	width: 50%;
+	height: 20px;
 }
 
 

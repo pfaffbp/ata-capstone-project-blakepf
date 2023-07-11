@@ -15,7 +15,7 @@ export default class SearchUsersClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getUserData' ];
+        const methodsToBind = ['clientLoaded', 'getUserData', 'follow', 'unfollow'];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -51,6 +51,24 @@ export default class SearchUsersClient extends BaseClass {
         }
     }
 
+    async follow (displayName, friendDisplayName, errorCallback) {
+        try {
+            const response = await this.client.post(`user/${displayName}/followUser/${friendDisplayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('follow', error, errorCallback);
+        }
+    }
+
+    async unfollow (displayName, friendFullName, errorCallback) {
+        try {
+            const response = await this.client.delete(`user/${displayName}/unfollowUser/${friendFullName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('unfollow', error, errorCallback);
+        }
+    }
+
     async getNotifications (displayName, errorCallback) {
         try {
             const response = await this.client.get(`notification/getNotification/${displayName}`)
@@ -61,11 +79,15 @@ export default class SearchUsersClient extends BaseClass {
     }
 
     
-    async setNotification (displayName, notificationRequest, errorCallback) {
+    async setNotification (displayName, notificationRequest, requester, errorCallback) {
         try {
-            const response = await this.client.post(`notification/setNotification/${displayName}`, {
+            const response = await this.client.post(`/notification/setNotification/${displayName}`, {
                 requestedUUID: displayName,
-                notificationRequest:  notificationRequest});
+                userRequest: {
+                    displayName: requester,
+                    action: notificationRequest
+                },
+                hasBeenViewed:  false});
             return response.data;
         } catch (error) {
             this.handleError('setNotifications', error, errorCallback);

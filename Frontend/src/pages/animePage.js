@@ -75,8 +75,6 @@ class AnimePage extends BaseClass {
                                 <b>Year Released:</b>  ${response.startDate}
                                 <br>
                                 <b>Genres:</b> ${response.genre}
-                                <br>
-                                <b>Episodes:</b> ${response.episodes}
                             </p>
                         </div>
 
@@ -86,7 +84,7 @@ class AnimePage extends BaseClass {
                                 <br>
                                 <b>Season:</b> ${response.season}
                                 <br>
-                                <b>Property:</b> N/A
+                                <b>Episodes:</b> ${response.episodes}
                             </p>
                         </div>
                     </div>
@@ -95,6 +93,11 @@ class AnimePage extends BaseClass {
             <div class="reviews">
                 <h3>Reviews:</h3>
                 <hr>
+                <button id = "load">
+                    <span> &#10533; Load Reviews &#10534; </span>
+                </button>
+
+                
 
                 <div id = "create-box" class = "hide">
                     <h3 id = "title-create"> Have some thoughts of your own? Share them! </h3>
@@ -121,9 +124,9 @@ class AnimePage extends BaseClass {
                 </div>
 
                 <div id = "reviewBox"></div>
-                <button id = "load">
-                    <span> &#10533; Load Reviews &#10534; </span>
-                </button>
+
+                
+                
             </div>
             `
 
@@ -236,68 +239,48 @@ class AnimePage extends BaseClass {
         let userFollowers = await this.client.getUserData(displayName);
         console.log(userFollowers);
 
-        userFollowers = userFollowers.followers;
-        console.log(userFollowers);
+        if (userFollowers.followers != null) {
+            userFollowers = userFollowers.followers
+            console.log(userFollowers);
 
-        for (let i = 0; i < userFollowers.length; i++) {
-            console.log("In the forEach of setNotifications");                                                                                   // Check to see if we're in the method.
-            const response = await this.client.setNotification(userFollowers[i], notificationRequest, displayName, this.errorHandler);
-            console.log(response);                                                                                                                // Check to see if it returns a proper response.
+            for (let i = 0; i < userFollowers.length; i++) {
+                console.log("In the forEach of setNotifications");                                                                                   // Check to see if we're in the method.
+                const response = await this.client.setNotification(userFollowers[i], notificationRequest, displayName, this.errorHandler);
+                console.log(response);                                                                                                                // Check to see if it returns a proper response.
+            } 
+            
+        }else {
+                console.log("No followers to send notification to!");
+            }
+
         }
-
-    }
 
     async getNotifications() {
-        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
-        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
-        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+            console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+            let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+            console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
 
-        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+            const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
 
-        let notificationDiv = document.getElementById("notification-items");     // Create variable to point to notification dropdown.
-        let notificationHtml = "";                                               // Create variable of an empty string.
+            let notificationDiv = document.getElementById("notification-items");     // Create variable to point to notification dropdown.
+            let notificationHtml = "";                                               // Create variable of an empty string.
 
-        for (let i = 0; i < response.length; i++) {
-            console.log("In fori loop to gather response details");
-            console.log(response.length)                                         // Verify length
-            notificationHtml +=
-                `<div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> 
+            for (let i = 0; i < response.length; i++) {
+                console.log("In fori loop to gather response details");
+                console.log(response.length)                                         // Verify length
+                notificationHtml +=
+                    `<div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> 
             <p> ${response[i].userRequest} </p>
         </div> `
-            console.log(response[i].userRequest)
+                console.log(response[i].userRequest)
+            }
+
+            notificationDiv.innerHTML = notificationHtml;                              // Setting the newly created html to the innerHtml of the notification dropdown.
+            console.log(notificationDiv.innerHTML)
+            console.log(response);
         }
 
-        notificationDiv.innerHTML = notificationHtml;                              // Setting the newly created html to the innerHtml of the notification dropdown.
-        console.log(notificationDiv.innerHTML)
-        console.log(response);
     }
-
-    async setNotifications() {
-        console.log("In setNotification");
-        let user = localStorage.getItem("displayName");
-        console.log(user);                                                                                          // Check to see if it pulls the proper user aka the one currently signed in.
-
-        let notificationRequest = user + " added to their Anime List";
-
-        const followers = await this.client.getUserData(user).followers;                                            // Iterate through all the followers.
-        console.log(followers);
-
-        for (let i = 0; i < followers.length; i++) {
-            console.log("In the forEach of setNotifications");                                                     // Check to see if we're in the method.
-            const response = this.client.setNotification(followers[i], notificationRequest, this.errorHandler);
-            console.log(response);                                                                                  // Check to see if it returns a proper response.
-            return response;
-        }
-    }
-
-    // async notification() {
-    //     let response = await this.client.getNotification("testMike", this.errorHandler)
-
-    //     alert(response);
-    //     setInterval(this.notification, 5000);
-    // }
-
-}
 
 function getMonth(date) {
     console.log(date)

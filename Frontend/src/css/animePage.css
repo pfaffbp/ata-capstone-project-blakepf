@@ -190,7 +190,8 @@ img {
 }
 
 .account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
+	background-color: #555;	
+	display: block;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {
@@ -337,6 +338,7 @@ hr {
     padding-left: 30px;
     border: 2px purple double;
     border-radius: 10px;
+    word-wrap: break-word;
 }
 
 .addl-info-2 {
@@ -352,7 +354,7 @@ hr {
 }
 
 .hide {
-	visibility: hidden;
+    display: none;
 }
 
 .reviews {

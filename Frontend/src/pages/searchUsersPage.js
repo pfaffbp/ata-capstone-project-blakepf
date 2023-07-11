@@ -10,7 +10,7 @@ class SearchUsersPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['renderUserProfile', 'onSearch', 'onLoad', 'getNotifications'], this);
+        this.bindClassMethods(['renderUserProfile', 'onSearch', 'onLoad', 'getNotifications', 'follow'], this);
         this.dataStore = new DataStore();
     }
 
@@ -93,6 +93,8 @@ class SearchUsersPage extends BaseClass {
             followingArea.innerHTML = " ";
 
         }
+
+        document.getElementById("follow").addEventListener('click', this.follow);
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
@@ -109,6 +111,7 @@ class SearchUsersPage extends BaseClass {
         localStorage.clear();
         window.location.href = "login.html";
     }
+
     async onLoad() {
         let user = localStorage.getItem('displayName')
         let LoggedInArea = document.getElementById('userLoggedIn');
@@ -118,6 +121,24 @@ class SearchUsersPage extends BaseClass {
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+    }
+
+    async follow() {
+        let user = localStorage.getItem('displayName');
+        console.log(user)
+
+        let friendDisplayName = this.dataStore.get("userData");
+        friendDisplayName = friendDisplayName.displayName;
+        console.log(friendDisplayName);
+
+        const response = await this.client.follow(user, friendDisplayName, this.errorHandler);
+        console.log(response)
+
+        let notificationRequest = " has followed you!";
+        console.log(notificationRequest);
+
+        const notifResponse = await this.client.setNotification(friendDisplayName, notificationRequest, user, this.errorHandler);
+        console.log(notifResponse);
     }
 
     async getNotifications() {
@@ -144,6 +165,8 @@ class SearchUsersPage extends BaseClass {
         console.log(notificationDiv.innerHTML)
         console.log(response);
     }
+
+
 
 }
 

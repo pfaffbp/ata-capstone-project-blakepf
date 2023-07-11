@@ -188,7 +188,8 @@ img {
 }
 
 .account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
+	background-color: #555;	
+	display: block;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {

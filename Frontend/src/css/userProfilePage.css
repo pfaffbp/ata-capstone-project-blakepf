@@ -1,18 +1,28 @@
-
 * {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 	box-sizing: border-box;
 }
 
 body {
-    width: 100%;
-    background: black;
-    color: white;
+	width: 100%;
+	background: black;
+	color: white;
 	overflow-x: hidden;
 }
 
 img {
-    width: 100%;
+	width: 100%;
+}
+
+button {
+	background: purple;
+	color: white;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	border: none;
+	border-radius: 10px;
+	margin: auto 0;
 }
 
 
@@ -47,7 +57,8 @@ img {
 }
 
 .main-links {
-	display: inline-block;					/*	 Home, Community, Manga, Search Users, Search Titles	*/
+	display: inline-block;
+	/*	 Home, Community, Manga, Search Users, Search Titles	*/
 	line-height: 80px;
 }
 
@@ -58,7 +69,8 @@ img {
 
 #bell {
 	display: block;
-	position: absolute;						/*	 Notification Bell Div	*/
+	position: absolute;
+	/*	 Notification Bell Div	*/
 	right: 250px;
 	top: 15px;
 }
@@ -107,7 +119,7 @@ img {
 }
 
 
-	/*	----  Notifications Box	---- */
+/*	----  Notifications Box	---- */
 
 #notification-items {
 	visibility: hidden;
@@ -125,7 +137,8 @@ img {
 }
 
 #notification-items::-webkit-scrollbar {
-	width: 0;												/* Hide scrollbar, but still can scroll! */
+	width: 0;
+	/* Hide scrollbar, but still can scroll! */
 }
 
 .notification {
@@ -159,7 +172,8 @@ img {
 
 .account ul {
 	list-style-type: none;
-	margin: 0;										/* Dropdown */
+	margin: 0;
+	/* Dropdown */
 	padding: 0;
 	background: #333333;
 }
@@ -181,6 +195,10 @@ img {
 	display: none;
 }
 
+.account ul ul:hover, .account ul ul li:hover {
+	display: block;
+}
+
 .account ul ul li {
 	display: block;
 }
@@ -190,7 +208,8 @@ img {
 }
 
 .account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
+	background-color: #555;	
+	display: block;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {
@@ -207,153 +226,185 @@ img {
 /* ------- Main Content  ------- */
 
 .flex-container {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    padding-top: 100px;
-    border: none;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	width: 100%;
+	height: 100%;
+	padding-top: 100px;
+	border: none;
 }
 
 /* ------- Left side banner  ------- */
 
 .leftImage {
-    width: 20%;
-    position: fixed;                        /* Currently Zenitsu from Demon Slayer. May change it to something else! */
-    bottom: 1%;
-    left: 3%;
+	width: 20%;
+	position: fixed;
+	/* Currently Zenitsu from Demon Slayer. May change it to something else! */
+	bottom: 1%;
+	left: 3%;
 }
 
 /* ------- Right side banner  ------- */
 
 .rightImage {
-    width: 30%;
-    position: fixed;                        /* Currently Tanjiro from Demon Slayer. May also change it to something else! */
-    right: 0%;
-    top: 8%;
+	width: 30%;
+	position: fixed;
+	/* Currently Tanjiro from Demon Slayer. May also change it to something else! */
+	right: 0%;
+	top: 8%;
 }
 
 /* ------- Center Div, Holds All Search Content  ------- */
 
 .main {
-    background: #242924;
-    color: white;
-    border: 2px solid white;         /* <----- Remove this once you've styled the rest of the page. */
-    width: 60%;                        /* I pretty much only put the border there so you can separate the content from the background." */
-    margin: auto;
-    top: -5%;
-    z-index: 1;
-    position: relative;
+	background: #242924;
+	color: white;
+	border: 2px solid white;
+	width: 60%;
+	margin: auto;
+	top: -5%;
+	z-index: 1;
+	position: relative;
 }
 
 .main h2 {
-    margin-left: 20px;
-    margin-top: 10px;
-    text-transform: capitalize;
-    font-weight: bold;
+	margin-left: 20px;
+	margin-top: 10px;
+	text-transform: capitalize;
+	font-weight: bold;
 }
 
 .display-name {
-    margin-left: 50px;
-    padding: 0;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	width: 90%;
+	margin: auto;
 }
 
+#displayName {
+	margin-top: auto;
+}
+
+.follower-count {
+	width: 250px;
+	height: 100px;
+	background: gray;
+	border-radius: 20px;
+	display: flex;
+	flex-direction: row;
+	justify-content: space-evenly;
+	margin-top: 10px;
+}
+
+.wah {
+	width: 100px;
+	margin: auto;
+}
+
+#follow {
+	display: inline-block;
+	height: 50px;
+	margin-right: 15px;
+}
+
+
+
 hr {
-    background-color: purple;
-    height: 3px;                                /* Horizontal line and style */
-    border: none;
-    width: 95%;
+	background-color: purple;
+	height: 3px;
+	/* Horizontal line and style */
+	border: none;
+	width: 95%;
 }
 
 .image-box {
-    width: 20%;
-    margin: 50px;
-    display: inline-block;
+	width: 20%;
+	margin: 50px;
+	margin-left: 60px;
+	display: inline-block;
 }
 
 .user-info {
-    border: 2px double silver;
-    background: purple;
-    border-radius: 10px;;
-    width: 60%;
-    height: fit-content;
-    position: absolute;
-    display: inline-block;
-    margin: 50px 30px;
-    padding: 5px;
+	border: 2px double silver;
+	background: purple;
+	border-radius: 10px;
+	;
+	width: 60%;
+	height: fit-content;
+	position: absolute;
+	display: inline-block;
+	margin: 50px 30px;
+	padding: 5px;
 }
 
 .user-info ul {
-    list-style: none;
+	list-style: none;
 }
 
 .user-info p {
-    margin: 30px;
+	margin: 30px;
 }
 
 .bottom-half {
-    margin: auto;
-    display: flex;
-    width: 100%;
-    justify-content: center;;
+	margin: auto;
+	display: flex;
+	width: 100%;
+	justify-content: center;
+	;
 }
 
 .favorite-list {
-    border: 2px double purple;
-    width: 40%;
-    margin: auto;
-    padding: 10px;
-    display: inline-block;
-    position: relative;
+	border: 2px double purple;
+	width: 40%;
+	margin: auto;
+	padding: 10px;
+	display: inline-block;
+	position: relative;
 }
 
 .favorite-list h4 {
-    text-align: center;
+	text-align: center;
 }
+
 .friend-list {
-    border: 2px double purple;
-    width: 40%;
-    margin: auto;
-    padding: 10px;
-    display: inline-block;
-    position: relative;
+	border: 2px double purple;
+	width: 40%;
+	margin: auto;
+	padding: 10px;
+	display: inline-block;
+	position: relative;
 }
 
 .friend-list h4 {
-    text-align: center;
+	text-align: center;
 }
 
 .reviews {
-    border: 2px double purple;
-    width: 40%;
-    height: inherit;
-    margin: auto;
-    display: inline-block;
-    padding: 10px;
-    position: relative;
-    top: 0%;
-    text-align: center;
+	border: 2px double purple;
+	width: 40%;
+	height: inherit;
+	margin: auto;
+	display: inline-block;
+	padding: 10px;
+	position: relative;
+	top: 0%;
+	text-align: center;
 }
 
 .review-button {
-    background: purple;
-    color: white;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    width: 100%;
-    height: 20px;
-}
-.updateProfileBtn {
-    background: white;
-    color: purple;
-    text-align: center;
-    text-decoration: none;
-    font-weight: bold;
-    border: none;
-    width: 50%;
-    height: 20px;
+	width: 100%;
+	height: 20px;
 }
 
+.updateProfileBtn {
+	background: white;
+	color: purple;
+	text-align: center;
+	text-decoration: none;
+	font-weight: bold;
+	border: none;
+	width: 50%;
+	height: 20px;
+}
