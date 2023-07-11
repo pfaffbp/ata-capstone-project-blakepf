@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 @Service
 public class UserService {
@@ -50,31 +51,6 @@ public class UserService {
         return user;
     }
 
-    public void updateUser(User user) {
-        if (userRepository.existsById(user.getUserId())) {
-            UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
-            if (userRecord != null) {
-                if (user.getAge() != userRecord.getAge()) {
-                    userRecord.setAge(user.getAge());
-                }
-                if (user.getEmail() != null && !user.getEmail().equals(userRecord.getEmail())) {
-                    userRecord.setEmail(user.getEmail());
-                }
-                if (user.getFullName() != null && !user.getFullName().equals(userRecord.getFullName())) {
-                    userRecord.setFullName(user.getFullName());
-                }
-                if (user.getDisplayName() != null && !user.getDisplayName().equals(userRecord.getDisplayName())) {
-                    userRecord.setDisplayName(user.getDisplayName());
-                }
-                if (user.getBio() != null && !user.getBio().equals(userRecord.getBio())) {
-                    userRecord.setBio(user.getBio());
-                }
-                userRepository.save(userRecord);
-
-                cache.evict(user.getFullName());
-            }
-        }
-    }
     public void deleteUser(String displayName) {
         userRepository.deleteById(findUserByName(displayName).getUserId());
         cache.evict(displayName);
@@ -82,7 +58,7 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
+        UserRecord existingUser = userRepository.findByDisplayName(displayName).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
@@ -184,6 +160,31 @@ public class UserService {
             return record.get().getDisplayName();
         } else {
             return null;
+        }
+    }
+    public void updateUser(User user) {
+        if (!userRepository.existsById(user.getUserId())) {
+            return;
+        }
+
+        UserRecord userRecord = userRepository.findById(user.getUserId()).orElse(null);
+        if (userRecord == null) {
+            return;
+        }
+
+        updateIfDifferent(user.getAge(), userRecord::setAge);
+        updateIfDifferent(user.getEmail(), userRecord::setEmail);
+        updateIfDifferent(user.getFullName(), userRecord::setFullName);
+        updateIfDifferent(user.getDisplayName(), userRecord::setDisplayName);
+        updateIfDifferent(user.getBio(), userRecord::setBio);
+
+        userRepository.save(userRecord);
+        cache.evict(user.getFullName());
+    }
+
+    private <User> void updateIfDifferent(User newValue, Consumer<User> setter) {
+        if (newValue != null && !newValue.equals(getClass())) {
+            setter.accept(newValue);
         }
     }
 }

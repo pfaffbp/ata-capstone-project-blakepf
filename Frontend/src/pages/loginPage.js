@@ -119,6 +119,9 @@ class LoginPage extends BaseClass {
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response);
     }
 
     async getNotifications() {

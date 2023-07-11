@@ -46,7 +46,7 @@ img {
 }
 
 .main-links {
-    display: inline-block;
+    display: inline-block;					/*	 Home, Community, Manga, Search Users, Search Titles	*/
     line-height: 80px;
 }
 
@@ -54,15 +54,15 @@ img {
     color: purple;
 }
 
+
 #bell {
-    display: inline-block;
-    line-height: 80px;
-    width: 50px;
-    height: 50px;
-    margin-right: auto;
-    padding-top: 10px;
-    padding-right: 50px;
+    display: block;
+    position: absolute;						/*	 Notification Bell Div	*/
+    right: 250px;
+    top: 15px;
 }
+
+/*	----  Notification Bell Styling	---- */
 
 .icon-button {
     position: relative;
@@ -80,6 +80,7 @@ img {
 
 .icon-button:hover {
     cursor: pointer;
+    background: plum;
 }
 
 .icon-button:active {
@@ -92,7 +93,7 @@ img {
     right: -10px;
     width: 25px;
     height: 25px;
-    background: red;
+    background: purple;
     color: #ffffff;
     display: flex;
     justify-content: center;
@@ -105,52 +106,96 @@ img {
 }
 
 
-.account ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-    background: #333333;
-}
+/*	----  Notifications Box	---- */
 
-.account li {
-    display: inline-block;
-}
-
-.account li a {
-    color: white;
-    display: block;
-    text-decoration: none;
-}
-
-/* Style the dropdown menu */
-.account ul ul {
+#notification-items {
+    visibility: hidden;
     position: absolute;
-    top: 100%;
-    display: none;
-}
-
-.account ul ul li {
+    right: 0px;
+    top: 55px;
+    background-color: #333333;
+    width: 400px;
+    height: 300px;
+    max-height: 500px;
     display: block;
+    border-radius: 10px;
+    overflow-y: scroll;
+    transition: visibility 0s .5s, opacity .5s ease-in;
 }
 
-.account li:hover ul {
-    display: block;
+#notification-items::-webkit-scrollbar {
+    width: 0;												/* Hide scrollbar, but still can scroll! */
 }
 
-/* Change the background color of dropdown links on hover */
-.account ul ul li a:hover {
-    background-color: #555;
+.notification {
+    background: silver;
+    height: fit-content;
+    max-height: 100px;
+    margin: 20px;
+    text-align: center;
+    word-wrap: break-word;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
+.notification-img {
+    height: 50px;
+    width: fit-content;
+    margin: auto;
+    border-radius: 50%;
+    padding: 5px;
+}
+
+.notification p {
+    margin: auto;
+    margin-left: -10px;
+    width: 70%;
+    padding: 5px;
+    color: rgb(109, 113, 208)
+}
+
+.dropdown {
+	display: inline-block;
+	position: relative;
+	height: 50px;
+	line-height: 50px;
+}
+
+.dropdown-content {
+	display: none;
+	position: absolute;
+	overflow: hidden;
+	height: fit-content;
+	color: white;
+	background: #333333;
+	text-align: left;
+}
+
+.dropdown-content li {
+	padding: 15px;
+	width: 250px;
+	color: white;
+	border-bottom: 2px white;
+}
+
+.dropdown-content li:first-child {
+	padding-top: 40px
+}
+
+.dropdown:hover .dropdown-content {
+	display: block;
+}
 
 .main-links {
-    float: left;
+	float: left;
 }
 
 .account {
-    float: right;
-    margin-right: 10px;
-    width: 200px;
+	float: right;
+	margin-right: 10px;
+	width: 250px;
 }
 
 /* ------- Main Content  ------- */

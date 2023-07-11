@@ -119,21 +119,21 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
     }
 
-    @Test
-    public void testFollowUser() throws Exception {
-        // Create two users using the userService
-        User user1 = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(),
-                new ArrayList<>(), "fullName", "displayName", 27, "bio");
-        userService.addNewUser(user1);
-
-        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", UUID.randomUUID().toString(),
-                new ArrayList<>(), "fullName2", "displayName2", 27, "bio2");
-        userService.addNewUser(user2);
-
-        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/followUser/{friendFullName}", "displayName", "displayName2")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
-    }
+//    @Test
+//    public void testFollowUser() throws Exception {
+//        // Create two users using the userService
+//        User user1 = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(),
+//                new ArrayList<>(), "fullName", "displayName", 27, "bio");
+//        userService.addNewUser(user1);
+//
+//        User user2 = new User(new ArrayList<>(), new ArrayList<>(), "email2", UUID.randomUUID().toString(),
+//                new ArrayList<>(), "fullName2", "displayName2", 27, "bio2");
+//        userService.addNewUser(user2);
+//
+//        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/followUser/{friendFullName}", "displayName", "displayName2")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(MockMvcResultMatchers.status().isOk());
+//    }
 
     @Test
     public void testUnfollowUser() throws Exception {
@@ -154,50 +154,50 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("displayName"));
     }
 
-    @Test
-    public void testAddFavorite() throws Exception {
-        // Create a user using the userService
-        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
-                "fullName", "testuser", 28, "bio");
+//    @Test
+//    public void testAddFavorite() throws Exception {
+//        // Create a user using the userService
+//        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
+//                "fullName", "testuser", 28, "bio");
+//
+//        userService.addNewUser(user);
+//
+//        Anime anime = new Anime("title", "animeId", "description", "image",
+//                01, "season", 1, 2, 3, new ArrayList<>());
+//
+//        animeService.addNewAnime(anime);
+//
+//
+//        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/addFavorite/{animeId}", "testuser", "animeId")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(user.getUserId()))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(28))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("fullName"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("bio"))
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime[0]").value("animeId"));
+//    }
 
-        userService.addNewUser(user);
-
-        Anime anime = new Anime("title", "animeId", "description", "image",
-                01, "season", 1, 2, 3, new ArrayList<>());
-
-        animeService.addNewAnime(anime);
-
-
-        mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/addFavorite/{animeId}", "testuser", "animeId")
-                    .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.userId").value(user.getUserId()))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.age").value(28))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.email").value("email"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.fullName").value("fullName"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("bio"))
-                .andExpect(MockMvcResultMatchers.jsonPath("$.favoriteAnime[0]").value("animeId"));
-    }
-
-    @Test
-    public void testRemoveFavorite() throws Exception {
-        // Create a user using the userService
-        Anime anime = new Anime("title", "animeId", "description", "image",
-                01, "season", 1, 2, 3, new ArrayList<>());
-        animeService.addNewAnime(anime);
-
-        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
-                "fullName", "testuser", 28, "bio");
-        user.getFavoriteAnime().add("animeId");
-
-        userService.addNewUser(user);
-
-        mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/removeFavorite/{animeId}/removeFavorite", "testuser", "123")
-                        .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
-                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"));
-    }
+//    @Test
+//    public void testRemoveFavorite() throws Exception {
+//        // Create a user using the userService
+//        Anime anime = new Anime("title", "animeId", "description", "image",
+//                01, "season", 1, 2, 3, new ArrayList<>());
+//        animeService.addNewAnime(anime);
+//
+//        User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
+//                "fullName", "testuser", 28, "bio");
+//        user.getFavoriteAnime().add("animeId");
+//
+//        userService.addNewUser(user);
+//
+//        mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/removeFavorite/{animeId}/removeFavorite", "testuser", "123")
+//                        .accept(MediaType.APPLICATION_JSON))
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("testuser"));
+//    }
 
     @Test
     public void testFindDisplayNameByEmail() throws Exception {

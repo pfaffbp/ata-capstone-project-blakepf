@@ -18,178 +18,174 @@ img {
 /* ------- Navigation Bar ------- */
 
 .logo {
-	width: 200px;
-	min-width: 175px;
-	margin-left: 20px;
-	margin-right: 30px;
-	margin-top: 5px;
-	float: left;
+    width: 200px;
+    min-width: 175px;
+    margin-left: 20px;
+    margin-right: 30px;
+    margin-top: 5px;
+    float: left;
 }
 
 .nav {
-	background-color: #333333;
-	position: fixed;
-	width: 100%;
-	top: 0;
-	left: 0;
-	height: 80px;
-	font-size: 20 px;
-	font-weight: bold;
-	z-index: 2;
+    background-color: #333333;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    height: 80px;
+    font-size: 20 px;
+    font-weight: bold;
+    z-index: 2;
 }
 
 .nav a {
-	color: white;
-	text-transform: uppercase;
-	text-decoration: none;
-	padding: 25px 15px;
+    color: white;
+    text-transform: uppercase;
+    text-decoration: none;
+    padding: 25px 15px;
 }
 
 .main-links {
-	display: inline-block;					/*	 Home, Community, Manga, Search Users, Search Titles	*/
-	line-height: 80px;
+    display: inline-block;					/*	 Home, Community, Manga, Search Users, Search Titles	*/
+    line-height: 80px;
 }
 
 .nav a:hover {
-	color: purple;
+    color: purple;
 }
 
 
 #bell {
-	display: block;
-	position: absolute;						/*	 Notification Bell Div	*/
-	right: 250px;
-	top: 15px;
+    display: block;
+    position: absolute;						/*	 Notification Bell Div	*/
+    right: 250px;
+    top: 15px;
 }
 
 /*	----  Notification Bell Styling	---- */
 
 .icon-button {
-	position: relative;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	width: 50px;
-	height: 50px;
-	color: #333333;
-	background: #dddddd;
-	border: none;
-	outline: none;
-	border-radius: 50%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    color: #333333;
+    background: #dddddd;
+    border: none;
+    outline: none;
+    border-radius: 50%;
 }
 
 .icon-button:hover {
-	cursor: pointer;
-	background: plum;
+    cursor: pointer;
+    background: plum;
 }
 
 .icon-button:active {
-	background: #cccccc;
+    background: #cccccc;
 }
 
 .icon-button__badge {
-	position: absolute;
-	top: 0px;
-	right: -10px;
-	width: 25px;
-	height: 25px;
-	background: purple;
-	color: #ffffff;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	border-radius: 50%;
+    position: absolute;
+    top: 0px;
+    right: -10px;
+    width: 25px;
+    height: 25px;
+    background: purple;
+    color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
 }
 
 .hide {
-	visibility: hidden;
+    visibility: hidden;
 }
 
 
-	/*	----  Notifications Box	---- */
+/*	----  Notifications Box	---- */
 
 #notification-items {
-	visibility: hidden;
-	position: absolute;
-	right: 0px;
-	top: 55px;
-	background-color: #333333;
-	width: 400px;
-	height: 300px;
-	max-height: 500px;
-	display: block;
-	border-radius: 10px;
-	overflow-y: scroll;
-	transition: visibility 0s .5s, opacity .5s ease-in;
+    visibility: hidden;
+    position: absolute;
+    right: 0px;
+    top: 55px;
+    background-color: #333333;
+    width: 400px;
+    height: 300px;
+    max-height: 500px;
+    display: block;
+    border-radius: 10px;
+    overflow-y: scroll;
+    transition: visibility 0s .5s, opacity .5s ease-in;
 }
 
 #notification-items::-webkit-scrollbar {
-	width: 0;												/* Hide scrollbar, but still can scroll! */
+    width: 0;												/* Hide scrollbar, but still can scroll! */
 }
 
 .notification {
-	background: silver;
-	height: fit-content;
-	max-height: 100px;
-	margin: 20px;
-	text-align: center;
-	word-wrap: break-word;
-	border-radius: 10px;
-	display: flex;
-	flex-direction: row;
-	justify-content: space-between;
+    background: silver;
+    height: fit-content;
+    max-height: 100px;
+    margin: 20px;
+    text-align: center;
+    word-wrap: break-word;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 .notification-img {
-	height: 50px;
-	width: fit-content;
-	margin: auto;
-	border-radius: 50%;
-	padding: 5px;
+    height: 50px;
+    width: fit-content;
+    margin: auto;
+    border-radius: 50%;
+    padding: 5px;
 }
 
 .notification p {
-	margin: auto;
-	margin-left: -10px;
-	width: 70%;
-	padding: 5px;
-	color: rgb(109, 113, 208)
+    margin: auto;
+    margin-left: -10px;
+    width: 70%;
+    padding: 5px;
+    color: rgb(109, 113, 208)
 }
 
-.account ul {
-	list-style-type: none;
-	margin: 0;										/* Dropdown */
-	padding: 0;
-	background: #333333;
-}
-
-.account li {
+.dropdown {
 	display: inline-block;
+	position: relative;
+	height: 50px;
+	line-height: 50px;
 }
 
-.account li a {
-	color: white;
-	display: block;
-	text-decoration: none;
-}
-
-
-.account ul ul {
-	position: absolute;
-	top: 100%;
+.dropdown-content {
 	display: none;
+	position: absolute;
+	overflow: hidden;
+	height: fit-content;
+	color: white;
+	background: #333333;
+	text-align: left;
 }
 
-.account ul ul li {
+.dropdown-content li {
+	padding: 15px;
+	width: 250px;
+	color: white;
+	border-bottom: 2px white;
+}
+
+.dropdown-content li:first-child {
+	padding-top: 40px
+}
+
+.dropdown:hover .dropdown-content {
 	display: block;
-}
-
-.account li:hover ul {
-	display: block;
-}
-
-.account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {
@@ -199,7 +195,7 @@ img {
 .account {
 	float: right;
 	margin-right: 10px;
-	width: 200px;
+	width: 250px;
 }
 
 

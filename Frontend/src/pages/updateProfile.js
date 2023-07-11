@@ -21,11 +21,13 @@ class UpdateProfilePage extends BaseClass {
     async mount() {
         this.client = new ProfileClient();
         document.getElementById('logout').addEventListener('click', this.Logout);
+        document.getElementById('updateBtn').addEventListener('click', this.updateUserProfile);
+
         this.onLoad();
 
     }
 
-    async updateUserProfile() {
+    async updateUserProfile(event) {
         const displayName = document.getElementById('displayName').value;
         const age = document.getElementById('age').value;
         const fullName = document.getElementById('fullName').value;
@@ -38,7 +40,7 @@ class UpdateProfilePage extends BaseClass {
             bio
         };
     
-        await profileClient.updateUser(user, errorHandler);
+        await this.client.updateUser(user, errorHandler);
     
         // Redirect to the profile page after the update
         window.location.href = "profilePage.html";

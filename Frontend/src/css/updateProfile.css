@@ -107,7 +107,7 @@ img {
 }
 
 
-	/*	----  Notifications Box	---- */
+/*	----  Notifications Box	---- */
 
 #notification-items {
 	visibility: hidden;
@@ -157,40 +157,36 @@ img {
 	color: rgb(109, 113, 208)
 }
 
-.account ul {
-	list-style-type: none;
-	margin: 0;										/* Dropdown */
-	padding: 0;
-	background: #333333;
-}
-
-.account li {
+.dropdown {
 	display: inline-block;
+	position: relative;
+	height: 50px;
+	line-height: 50px;
 }
 
-.account li a {
-	color: white;
-	display: block;
-	text-decoration: none;
-}
-
-
-.account ul ul {
-	position: absolute;
-	top: 100%;
+.dropdown-content {
 	display: none;
+	position: absolute;
+	overflow: hidden;
+	height: fit-content;
+	color: white;
+	background: #333333;
+	text-align: left;
 }
 
-.account ul ul li {
+.dropdown-content li {
+	padding: 15px;
+	width: 250px;
+	color: white;
+	border-bottom: 2px white;
+}
+
+.dropdown-content li:first-child {
+	padding-top: 40px
+}
+
+.dropdown:hover .dropdown-content {
 	display: block;
-}
-
-.account li:hover ul {
-	display: block;
-}
-
-.account ul ul li a:hover {
-	background-color: #555;					/* Change the background color of dropdown links on hover */
 }
 
 .main-links {
@@ -200,7 +196,7 @@ img {
 .account {
 	float: right;
 	margin-right: 10px;
-	width: 200px;
+	width: 250px;
 }
 
 body {

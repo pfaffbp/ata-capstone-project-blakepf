@@ -10,7 +10,7 @@ class SearchUsersPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['renderUserProfile', 'onSearch', 'onLoad', 'getNotifications'], this);
+        this.bindClassMethods(['renderUserProfile', 'onSearch', 'onLoad', 'getNotifications', 'follow'], this);
         this.dataStore = new DataStore();
     }
 
@@ -30,6 +30,7 @@ class SearchUsersPage extends BaseClass {
     // Render Methods --------------------------------------------------------------------------------------------------
 
     async renderUserProfile() {
+        document.getElementById("found-user").classList.remove("hide")
         let nameArea = document.getElementById("fullName");
         let displayName = document.getElementById("displayName");
         let ageArea = document.getElementById("age");
@@ -93,6 +94,8 @@ class SearchUsersPage extends BaseClass {
             followingArea.innerHTML = " ";
 
         }
+
+        document.getElementById("follow").addEventListener('click', this.follow);
     }
 
     // Event Handlers --------------------------------------------------------------------------------------------------
@@ -101,6 +104,11 @@ class SearchUsersPage extends BaseClass {
     async onSearch(event) {
         event.preventDefault();
         let result = await this.client.getUserData(this.errorHandler);
+
+        if (result == null) {
+            document.getElementById("no-user").classList.remove("hide")
+            document.getElementById("found-user").classList.add("hide")
+        }
         this.dataStore.set("userData", result);
     }
 
@@ -111,6 +119,7 @@ class SearchUsersPage extends BaseClass {
     }
     async onLoad() {
         let user = localStorage.getItem('displayName')
+
         let LoggedInArea = document.getElementById('userLoggedIn');
         if (user != null) {
             document.getElementById("bell").classList.remove("hide");
@@ -118,7 +127,31 @@ class SearchUsersPage extends BaseClass {
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response);
     }
+
+
+    async follow() {
+        let user = localStorage.getItem('displayName');
+        console.log(user)
+
+        let friendDisplayName = this.dataStore.get("userData");
+        friendDisplayName = friendDisplayName.displayName;
+        console.log(friendDisplayName);
+
+        const response = await this.client.follow(user, friendDisplayName, this.errorHandler);
+        console.log(response)
+
+        let notificationRequest = " has followed you!";
+        console.log(notificationRequest);
+
+        const notifResponse = await this.client.setNotification(friendDisplayName, notificationRequest, user, this.errorHandler);
+        console.log(notifResponse);
+    }
+
+
 
     async getNotifications() {
         console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.

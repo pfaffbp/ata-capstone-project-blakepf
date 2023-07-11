@@ -1,6 +1,7 @@
 package com.kenzie.appserver.service;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.kenzie.appserver.config.CacheAnimeStore;
@@ -268,6 +269,15 @@ public class CatalogServiceTest {
                 Assertions.assertTrue(false, "Anime returned is not in the records!");
             }
         }
+    }
+
+    @Test
+    void testGetSeasonAnime() {
+        PaginatedQueryList<CatalogRecord> mockResult = mock(PaginatedQueryList.class);
+        when(mapper.query(any(Class.class), any(DynamoDBQueryExpression.class))).thenReturn(mockResult);
+        PaginatedQueryList<CatalogRecord> result = catalogService.getSeasonAnime();
+        verify(mapper).query(any(Class.class), any(DynamoDBQueryExpression.class));
+        assertEquals(mockResult, result);
     }
 
 }
