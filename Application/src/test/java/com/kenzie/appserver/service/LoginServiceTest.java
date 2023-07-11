@@ -198,14 +198,20 @@ class LoginServiceTest {
         LoginRecord loginRecord = new LoginRecord();
         loginRecord.setEmail(email);
 
+        UserRecord userRecord = new UserRecord();
+        userRecord.setEmail(email);
+
 
         when(loginRepository.findByEmail(email)).thenReturn(Optional.of(loginRecord));
+        when(userRepository.findByEmail(email)).thenReturn(Optional.of(userRecord));
 
         boolean result = loginService.updateEmailByEmail(email, updatedEmail);
 
         assertTrue(result);
         verify(loginRepository, times(1)).save(loginRecord);
+        verify(userRepository, times(1)).save(userRecord);
         assertEquals(updatedEmail, loginRecord.getEmail());
+        assertEquals(updatedEmail, userRecord.getEmail());
     }
 
     @Test
