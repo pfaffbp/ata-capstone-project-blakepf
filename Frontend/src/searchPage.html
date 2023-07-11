@@ -1,94 +1,128 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
     <script type="text/javascript" src="searchPage.js"></script>
     <link rel="stylesheet" type="text/css" href="css/searchPage.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+    <script>
+        //show and hide dropdown list item on button click
+        function reveal() {
+           var click = document.getElementById("notification-items");
+           if (click.style.visibility === "hidden") {
+              click.style.visibility = "visible";
+           } else {
+              click.style.visibility = "hidden";
+           }
+        }
+     </script>
 </head>
 
 <body>
+    <div class="nav">
+        <img src="css/aniverse-logo-white.png" class="logo">
 
-<div class="nav">
-    <img src = "css/aniverse-logo-white.png" class= "logo">
+        <div class="main-links">
+            <a href="landingPage.html">Home</a>
+            <a href="holder1">Community</a>
+            <a href="holder3">Manga</a>
+            <a href="searchUsers.html" style="color: plum">Search Users</a>
+            <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
+        </div>
 
+        <div class="account">
+            <ul>
+                <div id="bell" class="hide">
+                    <button type="button" class="icon-button" onClick="reveal()">
+                        <span class="material-icons">notifications</span>
+                        <span class="icon-button__badge"></span>
+                    </button>
+                    <div id="notification-items">
+                        <!-- <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: added Fruits Basket: 1st Season to their Favorites List! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div>
+                        <div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> <p> juvabean: has followed you! </p></div> -->
 
-    <div class = "main-links">
-        <a href="landingPage.html">Anime</a>
-        <a href = "holder1">Community</a>
-        <a href = "searchUsers.html">Find Friends</a>
-        <a href = "holder3">Read</a>
-        <a href = "searchPage.html" class="navigation-buttons">Search</a >
+                    </div>
+                </div>
+                <li>
+                    <a class="userLoggedIn" id="userLoggedIn">Login </a>
+                    <ul>
+                        <li><a href="userProfilePage.html">Profile</a></li>
+                        <li><a href="signup.html">Signup</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="updatePassword.html">Update Password</a></li>
+                        <li><a href="updateLogin.html">Update Email</a></li>
+                        <li><a href="updateUser.html">Update Profile</a></li>
+                        <li><a id="logout">LogOut</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
     </div>
 
-    <div class = "account">
-        <ul>
-            <li>
-                <a class="userLoggedIn" id="userLoggedIn" >Login  </a>
-                <ul>
-                    <li><a href = "userProfilePage.html">Profile</a></li>
-                    <li><a href = "searchUsers.html">Search Users</a></li>
-                    <li><a href = "signup.html">Signup</a></li>
-                    <li><a href = "login.html">Login</a></li>
-                    <li><a href = "updatePassword.html">Update Password</a></li>
-                    <li><a href = "updateLogin.html">Update Email</a></li>
-                    <li><a  id="logout">LogOut</a></li>
-                </ul>
-            </li>
-        </ul>
+    <div id="flex-container">
+
+        <div class="leftImage">
+            <img src="css/Daco_715625.png">
+        </div>
+
+        <div class="main">
+            <form id="search-form">
+                <div class="search-bar-button">
+
+                    <label for="search-bar" class="search-bar-class">
+                        <h1>Search for Anime by Title &#x1F50D;</h1>
+                    </label>
+
+                    <input type="text" id="search-bar" placeholder="What are you looking for?" />
+                    <button class="button-85" role="button">Search</button>
+
+                </div>
+                <hr>
+
+
+                <div class = "search-bar-button" id = "search-bar-button">
+
+                    <label for="search-bar" class="search-bar-class">
+                        <h1>Search by Genre &#x1F50D;</h1>
+                    </label>
+
+                    <button class="button-86" data-genre="Action">Action💥</button>
+                    <button class="button-86" data-genre="Adventure">Adventure🧭</button>
+                    <button class="button-86" data-genre="Comedy">Comedy😂</button>
+                    <button class="button-86" data-genre="Drama">Drama😭</button>
+                    <button class="button-86" data-genre="Fantasy">Fantasy🐉</button>
+                    <button class="button-86" data-genre="Horror">Horror👻</button>
+                    <button class="button-86" data-genre="Mahou Shoujo">Mahou Shoujo🌟</button>
+                    <br>
+                    <br>
+                    <button class="button-86" data-genre="Mystery">Mystery🕵️‍</button>
+                    <button class="button-86" data-genre="Romance">Romance💘</button>
+                    <button class="button-86" data-genre="Sci-Fi">Sci-Fi👽</button>
+                    <button class="button-86" data-genre="Slice of Life">Slice of Life🌸</button>
+                    <button class="button-86" data-genre="Supernatural">Supernatural🔮</button>
+                    <button class="button-86" data-genre="Thriller">Thriller😰</button>
+                </div>
+            </form>
+
+            <link rel="stylesheet" href="css/Kero.png">
+            <img id="kero" src="css/Kero1.png" alt="Flying Kero">
+
+            <div id="work-area">
+            </div>
+        </div>
+
     </div>
 
-</div>
-
-<div id = "flex-container">
-
-    <div class = "leftImage">
+    <div class="rightImage">
         <img src="css/SeekPng.com_cardcaptor-sakura-png_3483900.png">
     </div>
 
-    <div class = "main">
-        <form id="search-form">
-            <label for="search-bar" class="search-bar-class">
-                <h1>Search for Anime by Title &#x1F50D;</h1>
-            </label>
-            <div class = "search-bar-button">
-                <input type="text" id="search-bar" placeholder="What are you looking for?"/>
-                <button class="button-85" role="button">Search</button>
-            </div>
-            <br>
-            <label for="search-bar" class="search-bar-class">
-                <h1>Search by Genre &#x1F50D;</h1>
-            </label>
-            <div id="search-bar-button">
-                <button class="button-86" data-genre="Action">Action💥</button>
-                <button class="button-86" data-genre="Adventure">Adventure🧭</button>
-                <button class="button-86" data-genre="Comedy">Comedy😂</button>
-                <button class="button-86" data-genre="Drama">Drama😭</button>
-                <button class="button-86" data-genre="Fantasy">Fantasy🐉</button>
-                <button class="button-86" data-genre="Horror">Horror👻</button>
-                <button class="button-86" data-genre="Mahou Shoujo">Mahou Shoujo🌟</button>
-                <br>
-                <br>
-                <button class="button-86" data-genre="Mystery">Mystery🕵️‍</button>
-                <button class="button-86" data-genre="Romance">Romance💘</button>
-                <button class="button-86" data-genre="Sci-Fi">Sci-Fi👽</button>
-                <button class="button-86" data-genre="Slice of Life">Slice of Life🌸</button>
-                <button class="button-86" data-genre="Supernatural">Supernatural🔮</button>
-                <button class="button-86" data-genre="Thriller">Thriller😰</button>
-            </div>
-            <link rel="stylesheet" href="css/Kero.png">
-            <img id="kero" src="css/Kero1.png" alt="Flying Kero">
-            <br>
-            <div id="work-area">
-            </div>
-        </form>
-    </div>
-
-</div>
-
-<div class= "rightImage">
-    <img src="css/Daco_715625.png">
-</div>
-
 </body>
+
 </html>

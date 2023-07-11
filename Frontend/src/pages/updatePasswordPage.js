@@ -10,7 +10,7 @@ class UpdatePasswordPage extends BaseClass {
 
     constructor() {
         super();
-        this.bindClassMethods(['onUpdatePassword', 'toggle', 'onLoad'], this);
+        this.bindClassMethods(['onUpdatePassword', 'toggle', 'onLoad', 'getNotifications'], this);
         this.dataStore = new DataStore();
 
 
@@ -61,7 +61,7 @@ class UpdatePasswordPage extends BaseClass {
             pwShowHide = document.querySelectorAll(".showHidePw"),
             pwFields = document.querySelectorAll(".password");
 
-//   js code to show/hide password and change icon
+        //   js code to show/hide password and change icon
         pwShowHide.forEach(eyeIcon => {
             eyeIcon.addEventListener("click", () => {
                 pwFields.forEach(pwField => {
@@ -116,11 +116,43 @@ class UpdatePasswordPage extends BaseClass {
 
     async onLoad() {
         let user = localStorage.getItem('displayName')
+
         let LoggedInArea = document.getElementById('userLoggedIn');
         if (user != null) {
+            document.getElementById("bell").classList.remove("hide");
+            document.getElementById("bell").addEventListener("click", this.getNotifications);
+
             LoggedInArea.innerHTML = user;
         } else
             LoggedInArea.innerHTML = "Login";
+
+        const response = await this.client.getNotifications(user, this.errorHandler());
+        console.log(response);
+    }
+
+    async getNotifications() {
+        console.log("In getNotifications");                                 // Checks to see if it makes it to this method when clicking the bell.
+        let user = localStorage.getItem("displayName");                     // Grabbing the user name. 
+        console.log(user);                                                  // Logging the user name to check and see if it pulls the correct one. 
+
+        const response = await this.client.getNotifications(localStorage.getItem("displayName"), this.errorHandler)         // Sends a get request to the Lambda API.
+
+        let notificationDiv = document.getElementById("notification-items");     // Create variable to point to notification dropdown.
+        let notificationHtml = "";                                               // Create variable of an empty string.
+
+        for (let i = 0; i < response.length; i++) {
+            console.log("In fori loop to gather response details");
+            console.log(response.length)                                         // Verify length
+            notificationHtml +=
+                `<div class = "notification"><img src = "https://i.pinimg.com/736x/f8/84/7b/f8847b5a92b0e321d6df26ebaee9b39c.jpg" class = "notification-img"> 
+            <p> ${response[i].userRequest} </p>
+        </div> `
+            console.log(response[i].userRequest)
+        }
+
+        notificationDiv.innerHTML = notificationHtml;                              // Setting the newly created html to the innerHtml of the notification dropdown.
+        console.log(notificationDiv.innerHTML)
+        console.log(response);
     }
 
 }

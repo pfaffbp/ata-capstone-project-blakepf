@@ -1,66 +1,72 @@
 package com.kenzie.capstone.service.model;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBIndexHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+import com.amazonaws.services.dynamodbv2.datamodeling.*;
 
+import java.util.Map;
 import java.util.Objects;
-@DynamoDBTable(tableName =  "Notifications")
+
+@DynamoDBTable(tableName = "NotificationTable")
+
 public class NotificationRecord {
 
-        public String message;
-        private String messageId;
-        private String follower;
-        private String following;
+    public static final String NOTIFICATION_GET = "GrabNotification";
+    private String requestedUUID;
 
-        @DynamoDBAttribute(attributeName = "message")
-        public String getMessage() {
-            return message;
-        }
+    private String userRequest;
 
-        public void setMessage(String message) {
-            this.message = message;
-        }
+    private boolean hasBeenViewed;
 
-        @DynamoDBHashKey(attributeName = "messageId")
-        public String getMessageId() {
-            return messageId;
-        }
+    @DynamoDBHashKey(attributeName = "requestedUUID")
+    @DynamoDBIndexHashKey(globalSecondaryIndexName = NOTIFICATION_GET, attributeName = "requestUUID")
+    public String getRequestedUUID() {
+        return requestedUUID;
+    }
 
-        public void setMessageId(String messageId) {
-            this.messageId = messageId;
-        }
-        @DynamoDBAttribute(attributeName = "follower")
-        @DynamoDBIndexHashKey(globalSecondaryIndexName = "follower", attributeName = "follower")
-        public String getFollower() {
-            return follower;
-        }
+    public void setRequestedUUID(String requestedUUID) {
+        this.requestedUUID = requestedUUID;
+    }
 
-        public void setFollower(String follower) {
-            this.follower = follower;
-        }
 
-        @DynamoDBAttribute(attributeName = "following")
-        @DynamoDBIndexHashKey(globalSecondaryIndexName = "following", attributeName = "following")
-        public String getFollowing() {
-            return following;
-        }
+//    @DynamoDBRangeKey(attributeName = "userRequest")
+//    public String getUserRequest() {
+//         return userRequest.getDisplayName() + ":" + userRequest.getAction();
+//    }
+//
+//    public void setUserRequest(UserRequest request) {
+//        this.userRequest = request;
+//    }
 
-        public void setFollowing(String following) {
-            this.following = following;
-        }
+    @DynamoDBRangeKey(attributeName = "userRequest")
+    public String getUserRequest() {
+        return userRequest;
+    }
 
-        @Override
-        public boolean equals(Object o) {
-            if (this == o) return true;
-            if (o == null || getClass() != o.getClass()) return false;
-            NotificationRecord that = (NotificationRecord) o;
-            return Objects.equals(message, that.message) && Objects.equals(messageId, that.messageId) && Objects.equals(follower, that.follower) && Objects.equals(following, that.following);
-        }
+    public void setUserRequest(String userRequest) {
+        this.userRequest = userRequest;
+    }
 
-        @Override
-        public int hashCode() {
-            return Objects.hash(message, messageId, follower, following);
-        }
+    @DynamoDBAttribute(attributeName = "hasBeenViewed")
+    @DynamoDBIndexRangeKey(globalSecondaryIndexName = NOTIFICATION_GET, attributeName = "hasBeenViewed")
+    public boolean isHasBeenViewed() {
+        return hasBeenViewed;
+    }
+
+    public void setHasBeenViewed(boolean hasBeenViewed) {
+        this.hasBeenViewed = hasBeenViewed;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        NotificationRecord that = (NotificationRecord) o;
+        return hasBeenViewed == that.hasBeenViewed && Objects.equals(requestedUUID, that.requestedUUID) && Objects.equals(userRequest, that.userRequest);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(requestedUUID, userRequest, hasBeenViewed);
+    }
+
 }
+

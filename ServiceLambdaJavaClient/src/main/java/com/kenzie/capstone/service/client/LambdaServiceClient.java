@@ -1,16 +1,22 @@
 package com.kenzie.capstone.service.client;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.kenzie.capstone.service.model.ExampleData;
-import com.kenzie.capstone.service.model.NotificationData;
+import com.kenzie.capstone.service.model.*;
+
+import javax.management.Notification;
+import java.util.List;
 
 
 public class LambdaServiceClient {
 
     private static final String GET_EXAMPLE_ENDPOINT = "example/{id}";
-    private static final String SET_EXAMPLE_ENDPOINT = "example";
-    private static final String SEND_MESSAGE_ENDPOINT = "message/add";
 
+    private static final String NOTIFICATION_GET_ENDPOINT = "notification/getNotification/{displayName}";
+
+    private static final String NOTIFICATION_SET_ENDPOINT = "notification/setNotification/{displayName}";
 
     private ObjectMapper mapper;
 
@@ -18,46 +24,37 @@ public class LambdaServiceClient {
         this.mapper = new ObjectMapper();
     }
 
-    public ExampleData getExampleData(String id) {
+    public List<NotificationData> getNotificationData(String displayName){
         EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.getEndpoint(GET_EXAMPLE_ENDPOINT.replace("{id}", id));
-        ExampleData exampleData;
-        try {
-            exampleData = mapper.readValue(response, ExampleData.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+        String response = endpointUtility.getEndpoint(NOTIFICATION_GET_ENDPOINT.replace("{displayName}",
+                displayName));
+
+        List<NotificationData> notificationData = null;
+        try{
+            notificationData = mapper.readValue(response, new TypeReference<List<NotificationData>>(){});
+        }catch(JsonProcessingException e){
+            System.out.println( "Line 64 " + e.getCause());
         }
-        return exampleData;
+        return notificationData;
     }
 
-    public ExampleData setExampleData(String data) {
-        EndpointUtility endpointUtility = new EndpointUtility();
-        String response = endpointUtility.postEndpoint(SET_EXAMPLE_ENDPOINT, data);
-        ExampleData exampleData;
+    public NotificationData setNotificationData(SetNotificationData data, String displayName) {
+        String jsonData = null;
+
         try {
-            exampleData = mapper.readValue(response, ExampleData.class);
-        } catch (Exception e) {
-            throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
+            jsonData = mapper.writeValueAsString(data);
+        }catch(Exception e){
+            e.getMessage();
         }
-        return exampleData;
-    }
-
-    public NotificationData setNotificatioNData(String userDisplayName, String friendDisplayName) {
         EndpointUtility endpointUtility = new EndpointUtility();
-        String request;
+        String response = endpointUtility.postEndpoint(NOTIFICATION_SET_ENDPOINT.replace("{displayName}", displayName), jsonData);
 
-        try {
-//            request = mapper.writeValueAsString()
-        }
-        String response = endpointUtility.postEndpoint(SEND_MESSAGE_ENDPOINT, userDisplayName, friendDisplayName);
-
-        NotificationData notificationData;
-
-        try {
-            notificationData = mapper.readValue(response, NotificationData.class);
+        NotificationData stringData;
+        try{
+            stringData = mapper.readValue(response, NotificationData.class);
         } catch (Exception e){
             throw new ApiGatewayException("Unable to map deserialize JSON: " + e);
         }
-        return notificationData;
+        return stringData;
     }
 }

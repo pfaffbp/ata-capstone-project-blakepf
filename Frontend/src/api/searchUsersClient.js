@@ -15,7 +15,7 @@ export default class SearchUsersClient extends BaseClass {
 
     constructor(props = {}){
         super();
-        const methodsToBind = ['clientLoaded', 'getUserData' ];
+        const methodsToBind = ['clientLoaded', 'getUserData', 'follow', 'unfollow', 'getNotifications', 'setNotification' ];
         this.bindClassMethods(methodsToBind, this);
         this.props = props;
         this.clientLoaded(axios);
@@ -39,7 +39,7 @@ export default class SearchUsersClient extends BaseClass {
      * @param errorCallback (Optional) A function to execute if the call fails.
      * @returns The concert
      */
-    async getUserData( errorCallback){
+    async getUserData(errorCallback) {
 
         const displayName = document.getElementById('search-bar').value;
 
@@ -50,6 +50,51 @@ export default class SearchUsersClient extends BaseClass {
             this.handleError('getUserData', error, errorCallback)
         }
     }
+
+    async follow (displayName, friendDisplayName, errorCallback) {
+        try {
+            const response = await this.client.post(`/user/${displayName}/followUser/${friendDisplayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('follow', error, errorCallback);
+        }
+    }
+
+    async unfollow (displayName, friendFullName, errorCallback) {
+        try {
+            const response = await this.client.delete(`/user/${displayName}/unfollowUser/${friendFullName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('unfollow', error, errorCallback);
+        }
+    }
+
+    async getNotifications (displayName, errorCallback) {
+        try {
+            const response = await this.client.get(`/notification/getNotification/${displayName}`)
+            return response.data;
+        } catch (error) {
+            this.handleError('getNotifications', error, errorCallback)
+        }
+    }
+
+
+    async setNotification (displayName, notificationRequest, requester, errorCallback) {
+        try {
+            const response = await this.client.post(`/notification/setNotification/${displayName}`, {
+                requestedUUID: displayName,
+                userRequest: {
+                    displayName: requester,
+                    action: notificationRequest
+                },
+                hasBeenViewed:  false});
+            return response.data;
+        } catch (error) {
+            this.handleError('setNotifications', error, errorCallback);
+        }
+    }
+
+
 
 
 

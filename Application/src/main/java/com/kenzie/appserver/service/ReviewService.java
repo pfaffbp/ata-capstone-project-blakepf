@@ -17,17 +17,15 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
 import static com.kenzie.appserver.repositories.model.ReviewRecord.REVIEW_lOOK_UP;
+import static com.kenzie.appserver.repositories.model.ReviewRecord.USER_LOOK_UP;
 
 @Service
 public class ReviewService {
-
-    private int animeId = 0;
-
-    private boolean lastPage = false;
     private ReviewRepository reviewRepository;
     private final DynamoDBMapper mapper;
 
@@ -39,7 +37,7 @@ public class ReviewService {
     public Review postReview(UserReviewPostRequest userReviewPostRequest){
         Review review = new Review(
                 userReviewPostRequest.getAnimeID(),
-                userReviewPostRequest.getUserID(),
+                userReviewPostRequest.getDisplayName(),
                 userReviewPostRequest.getRating(),
                 userReviewPostRequest.getReview());
 
@@ -133,6 +131,20 @@ public class ReviewService {
         return score / reviewRecords.size();
     }
 
+    public PaginatedQueryList<ReviewRecord> getListOfAnimeByDisplayName(String displayName){
+        Map<String, AttributeValue> valueMap = new HashMap<>();
+        valueMap.put(":displayName", new AttributeValue().withS(displayName));
+
+        DynamoDBQueryExpression<ReviewRecord> queryExpression = new DynamoDBQueryExpression<ReviewRecord>()
+                .withIndexName(USER_LOOK_UP)
+                .withConsistentRead(false)
+                .withKeyConditionExpression("displayName = :displayName")
+                .withExpressionAttributeValues(valueMap);
+
+        PaginatedQueryList<ReviewRecord> reviewRecords = mapper.query(ReviewRecord.class, queryExpression);
+        return reviewRecords;
+    }
+
 
 //    public Review updateReview()  //need some other things for this.
 
@@ -141,7 +153,7 @@ public class ReviewService {
         review.setRating(reviewRecord.getRating());
         review.setReviewID(reviewRecord.getReviewID());
         review.setReview(reviewRecord.getReview());
-        review.setUserID(reviewRecord.getUserID());
+        review.setDisplayName(reviewRecord.getDisplayName());
         review.setPostDate(reviewRecord.getPostDate());
         review.setAnimeID(reviewRecord.getAnimeID());
 
@@ -154,7 +166,7 @@ public class ReviewService {
         reviewRecord.setRating(review.getRating());
         reviewRecord.setAnimeID(review.getAnimeID());
         reviewRecord.setPostDate(review.getPostDate());
-        reviewRecord.setUserID(review.getUserID());
+        reviewRecord.setDisplayName(review.getDisplayName());
 
         return reviewRecord;
     }
