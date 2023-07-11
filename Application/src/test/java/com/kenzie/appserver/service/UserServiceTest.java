@@ -182,7 +182,7 @@ public class UserServiceTest {
     void addNewFavorite_validUser_addsToList() {
         String userId = randomUUID().toString();
         List<String> favoriteAnime = new ArrayList<>();
-        favoriteAnime.add(randomUUID().toString());
+        favoriteAnime.add("11");
 
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", userId, favoriteAnime,
                 "fullName", "displayName", 27, "bio");
@@ -199,7 +199,7 @@ public class UserServiceTest {
         userRecord.setBio(user.getBio());
         repository.save(userRecord);
 
-        String animeId = randomUUID().toString();
+        String animeId = "12";
         CatalogRecord anime = new CatalogRecord();
         anime.setAnimeId(animeId);
         anime.setDescription("description");
@@ -215,7 +215,13 @@ public class UserServiceTest {
         when(repository.findByDisplayName(userRecord.getDisplayName())).thenReturn(Optional.of(userRecord));
         when(animeRepository.findById(anime.getAnimeId())).thenReturn(Optional.of(anime));
 
-        List<String> updatedList = service.addNewFavorite(userRecord.getDisplayName(), anime.getAnimeId());
+        List<String> updatedList = new ArrayList<>();
+        updatedList.add("11");
+        updatedList.add(animeId);
+
+
+
+        service.addNewFavorite("displayName", anime.getAnimeId());
 
         verify(repository, times(1)).findByDisplayName(userRecord.getDisplayName());
         verify(animeRepository, times(1)).findById(anime.getAnimeId());

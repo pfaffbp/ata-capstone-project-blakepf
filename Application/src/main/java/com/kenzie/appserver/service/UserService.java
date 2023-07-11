@@ -82,7 +82,7 @@ public class UserService {
 
 
     public List<String> addNewFavorite(String displayName, String animeId) {
-        UserRecord existingUser = userRepository.findById(findUserByName(displayName).getUserId()).orElse(null);
+        UserRecord existingUser = userRepository.findByDisplayName(displayName).orElse(null);
         CatalogRecord existingAnime = animeRepository.findById(animeId).orElse(null);
 
         if (existingUser == null || existingAnime == null) {
