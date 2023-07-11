@@ -91,10 +91,16 @@ public class LoginService {
 
     public boolean updateEmailByEmail(String email, String updatedEmail) {
         Optional<LoginRecord> record = loginRepository.findByEmail(email);
-        if (record.isPresent()) {
+        Optional<UserRecord> userRecord = userRepository.findByEmail(email);
+        if (record.isPresent() && userRecord.isPresent() ) {
             LoginRecord loginRecord = record.get();
             loginRecord.setEmail(updatedEmail);
             loginRepository.save(loginRecord);
+
+            UserRecord userRecord1 = userRecord.get();
+            userRecord1.setEmail(updatedEmail);
+            userRepository.save(userRecord1);
+
             return true;
         } else {
             return false;
