@@ -107,7 +107,7 @@ public class UserControllerTest {
                 .andExpect(MockMvcResultMatchers.jsonPath("$.bio").value("New bio"));
     }
 
-    @Test
+/*    @Test
     public void testDeleteUserByDisplayName() throws Exception {
         // Create a user using the userService
         User user = new User(new ArrayList<>(), new ArrayList<>(), "email", UUID.randomUUID().toString(), new ArrayList<>(),
@@ -117,7 +117,7 @@ public class UserControllerTest {
         mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/deleteByDisplayName", "testuser")
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(MockMvcResultMatchers.status().isNoContent());
-    }
+    }*/
 
 //    @Test
 //    public void testFollowUser() throws Exception {

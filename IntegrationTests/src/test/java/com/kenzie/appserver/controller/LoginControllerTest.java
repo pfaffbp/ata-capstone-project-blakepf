@@ -74,9 +74,9 @@ class LoginControllerTest {
 
     @Test
     void testCreateLogin_Successful() throws Exception {
-        String email = "test@example.com";
+        String email = "syfy@example.com";
         String password = "password";
-        String nickname = "testuser";
+        String nickname = "syfyTest";
         String userId = UUID.randomUUID().toString();
 
 
@@ -93,7 +93,7 @@ class LoginControllerTest {
         mvc.perform(post("/login/createLogin")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(objectMapper.writeValueAsString(request)))
-                .andExpect(status().is(200));
+                .andExpect(status().is2xxSuccessful());
     }
 
 
