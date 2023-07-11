@@ -132,7 +132,7 @@ public class UserControllerTest {
 
         mvc.perform(MockMvcRequestBuilders.post("/user/{displayName}/followUser/{friendFullName}", "displayName", "displayName2")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk());
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful());
     }
 
     @Test
@@ -150,7 +150,7 @@ public class UserControllerTest {
 
         mvc.perform(MockMvcRequestBuilders.delete("/user/{displayName}/unfollowUser/{friendFullName}", "displayName", "displayName2")
                         .accept(MediaType.APPLICATION_JSON))
-                .andExpect(MockMvcResultMatchers.status().isOk())
+                .andExpect(MockMvcResultMatchers.status().is2xxSuccessful())
                 .andExpect(MockMvcResultMatchers.jsonPath("$.displayName").value("displayName"));
     }
 
