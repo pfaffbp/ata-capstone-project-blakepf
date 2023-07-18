@@ -1,0 +1,24 @@
+
+add to the webpack config
+
+place this right under module.exports = {
+
+---------------------------the resolve under this line
+  resolve: {
+    fallback: {
+      crypto: require.resolve('crypto-browserify'),
+      buffer: require.resolve("buffer"),
+      stream: require.resolve("stream-browserify")
+    },
+
+-----------nothing below this line goes in the webpack config
+
+you will need to install bcrypt
+https://www.npmjs.com/package/bcryptjs  -- the webpage you can locate info on bcryptjs
+----the install is the npm below
+npm i bcryptjs
+npm install --save-dev crypto-browserify stream-browserify assert stream-http https-browserify os-browserify url buffer process
+
+When you try to ./gradlew :Application:bootRunDev
+you may get prompted to install additional things.
+Big red warnings/errors. you will know.

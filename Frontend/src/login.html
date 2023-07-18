@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="css/loginSignup.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+g    <script type="text/javascript" src="loginPage.js"></script>
+    <title>Aniverse: Login</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <script>
+        //show and hide dropdown list item on button click
+        function reveal() {
+           var click = document.getElementById("notification-items");
+           if (click.style.visibility === "hidden") {
+              click.style.visibility = "visible";
+           } else {
+              click.style.visibility = "hidden";
+           }
+        }
+     </script>
+</head>
+
+<body>
+    <div class="nav">
+        <img src="css/aniverse-logo-white.png" class="logo">
+
+        <div class="main-links">
+            <a href="landingPage.html">Home</a>
+            <a href="holder1">Community</a>
+            <a href="holder3">Manga</a>
+            <a href="searchUsers.html" style="color: plum">Search Users</a>
+            <a href="searchPage.html" class="navigation-buttons" style="color: plum">Search Titles</a>
+        </div>
+
+        <div class="account">
+            <ul>
+                <div id="bell" class="hide">
+                    <button type="button" class="icon-button" onClick="reveal()">
+                        <span class="material-icons">notifications</span>
+                        <span class="icon-button__badge"></span>
+                    </button>
+                    <div id="notification-items">
+
+                    </div>
+                </div>
+                <div class = "dropdown">
+                    <a class="dropdown-btn" id="userLoggedIn">Login</a>
+                    <div class = "dropdown-content">
+                        <li><a href="userProfilePage.html">Profile</a></li>
+                        <li><a href="signup.html">Signup</a></li>
+                        <li><a href="login.html">Login</a></li>
+                        <li><a href="updatePassword.html">Update Password</a></li>
+                        <li><a href="updateLogin.html">Update Email</a></li>
+                        <li><a href="updateUser.html">Update Profile</a></li>
+                        <li><a id="logout">LogOut</a></li>
+                    </div>
+                </div>
+            </ul>
+        </div>
+    </div>
+
+    <div class="flex-container">
+<!-- 
+        <div class="leftImage">
+            <img src="css/zenitsu-left.png">
+        </div> -->
+
+        <div class="main">
+
+            <img src = "https://assets.stickpng.com/images/580b57fcd9996e24bc43c325.png" id = "pikachu">
+
+            <div class="container-2">
+                <div class="col-2">
+
+                    <h2>LOGIN</h2>
+
+                    <form id="login-forum">
+
+                        <div class="field-2 login-email-field">
+
+                            <div class="input-field-2">
+                                <input type="email" id="email-Login" placeholder="Enter your email" class="email" />
+                            </div>
+
+                            <span class="error email-error">
+                                <p class="error-text"></p>
+                            </span>
+
+                        </div>
+
+                        <div class="field login-password">
+                            <b> Double click the lock to show/hide text </b>
+                            <br>
+
+                            <div class="input-field-2">
+                                <input type="password" id="loginPassword" placeholder="Enter password" class="password" />
+                                <i class='bx bx-lock-alt showHidePw' id="eyes" style = "color: white"></i>
+                            </div>
+
+                            <span class="error password-error">
+                            </span>
+                        </div>
+
+                        <div class="input-field-2 button">
+                            <input type="submit" id="LoginUser" value="Login" />
+                        </div>
+
+                        <h3>
+                            New to Aniverse? 
+                            <br>
+                            Click <a href = "signup.html">here</a> to create an account!
+                        </h3>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <!-- <div class="rightImage">
+            <img src="css/tanjiro-right.png">
+        </div> -->
+
+    </div>
+
+
+
+
+
+</body>
